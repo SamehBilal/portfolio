@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hijra Journey - Interactive Map</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            background: #2c2416;
+            color: #d4c4a8;
+            overflow: hidden;
+        }
+
+        #map-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #2c2416;
+        }
+
+        #mapCanvas {
+            display: block;
+        }
+
+        .content {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(to left, rgba(44, 36, 22, 0.95) 0%, rgba(44, 36, 22, 0.7) 100%);
+            overflow-y: auto;
+            padding: 4rem 3rem;
+            z-index: 10;
+        }
+
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #8b7355;
+            border-radius: 4px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #8b7355;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #f5deb3;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: #c4b5a0;
+            font-style: italic;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            opacity: 0.3;
+            transition: opacity 0.8s ease;
+        }
+
+        .section.active {
+            opacity: 1;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #f5deb3;
+            margin-bottom: 1rem;
+            font-weight: normal;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .section-title::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            color: #8b7355;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: #8b7355;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .section-content {
+            line-height: 1.9;
+            font-size: 1.05rem;
+            color: #d4c4a8;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .quote-box {
+            background: rgba(139, 115, 85, 0.15);
+            border-left: 3px solid #8b7355;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #e8dcc4;
+        }
+
+        .info-box {
+            background: rgba(74, 124, 46, 0.15);
+            border: 1px solid rgba(74, 124, 46, 0.3);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .info-box h4 {
+            color: #9bc47d;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .distance-marker {
+            display: inline-block;
+            background: rgba(139, 115, 85, 0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: #f5deb3;
+        }
+
+        .intro-section {
+            background: rgba(74, 124, 46, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(74, 124, 46, 0.2);
+        }
+
+        .intro-section h2 {
+            color: #9bc47d;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .conclusion-section {
+            background: linear-gradient(135deg, rgba(45, 80, 22, 0.3) 0%, rgba(26, 61, 15, 0.3) 100%);
+            padding: 3rem 2rem;
+            border-radius: 8px;
+            margin-top: 3rem;
+            border: 1px solid rgba(74, 124, 46, 0.3);
+        }
+
+        .conclusion-section h2 {
+            color: #9bc47d;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .lessons-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .lessons-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(139, 115, 85, 0.2);
+            color: #d4c4a8;
+        }
+
+        .lessons-list li:last-child {
+            border-bottom: none;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 30%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 20;
+            animation: fadeInOut 3s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        .scroll-indicator-text {
+            color: #f5deb3;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .scroll-indicator-arrow {
+            color: #8b7355;
+            font-size: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .content {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                width: 100%;
+                background: rgba(44, 36, 22, 0.98);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="map-container">
+        <canvas id="mapCanvas"></canvas>
+    </div>
+
+    <div class="content" id="content">
+        <div class="header">
+            <h1>THE HIJRA</h1>
+            <div class="subtitle">The Sacred Journey from Makkah to Madinah • 622 CE</div>
+        </div>
+
+        <div class="intro-section">
+            <h2>An Journey That Changed History</h2>
+            <p class="section-content">
+                The Hijra marks one of the most pivotal moments in Islamic history. After enduring thirteen years of persecution in Makkah, Prophet Muhammad ﷺ received divine permission to migrate to Yathrib, which would later be known as Madinah al-Munawwarah.
+            </p>
+            <p class="section-content">
+                This migration was not merely a physical journey across the Arabian desert, but the beginning of a new era. The approximately 450-kilometer journey took eight to twelve days through harsh terrain, pursued by enemies, sustained by faith.
+            </p>
+        </div>
+
+        <div class="section" data-stage="0">
+            <h2 class="section-title">Makkah</h2>
+            <div class="section-subtitle">The Journey Begins • Day 1</div>
+            <div class="distance-marker">📍 Starting Point</div>
+            
+            <p class="section-content">
+                Makkah, the sacred city, birthplace of the Prophet Muhammad ﷺ and home to the Holy Kaaba. For thirteen years, the Prophet had called his people to Islam, facing ridicule, persecution, and threats. The Quraysh tribe intensified their opposition, culminating in a plot to assassinate him.
+            </p>
+            
+            <div class="quote-box">
+                "And when the disbelievers plotted against you to restrain you or kill you or evict you. But they plan, and Allah plans. And Allah is the best of planners." - Quran 8:30
+            </div>
+            
+            <p class="section-content">
+                On the night of migration, Angel Jibreel informed the Prophet of the assassination plot. The Prophet asked Ali ibn Abi Talib to sleep in his bed, wearing his green cloak, to deceive the assassins waiting outside. Meanwhile, the Prophet slipped away with his closest companion, Abu Bakr As-Siddiq.
+            </p>
+            
+            <div class="info-box">
+                <h4>The Prophet's Love for Makkah</h4>
+                As he departed, the Prophet looked back at Makkah and said: "You are the most beloved place to Allah, and you are the most beloved place to me. Had your people not forced me out, I would never have left you."
+            </div>
+        </div>
+
+        <div class="section" data-stage="1">
+            <h2 class="section-title">Cave of Thawr</h2>
+            <div class="section-subtitle">Divine Protection • Days 1-3</div>
+            <div class="distance-marker">📏 5 km south of Makkah</div>
+            
+            <p class="section-content">
+                Rather than heading directly north toward Madinah, the Prophet and Abu Bakr took an unexpected route south to Mount Thawr. This strategic decision confounded their pursuers who searched the northern roads. They hid in a small cave on the mountainside.
+            </p>
+            
+            <p class="section-content">
+                For three days and nights, they remained hidden while the Quraysh searched desperately. Abu Bakr's family secretly brought food and news. His son Abdullah brought intelligence, his daughter Asma brought provisions, and a shepherd named Amir concealed their tracks with his flock.
+            </p>
+            
+            <div class="quote-box">
+                "When Abu Bakr said, 'If one of them looks down at his feet, he will see us,' the Prophet replied, 'What do you think of two, O Abu Bakr, when Allah is their third?'" - Sahih al-Bukhari
+            </div>
+            
+            <p class="section-content">
+                When the Quraysh trackers reached the cave entrance, Abu Bakr feared discovery. But a miracle occurred: a spider had woven its web across the entrance, and a dove had nested there. The searchers concluded no one could have entered without disturbing these, and they moved on.
+            </p>
+            
+            <div class="info-box">
+                <h4>The Verse of the Cave</h4>
+                This moment is immortalized in the Quran: "Do not grieve; indeed Allah is with us. And Allah sent down His tranquility upon him and supported him with soldiers you did not see." (9:40)
+            </div>
+        </div>
+
+        <div class="section" data-stage="2">
+            <h2 class="section-title">The Coastal Route</h2>
+            <div class="section-subtitle">Through the Desert • Days 4-6</div>
+            <div class="distance-marker">📏 ~200 km traveled</div>
+            
+            <p class="section-content">
+                After three days, they emerged from the cave under cover of darkness. Their guide, Abdullah ibn Urayqit—a skilled tracker hired despite being a non-Muslim—led them along rarely-traveled coastal paths, avoiding the main caravan routes where pursuers waited.
+            </p>
+            
+            <p class="section-content">
+                The journey was grueling. They traveled mostly at night to avoid the scorching sun, resting during the day in whatever shade they could find. The rocky terrain and soft sand made every step arduous for both riders and mounts.
+            </p>
+            
+            <div class="info-box">
+                <h4>The Pursuit of Suraqah</h4>
+                Suraqah ibn Malik, a skilled horseman lured by the large bounty, tracked them down. Three times he charged on his horse, and three times the horse's legs sank deep into the sand. Recognizing divine intervention, Suraqah asked for amnesty. The Prophet promised him something extraordinary: "How would you feel wearing the bracelets of Khosrow?" This prophecy was fulfilled years later during Umar's caliphate when treasures from the Persian Empire reached Madinah.
+            </div>
+            
+            <p class="section-content">
+                They passed by the tent of Umm Ma'bad, known for her generosity to travelers. She apologized for having nothing to offer, pointing only to a frail goat that gave no milk. The Prophet asked permission to milk it, prayed over it, and it gave abundant milk—enough for all to drink their fill, with plenty left over.
+            </p>
+        </div>
+
+        <div class="section" data-stage="3">
+            <h2 class="section-title">Qudayd</h2>
+            <div class="section-subtitle">A Resting Point • Day 7</div>
+            <div class="distance-marker">📏 ~200 km from Makkah</div>
+            
+            <p class="section-content">
+                Qudayd marked the halfway point of their journey. This small settlement served as a crucial resting place for weary desert travelers. By now, the Prophet and his companion had been traveling for a week through some of the harshest terrain of the Arabian Peninsula.
+            </p>
+            
+            <p class="section-content">
+                Despite being fugitives, the Prophet maintained his noble character. He spoke kindly to all they encountered, showed gratitude for the smallest kindnesses, and never complained about the hardships of the journey.
+            </p>
+            
+            <div class="quote-box">
+                The shepherd who provided milk said: "I have never seen a man more blessed than him. The weakest of my goats gave milk as I had never seen before."
+            </div>
+        </div>
+
+        <div class="section" data-stage="4">
+            <h2 class="section-title">Al-Juhfah</h2>
+            <div class="section-subtitle">Approaching Safety • Day 8</div>
+            <div class="distance-marker">📏 ~300 km from Makkah</div>
+            
+            <p class="section-content">
+                As they approached Al-Juhfah, the landscape began to change. They were entering territories where Islam had already spread. News of the Prophet's migration had reached Madinah, and the Ansar began their daily vigil, watching the roads for his arrival.
+            </p>
+            
+            <p class="section-content">
+                The most dangerous part of the journey was behind them, but the final stretch still presented challenges. The small caravan pressed forward, sustained by faith and the knowledge that a welcoming community awaited them.
+            </p>
+        </div>
+
+        <div class="section" data-stage="5">
+            <h2 class="section-title">Quba</h2>
+            <div class="section-subtitle">The First Mosque • Days 8-12</div>
+            <div class="distance-marker">📏 5 km from Madinah</div>
+            
+            <p class="section-content">
+                On Monday, the 8th of Rabi' al-Awwal (September 23, 622 CE), after eight days of continuous travel, the Prophet arrived at Quba. The people welcomed him with overwhelming joy and hospitality. He stayed with Kulthum ibn al-Hidm.
+            </p>
+            
+            <p class="section-content">
+                During his four-day stay in Quba, the Prophet established Masjid Quba—the first mosque ever built in Islam. He participated in its construction, carrying stones and working alongside his companions, demonstrating that no task was beneath a leader.
+            </p>
+            
+            <div class="quote-box">
+                "A mosque founded on righteousness from the first day is more worthy for you to stand in. Within it are men who love to purify themselves; and Allah loves those who purify themselves." - Quran 9:108
+            </div>
+            
+            <div class="info-box">
+                <h4>The Merit of Masjid Quba</h4>
+                The Prophet later said: "Whoever purifies himself at home and comes to Masjid Quba and prays there, he will have a reward like that of an Umrah." This mosque stands to this day, continuously expanded and rebuilt, a living monument to that historic moment.
+            </div>
+        </div>
+
+        <div class="section" data-stage="6">
+            <h2 class="section-title">Madinah</h2>
+            <div class="section-subtitle">The Enlightened City • Day 12</div>
+            <div class="distance-marker">📏 Total: 450 km over 12 days</div>
+            
+            <p class="section-content">
+                On Friday, the 12th of Rabi' al-Awwal (September 27, 622 CE), the Prophet entered Madinah. The entire city poured into the streets in celebration. The women and children sang "Tala'a al-Badru 'Alayna" (The full moon has risen over us), a song of joy that Muslims still sing today.
+            </p>
+            
+            <div class="quote-box">
+                "The full moon has risen over us<br>
+                From the valley of Wada'<br>
+                And we must show gratitude<br>
+                As long as anyone calls to Allah"
+            </div>
+            
+            <p class="section-content">
+                Every family wanted the honor of hosting the Prophet. To avoid favoritism, he announced that wherever his camel, Al-Qaswa, stopped would be his residence. The camel walked through the streets and finally knelt on a plot of land belonging to two orphans. The Prophet purchased the land, and there he built Masjid an-Nabawi (the Prophet's Mosque).
+            </p>
+            
+            <div class="info-box">
+                <h4>The Transformation Begins</h4>
+                In Madinah, the Prophet established the first Islamic state. He created the Constitution of Madinah, established brotherhood between the Muhajirun (migrants) and Ansar (helpers), and built a society based on justice, faith, and mutual support. Yathrib was renamed Madinah al-Munawwarah—the Enlightened City.
+            </div>
+            
+            <p class="section-content">
+                This moment marks the beginning of the Islamic calendar. The Hijra represents not just a physical journey, but the birth of the Muslim Ummah as a distinct community with its own land, law, and identity.
+            </p>
+        </div>
+
+        <div class="conclusion-section">
+            <h2>The Legacy of the Hijra</h2>
+            
+            <p class="section-content">
+                The Hijra was not an escape but a strategic migration that transformed human history. From this journey emerged a civilization that would spread across continents, carrying a message of monotheism, justice, and human dignity.
+            </p>
+            
+            <h3 style="color: #9bc47d; margin: 2rem 0 1rem; font-size: 1.3rem;">Eternal Lessons</h3>
+            <ul class="lessons-list">
+                <li><strong>Patience (Sabr):</strong> Thirteen years of persecution before divine permission to migrate</li>
+                <li><strong>Trust in Allah (Tawakkul):</strong> Complete reliance on Allah while taking all practical measures</li>
+                <li><strong>Strategic Planning:</strong> Taking the longer, safer route and hiring an expert guide</li>
+                <li><strong>Sacrifice:</strong> Leaving behind home, wealth, and comfort for the sake of faith</li>
+                <li><strong>Brotherhood:</strong> The Ansar sharing their homes and wealth with the Muhajirun</li>
+                <li><strong>Leadership:</strong> The Prophet working with his own hands to build the mosque</li>
+                <li><strong>Divine Support:</strong> Miracles and protection at every critical moment</li>
+            </ul>
+            
+            <p class="section-content" style="text-align: center; margin-top: 2rem; font-size: 1.15rem; font-style: italic; color: #f5deb3;">
+                May peace and blessings be upon Prophet Muhammad ﷺ, his family, and all his companions.
+            </p>
+        </div>
+
+        <div style="height: 100px;"></div>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator">
+        <div class="scroll-indicator-text">Scroll to Begin</div>
+        <div class="scroll-indicator-arrow">↓</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mapCanvas');
+        const ctx = canvas.getContext('2d');
+        const content = document.getElementById('content');
+        const scrollIndicator = document.getElementById('scrollIndicator');
+
+        let scrollProgress = 0;
+        let currentStage = 0;
+        let cameraX = 0;
+        let cameraY = 0;
+        let cameraZoom = 1;
+        let targetCameraX = 0;
+        let targetCameraY = 0;
+        let targetZoom = 1;
+
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Waypoints
+        const waypoints = [
+            { name: "Makkah", lat: 21.4225, lng: 39.8262, zoom: 2.5 },
+            { name: "Cave of Thawr", lat: 21.3891, lng: 39.8089, zoom: 3 },
+            { name: "Coastal Route", lat: 21.8, lng: 39.5, zoom: 1.8 },
+            { name: "Qudayd", lat: 22.3, lng: 39.2, zoom: 2 },
+            { name: "Al-Juhfah", lat: 22.8, lng: 39.1, zoom: 2 },
+            { name: "Quba", lat: 24.4539, lng: 39.6178, zoom: 2.8 },
+            { name: "Madinah", lat: 24.4672, lng: 39.6111, zoom: 2.5 }
+        ];
+
+        // Convert lat/lng to map coordinates
+        function latLngToMap(lat, lng) {
+            const mapWidth = 3000;
+            const mapHeight = 3000;
+            const minLat = 20.5;
+            const maxLat = 25.5;
+            const minLng = 38.5;
+            const maxLng = 40.5;
+            
+            const x = ((lng - minLng) / (maxLng - minLng)) * mapWidth;
+            const y = mapHeight - ((lat - minLat) / (maxLat - minLat)) * mapHeight;
+            
+            return { x, y };
+        }
+
+        // Draw map terrain
+        function drawTerrain() {
+            // Desert background
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#3d3426');
+            gradient.addColorStop(0.5, '#4a3f2f');
+            gradient.addColorStop(1, '#2c2416');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw decorative patterns (simulating terrain)
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.scale(cameraZoom, cameraZoom);
+            ctx.translate(-cameraX, -cameraY);
+
+            // Mountain ranges (simplified)
+            ctx.strokeStyle = 'rgba(139, 115, 85, 0.15)';
+            ctx.lineWidth = 2 / cameraZoom;
+            for (let i = 0; i < 30; i++) {
+                ctx.beginPath();
+                const startX = Math.random() * 3000;
+                const startY = Math.random() * 3000;
+                ctx.moveTo(startX, startY);
+                for (let j = 0; j < 5; j++) {
+                    ctx.lineTo(startX + j * 100, startY + (Math.random() - 0.5) * 100);
+                }
+                ctx.stroke();
+            }
+
+            // Cities markers
+            ctx.fillStyle = 'rgba(139, 115, 85, 0.2)';
+            ctx.font = `${20 / cameraZoom}px serif`;
+            waypoints.forEach((wp, i) => {
+                const pos = latLngToMap(wp.lat, wp.lng);
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 3 / cameraZoom, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            ctx.restore();
+        }
+
+        // Draw the path and points
+        function drawPath() {
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.scale(cameraZoom, cameraZoom);
+            ctx.translate(-cameraX, -cameraY);
+
+            const points = waypoints.map(wp => latLngToMap(wp.lat, wp.lng));
+
+            // Calculate path segments
+            let totalLength = 0;
+            const segments = [];
+            for (let i = 0; i < points.length - 1; i++) {
+                const dx = points[i + 1].x - points[i].x;
+                const dy = points[i + 1].y - points[i].y;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                segments.push(length);
+                totalLength += length;
+            }
+
+            // Draw full path (faded)
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.strokeStyle = 'rgba(139, 115, 85, 0.3)';
+            ctx.lineWidth = 3 / cameraZoom;
+            ctx.setLineDash([15 / cameraZoom, 15 / cameraZoom]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw active path
+            const drawLength = totalLength * scrollProgress;
+            let currentLength = 0;
+            
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            
+            for (let i = 0; i < points.length - 1; i++) {
+                if (currentLength + segments[i] <= drawLength) {
+                    ctx.lineTo(points[i + 1].x, points[i + 1].y);
+                    currentLength += segments[i];
+                } else {
+                    const remaining = drawLength - currentLength;
+                    const ratio = remaining / segments[i];
+                    const x = points[i].x + (points[i + 1].x - points[i].x) * ratio;
+                    const y = points[i].y + (points[i + 1].y - points[i].y) * ratio;
+                    ctx.lineTo(x, y);
+                    break;
+                }
+            }
+            
+            ctx.strokeStyle = '#8b7355';
+            ctx.lineWidth = 5 / cameraZoom;
+            ctx.lineCap = 'round';
+            ctx.shadowColor = 'rgba(139, 115, 85, 0.5)';
+            ctx.shadowBlur = 10 / cameraZoom;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            // Draw waypoints
+            points.forEach((point, index) => {
+                const progress = scrollProgress * (waypoints.length - 1);
+                const isReached = progress >= index;
+                const isActive = Math.abs(progress - index) < 0.5;
+
+                // Glow for active point
+                if (isActive && isReached) {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 25 / cameraZoom, 0, Math.PI * 2);
+                    const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, 25 / cameraZoom);
+                    gradient.addColorStop(0, 'rgba(139, 115, 85, 0.4)');
+                    gradient.addColorStop(1, 'rgba(139, 115, 85, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                }
+
+                // Outer circle
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 12 / cameraZoom, 0, Math.PI * 2);
+                ctx.fillStyle = isReached ? '#8b7355' : 'rgba(139, 115, 85, 0.3)';
+                ctx.fill();
+                ctx.strokeStyle = '#f5deb3';
+                ctx.lineWidth = 2 / cameraZoom;
+                ctx.stroke();
+
+                // Inner circle
+                if (isReached) {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 5 / cameraZoom, 0, Math.PI * 2);
+                    ctx.fillStyle = '#f5deb3';
+                    ctx.fill();
+                }
+
+                // Label
+                ctx.fillStyle = 'rgba(44, 36, 22, 0.8)';
+                ctx.font = `${14 / cameraZoom}px serif`;
+                const textWidth = ctx.measureText(waypoints[index].name).width;
+                ctx.fillRect(point.x - (textWidth / 2 + 8) / cameraZoom, point.y - 35 / cameraZoom, 
+                           (textWidth + 16) / cameraZoom, 20 / cameraZoom);
+                
+                ctx.fillStyle = isReached ? '#f5deb3' : 'rgba(245, 222, 179, 0.5)';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(waypoints[index].name, point.x, point.y - 25 / cameraZoom);
+            });
+
+            // Draw traveling camel
+            if (scrollProgress > 0 && scrollProgress < 1) {
+                const totalSegments = points.length - 1;
+                const exactProgress = scrollProgress * totalSegments;
+                const segmentIndex = Math.floor(exactProgress);
+                const segmentProgress = exactProgress - segmentIndex;
+                
+                if (segmentIndex < totalSegments) {
+                    const x = points[segmentIndex].x + 
+                              (points[segmentIndex + 1].x - points[segmentIndex].x) * segmentProgress;
+                    const y = points[segmentIndex].y + 
+                              (points[segmentIndex + 1].y - points[segmentIndex].y) * segmentProgress;
+                    
+                    // Camel icon
+                    ctx.font = `${32 / cameraZoom}px Arial`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    
+                    // Shadow
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                    ctx.shadowBlur = 5 / cameraZoom;
+                    ctx.fillText('🐪', x, y);
+                    ctx.shadowBlur = 0;
+                }
+            }
+
+            ctx.restore();
+        }
+
+        // Update camera position
+        function updateCamera() {
+            const progress = scrollProgress * (waypoints.length - 1);
+            const index = Math.floor(progress);
+            const blend = progress - index;
+
+            if (index < waypoints.length - 1) {
+                const current = latLngToMap(waypoints[index].lat, waypoints[index].lng);
+                const next = latLngToMap(waypoints[index + 1].lat, waypoints[index + 1].lng);
+                
+                targetCameraX = current.x + (next.x - current.x) * blend;
+                targetCameraY = current.y + (next.y - current.y) * blend;
+                targetZoom = waypoints[index].zoom + (waypoints[index + 1].zoom - waypoints[index].zoom) * blend;
+            } else {
+                const last = latLngToMap(waypoints[waypoints.length - 1].lat, waypoints[waypoints.length - 1].lng);
+                targetCameraX = last.x;
+                targetCameraY = last.y;
+                targetZoom = waypoints[waypoints.length - 1].zoom;
+            }
+
+            // Smooth interpolation
+            cameraX += (targetCameraX - cameraX) * 0.1;
+            cameraY += (targetCameraY - cameraY) * 0.1;
+            cameraZoom += (targetZoom - cameraZoom) * 0.1;
+        }
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            updateCamera();
+            drawTerrain();
+            drawPath();
+            
+            requestAnimationFrame(animate);
+        }
+
+        // Handle scroll
+        function handleScroll() {
+            const scrollTop = content.scrollTop;
+            const scrollHeight = content.scrollHeight - content.clientHeight;
+            scrollProgress = Math.min(Math.max(scrollTop / scrollHeight, 0), 1);
+
+            // Update active sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                const stage = parseInt(section.dataset.stage);
+                if (scrollProgress * waypoints.length >= stage) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+
+            // Hide scroll indicator
+            if (scrollProgress > 0.05) {
+                scrollIndicator.style.opacity = '0';
+            } else {
+                scrollIndicator.style.opacity = '1';
+            }
+        }
+
+        // Event listeners
+        content.addEventListener('scroll', handleScroll);
+
+        // Initialize
+        handleScroll();
+        animate();
+    </script>
+</body>
+</html>

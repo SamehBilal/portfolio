@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Hijra Journey - Interactive Storytelling</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Avenir Next', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #5d5c56;
+            background: #FDFEFF;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            position: fixed;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        /* Header */
+        .header {
+            position: relative;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            min-height: 600px;
+            padding: 2em 1em 4em;
+            text-align: center;
+            color: #fff;
+            background: #181922 url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzJkMzUyNCIvPjwvc3ZnPg==') no-repeat center center;
+            background-size: cover;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(24, 25, 34, 0.6);
+        }
+
+        .header-title {
+            position: relative;
+        }
+
+        .header-title__main {
+            font-family: Baskerville, 'Baskerville Old Face', 'Hoefler Text', Garamond, 'Times New Roman', serif;
+            font-size: 3em;
+            font-weight: 400;
+            line-height: 1;
+            margin: 0 0 0.15em 0;
+        }
+
+        .header-title__part {
+            font-family: Baskerville, 'Baskerville Old Face', 'Hoefler Text', Garamond, 'Times New Roman', serif;
+            font-size: 0.85em;
+            font-weight: 400;
+            display: block;
+            padding: 0.5em 0 2em;
+            text-indent: 4px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .header-title__part::before,
+        .header-title__part::after {
+            content: '—';
+            padding: 0 0.5em;
+        }
+
+        .header-title__sub {
+            font-size: 0.55em;
+            font-weight: normal;
+            display: block;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0.5em 0 1em;
+            color: #d1d2d2;
+        }
+
+        /* Intro */
+        .intro {
+            font-family: Baskerville, 'Baskerville Old Face', 'Hoefler Text', Garamond, 'Times New Roman', serif;
+            font-size: 2em;
+            position: relative;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 150vh;
+            margin: 0 0 3em;
+            padding: 3em;
+            text-align: center;
+            color: #fff;
+            background: #181922;
+        }
+
+        .intro blockquote {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .intro em {
+            font-size: 1.5em;
+        }
+
+        .intro span {
+            display: block;
+            padding: 1em 0;
+            color: #464b4b;
+        }
+
+        /* Story */
+        .text {
+            position: relative;
+            z-index: 1000;
+            padding: 5em 3em;
+        }
+
+        .text section {
+            font-size: 1.25em;
+            line-height: 1.7;
+            width: 50%;
+            max-width: 700px;
+        }
+
+        .text section h2 {
+            font-size: 2.7em;
+            font-weight: 400;
+            margin: 0;
+            text-align: left;
+        }
+
+        .text section:not(:first-child) h2 {
+            padding: 2em 0 0 0;
+        }
+
+        .title-up {
+            font-size: 0.365em;
+            font-weight: bold;
+            display: block;
+            letter-spacing: 7px;
+            text-transform: uppercase;
+            color: #cecec5;
+        }
+
+        .title-down {
+            font-family: Baskerville, 'Baskerville Old Face', 'Hoefler Text', Garamond, 'Times New Roman', serif;
+            font-size: 1.35em;
+            font-weight: 400;
+            line-height: 0.9;
+            display: block;
+            padding: 0.15em 0 0.35em;
+            color: #5f646c;
+        }
+
+        .text figure {
+            margin: 1em 0 2em;
+        }
+
+        .text figure img {
+            max-width: 100%;
+        }
+
+        .text figcaption {
+            font-size: 0.85em;
+            font-style: italic;
+            padding: 1em 1.5em 0;
+            text-align: center;
+            color: #5f646c;
+        }
+
+        .text section p {
+            font-size: 0.95em;
+            margin: 0.5em 0 1.5em;
+        }
+
+        .text section p.text-intro {
+            font-size: 1.3em;
+            font-style: italic;
+            line-height: 1.5;
+            margin: 0.5em 0 1.25em;
+            text-align: left;
+            color: #9d9c95;
+        }
+
+        .text blockquote {
+            font-family: Baskerville, 'Baskerville Old Face', 'Hoefler Text', Garamond, 'Times New Roman', serif;
+            font-size: 2em;
+            line-height: 1.5;
+            position: relative;
+            text-align: left;
+            color: #939997;
+            margin: 2em 0;
+        }
+
+        .text blockquote::before {
+            content: '"';
+            font-size: 2.5em;
+            font-style: italic;
+            line-height: 1;
+            position: absolute;
+            top: -0.15em;
+            right: 100%;
+            margin: 0 0.075em 0 0;
+            color: #f0f3f3;
+        }
+
+        .text blockquote span {
+            font-family: 'Avenir Next', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.5em;
+            white-space: nowrap;
+            color: #cbcece;
+        }
+
+        .content--related {
+            position: relative;
+            z-index: 1000;
+            padding: 10em 2em;
+            text-align: center;
+            color: #fff;
+            background: #181922;
+        }
+
+        .info {
+            font-size: 1.65em;
+            padding: 0 0 4em;
+        }
+
+        @media(max-width: 720px) {
+            .header-title {
+                font-size: 1.5em;
+            }
+            .intro {
+                font-size: 1.25em;
+                height: auto;
+                padding: 1em;
+            }
+            .text {
+                font-size: 0.85em;
+                padding: 2em;
+            }
+            .text section {
+                width: 100%;
+                max-width: none;
+            }
+            .text section h2 {
+                font-size: 1.85em;
+            }
+            .text blockquote {
+                font-size: 1.45em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <header class="header">
+            <h1 class="header-title">
+                <span class="header-title__main">The Sacred Journey</span>
+                <span class="header-title__part">Al-Hijra</span>
+                <span class="header-title__sub">An interactive storytelling of Prophet Muhammad's ﷺ migration from Makkah to Madinah - 622 CE</span>
+            </h1>
+        </header>
+
+        <div class="intro">
+            <blockquote>
+                <em>"And when the disbelievers plotted against you to restrain you or kill you or evict you. But they plan, and Allah plans. And Allah is the best of planners."</em>
+                <span>— Quran 8:30</span>
+            </blockquote>
+        </div>
+
+        <div class="container"></div>
+
+        <div class="text">
+            <section class="js-section" data-zoom-middle="2">
+                <h2><span class="title-up">Makkah</span><span class="title-down">The Journey Begins</span></h2>
+                <p class="text-intro">The sacred city, birthplace of the Prophet Muhammad ﷺ and home to the Holy Kaaba.</p>
+                <p>For thirteen years, the Prophet had called his people to Islam, facing ridicule, persecution, and threats. The Quraysh tribe intensified their opposition, culminating in a plot to assassinate him. On the night of migration, Angel Jibreel informed the Prophet of the assassination plot.</p>
+                <p>The Prophet asked Ali ibn Abi Talib to sleep in his bed, wearing his green cloak, to deceive the assassins waiting outside. Meanwhile, the Prophet slipped away with his closest companion, Abu Bakr As-Siddiq. They embarked on a journey that would change the course of history.</p>
+                <p>As he departed, the Prophet looked back at Makkah and said: "You are the most beloved place to Allah, and you are the most beloved place to me. Had your people not forced me out, I would never have left you."</p>
+            </section>
+
+            <section class="js-section" data-zoom-start="2.5">
+                <h2><span class="title-up">Cave of Thawr</span><span class="title-down">Divine Protection</span></h2>
+                <p>Rather than heading directly north toward Madinah, the Prophet and Abu Bakr took an unexpected route south to Mount Thawr. This strategic decision confounded their pursuers who searched the northern roads. They hid in a small cave on the mountainside for three days and nights.</p>
+                <p>Abu Bakr's family secretly brought food and news. His son Abdullah brought intelligence, his daughter Asma brought provisions, and a shepherd named Amir concealed their tracks with his flock. The Quraysh searched desperately, offering a large reward for their capture.</p>
+                <blockquote>
+                    <em>When Abu Bakr said, 'If one of them looks down at his feet, he will see us,' the Prophet replied, 'What do you think of two, O Abu Bakr, when Allah is their third?'</em>
+                    <span> — Sahih al-Bukhari</span>
+                </blockquote>
+                <p>When the Quraysh trackers reached the cave entrance, Abu Bakr feared discovery. But a miracle occurred: a spider had woven its web across the entrance, and a dove had nested there. The searchers concluded no one could have entered without disturbing these, and they moved on.</p>
+            </section>
+
+            <section class="js-section" data-zoom-start="2" data-stay="true">
+                <h2><span class="title-up">The Desert Journey</span><span class="title-down">Through Harsh Terrain</span></h2>
+                <p>After three days, they emerged from the cave under cover of darkness. Their guide, Abdullah ibn Urayqit—a skilled tracker hired despite being a non-Muslim—led them along rarely-traveled coastal paths, avoiding the main caravan routes where pursuers waited.</p>
+                <p>The journey was grueling. They traveled mostly at night to avoid the scorching sun, resting during the day in whatever shade they could find. The rocky terrain and soft sand made every step arduous for both riders and mounts. The approximately 450-kilometer journey would take eight to twelve days through some of the harshest terrain of the Arabian Peninsula.</p>
+                <p>Suraqah ibn Malik, a skilled horseman lured by the large bounty, tracked them down. Three times he charged on his horse, and three times the horse's legs sank deep into the sand. Recognizing divine intervention, Suraqah asked for amnesty. The Prophet promised him something extraordinary: "How would you feel wearing the bracelets of Khosrow?" This prophecy was fulfilled years later during Umar's caliphate.</p>
+                <p>They passed by the tent of Umm Ma'bad, known for her generosity to travelers. She apologized for having nothing to offer, pointing only to a frail goat that gave no milk. The Prophet asked permission to milk it, prayed over it, and it gave abundant milk—enough for all to drink their fill, with plenty left over.</p>
+            </section>
+
+            <section class="js-section" data-zoom-start="1.8">
+                <h2><span class="title-up">Quba</span><span class="title-down">The First Mosque</span></h2>
+                <p>On Monday, the 8th of Rabi' al-Awwal (September 23, 622 CE), after eight days of continuous travel, the Prophet arrived at Quba, just five kilometers south of Madinah. The people welcomed him with overwhelming joy and hospitality.</p>
+                <p>During his four-day stay in Quba, the Prophet established Masjid Quba—the first mosque ever built in Islam. He participated in its construction, carrying stones and working alongside his companions, demonstrating that no task was beneath a leader.</p>
+                <blockquote>
+                    <em>A mosque founded on righteousness from the first day is more worthy for you to stand in. Within it are men who love to purify themselves; and Allah loves those who purify themselves.</em>
+                    <span> — Quran 9:108</span>
+                </blockquote>
+                <p>The Prophet later said: "Whoever purifies himself at home and comes to Masjid Quba and prays there, he will have a reward like that of an Umrah." This mosque stands to this day, continuously expanded and rebuilt, a living monument to that historic moment.</p>
+            </section>
+
+            <section class="js-section" data-zoom-start="1.5" data-icon="camel">
+                <h2><span class="title-up">Madinah</span><span class="title-down">The Enlightened City</span></h2>
+                <p>On Friday, the 12th of Rabi' al-Awwal (September 27, 622 CE), the Prophet entered Madinah. The entire city poured into the streets in celebration. The women and children sang "Tala'a al-Badru 'Alayna" (The full moon has risen over us), a song of joy that Muslims still sing today.</p>
+                <blockquote>
+                    <em>The full moon has risen over us from the valley of Wada', and we must show gratitude as long as anyone calls to Allah.</em>
+                    <span> — Traditional Islamic Song</span>
+                </blockquote>
+                <p>Every family wanted the honor of hosting the Prophet. To avoid favoritism, he announced that wherever his camel, Al-Qaswa, stopped would be his residence. The camel walked through the streets and finally knelt on a plot of land belonging to two orphans. The Prophet purchased the land, and there he built Masjid an-Nabawi (the Prophet's Mosque).</p>
+                <p>In Madinah, the Prophet established the first Islamic state. He created the Constitution of Madinah, established brotherhood between the Muhajirun (migrants) and Ansar (helpers), and built a society based on justice, faith, and mutual support. Yathrib was renamed Madinah al-Munawwarah—the Enlightened City.</p>
+                <p>This moment marks the beginning of the Islamic calendar. The Hijra represents not just a physical journey, but the birth of the Muslim Ummah as a distinct community with its own land, law, and identity.</p>
+            </section>
+
+            <section class="js-section" data-stay="true" data-zoom-start="1.2">
+                <h2><span class="title-up">Legacy</span><span class="title-down">Lessons That Endure</span></h2>
+                <p>The Hijra was not an escape but a strategic migration that transformed human history. From this journey emerged a civilization that would spread across continents, carrying a message of monotheism, justice, and human dignity.</p>
+                <p>The journey teaches us profound lessons: patience through thirteen years of persecution; trust in Allah combined with practical planning; strategic thinking in taking the longer, safer route; sacrifice in leaving behind home and comfort; brotherhood in the Ansar welcoming the Muhajirun; and divine support manifested at every critical moment.</p>
+                <blockquote>
+                    <em>Do not grieve; indeed Allah is with us.</em>
+                    <span> — Prophet Muhammad ﷺ (Quran 9:40)</span>
+                </blockquote>
+                <p>May peace and blessings be upon Prophet Muhammad ﷺ, his family, and all his companions.</p>
+            </section>
+
+            <section class="js-section" data-stay="true" data-zoom-start="0.8"></section>
+        </div>
+
+        <section class="content--related">
+            <p class="info">A journey of faith, perseverance, and divine protection that marks the beginning of the Islamic calendar.</p>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        // Map configuration - Full Saudi Arabia map
+        const mapSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:mapsvg="http://mapsvg.com" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" mapsvg:geoViewBox="34.492946 32.271167 55.688143 16.387460" width="730.13947" height="600.4032" viewBox="0 0 730 600">
+  <path d="m 456.82718,487.03041 -10.13,2.63 -16.39,2.39 -58.85,5.04 -8.85,-0.7 -3.24,-0.72 -5.22,-2.39 -8.51,-5.59 0,0 -13.54,-12.09 -3.91,-6.36 -2.75,-2.96 -0.22,-1.6 1.23,-6.11 3.34,-6.09 0.08,-2.96 -1.06,-1.73 -3.6,-3.6 -3.07,-4.93 -5.76,-5.01 0,0 -4.34,-7.06 -4.77,-6.36 -0.58,-1.47 1.76,-8.48 -0.54,-6.95 2.33,-3.42 0.68,-2.34 -1.79,-13.1 0.96,-6.16 -0.31,-1.57 -6.45,-1.41 -5.65,1.47 -3.7,-1.28 -1.26,-2.3 0.28,-5.34 0.86,-2.93 -1.84,-1.88 -3.09,-0.85 -14.1,-0.63 -3.01,-1.63 -5.15,-11.26 -0.91,-5.64 -2.1,-4.72 -1.13,-4.86 -4.16,-3.3 -0.36,-3.13 0.44,-3.64 0,0 -0.04,-9.03 1.41,-4.88 -0.94,-3.6 2.95,-4.25 0.4,-3.14 0,0 3.04,-5.08 2.17,-1.58 1.5,0.12 5.17,2.55 3.87,0.81 5.73,0.5 5.67,-0.89 5.69,0.87 2.43,-1.79 0.85,-2.18 -1.91,-3.83 0.15,-2.3 5.42,-6.69 3.27,-2.52 12.88,-3.15 2.84,-2.81 3.09,-1.74 2.28,-4.47 2.02,-1.97 3.13,-0.82 8.3,1.06 7.2,-0.68 5.53,0.22 0.84,-3.9 -0.31,-3.16 -2.52,-4.86 1.08,-2.91 -0.14,-0.86 -6.69,-10.16 -3.6,-3.57 -0.49,-1.52 0.84,-5.74 -0.43,-5.12 4.01,-1.1 4.5,-5.87 2.46,-2.11 4.18,-1.84 0.62,-1.48 -0.15,-2.5 -1.34,-2.5 -3.6,-2.99 -2.35,-0.93 0,0 -0.68,-1.88 0.06,-1.59 0.99,-3.1 2.42,-3.32 3.15,-1.64 0,0 1.94,2.12 1.51,0.52 1.8,-0.86 1.3,-2.23 0,0 3.32,2.32 2.12,2.21 1.4,5.11 1.24,1.53 10.41,6.08 5.75,1.06 3.46,4.22 4.06,3.38 2.34,0.63 5.64,0.11 3.01,0.81 9.86,6.94 2.49,1.19 2.36,0.05 4.41,-1.01 1.55,0.22 6.45,6.08 1.47,2.52 8.88,3.16 3.86,2.08 1.09,2.56 0.43,4.96 0.38,22.63 -0.63,15.07 0.35,7.41 0.68,3.7 1.12,1.79 2.28,1.8 9.44,6.3 9.19,9.16 1.68,2.06 2.95,5.78 1.36,6.89 -0.02,7.75 z" title="Ar Riyāḑ" id="SA-01" fill="#FDFDED" stroke="#8b7355" stroke-width="0.5"/>
+  <path d="m 143.70718,343.80041 0,0 0.12,-0.02 -0.12,0.02 z m 114.74,-19.79 -0.44,3.64 0.36,3.13 4.15,3.3 1.13,4.86 2.11,4.72 0.91,5.64 5.15,11.26 3.01,1.63 14.1,0.63 3.09,0.85 1.84,1.88 -0.85,2.93 -0.29,5.33 1.26,2.31 3.7,1.28 5.65,-1.47 6.45,1.41 0.31,1.57 -0.96,6.17 1.79,13.1 -0.68,2.34 -2.33,3.43 0.55,6.94 -1.76,8.48 0.58,1.47 4.77,6.36 4.34,7.06 0,0 -4.02,1.47 -5.71,3.77 -5.22,-1.3 -2.26,0.25 -3.16,1.52 -4.55,0.28 -4.26,3.81 -6.41,3.06 -10.11,9.24 -2.31,1.14 -2.29,-0.24 -1.4,-1.02 -4.67,-9.07 0,0 -1.98,-1.93 -1.48,-0.22 -5.42,2.76 -4.16,-0.2 -4.61,1.77 -1.91,-1.46 -1.28,-3.77 -1.22,-1.45 -1.43,-0.61 -2.26,0.32 -1.36,1.41 -0.7,2.12 1.11,4.54 -0.12,2.36 -2.69,4.63 -1.37,3.56 -7.73,1.86 -4,4.1 0.17,1.42 0.67,0.7 3.66,1.09 0.97,1.53 -0.31,5.28 0.91,3.89 -0.27,4.44 1.3,1.54 3.69,2.13 2.06,3.06 1.59,1.05 2.59,0 2.21,-1.08 2.58,-8.98 2.4,-4.46 1.52,-0.59 4.61,-0.04 0.79,-0.5 0,0 1.51,-0.74 2.29,0.13 1.85,1.88 0.21,1.52 -1.31,6.92 2.19,4.44 -1.27,4.6 -0.76,1.42 -1.52,0.75 -4.74,-0.43 -2.24,0.37 -3.88,2.82 -0.75,0.06 -1.97,-1.87 -0.49,10 0.61,2.97 1.02,1.48 1.44,0.48 6.71,0.21 2.11,1.21 2.98,9.14 -1.5,6.41 0,0 -1.01,1.94 -3.55,2.05 -1.97,3.15 0,0 -0.4,-1.87 -0.27,-0.33 -0.95,-1.23 0.03,-0.49 -0.32,-0.57 -0.37,-0.37 -0.51,0.76 -0.36,-0.35 0.36,-1.15 -0.46,-0.24 -0.48,-0.65 0.15,-0.87 -0.73,-0.87 -0.54,-2.04 0.05,-0.8 -0.17,-1.41 -0.82,-0.8 0.15,-1.21 -1.41,-1.06 -0.63,-1.3 -2.26,-0.09 -1.06,-0.83 -0.19,-1.62 -1.74,-2.17 1.24,-4.89 -1.56,-0.4 -1.15,-0.92 -1.2,-2.73 1.29,-3 -0.2,-1.69 -3.05,-1.3 -1.11,-2.63 0.38,-1.51 -0.45,-1.44 -0.82,-0.58 -0.56,-1.36 -1.58,-0.81 0.3,-0.43 -0.48,-2.03 0.5,-2.77 -1.22,-1.31 -2.27,-0.56 -2.79,-2.11 -0.28,-1.02 1.04,0.93 0.34,-2.1 -1.13,-3.14 -1.43,-1.64 -2.06,0.57 -1.01,-0.32 0.18,0.78 1.11,0.52 -0.3,0.28 -1.35,-0.84 -0.43,-1.5 -1.42,-0.71 -0.3,-2 -1.3,-0.58 0.42,-1.26 -0.41,-1.12 -5.69,-3.91 -2.98,-0.95 -1.24,-2.03 -0.65,-0.05 0.14,-1.25 -2.29,0.07 -1.45,-1.52 -0.51,-1.48 -1.65,-0.59 -1.89,0.26 0.06,0.51 -0.75,0.13 -2.1,-1.56 -1.14,0.2 1.53,0.77 0.28,0.74 -2.67,-1.27 -5.15,-3.89 -1.76,-1.95 0.58,-0.54 -1.07,-0.75 0.18,-1.07 -0.96,0.31 -0.7,-0.68 -1.01,-1.32 0.23,-0.37 1,0.68 -0.4,-1.17 -0.99,0.09 -1.48,-1.98 -1.64,-3.02 0.52,-0.77 -0.17,-0.74 -1.45,-0.9 -0.15,0.64 0.6,0.97 -0.58,-0.22 -0.8,-2.17 0.89,0.43 0.34,-0.2 -0.53,-0.43 0.29,-0.25 -0.67,-0.12 -0.55,0.19 -2.05,-1.72 0.25,-1.31 -0.84,-0.77 -1.29,-0.07 -1.24,-1.94 0.16,-1.2 -1.32,-2.35 -1.66,-1 -0.89,-4.24 -0.83,-0.7 -1.27,-2.5 0.11,-0.78 0.87,-0.39 1.29,-0.9 0.7,-1.87 -1.22,-1.02 0.13,-0.82 -0.26,-0.74 0.9,-0.1 -0.92,-1.34 0.25,-0.39 -0.59,0 -0.24,0.29 -0.78,-0.67 -0.93,-6.07 -1.43,-3.12 -3.24,-4.23 -0.38,-1.86 0.39,-0.47 -0.51,-1.44 0.59,-0.78 1.37,-0.28 -1.02,1.88 0.52,0.64 0.46,-0.88 0.79,0.17 0.2,-2.75 1.22,0.1 -0.24,-0.86 0.56,-2.21 -0.34,-0.69 -0.56,2.85 -0.58,-0.26 0.8,-1.95 -0.32,-1.47 2.25,-4.19 -0.02,-1.7 0.44,-0.72 0.84,-0.18 0.32,-1.38 -1.17,-0.01 -0.15,0.92 -0.33,-0.19 -0.72,-0.57 0.48,-2.14 -0.1,-3.6 -1.88,-3.15 -0.39,-1.76 -1.17,-1.43 0.89,-0.9 -0.93,-0.07 -0.43,0.31 -4.27,-7.13 1.3,0.49 1.37,2.24 -0.19,0.47 1.19,0.21 0.51,-0.72 -1.58,-2.25 -0.05,-1.49 -2.29,0 0.32,-0.53 -0.89,0.1 -0.26,0.35 -1.44,-2.19 0.74,-1.65 -0.73,-3.8 -0.25,-0.76 -0.68,0.68 -1.68,-2.45 -0.09,-1.34 -0.33,-0.39 -0.23,-0.15 -0.98,-2.23 -0.07,-2.6 0,0 5.12,-0.4 3.08,-0.92 0.82,0.34 2.13,3.42 2.42,1.85 3.42,4.08 1.68,1.3 1.55,0.23 4.88,-1.11 1.58,0.37 0.43,3.86 0.7,0.58 10.44,-3.25 4.76,-0.31 1.07,1.39 0.28,3.25 -2.65,6.93 0.06,0.86 0.59,0.74 3.98,1.18 2.09,1.91 0.45,2.31 -0.83,3.87 0.65,1.58 4.76,0.56 2.33,-1.12 4.63,-4.1 6.79,2.21 1.62,-0.02 4.47,-6.66 9.34,-7.12 5.12,-5.32 2.45,-1.77 5.67,-2.31 0.56,-0.76 -0.4,-1.57 -5.35,-2.94 -0.76,-0.66 -0.2,-1.49 3.59,-2.87 11.75,-5.83 1.06,-1.53 0.69,-2.21 -0.16,-3.22 -1.11,-2.52 0.58,-2.32 3.24,-1.03 5.03,0.65 z" title="Makkah" id="SA-02" fill="#FDFDED" stroke="#8b7355" stroke-width="0.5"/>
+  <path d="m 130.84718,324.65041 -0.9,-0.61 -0.33,0.61 -0.7,-0.29 -0.33,-0.44 -1.1,-1 0.38,-0.9 -1,0.41 -1.03,-1.53 -1.82,-1.19 0.16,-0.31 -0.62,-0.34 -1.13,0.46 -3.64,-2.84 0.62,-0.51 -0.59,-0.29 0.58,-1.68 -1.39,0.76 0.45,0.38 -0.44,1.27 -1.68,-0.19 -2.75,-2.06 -1.19,-2.11 -0.79,0.16 -0.38,-0.71 -0.69,-0.14 -0.09,-0.83 -1.55,0.6 -1.04,-0.36 -0.08,0.81 0.54,0.16 -0.37,0.91 -1.51,0.05 -0.66,-0.98 -1.17,0.09 -1.82,-2.71 -1.49,-1.07 0.31,-1.82 0.67,0.46 0.26,-1.12 -1.18,-1.47 -0.42,-1.45 -1.040004,-0.88 0,0 0.550004,-3.24 0.95,-1.47 5.65,-0.48 0,0 2.36,-0.91 0,0 0.79,-0.71 0,0 1.17,-1.81 0,0 0.55,-0.71 0,0 1.55,-0.41 2.31,0.45 0,0 2.58,-0.03 1.61,-0.83 0.92,-1.54 0.22,-1.56 0,0 -0.11,-3.18 0,0 -0.22,-10.27 0,0 0.84,-4.77 0,0 0.1,-0.74 0,0 0.25,-2.3 0,0 -1.12,-1.4 0,0 -3.17,-0.13 0,0 -0.74,-0.31 0,0 -1.79,-6.32 0,0 -1.8,-3.88 -3.72,-3.33 0,0 -2.17,-1.85 -0.67,-1.64 0,0 -0.54,-2.27 -0.73,-0.61 0,0 -2.23,-1.15 0,0 -4.010004,-2.52 -1.53,0.17 0,0 -1.95,1.78 -0.28,-1.56 0,0 -0.81,-3.12 -1.69,-3.17 0,0 -0.67,-1.68 0,0 0.16,-2.33 0,0 3.15,-5.54 0.26,-1.76 0,0 -0.36,-1.18 0,0 -1.54,-0.95 0,0 -4.78,-1.35 0,0 -1.6,-1.31 0,0 -1,-1.58 -0.69,-2.63 0.81,-8.93 0,0 -0.99,-4.2 0,0 -1.43,-1.38 0,0 -1.54,-0.18 0,0 -3.12,0.69 0,0 -0.81,-0.48 -0.09,-0.75 1,-1.47 0,0 3.12,-0.69 0,0 1.62,-0.43 0,0 1.67,-0.81 0,0 1.59,-0.57 0,0 3.22,-1.5 0,0 1.64,-1.06 0,0 0.76,-0.34 0,0 1.55,-0.39 0,0 3.96,1.66 0,0 2.360004,1.74 0,0 2.42,0.31 1.73,-0.42 5.85,-3.33 0,0 1.55,-0.46 0,0 0.78,0.31 0,0 1.11,1.52 0,0 0.8,3.16 0,0 0.56,1.68 0,0 2.45,4.27 0,0 1.09,1.55 0,0 0.81,0.56 0,0 1.52,0.26 0,0 5.38,0.24 1,1.24 0,0 -0.2,1.59 0,0 0.15,0.79 1.47,1.04 0,0 2.27,1.42 0,0 0.15,0.75 0,0 -0.43,2.4 0.19,0.75 0.74,0.34 0,0 0.75,-0.01 1.57,-1.19 0,0 1.54,-1.37 0,0 1.69,-1.29 1.65,-0.33 6.16,2.51 0.8,-0.64 -0.52,-1.5 0,0 -0.31,-1.5 0.42,-0.73 0.75,-0.04 0,0 1.28,1.18 0.96,3.08 0,0 2.36,0.83 0,0 2.36,0.58 2.27,1.43 0,0 1.52,1.23 0,0 2.42,1.83 2.26,0.41 0,0 6.57,-0.52 0,0 10.45,-2.02 0,0 1.53,-0.07 0,0 0.77,0.43 0,0 1.22,1.43 0,0 0.56,1.01 0,0 0.68,1.56 0.24,2.66 -0.75,2.42 -1.62,2.25 0,1.63 1.18,1.5 0.77,0.24 3.27,-0.84 0.73,0.25 0.36,0.79 -0.11,4.16 -1.9,10.91 2.08,9.8 -0.52,10.14 0.63,1.61 1.3,1.49 1.56,0.71 1.55,0.03 9.37,-3.24 8.06,-0.39 2.41,-1.18 3.87,-4.64 3.27,-1.25 6.68,-0.15 11.8,2.31 0,0 6.92,1.83 1.35,1.16 0.28,1.98 -0.57,11.32 1.74,2.02 5.3,1.39 1.41,1.13 3.15,10.79 4.08,3.38 0,0 -0.4,3.14 -2.95,4.25 0.94,3.6 -1.41,4.88 0.04,9.03 0,0 -5.05,-0.85 -3.23,1.03 -0.58,2.32 1.11,2.52 0.16,3.23 -0.69,2.21 -1.06,1.53 -11.75,5.84 -3.59,2.87 0.2,1.49 0.76,0.66 5.35,2.94 0.4,1.57 -0.56,0.76 -5.67,2.31 -2.45,1.77 -5.12,5.33 -9.34,7.12 -4.47,6.66 -1.62,0.02 -6.79,-2.21 -4.63,4.1 -2.33,1.12 -4.76,-0.56 -0.65,-1.58 0.83,-3.86 -0.45,-2.31 -2.09,-1.91 -3.98,-1.18 -0.59,-0.74 -0.06,-0.86 2.65,-6.92 -0.28,-3.25 -1.07,-1.39 -4.76,0.31 -10.44,3.25 -0.7,-0.58 -0.43,-3.86 -1.58,-0.37 -4.88,1.11 -1.55,-0.23 -1.67,-1.3 -3.42,-4.08 -2.42,-1.84 -2.12,-3.42 -0.82,-0.34 -3.08,0.92 -5.12,0.4 0,0 -0.21,0.03 0,0 -0.12,0.02 0,0 -0.64,-3.24 -1.32,-1.32 0.21,-1.05 -0.97,0.4 -0.65,-0.35 -0.13,0.75 0.84,0.4 -0.37,0.4 -0.86,-0.5 0.1,-1.51 -0.57,-1.35 0.13,-0.52 -0.78,-0.4 -0.7,-0.82 -0.95,-2.79 -0.01,-1.63 -1.02,-1.12 -0.92,-0.09 -0.87,-1.56 -2.41,-1.65 -0.58,-1.03 -0.44,-0.28 z" title="Al Madīnah" id="SA-03" fill="#FDFDED" stroke="#8b7355" stroke-width="0.5"/>
+</svg>`;
+
+        // Camel SVG
+        const camelSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="40" height="40">
+            <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-size="40">🐪</text>
+        </svg>`;
+
+        // Waypoints on the map - adjusted for full Saudi map
+        const waypoints = [
+            { name: "Makkah", x: 258, y: 344, zoom: 3 },
+            { name: "Cave of Thawr", x: 258, y: 352, zoom: 4 },
+            { name: "Coastal Route", x: 225, y: 390, zoom: 2 },
+            { name: "Quba", x: 143, y: 324, zoom: 3.5 },
+            { name: "Madinah", x: 130, y: 324, zoom: 3 }
+        ];
+
+        // Initialize canvas
+        const container = document.querySelector('.container');
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        container.appendChild(canvas);
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Map state
+        let scrollProgress = 0;
+        let animationStarted = false;
+        let cameraX = 365;
+        let cameraY = 300;
+        let targetCameraX = 365;
+        let targetCameraY = 300;
+        let cameraZoom = 1;
+        let targetCameraZoom = 1;
+        let pathProgress = 0;
+
+        // Helper function to encode SVG for data URI (handles Unicode)
+        function encodeSVG(svg) {
+            return 'data:image/svg+xml,' + encodeURIComponent(svg);
+        }
+
+        // Load SVG as image
+        const mapImage = new Image();
+        mapImage.src = encodeSVG(mapSVG);
+
+        // Load camel SVG
+        const camelImage = new Image();
+        camelImage.src = encodeSVG(camelSVG);
+
+        // Get first section position
+        const firstSection = document.querySelector('.js-section');
+        let firstSectionTop = 0;
+
+        function updateFirstSectionPosition() {
+            if (firstSection) {
+                firstSectionTop = firstSection.offsetTop - window.innerHeight / 2;
+            }
+        }
+
+        updateFirstSectionPosition();
+
+        // Draw function
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw background
+            ctx.fillStyle = '#FDFEFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.scale(cameraZoom, cameraZoom);
+            ctx.translate(-cameraX, -cameraY);
+
+            // Draw map
+            if (mapImage.complete) {
+                ctx.globalAlpha = 0.9;
+                ctx.drawImage(mapImage, 0, 0, 730, 600);
+                ctx.globalAlpha = 1;
+            }
+
+            // Draw path only after animation starts
+            if (animationStarted && pathProgress > 0) {
+                ctx.beginPath();
+                ctx.moveTo(waypoints[0].x, waypoints[0].y);
+                
+                for (let i = 1; i < waypoints.length; i++) {
+                    const segmentProgress = Math.min(Math.max((pathProgress * (waypoints.length - 1)) - (i - 1), 0), 1);
+                    if (segmentProgress > 0) {
+                        const startX = waypoints[i - 1].x;
+                        const startY = waypoints[i - 1].y;
+                        const endX = waypoints[i].x;
+                        const endY = waypoints[i].y;
+                        
+                        const currentX = startX + (endX - startX) * segmentProgress;
+                        const currentY = startY + (endY - startY) * segmentProgress;
+                        
+                        ctx.lineTo(currentX, currentY);
+                    }
+                }
+                
+                ctx.strokeStyle = '#d4a574';
+                ctx.lineWidth = 5 / cameraZoom;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+            }
+
+            // Draw waypoints only after animation starts
+            if (animationStarted) {
+                waypoints.forEach((point, i) => {
+                    const reached = i <= pathProgress * (waypoints.length - 1);
+                    
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 12 / cameraZoom, 0, Math.PI * 2);
+                    ctx.fillStyle = reached ? '#8b7355' : 'rgba(139, 115, 85, 0.3)';
+                    ctx.fill();
+                    ctx.strokeStyle = '#FDFDED';
+                    ctx.lineWidth = 3 / cameraZoom;
+                    ctx.stroke();
+
+                    if (reached) {
+                        ctx.beginPath();
+                        ctx.arc(point.x, point.y, 5 / cameraZoom, 0, Math.PI * 2);
+                        ctx.fillStyle = '#FDFDED';
+                        ctx.fill();
+                    }
+
+                    // Draw label
+                    ctx.font = `bold ${14 / cameraZoom}px Arial`;
+                    ctx.fillStyle = reached ? '#5d5c56' : 'rgba(93, 92, 86, 0.5)';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(point.name, point.x, point.y - 25 / cameraZoom);
+                });
+
+                // Draw camel at current position
+                if (pathProgress > 0 && pathProgress < 1 && camelImage.complete) {
+                    const totalSegments = waypoints.length - 1;
+                    const exactProgress = pathProgress * totalSegments;
+                    const segmentIndex = Math.floor(exactProgress);
+                    const segmentProgress = exactProgress - segmentIndex;
+                    
+                    if (segmentIndex < totalSegments) {
+                        const startX = waypoints[segmentIndex].x;
+                        const startY = waypoints[segmentIndex].y;
+                        const endX = waypoints[segmentIndex + 1].x;
+                        const endY = waypoints[segmentIndex + 1].y;
+                        
+                        const camelX = startX + (endX - startX) * segmentProgress;
+                        const camelY = startY + (endY - startY) * segmentProgress;
+                        
+                        const size = 40 / cameraZoom;
+                        ctx.drawImage(camelImage, camelX - size / 2, camelY - size / 2, size, size);
+                    }
+                }
+            }
+
+            ctx.restore();
+
+            // Smooth camera movement
+            cameraX += (targetCameraX - cameraX) * 0.05;
+            cameraY += (targetCameraY - cameraY) * 0.05;
+            cameraZoom += (targetCameraZoom - cameraZoom) * 0.05;
+
+            requestAnimationFrame(draw);
+        }
+
+        // Scroll handler
+        function handleScroll() {
+            const scrollY = window.scrollY;
+            
+            // Check if we've scrolled to the first section
+            if (scrollY >= firstSectionTop && !animationStarted) {
+                animationStarted = true;
+            }
+
+            if (!animationStarted) {
+                // Show full map before first section
+                targetCameraX = 365;
+                targetCameraY = 300;
+                targetCameraZoom = 1;
+                pathProgress = 0;
+            } else {
+                // Calculate progress after first section
+                const maxScroll = document.body.scrollHeight - window.innerHeight;
+                const adjustedScroll = Math.max(0, scrollY - firstSectionTop);
+                const adjustedMaxScroll = maxScroll - firstSectionTop;
+                scrollProgress = adjustedScroll / adjustedMaxScroll;
+                pathProgress = Math.min(scrollProgress * 1.3, 1);
+                
+                // Zoom in and follow the path
+                const targetIndex = Math.floor(pathProgress * (waypoints.length - 1));
+                const nextIndex = Math.min(targetIndex + 1, waypoints.length - 1);
+                const blend = (pathProgress * (waypoints.length - 1)) - targetIndex;
+                
+                if (waypoints[targetIndex] && waypoints[nextIndex]) {
+                    targetCameraX = waypoints[targetIndex].x + (waypoints[nextIndex].x - waypoints[targetIndex].x) * blend;
+                    targetCameraY = waypoints[targetIndex].y + (waypoints[nextIndex].y - waypoints[targetIndex].y) * blend;
+                    targetCameraZoom = waypoints[targetIndex].zoom + (waypoints[nextIndex].zoom - waypoints[targetIndex].zoom) * blend;
+                }
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            updateFirstSectionPosition();
+        });
+
+        draw();
+    </script>
+</body>
+</html>

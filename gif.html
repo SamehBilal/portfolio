@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+  box-sizing: border-box;
+}
+
+html { color-scheme: light only; }
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background: color-mix(in lch, canvas, canvasText 10%);
+}
+
+
+body::before {
+  --size: 45px;
+  --line: color-mix(in lch, canvasText, transparent 70%);
+  content: '';
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  background: linear-gradient(
+        90deg,
+        var(--line) 1px,
+        transparent 1px var(--size)
+      )
+      50% 50% / var(--size) var(--size),
+    linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
+      var(--size) var(--size);
+  mask: linear-gradient(-20deg, transparent 50%, white);
+  top: 0;
+  transform-style: flat;
+  pointer-events: none;
+  z-index: -1;
+}
+
+article {
+  width: 260px;
+  aspect-ratio: 3 / 4;
+  display: grid;
+  padding: 0.5rem;
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+video, img {
+  position: absolute;
+  inset: 0;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  filter: brightness(1.25);
+}
+
+.rating {
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  z-index: 2;
+  background: canvas;
+  padding: 0.25rem;
+  margin: 0;
+  border-radius: 6px;
+}
+
+img {
+  transition: opacity 0.5s;
+}
+video {
+  transition: display 0.5s;
+  transition-behavior: allow-discrete;
+  display: none;
+}
+article[data-loaded=true]:is(:hover, :focus-within) {
+  video {
+    display: block;
+  }
+  img {  
+    mix-blend-mode: lighten;
+    opacity: 0;
+  }
+}
+.bear-link {
+  color: canvasText;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  width: 48px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  opacity: 0.8;
+}
+
+:where(.x-link, .bear-link):is(:hover, :focus-visible) {
+  opacity: 1;
+}
+
+.bear-link svg {
+  width: 75%;
+}
+
+.info svg {
+  width: 20px;
+  color: hsl(30 80% 50%);
+}
+
+.info {
+  font-family: monospace;
+  color: color-mix(in lch, canvasText, transparent 45%);
+  font-weight: 300;
+  display: grid;
+  gap: 0.25rem;
+  line-height: 1;
+}
+
+p {
+  margin: 0;
+}
+
+.info h3 {
+  line-height: 1.5;
+  color: canvasText;
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.info div {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+    </style>
+</head>
+<body>
+    <article>
+  <div class="media">
+    <video src="https://assets.codepen.io/605876/jhey-product.mp4" muted loop preload="none" playsinline></video>
+    <img src="https://assets.codepen.io/605876/jhey-product.jpg" alt="Pic of Jhey" />
+    <div class="rating">
+      $ ∞
+    </div>
+  </div>
+  <div class="info">
+    <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
+</svg>
+      <span>4.8 | 1800 Reviews</span>
+    </div>
+    <h3>Clear Jhey Tompkins</h3>
+    <p>700 demos | 584 CSS</p>
+  </div>
+</article>
+    <a
+      class="bear-link"
+      href="https://twitter.com/intent/follow?screen_name=jh3yy"
+      target="_blank"
+      rel="noreferrer noopener"
+    >
+      <svg
+        class="w-9"
+        viewBox="0 0 969 955"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="161.191"
+          cy="320.191"
+          r="133.191"
+          stroke="currentColor"
+          stroke-width="20"
+        ></circle>
+        <circle
+          cx="806.809"
+          cy="320.191"
+          r="133.191"
+          stroke="currentColor"
+          stroke-width="20"
+        ></circle>
+        <circle
+          cx="695.019"
+          cy="587.733"
+          r="31.4016"
+          fill="currentColor"
+        ></circle>
+        <circle
+          cx="272.981"
+          cy="587.733"
+          r="31.4016"
+          fill="currentColor"
+        ></circle>
+        <path
+          d="M564.388 712.083C564.388 743.994 526.035 779.911 483.372 779.911C440.709 779.911 402.356 743.994 402.356 712.083C402.356 680.173 440.709 664.353 483.372 664.353C526.035 664.353 564.388 680.173 564.388 712.083Z"
+          fill="currentColor"
+        ></path>
+        <rect
+          x="310.42"
+          y="448.31"
+          width="343.468"
+          height="51.4986"
+          fill="#FF1E1E"
+        ></rect>
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M745.643 288.24C815.368 344.185 854.539 432.623 854.539 511.741H614.938V454.652C614.938 433.113 597.477 415.652 575.938 415.652H388.37C366.831 415.652 349.37 433.113 349.37 454.652V511.741L110.949 511.741C110.949 432.623 150.12 344.185 219.845 288.24C289.57 232.295 384.138 200.865 482.744 200.865C581.35 200.865 675.918 232.295 745.643 288.24Z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </a>
+
+    <script>
+        const articles = document.querySelectorAll('article');
+
+const entry = video => () => {
+  video.currentTime = 0;
+  video.play();
+};
+const exit = video => () => {
+  video.pause();
+};
+
+for (const article of articles) {
+  const video = article.querySelector('video');
+  video.addEventListener('loadeddata', () => article.dataset.loaded = true);
+  article.addEventListener('pointerenter', entry(video));
+  article.addEventListener('pointerleave', exit(video));
+}
+    </script>
+</body>
+</html>

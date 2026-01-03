@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Life Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-theme {
+            background-color: #1f2937;
+            color: #f3f4f6;
+        }
+
+        .split-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-half {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            background: white;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-theme .top-half {
+            background: #1f2937;
+        }
+
+        .bottom-half {
+            height: 50vh;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 20;
+            background: white;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-theme .bottom-half {
+            background: #1f2937;
+        }
+
+        .fact-section {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .fact-content {
+            max-width: 800px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .fact-section.active .fact-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .fact-section:not(.active) .fact-content {
+            transform: scale(0.95);
+            opacity: 0.4;
+        }
+
+        .icon-container {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+
+        .icon-container img,
+        .icon-container svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .animate-pulse-custom {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .animate-bounce-custom {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .calendar-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 4px solid #e5e7eb;
+        }
+
+        body.dark-theme .calendar-card {
+            background: #374151;
+            border-color: #4b5563;
+        }
+
+        .calendar-header {
+            background: #ef4444;
+            color: white;
+            padding: 1rem 3rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .calendar-body {
+            padding: 2rem;
+            background: white;
+        }
+
+        body.dark-theme .calendar-body {
+            background: #374151;
+        }
+
+        .calendar-day {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        body.dark-theme .calendar-day {
+            color: #f3f4f6;
+        }
+
+        .calendar-month {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+        }
+
+        body.dark-theme .calendar-month {
+            color: #9ca3af;
+        }
+
+        .bottom-half::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .bottom-half::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        body.dark-theme .bottom-half::-webkit-scrollbar-track {
+            background: #374151;
+        }
+
+        .bottom-half::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 4px;
+        }
+
+        .bottom-half::-webkit-scrollbar-thumb:hover {
+            background: #059669;
+        }
+
+        .settings-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dropdown-content {
+            background: white;
+            border: 1px solid #e5e7eb;
+        }
+
+        body.dark-theme .dropdown-content {
+            background: #374151;
+            border-color: #4b5563;
+        }
+
+        body.dark-theme .card {
+            background: #374151;
+        }
+
+        body.dark-theme .input {
+            background: #1f2937;
+            border-color: #4b5563;
+            color: #f3f4f6;
+        }
+
+        body.dark-theme .text-gray-800 {
+            color: #f3f4f6 !important;
+        }
+
+        body.dark-theme .text-gray-600 {
+            color: #d1d5db !important;
+        }
+
+        body.dark-theme .text-gray-500 {
+            color: #9ca3af !important;
+        }
+
+        .rtl {
+            direction: rtl;
+        }
+    </style>
+</head>
+<body>
+    <!-- Settings Buttons -->
+    <div class="settings-btn">
+        <!-- Language Dropdown -->
+        <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-circle btn-sm">🌐</label>
+            <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-2">
+                <li><a onclick="changeLanguage('en')">English</a></li>
+                <li><a onclick="changeLanguage('ar')">العربية</a></li>
+                <li><a onclick="changeLanguage('fr')">Français</a></li>
+                <li><a onclick="changeLanguage('es')">Español</a></li>
+                <li><a onclick="changeLanguage('de')">Deutsch</a></li>
+                <li><a onclick="changeLanguage('tr')">Türkçe</a></li>
+                <li><a onclick="changeLanguage('ur')">اردو</a></li>
+                <li><a onclick="changeLanguage('id')">Bahasa Indonesia</a></li>
+            </ul>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button onclick="toggleTheme()" class="btn btn-circle btn-sm" id="themeToggle">🌙</button>
+    </div>
+
+    <!-- Birthday Input Screen -->
+    <div id="inputScreen" class="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center p-4">
+        <div class="card w-full max-w-md bg-base-100 shadow-2xl">
+            <div class="card-body items-center text-center">
+                <div class="text-6xl mb-4">🌙</div>
+                <h1 class="text-4xl font-bold text-emerald-700 mb-2" data-i18n="title">
+                    Islamic Life Journey
+                </h1>
+                <p class="text-gray-600 mb-6" data-i18n="subtitle">
+                    Discover the blessings and moments Allah has given you
+                </p>
+                <div class="w-full">
+                    <label class="label">
+                        <span class="label-text font-semibold text-lg" data-i18n="birthdayLabel">When were you born?</span>
+                    </label>
+                    <input
+                        type="date"
+                        id="birthdayInput"
+                        class="input input-bordered input-primary w-full text-lg"
+                    />
+                    <button onclick="startJourney()" class="btn btn-primary w-full mt-6 text-lg" data-i18n="startButton">
+                        Begin Your Journey ✨
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Split Screen Stats View -->
+    <div id="statsScreen" style="display: none;">
+        <!-- Top Half - Fixed Icon Area -->
+        <div class="top-half" id="topHalf">
+            <div class="icon-container" id="iconContainer"></div>
+        </div>
+
+        <!-- Bottom Half - Scrolling Facts -->
+        <div class="bottom-half" id="bottomHalf">
+            <div style="height: 50vh;"></div>
+
+            <!-- Facts will be dynamically generated here -->
+            <div id="factsContainer"></div>
+
+            <div style="height: 50vh;"></div>
+        </div>
+    </div>
+
+    <script>
+        let birthday = null;
+        let updateInterval = null;
+        let currentIcon = 'calendar';
+        let currentLanguage = 'en';
+        let isDarkTheme = false;
+
+        // Translations
+        const translations = {
+            en: {
+                title: "Islamic Life Journey",
+                subtitle: "Discover the blessings and moments Allah has given you",
+                birthdayLabel: "When were you born?",
+                startButton: "Begin Your Journey ✨",
+                resetButton: "Start Over",
+                sinceBorn: "Since you were born...",
+                fact1: "A lot has happened in the {days} days since you were born.",
+                fact2: "Your heart has beaten about {heartbeats} times and pumped {blood} L of blood.",
+                fact2Quote: '"Indeed, in the creation of the heavens and the earth and the alternation of the night and day are signs for those of understanding." — Quran 3:190',
+                fact3: "You've taken about {breaths} breaths.",
+                fact3Sub: "Each breath is a gift from Allah.",
+                fact3Quote: '"So which of the favors of your Lord would you deny?" — Quran 55:13',
+                fact4: "You've spent {sleep} days of your life asleep.",
+                fact4Sub: "Rest is a blessing and a mercy from Allah.",
+                fact4Quote: '"And We made your sleep [a means for] rest." — Quran 78:9',
+                fact5: "{prayers} opportunities to pray.",
+                fact5Sub: "5 daily prayers, {prayers} chances to connect with Allah.",
+                fact5Quote: '"And establish prayer. Indeed, prayer prohibits immorality and wrongdoing." — Quran 29:45',
+                fact6: "{sujood} potential prostrations (Sujood).",
+                fact6Sub: "Every Sujood is a moment of closeness to Allah.",
+                fact6Quote: '"The closest that a servant is to his Lord is when he is in prostration." — Hadith (Muslim)',
+                fact7: 'You could have said "Alhamdulillah" {count} times.',
+                fact7Sub: "Gratitude fills the heart with peace.",
+                fact7Quote: '"If you are grateful, I will surely increase you [in favor]." — Quran 14:7',
+                fact8: '{count} chances to say "SubhanAllah".',
+                fact8Sub: "Glory be to Allah in all moments.",
+                fact8Quote: '"SubhanAllah and praise be to Him, the number of His creation and His pleasure and the weight of His Throne and the ink of His words." — Hadith',
+                fact9: "{ramadans} blessed Ramadans witnessed.",
+                fact9Sub: "About {fasting} days of fasting completed.",
+                fact9Quote: '"O you who have believed, decreed upon you is fasting as it was decreed upon those before you that you may become righteous." — Quran 2:183',
+                fact10: "The world has changed too.",
+                fact10Sub: "About {population} more people have been born since you were born.",
+                fact10Quote: '"O mankind, indeed We have created you from male and female and made you peoples and tribes that you may know one another." — Quran 49:13',
+                fact11: "Every moment is an opportunity for good deeds.",
+                fact11Sub: "You've had {days} days to spread kindness, help others, and earn rewards.",
+                fact11Quote: '"Whoever does an atom\'s weight of good will see it." — Quran 99:7',
+                fact12: "Who knows what else will happen in your lifetime?",
+                fact12Sub: "Make every moment count. Make the most of the time Allah has given you.",
+                fact12Quote: '"By time, indeed mankind is in loss, except for those who have believed and done righteous deeds and advised each other to truth and advised each other to patience." — Quran 103:1-3'
+            },
+            ar: {
+                title: "رحلة الحياة الإسلامية",
+                subtitle: "اكتشف البركات واللحظات التي منحك الله إياها",
+                birthdayLabel: "متى ولدت؟",
+                startButton: "ابدأ رحلتك ✨",
+                resetButton: "ابدأ من جديد",
+                sinceBorn: "منذ أن ولدت...",
+                fact1: "حدث الكثير في الأيام الـ {days} منذ ولادتك.",
+                fact2: "نبض قلبك حوالي {heartbeats} مرة وضخ {blood} لتر من الدم.",
+                fact2Quote: '"إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِّأُولِي الْأَلْبَابِ" — القرآن 3:190',
+                fact3: "أخذت حوالي {breaths} نفس.",
+                fact3Sub: "كل نفس هو هدية من الله.",
+                fact3Quote: '"فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ" — القرآن 55:13',
+                fact4: "قضيت {sleep} يوماً من حياتك نائماً.",
+                fact4Sub: "الراحة نعمة ورحمة من الله.",
+                fact4Quote: '"وَجَعَلْنَا نَوْمَكُمْ سُبَاتًا" — القرآن 78:9',
+                fact5: "{prayers} فرصة للصلاة.",
+                fact5Sub: "5 صلوات يومية، {prayers} فرصة للتواصل مع الله.",
+                fact5Quote: '"وَأَقِمِ الصَّلَاةَ ۖ إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ" — القرآن 29:45',
+                fact6: "{sujood} سجدة محتملة.",
+                fact6Sub: "كل سجدة هي لحظة قرب من الله.",
+                fact6Quote: '"أقرب ما يكون العبد من ربه وهو ساجد" — حديث (مسلم)',
+                fact7: 'كان بإمكانك أن تقول "الحمد لله" {count} مرة.',
+                fact7Sub: "الشكر يملأ القلب بالسلام.",
+                fact7Quote: '"لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ" — القرآن 14:7',
+                fact8: '{count} فرصة لقول "سبحان الله".',
+                fact8Sub: "تسبيح الله في كل اللحظات.",
+                fact8Quote: '"سبحان الله وبحمده عدد خلقه ورضا نفسه وزنة عرشه ومداد كلماته" — حديث',
+                fact9: "{ramadans} رمضان مبارك شهدته.",
+                fact9Sub: "حوالي {fasting} يوم صيام أكملته.",
+                fact9Quote: '"يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ" — القرآن 2:183',
+                fact10: "العالم تغير أيضاً.",
+                fact10Sub: "حوالي {population} شخص ولدوا منذ ولادتك.",
+                fact10Quote: '"يَا أَيُّهَا النَّاسُ إِنَّا خَلَقْنَاكُم مِّن ذَكَرٍ وَأُنثَىٰ وَجَعَلْنَاكُمْ شُعُوبًا وَقَبَائِلَ لِتَعَارَفُوا" — القرآن 49:13',
+                fact11: "كل لحظة هي فرصة للأعمال الصالحة.",
+                fact11Sub: "كان لديك {days} يوماً لنشر اللطف ومساعدة الآخرين وكسب الأجر.",
+                fact11Quote: '"فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ" — القرآن 99:7',
+                fact12: "من يعلم ما الذي سيحدث في حياتك؟",
+                fact12Sub: "اجعل كل لحظة تُحتسب. استفد من الوقت الذي أعطاك الله إياه.",
+                fact12Quote: '"وَالْعَصْرِ * إِنَّ الْإِنسَانَ لَفِي خُسْرٍ * إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ" — القرآن 103:1-3'
+            },
+            fr: {
+                title: "Voyage de Vie Islamique",
+                subtitle: "Découvrez les bénédictions et les moments qu'Allah vous a donnés",
+                birthdayLabel: "Quand êtes-vous né(e)?",
+                startButton: "Commencez Votre Voyage ✨",
+                resetButton: "Recommencer",
+                sinceBorn: "Depuis votre naissance...",
+                fact1: "Beaucoup de choses se sont passées dans les {days} jours depuis votre naissance.",
+                fact2: "Votre cœur a battu environ {heartbeats} fois et pompé {blood} L de sang.",
+                fact2Quote: '"En vérité, dans la création des cieux et de la terre, et dans l\'alternance de la nuit et du jour, il y a certes des signes pour les doués d\'intelligence." — Coran 3:190',
+                fact3: "Vous avez pris environ {breaths} respirations.",
+                fact3Sub: "Chaque respiration est un don d'Allah.",
+                fact3Quote: '"Lequel donc des bienfaits de votre Seigneur nierez-vous?" — Coran 55:13',
+                fact4: "Vous avez passé {sleep} jours de votre vie à dormir.",
+                fact4Sub: "Le repos est une bénédiction et une miséricorde d'Allah.",
+                fact4Quote: '"Et fait de votre sommeil un repos." — Coran 78:9',
+                fact5: "{prayers} opportunités de prier.",
+                fact5Sub: "5 prières quotidiennes, {prayers} chances de se connecter avec Allah.",
+                fact5Quote: '"Et accomplis la Salat. En vérité la Salat préserve de la turpitude et du blâmable." — Coran 29:45',
+                fact6: "{sujood} prosternations potentielles (Sujood).",
+                fact6Sub: "Chaque Sujood est un moment de proximité avec Allah.",
+                fact6Quote: '"Le serviteur est le plus proche de son Seigneur lorsqu\'il est en prosternation." — Hadith (Muslim)',
+                fact7: 'Vous auriez pu dire "Alhamdulillah" {count} fois.',
+                fact7Sub: "La gratitude remplit le cœur de paix.",
+                fact7Quote: '"Si vous êtes reconnaissants, très certainement J\'augmenterai [Mes bienfaits] pour vous." — Coran 14:7',
+                fact8: '{count} chances de dire "SubhanAllah".',
+                fact8Sub: "Gloire à Allah en tout moment.",
+                fact8Quote: '"SubhanAllah et louange à Lui, du nombre de Sa création et de Sa satisfaction et du poids de Son Trône et de l\'encre de Ses paroles." — Hadith',
+                fact9: "{ramadans} Ramadans bénis témoins.",
+                fact9Sub: "Environ {fasting} jours de jeûne complétés.",
+                fact9Quote: '"Ô les croyants! On vous a prescrit le jeûne comme on l\'a prescrit à ceux d\'avant vous, ainsi atteindrez-vous la piété." — Coran 2:183',
+                fact10: "Le monde a aussi changé.",
+                fact10Sub: "Environ {population} personnes de plus sont nées depuis votre naissance.",
+                fact10Quote: '"Ô hommes! Nous vous avons créés d\'un mâle et d\'une femelle, et Nous avons fait de vous des nations et des tribus, pour que vous vous entre-connaissiez." — Coran 49:13',
+                fact11: "Chaque moment est une opportunité de bonnes actions.",
+                fact11Sub: "Vous avez eu {days} jours pour répandre la gentillesse, aider les autres et gagner des récompenses.",
+                fact11Quote: '"Quiconque fait un bien fût-ce du poids d\'un atome, le verra." — Coran 99:7',
+                fact12: "Qui sait ce qui se passera d'autre dans votre vie?",
+                fact12Sub: "Faites compter chaque moment. Profitez au maximum du temps qu'Allah vous a donné.",
+                fact12Quote: '"Par le Temps! L\'homme est certes, en perdition, sauf ceux qui croient et accomplissent les bonnes œuvres, s\'enjoignent mutuellement la vérité et s\'enjoignent mutuellement l\'endurance." — Coran 103:1-3'
+            },
+            es: {
+                title: "Viaje de Vida Islámico",
+                subtitle: "Descubre las bendiciones y momentos que Allah te ha dado",
+                birthdayLabel: "¿Cuándo naciste?",
+                startButton: "Comienza Tu Viaje ✨",
+                resetButton: "Empezar de Nuevo",
+                sinceBorn: "Desde que naciste...",
+                fact1: "Han pasado muchas cosas en los {days} días desde que naciste.",
+                fact2: "Tu corazón ha latido aproximadamente {heartbeats} veces y bombeó {blood} L de sangre.",
+                fact2Quote: '"Ciertamente en la creación de los cielos y la tierra, y en la alternancia de la noche y el día, hay signos para los dotados de intelecto." — Corán 3:190',
+                fact3: "Has tomado aproximadamente {breaths} respiraciones.",
+                fact3Sub: "Cada respiración es un regalo de Allah.",
+                fact3Quote: '"¿Cuál, pues, de los favores de vuestro Señor negaréis?" — Corán 55:13',
+                fact4: "Has pasado {sleep} días de tu vida durmiendo.",
+                fact4Sub: "El descanso es una bendición y misericordia de Allah.",
+                fact4Quote: '"E hicimos de vuestro sueño descanso." — Corán 78:9',
+                fact5: "{prayers} oportunidades para orar.",
+                fact5Sub: "5 oraciones diarias, {prayers} oportunidades de conectar con Allah.",
+                fact5Quote: '"Y establece la oración. En verdad la oración preserva de la inmoralidad y de lo reprobable." — Corán 29:45',
+                fact6: "{sujood} prosternaciones potenciales (Sujood).",
+                fact6Sub: "Cada Sujood es un momento de cercanía con Allah.",
+                fact6Quote: '"El siervo está más cerca de su Señor cuando está en prosternación." — Hadiz (Muslim)',
+                fact7: 'Podrías haber dicho "Alhamdulillah" {count} veces.',
+                fact7Sub: "La gratitud llena el corazón de paz.",
+                fact7Quote: '"Si agradecéis, ciertamente os daré más." — Corán 14:7',
+                fact8: '{count} oportunidades de decir "SubhanAllah".',
+                fact8Sub: "Gloria a Allah en todos los momentos.",
+                fact8Quote: '"SubhanAllah y alabanza a Él, del número de Su creación y Su satisfacción y el peso de Su Trono y la tinta de Sus palabras." — Hadiz',
+                fact9: "{ramadans} Ramadanes benditos presenciados.",
+                fact9Sub: "Aproximadamente {fasting} días de ayuno completados.",
+                fact9Quote: '"¡Oh, creyentes! Se os ha prescrito el ayuno como se prescribió a los que os precedieron, para que alcancéis la piedad." — Corán 2:183',
+                fact10: "El mundo también ha cambiado.",
+                fact10Sub: "Aproximadamente {population} personas más han nacido desde tu nacimiento.",
+                fact10Quote: '"¡Oh, humanidad! Os hemos creado de un varón y una hembra, y os hemos hecho naciones y tribus para que os conozcáis unos a otros." — Corán 49:13',
+                fact11: "Cada momento es una oportunidad para buenas acciones.",
+                fact11Sub: "Has tenido {days} días para difundir bondad, ayudar a otros y ganar recompensas.",
+                fact11Quote: '"Quien haga el bien, aunque sea del peso de un átomo, lo verá." — Corán 99:7',
+                fact12: "¿Quién sabe qué más sucederá en tu vida?",
+                fact12Sub: "Haz que cada momento cuente. Aprovecha al máximo el tiempo que Allah te ha dado.",
+                fact12Quote: '"¡Por el tiempo! Ciertamente el hombre está en pérdida, excepto aquellos que creen y hacen buenas obras, y se aconsejan mutuamente la verdad y se aconsejan mutuamente la paciencia." — Corán 103:1-3'
+            },
+            de: {
+                title: "Islamische Lebensreise",
+                subtitle: "Entdecke die Segnungen und Momente, die Allah dir gegeben hat",
+                birthdayLabel: "Wann bist du geboren?",
+                startButton: "Beginne Deine Reise ✨",
+                resetButton: "Neu Starten",
+                sinceBorn: "Seit deiner Geburt...",
+                fact1: "Viel ist passiert in den {days} Tagen seit deiner Geburt.",
+                fact2: "Dein Herz hat etwa {heartbeats} Mal geschlagen und {blood} L Blut gepumpt.",
+                fact2Quote: '"Wahrlich, in der Schöpfung der Himmel und der Erde und im Wechsel von Nacht und Tag sind Zeichen für die Verständigen." — Koran 3:190',
+                fact3: "Du hast etwa {breaths} Atemzüge genommen.",
+                fact3Sub: "Jeder Atemzug ist ein Geschenk Allahs.",
+                fact3Quote: '"Welche der Wohltaten eures Herrn wollt ihr beide denn leugnen?" — Koran 55:13',
+                fact4: "Du hast {sleep} Tage deines Lebens schlafend verbracht.",
+                fact4Sub: "Ruhe ist ein Segen und eine Barmherzigkeit Allahs.",
+                fact4Quote: '"Und Wir machten euren Schlaf zur Ruhe." — Koran 78:9',
+                fact5: "{prayers} Gelegenheiten zu beten.",
+                fact5Sub: "5 tägliche Gebete, {prayers} Chancen, sich mit Allah zu verbinden.",
+                fact5Quote: '"Und verrichtet das Gebet. Wahrlich, das Gebet hält ab von schändlichen und verwerflichen Dingen." — Koran 29:45',
+                fact6: "{sujood} potenzielle Niederwerfungen (Sujood).",
+                fact6Sub: "Jede Sujood ist ein Moment der Nähe zu Allah.",
+                fact6Quote: '"Der Diener ist seinem Herrn am nächsten, wenn er sich in Niederwerfung befindet." — Hadith (Muslim)',
+                fact7: 'Du hättest "Alhamdulillah" {count} Mal sagen können.',
+                fact7Sub: "Dankbarkeit erfüllt das Herz mit Frieden.",
+                fact7Quote: '"Wenn ihr dankbar seid, werde Ich euch gewiss noch mehr geben." — Koran 14:7',
+                fact8: '{count} Gelegenheiten "SubhanAllah" zu sagen.',
+                fact8Sub: "Ehre sei Allah in allen Momenten.",
+                fact8Quote: '"SubhanAllah und Lob sei Ihm, in der Anzahl Seiner Schöpfung und Seiner Zufriedenheit und dem Gewicht Seines Thrones und der Tinte Seiner Worte." — Hadith',
+                fact9: "{ramadans} gesegnete Ramadane miterlebt.",
+                fact9Sub: "Etwa {fasting} Fastentage vollendet.",
+                fact9Quote: '"O die ihr glaubt, vorgeschrieben ist euch das Fasten, so wie es denen vor euch vorgeschrieben war, auf dass ihr gottesfürchtig werdet." — Koran 2:183',
+                fact10: "Die Welt hat sich auch verändert.",
+                fact10Sub: "Etwa {population} mehr Menschen wurden seit deiner Geburt geboren.",
+                fact10Quote: '"O ihr Menschen, Wir haben euch von einem männlichen und einem weiblichen Wesen erschaffen, und Wir haben euch zu Völkern und Stämmen gemacht, damit ihr einander kennenlernt." — Koran 49:13',
+                fact11: "Jeder Moment ist eine Gelegenheit für gute Taten.",
+                fact11Sub: "Du hattest {days} Tage, um Güte zu verbreiten, anderen zu helfen und Belohnungen zu verdienen.",
+                fact11Quote: '"Wer auch nur Gutes im Gewicht eines Stäubchens tut, wird es sehen." — Koran 99:7',
+                fact12: "Wer weiß, was sonst noch in deinem Leben passieren wird?",
+                fact12Sub: "Lass jeden Moment zählen. Nutze die Zeit, die Allah dir gegeben hat.",
+                fact12Quote: '"Bei der Zeit! Wahrlich, der Mensch ist in Verlust, außer denjenigen, die glauben und gute Werke tun und einander die Wahrheit ans Herz legen und einander zur Geduld anhalten." — Koran 103:1-3'
+            },
+            tr: {
+                title: "İslami Yaşam Yolculuğu",
+                subtitle: "Allah'ın size verdiği nimetleri ve anları keşfedin",
+                birthdayLabel: "Ne zaman doğdunuz?",
+                startButton: "Yolculuğunuza Başlayın ✨",
+                resetButton: "Yeniden Başla",
+                sinceBorn: "Doğduğunuzdan beri...",
+                fact1: "Doğduğunuzdan beri geçen {days} günde çok şey oldu.",
+                fact2: "Kalbiniz yaklaşık {heartbeats} kez attı ve {blood} L kan pompaladı.",
+                fact2Quote: '"Şüphesiz göklerin ve yerin yaratılışında, gece ile gündüzün birbiri ardınca gelişinde akıl sahipleri için ibretler vardır." — Kuran 3:190',
+                fact3: "Yaklaşık {breaths} nefes aldınız.",
+                fact3Sub: "Her nefes Allah'tan bir hediyedir.",
+                fact3Quote: '"Rabbinizin hangi nimetlerini yalanlıyorsunuz?" — Kuran 55:13',
+                fact4: "Hayatınızın {sleep} gününü uyuyarak geçirdiniz.",
+                fact4Sub: "Dinlenme Allah'tan bir nimet ve rahmettir.",
+                fact4Quote: '"Uykuyu sizin için bir rahatlama kıldık." — Kuran 78:9',
+                fact5: "{prayers} namaz kılma fırsatı.",
+                fact5Sub: "Günde 5 namaz, Allah'a bağlanmak için {prayers} fırsat.",
+                fact5Quote: '"Namazı dosdoğru kılın. Şüphesiz namaz, insanı çirkin ve kötü işlerden alıkoyar." — Kuran 29:45',
+                fact6: "{sujood} potansiyel secde.",
+                fact6Sub: "Her secde Allah'a yakınlık anıdır.",
+                fact6Quote: '"Kul Rabbine en yakın olduğu an secdededir." — Hadis (Müslim)',
+                fact7: '"Elhamdülillah" {count} kez söyleyebilirdiniz.',
+                fact7Sub: "Şükür kalbi huzurla doldurur.",
+                fact7Quote: '"Eğer şükrederseniz, elbette size nimetimi artırırım." — Kuran 14:7',
+                fact8: '{count} "Sübhanallah" deme fırsatı.',
+                fact8Sub: "Her an Allah'ı tesbih etmek.",
+                fact8Quote: '"Sübhanallah ve hamd ile, yarattıklarının sayısınca, rızasının ağırlığınca, Arşının ağırlığınca ve kelimelerinin mürekkebi kadar." — Hadis',
+                fact9: "{ramadans} mübarek Ramazan şahit oldunuz.",
+                fact9Sub: "Yaklaşık {fasting} gün oruç tamamlandı.",
+                fact9Quote: '"Ey iman edenler! Sizden öncekilere farz kılındığı gibi, size de oruç farz kılındı. Umulur ki korunursunuz." — Kuran 2:183',
+                fact10: "Dünya da değişti.",
+                fact10Sub: "Doğduğunuzdan beri yaklaşık {population} kişi daha doğdu.",
+                fact10Quote: '"Ey insanlar! Biz sizi bir erkek ve bir dişiden yarattık ve birbirinizle tanışmanız için sizi milletlere ve kabilelere ayırdık." — Kuran 49:13',
+                fact11: "Her an iyi işler için bir fırsattır.",
+                fact11Sub: "İyilik yaymak, başkalarına yardım etmek ve sevap kazanmak için {days} gününüz oldu.",
+                fact11Quote: '"Kim zerre ağırlığınca hayır yaparsa, onu görecektir." — Kuran 99:7',
+                fact12: "Hayatınızda başka ne olacağını kim bilir?",
+                fact12Sub: "Her anı değerlendirin. Allah'ın size verdiği zamanın en iyi şekilde kullanın.",
+                fact12Quote: '"Zamana andolsun ki, insan gerçekten ziyan içindedir. Ancak iman edip salih amel işleyenler, birbirlerine hakkı tavsiye edenler ve sabrı tavsiye edenler başka." — Kuran 103:1-3'
+            },
+            ur: {
+                title: "اسلامی زندگی کا سفر",
+                subtitle: "ان نعمتوں اور لمحات کو دریافت کریں جو اللہ نے آپ کو دی ہیں",
+                birthdayLabel: "آپ کب پیدا ہوئے؟",
+                startButton: "اپنا سفر شروع کریں ✨",
+                resetButton: "دوبارہ شروع کریں",
+                sinceBorn: "آپ کی پیدائش سے...",
+                fact1: "آپ کی پیدائش کے بعد سے {days} دنوں میں بہت کچھ ہوا ہے۔",
+                fact2: "آپ کے دل نے تقریباً {heartbeats} بار دھڑکا اور {blood} لیٹر خون پمپ کیا۔",
+                fact2Quote: '"بیشک آسمانوں اور زمین کی تخلیق میں اور رات اور دن کے آنے جانے میں عقل والوں کے لیے نشانیاں ہیں۔" — قرآن 3:190',
+                fact3: "آپ نے تقریباً {breaths} سانسیں لیں۔",
+                fact3Sub: "ہر سانس اللہ کی طرف سے ایک تحفہ ہے۔",
+                fact3Quote: '"تو تم اپنے رب کی کن کن نعمتوں کو جھٹلاؤ گے؟" — قرآن 55:13',
+                fact4: "آپ نے اپنی زندگی کے {sleep} دن سوتے ہوئے گزارے۔",
+                fact4Sub: "آرام اللہ کی طرف سے ایک نعمت اور رحمت ہے۔",
+                fact4Quote: '"اور ہم نے تمہاری نیند کو آرام بنایا۔" — قرآن 78:9',
+                fact5: "{prayers} نماز پڑھنے کے مواقع۔",
+                fact5Sub: "روزانہ 5 نمازیں، اللہ سے جڑنے کے {prayers} مواقع۔",
+                fact5Quote: '"اور نماز قائم کرو۔ بیشک نماز بے حیائی اور برائی سے روکتی ہے۔" — قرآن 29:45',
+                fact6: "{sujood} ممکنہ سجدے۔",
+                fact6Sub: "ہر سجدہ اللہ کے قریب ہونے کا لمحہ ہے۔",
+                fact6Quote: '"بندہ اپنے رب کے سب سے قریب اس وقت ہوتا ہے جب وہ سجدے میں ہو۔" — حدیث (مسلم)',
+                fact7: 'آپ {count} بار "الحمد للہ" کہہ سکتے تھے۔',
+                fact7Sub: "شکر دل کو سکون سے بھر دیتا ہے۔",
+                fact7Quote: '"اگر تم شکر کرو گے تو میں تمہیں ضرور زیادہ دوں گا۔" — قرآن 14:7',
+                fact8: '{count} بار "سبحان اللہ" کہنے کے مواقع۔',
+                fact8Sub: "ہر لمحے میں اللہ کی تسبیح۔",
+                fact8Quote: '"سبحان اللہ وبحمدہ عدد خلقہ ورضا نفسہ وزنۃ عرشہ ومداد کلماتہ۔" — حدیث',
+                fact9: "{ramadans} مبارک رمضان دیکھے۔",
+                fact9Sub: "تقریباً {fasting} دن کے روزے مکمل ہوئے۔",
+                fact9Quote: '"اے ایمان والو! تم پر روزے فرض کیے گئے ہیں جیسے تم سے پہلے لوگوں پر فرض کیے گئے تھے تاکہ تم پرہیزگار بن جاؤ۔" — قرآن 2:183',
+                fact10: "دنیا بھی بدل گئی ہے۔",
+                fact10Sub: "آپ کی پیدائش کے بعد سے تقریباً {population} مزید لوگ پیدا ہوئے ہیں۔",
+                fact10Quote: '"اے لوگو! ہم نے تمہیں ایک مرد اور ایک عورت سے پیدا کیا اور تمہیں قوموں اور قبیلوں میں تقسیم کیا تاکہ تم ایک دوسرے کو پہچانو۔" — قرآن 49:13',
+                fact11: "ہر لمحہ نیک اعمال کا موقع ہے۔",
+                fact11Sub: "آپ کو {days} دن ملے مہربانی پھیلانے، دوسروں کی مدد کرنے اور اجر کمانے کے لیے۔",
+                fact11Quote: '"جو ذرہ برابر نیکی کرے گا وہ اسے دیکھ لے گا۔" — قرآن 99:7',
+                fact12: "کون جانتا ہے کہ آپ کی زندگی میں اور کیا ہوگا؟",
+                fact12Sub: "ہر لمحے کو قیمتی بنائیں۔ اللہ نے جو وقت دیا ہے اس کا بہترین استعمال کریں۔",
+                fact12Quote: '"قسم ہے زمانے کی! بیشک انسان خسارے میں ہے۔ سوائے ان لوگوں کے جو ایمان لائے اور نیک عمل کیے اور ایک دوسرے کو حق کی نصیحت کی اور صبر کی تلقین کی۔" — قرآن 103:1-3'
+            },
+            id: {
+                title: "Perjalanan Hidup Islami",
+                subtitle: "Temukan berkah dan momen yang Allah berikan kepada Anda",
+                birthdayLabel: "Kapan Anda lahir?",
+                startButton: "Mulai Perjalanan Anda ✨",
+                resetButton: "Mulai Ulang",
+                sinceBorn: "Sejak Anda lahir...",
+                fact1: "Banyak hal telah terjadi dalam {days} hari sejak Anda lahir.",
+                fact2: "Jantung Anda telah berdetak sekitar {heartbeats} kali dan memompa {blood} L darah.",
+                fact2Quote: '"Sesungguhnya dalam penciptaan langit dan bumi, dan silih bergantinya malam dan siang terdapat tanda-tanda bagi orang-orang yang berakal." — Al-Quran 3:190',
+                fact3: "Anda telah mengambil sekitar {breaths} napas.",
+                fact3Sub: "Setiap napas adalah anugerah dari Allah.",
+                fact3Quote: '"Maka nikmat Tuhan kamu yang manakah yang kamu dustakan?" — Al-Quran 55:13',
+                fact4: "Anda telah menghabiskan {sleep} hari hidup Anda untuk tidur.",
+                fact4Sub: "Istirahat adalah berkah dan rahmat dari Allah.",
+                fact4Quote: '"Dan Kami jadikan tidurmu untuk istirahat." — Al-Quran 78:9',
+                fact5: "{prayers} kesempatan untuk shalat.",
+                fact5Sub: "5 shalat harian, {prayers} kesempatan untuk terhubung dengan Allah.",
+                fact5Quote: '"Dan dirikanlah shalat. Sesungguhnya shalat itu mencegah dari perbuatan keji dan mungkar." — Al-Quran 29:45',
+                fact6: "{sujood} potensi sujud.",
+                fact6Sub: "Setiap Sujud adalah momen kedekatan dengan Allah.",
+                fact6Quote: '"Hamba paling dekat dengan Tuhannya ketika ia bersujud." — Hadits (Muslim)',
+                fact7: 'Anda bisa mengucapkan "Alhamdulillah" {count} kali.',
+                fact7Sub: "Syukur mengisi hati dengan kedamaian.",
+                fact7Quote: '"Jika kamu bersyukur, pasti Kami akan menambah (nikmat) kepadamu." — Al-Quran 14:7',
+                fact8: '{count} kesempatan untuk mengucapkan "Subhanallah".',
+                fact8Sub: "Maha Suci Allah di setiap saat.",
+                fact8Quote: '"Subhanallah dan segala puji bagi-Nya, sebanyak makhluk-Nya dan keridhaan-Nya dan seberat Arsy-Nya dan sebanyak tinta kalimat-Nya." — Hadits',
+                fact9: "{ramadans} Ramadhan yang diberkahi telah disaksikan.",
+                fact9Sub: "Sekitar {fasting} hari puasa diselesaikan.",
+                fact9Quote: '"Hai orang-orang yang beriman, diwajibkan atas kamu berpuasa sebagaimana diwajibkan atas orang-orang sebelum kamu agar kamu bertakwa." — Al-Quran 2:183',
+                fact10: "Dunia juga telah berubah.",
+                fact10Sub: "Sekitar {population} orang lebih banyak telah lahir sejak Anda lahir.",
+                fact10Quote: '"Hai manusia, sesungguhnya Kami menciptakan kamu dari seorang laki-laki dan seorang perempuan dan menjadikan kamu berbangsa-bangsa dan bersuku-suku supaya kamu saling kenal-mengenal." — Al-Quran 49:13',
+                fact11: "Setiap momen adalah kesempatan untuk kebaikan.",
+                fact11Sub: "Anda memiliki {days} hari untuk menyebarkan kebaikan, membantu orang lain, dan mendapatkan pahala.",
+                fact11Quote: '"Barangsiapa yang mengerjakan kebaikan seberat dzarrahpun, niscaya dia akan melihat (balasan)nya." — Al-Quran 99:7',
+                fact12: "Siapa yang tahu apa lagi yang akan terjadi dalam hidup Anda?",
+                fact12Sub: "Jadikan setiap momen berarti. Manfaatkan waktu yang Allah berikan kepada Anda.",
+                fact12Quote: '"Demi masa. Sesungguhnya manusia itu benar-benar dalam kerugian, kecuali orang-orang yang beriman dan mengerjakan amal saleh dan nasehat menasehati supaya mentaati kebenaran dan nasehat menasehati supaya menetapi kesabaran." — Al-Quran 103:1-3'
+            }
+        };
+
+        const icons = {
+            calendar: `<div class="calendar-card">
+                <div class="calendar-header" id="birthWeekday">Tuesday</div>
+                <div class="calendar-body">
+                    <div class="calendar-day" id="birthDay">1</div>
+                    <div class="calendar-month" id="birthMonthYear">Feb 1994</div>
+                </div>
+            </div>`,
+            heart: `<div class="animate-pulse-custom text-9xl">❤️</div>`,
+            breath: `<div class="animate-pulse-custom text-9xl">🌅</div>`,
+            sleep: `<div class="text-9xl">😴</div>`,
+            moon: `<div class="animate-bounce-custom text-9xl">🌙</div>`,
+            hands: `<div class="text-9xl">🤲</div>`,
+            message: `<div class="text-9xl">💬</div>`,
+            sparkle: `<div class="text-9xl">✨</div>`,
+            book: `<div class="text-9xl">📖</div>`,
+            globe: `<div class="animate-pulse-custom text-9xl">🌍</div>`,
+            star: `<div class="text-9xl">⭐</div>`,
+            car: `<div class="text-9xl">🚗</div>`
+        };
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update RTL for Arabic and Urdu
+            if (lang === 'ar' || lang === 'ur') {
+                document.body.classList.add('rtl');
+            } else {
+                document.body.classList.remove('rtl');
+            }
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            // If stats screen is visible, regenerate facts
+            if (document.getElementById('statsScreen').style.display !== 'none') {
+                generateFacts();
+            }
+        }
+
+        function toggleTheme() {
+            isDarkTheme = !isDarkTheme;
+            document.body.classList.toggle('dark-theme');
+            document.getElementById('themeToggle').textContent = isDarkTheme ? '☀️' : '🌙';
+        }
+
+        function generateFacts() {
+            const t = translations[currentLanguage];
+            const container = document.getElementById('factsContainer');
+            
+            const facts = [
+                { icon: 'calendar', html: `
+                    <div class="fact-section active" data-icon="calendar">
+                        <div class="fact-content">
+                            <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+                                ${t.fact1.replace('{days}', '<span class="text-emerald-600 font-bold text-4xl" id="totalDays">0</span>')}
+                            </h2>
+                            <p class="text-lg text-gray-500 mt-4">${t.sinceBorn}</p>
+                        </div>
+                    </div>
+                `},
+                { icon: 'heart', html: `
+                    <div class="fact-section" data-icon="heart">
+                        <div class="fact-content">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                                ${t.fact2.replace('{heartbeats}', '<span class="text-red-500 text-4xl" id="heartbeats">0</span>').replace('{blood}', '<span class="text-red-500 text-4xl" id="bloodPumped">0</span>')}
+                            </h2>
+                            <p class="text-lg text-gray-600 italic mt-6 bg-emerald-50 p-4 rounded-lg">
+                                ${t.fact2Quote}
+                            </p>
+                        </div>
+                    </div>
+                `},
+                { icon: 'breath', html: `
+                    <div class="fact-section" data-icon="breath">
+                        <div class="fact-content">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                                ${t.fact3.replace('{breaths}', '<span class="text-orange-500 text-4xl" id="breaths">0</span>')}
+                            </h2>
+                            <p class="text-xl text-gray-600 mt-4">
+                                ${t.fact11Sub.replace('{days}', '<span class="text-green-600 font-bold text-3xl" id="totalDays2">0</span>')}
+                            </p>
+                            <p class="text-lg text-gray-600 italic mt-6 bg-green-50 p-4 rounded-lg">
+                                ${t.fact11Quote}
+                            </p>
+                        </div>
+                    </div>
+                `},
+                ,
+{ icon: 'star', html: `
+    <div class="fact-section" data-icon="star">
+        <div class="fact-content">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                ${t.fact11}
+            </h2>
+            <p class="text-xl text-gray-600 mt-4">${t.fact3Sub}</p>
+                            <p class="text-lg text-gray-600 italic mt-6 bg-orange-50 p-4 rounded-lg">
+                                ${t.fact3Quote}
+                            </p>
+                        </div>
+                    </div>
+                `},
+                { icon: 'sleep', html: `
+                    <div class="fact-section" data-icon="sleep">
+                        <div class="fact-content">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                                ${t.fact4.replace('{sleep}', '<span class="text-blue-600 text-4xl" id="sleepDays">0</span>')}
+                            </h2>
+                            <p class="text-xl text-gray-600 mt-4">${t.fact4Sub}</p>
+                            <p class="text-lg text-gray-600 italic mt-6 bg-blue-50 p-4 rounded-lg">
+                                ${t.fact4Quote}
+                            </p>
+                        </div>
+                    </div>
+                `},
+                { icon: 'moon', html: `
+                    <div class="fact-section" data-icon="moon">
+                        <div class="fact-content">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                                ${t.fact5.replace('{prayers}', '<span class="text-indigo-600 text-4xl" id="prayers">0</span>')}
+                            </h2>
+                            <p class="text-xl text-gray-600 mt-4">
+                                ${t.fact5Sub.replace('{prayers}', '<span id="prayers2">0</span>')}
+                            </p>
+                            <p class="text-lg text-gray-600 italic mt-6 bg-indigo-50 p-4 rounded-lg">
+                                ${t.fact5Quote}
+                            </p>
+                        </div>
+                    </div>
+                `},
+                { icon: 'hands', html: `
+                    <div class="fact-section" data-icon="hands">
+                        <div class="fact-content">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                                ${t.fact6.replace('{sujood}', '<span class="text-emerald-600 text-4xl" id="sujood">0</span>')}
+                            </h2>
+                            <p class="text-xl text-gray-600 mt-4">${t.fact6Sub}</p>
+                            <p class="text-lg text-gray-600 italic mt-6 bg-emerald-50 p-4 rounded-lg">
+                                ${t.fact6Quote}
+                            </p>
+                        </div>
+                    </div>
+                `},
+                { icon: 'message', html: `
+                    <div class="fact-section" data-icon="message">
+                        <div class="fact-content">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                                ${t.fact7.replace('{count}', '<span class="text-amber-600 text-4xl" id="alhamdulillah">0</span>')}
+                            </h2>
+                            <p class="text-xl text-gray-600 mt-4">${t.fact7Sub}</p>
+                            <p class="text-lg text-gray-600 italic mt-6 bg-amber-50 p-4 rounded-lg">
+                                ${t.fact7Quote}
+                            </p>
+                        </div>
+                    </div>
+                `},
+                { icon: 'sparkle', html: `
+                    <div class="fact-section" data-icon="sparkle">
+                        <div class="fact-content">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                                ${t.fact8.replace('{count}', '<span class="text-purple-600 text-4xl" id="subhanallah">0</span>')}
+                            </h2>
+                            <p class="text-xl text-gray-600 mt-4">${t.fact8Sub}</p>
+                            <p class="text-lg text-gray-600 italic mt-6 bg-purple-50 p-4 rounded-lg">
+                                ${t.fact8Quote}
+                            </p>
+                        </div>
+                    </div>
+                `},
+                { icon: 'book', html: `
+                    <div class="fact-section" data-icon="book">
+                        <div class="fact-content">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                                ${t.fact9.replace('{ramadans}', '<span class="text-teal-600 text-4xl" id="ramadans">0</span>')}
+                            </h2>
+                            <p class="text-xl text-gray-600 mt-4">
+                                ${t.fact9Sub.replace('{fasting}', '<span id="fastingDays">0</span>')}
+                            </p>
+                            <p class="text-lg text-gray-600 italic mt-6 bg-teal-50 p-4 rounded-lg">
+                                ${t.fact9Quote}
+                            </p>
+                        </div>
+                    </div>
+                `},
+                { icon: 'globe', html: `
+                    <div class="fact-section" data-icon="globe">
+                        <div class="fact-content">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                                ${t.fact10}
+                            </h2>
+                            <p class="text-xl text-gray-600 mt-4">
+                                ${t.fact10Sub.replace('{population}', '<span class="text-blue-600 font-bold text-3xl" id="population">0</span>')}
+                            </p>
+                            <p class="text-lg text-gray-600 italic mt-6 bg-blue-50 p-4 rounded-lg">
+                                ${t.fact10Quote}
+                            </p>
+                        </div>
+                    </div>
+                `},
+                { icon: 'car', html: `
+                    <div class="fact-section" data-icon="car">
+                        <div class="fact-content">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                                ${t.fact12}
+                            </h2>
+                            <p class="text-xl text-gray-600 mb-6">
+                                ${t.fact12Sub}
+                            </p>
+                            <p class="text-lg text-gray-600 italic bg-emerald-50 p-6 rounded-lg mb-6">
+                                ${t.fact12Quote}
+                            </p>
+                            <button onclick="resetJourney()" class="btn btn-primary btn-lg mt-4">
+                                ${t.resetButton}
+                            </button>
+                        </div>
+                    </div>
+                `}
+            ];
+            
+            container.innerHTML = facts.map(f => f.html).join('');
+        }
+
+        function startJourney() {
+            const input = document.getElementById('birthdayInput');
+            birthday = input.value;
+            
+            if (!birthday) {
+                alert('Please select your birthday');
+                return;
+            }
+
+            const birthDate = new Date(birthday);
+            
+            // Show stats screen
+            document.getElementById('inputScreen').style.display = 'none';
+            document.getElementById('statsScreen').style.display = 'block';
+            
+            // Generate facts with current language
+            generateFacts();
+            
+            // Set initial icon
+            updateIcon('calendar');
+            
+            // Update calendar details
+            const weekdays = {
+                en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                ar: ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+                fr: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                es: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                de: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                tr: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+                ur: ['اتوار', 'پیر', 'منگل', 'بدھ', 'جمعرات', 'جمعہ', 'ہفتہ'],
+                id: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']
+            };
+            
+            const months = {
+                en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                ar: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+                fr: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
+                es: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                de: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+                tr: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
+                ur: ['جنوری', 'فروری', 'مارچ', 'اپریل', 'مئی', 'جون', 'جولائی', 'اگست', 'ستمبر', 'اکتوبر', 'نومبر', 'دسمبر'],
+                id: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']
+            };
+            
+            setTimeout(() => {
+                const weekdayEl = document.getElementById('birthWeekday');
+                const monthYearEl = document.getElementById('birthMonthYear');
+                if (weekdayEl) weekdayEl.textContent = weekdays[currentLanguage][birthDate.getDay()];
+                if (monthYearEl) monthYearEl.textContent = months[currentLanguage][birthDate.getMonth()] + ' ' + birthDate.getFullYear();
+            }, 100);
+
+            // Start updating stats
+            updateStats();
+            updateInterval = setInterval(updateStats, 100);
+
+            // Setup scroll listener
+            const bottomHalf = document.getElementById('bottomHalf');
+            bottomHalf.addEventListener('scroll', handleScroll);
+            bottomHalf.scrollTop = 0;
+        }
+
+        function updateIcon(iconName) {
+            if (currentIcon === iconName) return;
+            currentIcon = iconName;
+            const container = document.getElementById('iconContainer');
+            container.style.opacity = '0';
+            container.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                container.innerHTML = icons[iconName];
+                container.style.opacity = '1';
+                container.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function handleScroll() {
+            const bottomHalf = document.getElementById('bottomHalf');
+            const sections = document.querySelectorAll('.fact-section');
+            const viewportHeight = window.innerHeight * 0.5;
+            
+            let activeSection = null;
+            
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const sectionTop = rect.top - window.innerHeight * 0.5;
+                const sectionMiddle = sectionTop + (rect.height / 2);
+                
+                section.classList.remove('active');
+                
+                if (sectionMiddle >= -viewportHeight/2 && sectionMiddle <= viewportHeight/2) {
+                    activeSection = section;
+                }
+            });
+            
+            if (activeSection) {
+                activeSection.classList.add('active');
+                const iconName = activeSection.getAttribute('data-icon');
+                updateIcon(iconName);
+            }
+        }
+
+        function updateStats() {
+            if (!birthday) return;
+
+            const birthDate = new Date(birthday);
+            const now = new Date();
+            const diffMs = now - birthDate;
+            const diffDays = diffMs / (1000 * 60 * 60 * 24);
+            const diffYears = diffDays / 365.25;
+
+            const heartbeatsPerDay = 100000;
+            const breathsPerDay = 20000;
+            const bloodPerBeat = 0.07;
+            const prayersPerDay = 5;
+            const sujoodPerPrayer = 2;
+            const sleepPerDay = 8 / 24;
+            const populationGrowthRate = 2.3;
+            const secondsSinceBirth = diffMs / 1000;
+
+            const stats = {
+                days: Math.floor(diffDays),
+                heartbeats: Math.floor(diffDays * heartbeatsPerDay),
+                bloodPumped: Math.floor(diffDays * heartbeatsPerDay * bloodPerBeat),
+                prayers: Math.floor(diffDays * prayersPerDay),
+                breaths: Math.floor(diffDays * breathsPerDay),
+                ramadans: Math.floor(diffYears),
+                sujood: Math.floor(diffDays * prayersPerDay * sujoodPerPrayer * 17),
+                alhamdulillah: Math.floor(diffDays * 100),
+                subhanallah: Math.floor(diffDays * 100),
+                sleep: Math.floor(diffDays * sleepPerDay),
+                population: Math.floor(secondsSinceBirth * populationGrowthRate),
+                fastingDays: Math.floor(diffYears * 30)
+            };
+
+            // Update all elements safely
+            const updateElement = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value.toLocaleString();
+            };
+
+            updateElement('totalDays', stats.days);
+            updateElement('totalDays2', stats.days);
+            updateElement('heartbeats', stats.heartbeats);
+            updateElement('bloodPumped', stats.bloodPumped);
+            updateElement('breaths', stats.breaths);
+            updateElement('sleepDays', stats.sleep);
+            updateElement('prayers', stats.prayers);
+            updateElement('prayers2', stats.prayers);
+            updateElement('sujood', stats.sujood);
+            updateElement('alhamdulillah', stats.alhamdulillah);
+            updateElement('subhanallah', stats.subhanallah);
+            updateElement('ramadans', stats.ramadans);
+            updateElement('fastingDays', stats.fastingDays);
+            updateElement('population', stats.population);
+        }
+
+        function resetJourney() {
+            clearInterval(updateInterval);
+            birthday = null;
+            currentIcon = 'calendar';
+            document.getElementById('inputScreen').style.display = 'flex';
+            document.getElementById('statsScreen').style.display = 'none';
+            document.getElementById('birthdayInput').value = '';
+            
+            const bottomHalf = document.getElementById('bottomHalf');
+            bottomHalf.removeEventListener('scroll', handleScroll);
+        }
+
+        // Set max date to today
+        document.getElementById('birthdayInput').max = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>

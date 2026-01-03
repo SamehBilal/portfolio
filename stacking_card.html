@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/3.0.1/modern-normalize.min.css">
+
+<script>
+  !function(a){var b=/iPhone/i,c=/iPod/i,d=/iPad/i,e=/(?=.*\bAndroid\b)(?=.*\bMobile\b)/i,f=/Android/i,g=/(?=.*\bAndroid\b)(?=.*\bSD4930UR\b)/i,h=/(?=.*\bAndroid\b)(?=.*\b(?:KFOT|KFTT|KFJWI|KFJWA|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|KFARWI|KFASWI|KFSAWI|KFSAWA)\b)/i,i=/Windows Phone/i,j=/(?=.*\bWindows\b)(?=.*\bARM\b)/i,k=/BlackBerry/i,l=/BB10/i,m=/Opera Mini/i,n=/(CriOS|Chrome)(?=.*\bMobile\b)/i,o=/(?=.*\bFirefox\b)(?=.*\bMobile\b)/i,p=new RegExp("(?:Nexus 7|BNTV250|Kindle Fire|Silk|GT-P1000)","i"),q=function(a,b){return a.test(b)},r=function(a){var r=a||navigator.userAgent,s=r.split("[FBAN");if("undefined"!=typeof s[1]&&(r=s[0]),s=r.split("Twitter"),"undefined"!=typeof s[1]&&(r=s[0]),this.apple={phone:q(b,r),ipod:q(c,r),tablet:!q(b,r)&&q(d,r),device:q(b,r)||q(c,r)||q(d,r)},this.amazon={phone:q(g,r),tablet:!q(g,r)&&q(h,r),device:q(g,r)||q(h,r)},this.android={phone:q(g,r)||q(e,r),tablet:!q(g,r)&&!q(e,r)&&(q(h,r)||q(f,r)),device:q(g,r)||q(h,r)||q(e,r)||q(f,r)},this.windows={phone:q(i,r),tablet:q(j,r),device:q(i,r)||q(j,r)},this.other={blackberry:q(k,r),blackberry10:q(l,r),opera:q(m,r),firefox:q(o,r),chrome:q(n,r),device:q(k,r)||q(l,r)||q(m,r)||q(o,r)||q(n,r)},this.seven_inch=q(p,r),this.any=this.apple.device||this.android.device||this.windows.device||this.other.device||this.seven_inch,this.phone=this.apple.phone||this.android.phone||this.windows.phone,this.tablet=this.apple.tablet||this.android.tablet||this.windows.tablet,"undefined"==typeof window)return this},s=function(){var a=new r;return a.Class=r,a};"undefined"!=typeof module&&module.exports&&"undefined"==typeof window?module.exports=r:"undefined"!=typeof module&&module.exports&&"undefined"!=typeof window?module.exports=s():"function"==typeof define&&define.amd?define("isMobile",[],a.isMobile=s()):a.isMobile=s()}(this);
+    isMobile.any||document.querySelector('html').classList.add('is-desktop');
+</script>
+    <style>
+        :root {
+  --black: #1f1f1f;
+  --white: #fff;
+}
+
+body {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+main {
+  padding: 3.125rem 0;
+}
+
+h1 {
+  color: var(--white);
+  font-size: clamp(3.125rem, 17.321vw + -1.357rem, 12.5rem);
+  line-height: clamp(4.688rem, 21.363vw + -0.84rem, 16.25rem);
+  margin: 6.25rem 0;
+  text-align: center;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 1.848vw + 1.022rem, 2.5rem);
+  line-height: clamp(2.25rem, 1.848vw + 1.772rem, 3.25rem);
+}
+
+.stacking {
+  position: relative;
+}
+
+.stacking__card {
+  background-color: var(--white);
+  border-radius: 2rem;
+  color: var(--black);
+  display: flex;
+  flex-direction: column;
+  gap: var(--whatwedo-gap);
+  margin: 25vh auto;
+  max-width: 63.75rem;
+  padding: 2rem 2rem 0;
+}
+
+.stacking__content {
+  font-size: 1.125rem;
+  margin: 1.25rem 0;
+  padding-bottom: 1.25rem;
+}
+
+.container {
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+p {
+  margin: 1.25rem 0;
+}
+    </style>
+</head>
+<body>
+    <main>
+  <h1>Stacking Card</h1>
+
+  <div class="stacking">
+    <div class="stacking__card">
+      <h2>Title</h2>
+      <div class="stacking__content">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur error, reiciendis enim nulla voluptate non aspernatur rem dicta alias perspiciatis qui nobis ratione similique incidunt magnam ut commodi quae eaque!</p>
+      </div>
+    </div>
+    <div class="stacking__card" style="background-color: #d6e684;">
+      <h2>Title</h2>
+      <div class="stacking__content">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur error, reiciendis enim nulla voluptate non aspernatur rem dicta alias perspiciatis qui nobis ratione similique incidunt magnam ut commodi quae eaque!</p>
+      </div>
+    </div>
+    <div class="stacking__card" style="background-color: #4fc1ed;">
+      <h2>Title</h2>
+      <div class="stacking__content">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequatur error, reiciendis enim nulla voluptate non aspernatur rem dicta alias perspiciatis qui nobis ratione similique incidunt magnam ut commodi quae eaque!</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="container">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto eum iste est aspernatur dolorum corporis hic tenetur labore voluptas dolor vitae numquam consectetur autem obcaecati quisquam ipsam eveniet, ad veritatis.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto eum iste est aspernatur dolorum corporis hic tenetur labore voluptas dolor vitae numquam consectetur autem obcaecati quisquam ipsam eveniet, ad veritatis.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto eum iste est aspernatur dolorum corporis hic tenetur labore voluptas dolor vitae numquam consectetur autem obcaecati quisquam ipsam eveniet, ad veritatis.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto eum iste est aspernatur dolorum corporis hic tenetur labore voluptas dolor vitae numquam consectetur autem obcaecati quisquam ipsam eveniet, ad veritatis.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto eum iste est aspernatur dolorum corporis hic tenetur labore voluptas dolor vitae numquam consectetur autem obcaecati quisquam ipsam eveniet, ad veritatis.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto eum iste est aspernatur dolorum corporis hic tenetur labore voluptas dolor vitae numquam consectetur autem obcaecati quisquam ipsam eveniet, ad veritatis.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto eum iste est aspernatur dolorum corporis hic tenetur labore voluptas dolor vitae numquam consectetur autem obcaecati quisquam ipsam eveniet, ad veritatis.</p>
+  </section>
+</main>
+
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollSmoother.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script>
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+ScrollSmoother.create({
+  smooth: 1,
+  effects: true,
+  normalizeScroll: true
+});
+
+const cards = gsap.utils.toArray(".stacking__card");
+const spacer = 50;
+
+cards.forEach((card, index) => {
+  ScrollTrigger.create({
+    trigger: card,
+    start: `center-=${index * spacer} center`,
+    endTrigger: ".stacking",
+    end: `bottom center`,
+    pin: true,
+    pinSpacing: false,
+    // markers: true,
+    invalidateOnRefresh: true
+  });
+
+  const scaleValue = 0.85 + index * 0.05;
+  gsap.to(card, {
+    scrollTrigger: {
+      trigger: card,
+      start: `top center`,
+      end: `bottom center`,
+      scrub: true,
+      // markers: true,
+      invalidateOnRefresh: true
+    },
+    // ease: "none",
+    scale: scaleValue
+  });
+});
+
+</script>
+</body>
+</html>

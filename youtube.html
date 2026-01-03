@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://unpkg.com/normalize.css') layer(normalize);
+
+@layer normalize, base, demo, stuck, scroll, debug;
+
+@layer debug {
+  .video-container {
+    pointer-events: none;
+    iframe {
+      pointer-events: all;
+    }
+  }
+  [data-stuck][data-debug='true'] .sentinel,
+  [data-debug='true'] .video-container::before,
+  [data-debug='true'] .video-container::after {
+    opacity: 1;
+  }
+  [data-debug='true'] :is(main, .nav) {
+    opacity: 0.4;
+  }
+  .video-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    outline: 2px solid red;
+    border-radius: 1rem;
+    background: repeating-linear-gradient(
+        45deg,
+        hsl(0 100% 50% / 0.4) 0 2px,
+        #0000 2px 10px
+      ),
+      hsl(0 100% 50% / 0.05);
+    transition: opacity 0.26s ease-out;
+    opacity: 0;
+  }
+  .video-container::after {
+    opacity: 0;
+    font-family: monospace;
+    content: 'sticky holder';
+    position: absolute;
+    top: 100%;
+    left: 2rem;
+    color: white;
+    text-shadow: 0 1px #222;
+    padding: 0.25rem 0.75rem;
+    text-transform: uppercase;
+    background: hsl(0 100% 50%);
+    border-radius: 0 0 6px 6px;
+    font-size: 0.875rem;
+    transition: opacity 0.26s ease-out;
+  }
+}
+
+@layer scroll {
+  .nav {
+    animation: elevate linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 calc(var(--nav-height) * 2);
+  }
+  @keyframes elevate {
+    to {
+      --shadow-color: 0 0% 0%;
+      box-shadow: 0px 0.6px 0.7px hsl(var(--shadow-color) / 0.05),
+        0px 1.6px 1.8px -0.6px hsl(var(--shadow-color) / 0.05),
+        0px 3.2px 3.6px -1.2px hsl(var(--shadow-color) / 0.05),
+        0px 6.5px 7.3px -1.9px hsl(var(--shadow-color) / 0.05),
+        0px 12.6px 14.2px -2.5px hsl(var(--shadow-color) / 0.05);
+    }
+  }
+}
+
+@layer stuck {
+  :root {
+    --gutter: 1;
+    --margin: 0.1;
+    --content-width: 640px;
+    --nav-height: 56px;
+    --threshold: calc(
+      (
+          min(var(--content-width) + 4rem, 100vw - 2rem) * (9 / 16) *
+            var(--margin)
+        ) * -1
+    );
+    /* --threshold: -100px; */
+  }
+
+  .sentinel {
+    position: absolute;
+    height: 2px;
+    width: calc(100% + 4rem);
+    background: red;
+    z-index: 20;
+    left: 50%;
+    translate: -50% -50%;
+    top: calc(var(--threshold) * -1);
+    opacity: 0;
+    transition: opacity 0.26s ease-out;
+
+    &::after {
+      content: 'sentinel';
+      text-transform: uppercase;
+      font-family: monospace;
+      text-shadow: 0 1px #222;
+      background: hsl(0 100% 50%);
+      position: absolute;
+      top: 50%;
+      left: calc(100% - 1rem);
+      padding: 0.25rem 0.75rem;
+      color: white;
+      translate: 0 -50%;
+    }
+  }
+
+  .video-backdrop {
+    width: calc(var(--content-width) + 4rem);
+    aspect-ratio: 16 / 9;
+    position: absolute;
+    top: var(--nav-height);
+    background: blue;
+    left: 50%;
+    translate: -50% 0;
+    border-radius: 1rem;
+    background: color-mix(in oklch, canvas, canvasText 2%);
+    box-shadow: inset 0 -2px 6px -2px color-mix(in oklch, canvasText, #0000 80%);
+  }
+
+  .video-container {
+    width: calc(var(--content-width) + 4rem);
+    max-width: calc(100vw - 2rem);
+    aspect-ratio: 16 / 9;
+    margin: 0 auto;
+    position: sticky;
+    top: var(--threshold);
+
+    iframe {
+      border-radius: 1rem;
+      width: 100%;
+      transition-property: width, transform, box-shadow, border-radius;
+      transition-timing-function: ease-out;
+      transition-duration: calc(var(--duration) * 1s);
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: absolute;
+      left: 50%;
+      top: 0%;
+      transform: translate(-50%, 0%);
+    }
+  }
+
+  [data-stuck='true'] {
+    .video-container::after {
+      content: 'sticky holder [stuck]' !important;
+    }
+    .video-container iframe {
+      width: calc(var(--width) * 1px);
+      border-radius: 6px;
+      transition-timing-function: ease-in-out;
+      --shadow-color: 0 0% 0%;
+      box-shadow: 0px 0.6px 0.7px hsl(var(--shadow-color) / 0.1),
+        0px 1.6px 1.8px -0.6px hsl(var(--shadow-color) / 0.1),
+        0px 3.2px 3.6px -1.2px hsl(var(--shadow-color) / 0.1),
+        0px 6.5px 7.3px -1.9px hsl(var(--shadow-color) / 0.1),
+        0px 12.6px 14.2px -2.5px hsl(var(--shadow-color) / 0.1);
+      transform: translate(-50%, 0%)
+        translate(
+          calc(50vw - (50% + (var(--gutter) * 1rem))),
+          calc((100vh - var(--threshold)) - (100% + (var(--gutter) * 1rem)))
+        );
+    }
+  }
+
+  @supports (container-type: scroll-state) {
+    .video-container {
+      container-type: scroll-state;
+    }
+    @container scroll-state(stuck: top) {
+      .video-container::after {
+        content: 'sticky holder [stuck]' !important;
+      }
+      .video-container iframe {
+        width: calc(var(--width) * 1px);
+        border-radius: 6px;
+        transition-timing-function: ease-in-out;
+        --shadow-color: 0 0% 0%;
+        box-shadow: 0px 0.6px 0.7px hsl(var(--shadow-color) / 0.1),
+          0px 1.6px 1.8px -0.6px hsl(var(--shadow-color) / 0.1),
+          0px 3.2px 3.6px -1.2px hsl(var(--shadow-color) / 0.1),
+          0px 6.5px 7.3px -1.9px hsl(var(--shadow-color) / 0.1),
+          0px 12.6px 14.2px -2.5px hsl(var(--shadow-color) / 0.1);
+        transform: translate(-50%, 0%)
+          translate(
+            calc(50vw - (50% + (var(--gutter) * 1rem))),
+            calc((100vh - var(--threshold)) - (100% + (var(--gutter) * 1rem)))
+          );
+      }
+    }
+  }
+  .video-container {
+    z-index: 10;
+  }
+}
+
+@layer demo {
+  body {
+    display: block;
+    font-family: 'Inter', sans-serif;
+  }
+  main p:not(:last-of-type):not(:has(+ ul)) {
+    margin-bottom: 2rem;
+  }
+  .sig-holder p {
+    font-weight: 600;
+  }
+  .nav {
+    height: var(--nav-height);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: light-dark(canvas, #000);
+    z-index: 9999;
+    transition: opacity 0.26s ease-out;
+
+    .nav__content {
+      width: var(--content-width);
+      max-width: calc(100% - 2rem);
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      & > a {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        aspect-ratio: 1;
+        color: inherit;
+
+        svg {
+          width: 24px;
+        }
+      }
+    }
+  }
+
+  .sig {
+    width: 160px;
+    rotate: 12deg;
+  }
+
+  html {
+    scrollbar-color: canvasText #0000;
+  }
+  header {
+    padding-block: 4rem;
+
+    h1 {
+      margin: 0;
+    }
+
+    p {
+      font-size: 1.25rem;
+      margin: 0;
+      text-wrap: balance;
+    }
+  }
+  hr {
+    /* opacity: 0.5; */
+    border-color: color-mix(in oklch, canvas, canvasText 1%);
+    margin-bottom: 2rem;
+    z-index: -1;
+  }
+  footer {
+    padding: 2rem;
+    margin-top: 8rem;
+    opacity: 0.7;
+  }
+  main {
+    width: var(--content-width);
+    max-width: calc(100% - 2rem);
+    line-height: 1.5;
+    font-size: 0.875rem;
+    transition: opacity 0.26s ease-out;
+    margin: 0 auto;
+    ul {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+      padding-left: 0.5rem;
+      list-style-position: inside;
+    }
+
+    p {
+      color: color-mix(in oklch, canvasText, canvas 36%);
+
+      &:has(+ ul) {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+  h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+  }
+  nav {
+    ul {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      list-style-type: none;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+
+      a {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --font-size-min: 16;
+    --font-size-max: 20;
+    --font-ratio-min: 1.2;
+    --font-ratio-max: 1.33;
+    --font-width-min: 375;
+    --font-width-max: 1500;
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
+  [data-theme='light'] {
+    color-scheme: light only;
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark only;
+  }
+
+  :where(.fluid) {
+    --fluid-min: calc(
+      var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0))
+    );
+    --fluid-max: calc(
+      var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0))
+    );
+    --fluid-preferred: calc(
+      (var(--fluid-max) - var(--fluid-min)) /
+        (var(--font-width-max) - var(--font-width-min))
+    );
+    --fluid-type: clamp(
+      (var(--fluid-min) / 16) * 1rem,
+      ((var(--fluid-min) / 16) * 1rem) -
+        (((var(--fluid-preferred) * var(--font-width-min)) / 16) * 1rem) +
+        (var(--fluid-preferred) * var(--variable-unit, 100vi)),
+      (var(--fluid-max) / 16) * 1rem
+    );
+    font-size: var(--fluid-type);
+  }
+
+  *,
+  *:after,
+  *:before {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: light-dark(#fff, #000);
+    color: light-dark(hsl(0 0% 10%), hsl(0 0% 98%));
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
+      Helvetica, Arial, sans-serif, system-ui;
+  }
+
+  body::before {
+    --size: 45px;
+    --line: color-mix(in hsl, canvasText, transparent 90%);
+    content: '';
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background: linear-gradient(
+          90deg,
+          var(--line) 1px,
+          transparent 1px var(--size)
+        )
+        calc(var(--size) * 0.36) 50% / var(--size) var(--size),
+      linear-gradient(var(--line) 1px, transparent 1px var(--size)) 0%
+        calc(var(--size) * 0.32) / var(--size) var(--size);
+    mask: linear-gradient(132deg, transparent 60%, white);
+    top: 0;
+    transform-style: flat;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .bear-link {
+    color: canvasText;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 48px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    opacity: 0.8;
+  }
+
+  :where(.x-link, .bear-link):is(:hover, :focus-visible) {
+    opacity: 1;
+  }
+
+  .bear-link svg {
+    width: 75%;
+  }
+
+  /* Utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+div.tp-dfwv {
+  position: fixed;
+  bottom: 8px;
+  top: unset;
+  left: 8px;
+  z-index: 99999;
+  width: 280px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="nav">
+      <div class="nav__content">
+        <a
+          aria-label="Craft of UI"
+          href="https://craftofui.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m3.98448 20.5882-1.17645 1.6174m-.22047-1.3969 1.61739 1.1764M22.144.730378 20.6832 2.09646m.0474-1.413417 1.366 1.460757"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="m3.90821 18.5526-.59559.0726c.03203.2626.23224.4732.49285.5185l.10274-.5911ZM20.601 4.22249l.3908.45525c.1679-.14415.2428-.36902.195-.58508-.0479-.21606-.2109-.38822-.424-.44793l-.1618.57776Zm.6023-.00906c-.0066-.33131-.2805-.59453-.6118-.58794-.3313.0066-.5945.28052-.5879.61183l1.1997-.02389Zm-.2556 17.30047-.1028.5911c.1766.0307.3576-.0191.4935-.1358.136-.1168.2127-.2881.2091-.4673l-.5998.012ZM3.03505 11.3945l-.39082-.4552c-.15222.1306-.22906.3287-.20477.5279l.59559-.0727ZM13.8216 1.69999c-.3191-.0894-.6502.0968-.7396.41588-.0894.31909.0968.65023.4159.73963l.3237-1.15551ZM4.29903 19.0078 20.9918 4.67774l-.7816-.91051L3.51739 18.0973l.78164.9105ZM20.0036 4.23732l.3442 17.28848 1.1997-.0239-.3442-17.28847-1.1997.02389ZM3.80547 19.1437 20.8449 22.105l.2055-1.1823-17.03946-2.9613-.20547 1.1823Zm-.3796-7.2939L14.0485 2.73064l-.7816-.91052L2.64423 10.9393l.78164.9105Zm1.07792 6.6301-.87316-7.158-1.19117.1453.87316 7.158 1.19117-.1453ZM20.7628 3.64473l-6.9412-1.94474-.3237 1.15551 6.9412 1.94474.3237-1.15551Z"
+              fill="currentColor"
+            ></path>
+            <path
+              d="m15.7227 7.75 4.9996 13.5001M8.13672 14.2656 20.724 21.2521"
+              stroke="currentColor"
+              stroke-width="1.2"
+            ></path>
+            <path
+              d="M7.0673 8.29748c-.11208-.31184-.45574-.47378-.76758-.36169-.31184.11208-.47377.45574-.36169.76758l1.12927-.40589Zm2.05515 5.71782L7.0673 8.29748l-1.12927.40589 2.05515 5.71783 1.12927-.4059Z"
+              fill="currentColor"
+            ></path>
+            <path
+              d="m15.6133 8.16406-5.1156-2.66251"
+              stroke="currentColor"
+              stroke-width="1.2"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+        </a>
+        <nav>
+          <ul>
+            <li>
+              <a href="#">Log in</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="video-backdrop">
+      <div class="sentinel"></div>
+    </div>
+    <div class="video-container">
+      <iframe
+        src="https://www.youtube.com/embed/loKm4JcT4U4?si=nUP8-C2DA16_4wJ3"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <main>
+      <header>
+        <h1>The Craft of UI</h1>
+        <p>
+          Master the tools, mindset, and techniques behind crafting exceptional
+          user interfaces with HTML, CSS, and JavaScript
+        </p>
+      </header>
+      <hr />
+      <p>
+        What if you could build anything you see? Not just copy a design, but
+        really understand it. To break it down. To know which tools to reach
+        for. Built it with precision, performance, and accessibility in mind. To
+        make it feel right and make it your own.
+      </p>
+      <p>
+        Building user interfaces is complex. Even a “simple” sign-up form means
+        making calls about motion, accessibility, performance — and all the
+        finer UX details that most people never see. And too often, education
+        only covers slices of that complexity.
+      </p>
+      <p>
+        You might learn how to make something look good or move well. But what
+        about making it work right? For everyone? What about building fast,
+        inclusive, resilient interfaces that feel effortless?
+      </p>
+      <p>
+        <strong>The Craft of UI</strong> is a course about how to build things
+        well. It’s about learning how to see like a developer who understands
+        design, and code like a developer who cares about users.
+      </p>
+      <p>
+        It’s about working with the web — not fighting it. Leveraging the power
+        of HTML and CSS. Sprinkling in enough JavaScript when it adds real
+        magic. And reaching for libraries only when they truly help you go
+        further. It’s not about chasing trends or selling you “taste”. It’s
+        about timeless skills that level you up and pay the bills. Tools change.
+        APIs evolve. But the foundations of the web platform are your unfair
+        advantage when mastered.
+      </p>
+      <p>
+        You don’t need to be “a natural”. You just need the right approach. The
+        right mindset. With practice, you become the person who can build
+        anything. Whether you’re starting out or already the team’s go-to, this
+        course will help you level up and build with confidence.
+      </p>
+      <p>You’ll learn to:</p>
+      <ul>
+        <li>Think through UI problems, not just code them</li>
+        <li>Use the web platform fully before adding dependencies</li>
+        <li>Know when (and why) to reach for libraries or frameworks</li>
+        <li>Explore emerging browser APIs so you’re ready when they land</li>
+        <li>Build fast, accessible, resilient UIs that make people go “wow”</li>
+      </ul>
+      <p>
+        Over the years, I’ve built a reputation for being able to recreate just
+        about anything passed my way. But the real secret isn’t “tricks”. It’s
+        mindset, curiosity, and knowing how to think through a UI challenge, not
+        just code it. I want to teach you how I do it — how I see a UI, break it
+        down, and bring it to life. This course is everything I’ve learned from
+        over a decade of experience.
+      </p>
+      <p>
+        If you’ve ever looked at a design and thought, “How would I build
+        that?”, this is for you. It’s about equipping you with the skills to
+        build whatever you need, and the confidence to say, “I’ve got this”.
+      </p>
+      <p>
+        Because when you can do that, everything changes. You’re not chasing
+        snippets. You’re not limited by tools or libraries. You become the tool.
+        You become the documentation. You move fast and solve problems
+        confidently like it’s second nature.
+      </p>
+      <p>
+        You bring ideas to life and you make it look easy. It’s not just
+        satisfying, it’s how you 10x your career. You become the person the team
+        turns to when they say: “Can we even build this?”.
+      </p>
+      <p>
+        Could you become that person? Yes. You could. And I’ll show you how.
+      </p>
+      <p>Let's go.</p>
+      <div class="sig-holder">
+        <svg
+          class="sig"
+          viewBox="0 0 271 209"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M40.3725 26.8984C58.6558 41.1564 141.659 43.1867 128.248 5.48254C127.911 4.53766 127.085 2.2403 125.938 2.0095C124.714 1.76297 121.929 6.39448 121.627 6.82375C100.965 36.1863 95.2641 73.5992 74.5923 102.644C63.7045 117.942 14.7891 145.678 5.55986 113.481C-17.5939 32.705 78.7483 76.0672 105.741 67.4678C119.757 63.0021 125.297 50.6825 132.831 39.1622C135.218 35.5126 137.628 24.6153 140.043 28.2467C144.771 35.3581 119.642 69.8761 115.559 78.4692C110.959 88.1482 129.228 46.7461 136.796 54.3333C146.229 63.7897 128.236 82.7359 153.367 61.6804C157.634 58.1059 166.582 46.4029 161.033 46.8455C153.977 47.4085 141.565 67.0198 151.685 70.0327C161.531 72.9635 176.039 38.7196 174.012 48.7901C173.009 53.769 168.343 67.3695 175.978 68.9069C186.537 71.0328 191.574 35.8659 197.537 44.8359C240.356 109.24 81.7126 283.324 50.2184 167.261C25.2159 75.1229 240.563 89.2082 268.88 137.08"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            pathLength="1"
+            style="--path-speed: 0.831875"
+          ></path>
+          <path
+            class="ear"
+            d="M187.183 101.246C182.107 82.5407 155.739 77.9455 151.5 99"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            pathLength="1"
+            style="--path-speed: 0.031875; --path-delay: 0.831875"
+          ></path>
+          <path
+            class="ear"
+            d="M117.998 100.704C117.998 91.1516 103.912 87.3662 96.5585 89.3717C84.7816 92.5836 80.6315 99.053 80.6315 110.505"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            pathLength="1"
+            style="--path-speed: 0.035625; --path-delay: 0.86375"
+          ></path>
+          <path
+            class="eye"
+            d="M170.025 108.347C168.627 105.551 162.781 110.631 165.494 114.577C168.207 118.523 173.936 114.091 171.643 109.965C171.035 108.871 168.547 107.832 167.355 108.428"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            pathLength="1"
+            style="--path-speed: 0.0175; --path-delay: 0.899375"
+          ></path>
+          <path
+            class="eye"
+            d="M102.952 112.797C97.2672 112.797 96.7371 120.527 102.224 119.917C108.363 119.235 105.409 110.012 100.363 113.04"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            pathLength="1"
+            style="--path-speed: 0.01625; --path-delay: 0.916875"
+          ></path>
+          <path
+            class="nose"
+            d="M144.745 123.82C146.652 122.562 141.479 121.621 140.561 121.402C136.485 120.429 124.736 118.793 124.42 125.721C123.695 141.628 160.767 131.457 140.492 121.735"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            pathLength="1"
+            style="--path-speed: 0.04; --path-delay: 0.933125"
+          ></path>
+        </svg>
+        <p class="font-[600]">– Jhey, the Craft of UI</p>
+      </div>
+    </main>
+    <footer>ʕ◕ᴥ◕ʔ &copy; jhey 2025</footer>
+
+
+    <script>
+        const config = {
+  theme: 'dark',
+  debug: false,
+  margin: 0.1,
+  gutter: 1,
+  width: 260,
+  duration: 0.26,
+}
+
+const update = () => {
+  document.documentElement.dataset.theme = config.theme
+  document.documentElement.dataset.debug = config.debug
+  document.documentElement.style.setProperty('--margin', config.margin)
+  document.documentElement.style.setProperty('--gutter', config.gutter)
+  document.documentElement.style.setProperty('--width', config.width)
+  document.documentElement.style.setProperty('--duration', config.duration)
+}
+
+const sync = (event) => {
+  if (
+    !document.startViewTransition ||
+    event.target.controller.view.labelElement.innerText !== 'theme'
+  )
+    return update()
+  document.startViewTransition(() => update())
+}
+
+update()
+
+if (!CSS.supports('container-type: scroll-state')) {
+  const sentinel = document.querySelector('.sentinel')
+  const observer = new IntersectionObserver((entries) => {
+    document.documentElement.dataset.stuck = !entries[0].isIntersecting
+  })
+  observer.observe(sentinel)
+}
+
+    </script>
+</body>
+</html>

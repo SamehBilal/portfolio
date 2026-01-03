@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Eczar:700|Rubik:400,700" rel="stylesheet">
+    <style>
+        @charset "UTF-8";
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 450px) {
+            html {
+                font-size: 16px;
+            }
+        }
+
+        body,
+        input,
+        select {
+            color: #111;
+        }
+
+        body {
+            background: #2e64b5;
+            font-family: "Eczar", serif;
+        }
+
+        .wrap {
+            margin: 0 auto;
+            display: flex;
+            width: 90%;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        @media (max-width: 1000px) {
+            .wrap {
+                max-width: 800px;
+                flex-direction: column;
+            }
+        }
+
+        .container,
+        .knockout {
+            margin: 1em auto;
+            padding: 1em;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            background-color: #e9eff9;
+            border: 0.2em solid #193764;
+            border-radius: 0.3em;
+        }
+
+        @media (max-width: 1000px) {
+
+            .container,
+            .knockout {
+                width: 100%;
+            }
+        }
+
+        h1 {
+            width: 100%;
+            background: #193764;
+            font-weight: 700;
+            font-size: 3rem;
+            padding: 0.3em 0;
+            color: #fff;
+            border-bottom: 0.1em solid #fff;
+        }
+
+        .group-stage {
+            color: #fff;
+            font-weight: 700;
+            font-size: 2.5rem;
+            padding: 0.4em 0 0;
+        }
+
+        .table-container {
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        table thead {
+            background: #193764;
+            color: #fff;
+            font-weight: 700;
+            height: 30px;
+        }
+
+        table tr {
+            height: 50px;
+        }
+
+        table tr:nth-child(1n) {
+            background: #83a8df;
+        }
+
+        table tr:nth-child(2n) {
+            background: #c0d3ef;
+        }
+
+        table td,
+        table th {
+            vertical-align: middle;
+            font-family: "Rubik", sans-serif;
+        }
+
+        @media (max-width: 350px) {
+            .name {
+                display: none;
+            }
+        }
+
+        .matches {
+            padding: 1em 0;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .matches .match {
+            display: flex;
+            justify-content: center;
+            text-align: left;
+            padding: 0.2em 0;
+        }
+
+        .matches .match input {
+            text-align: center;
+            width: 2.5em;
+            height: 1.5em;
+            margin: 0.3em 0.1em;
+            font-size: 1rem;
+            border: 0.05em solid #193764;
+            border-radius: 0.2em;
+        }
+
+        .matches .match .v {
+            padding: 0.5em 0.25em;
+        }
+
+        .knockout {
+            width: 90%;
+        }
+
+        @media (max-width: 900px) {
+            .knockout {
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .knockout {
+                font-size: 0.65em;
+            }
+        }
+
+        .knockout h2 {
+            width: 80%;
+            margin: 0 auto;
+            font-size: 3em;
+            color: #244e8c;
+            border-bottom: 0.1em solid #244e8c;
+        }
+
+        .knockout .flag {
+            font-size: 0.5em;
+        }
+
+        .knockout.semi {
+            font-size: 1.3em;
+        }
+
+        @media (max-width: 900px) {
+            .knockout.semi {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .knockout.semi {
+                font-size: 0.75em;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .knockout.semi {
+                font-size: 0.65em;
+            }
+        }
+
+        .knockout.final {
+            font-size: 1.5em;
+        }
+
+        @media (max-width: 900px) {
+            .knockout.final {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .knockout.final {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .knockout.final {
+                font-size: 0.75em;
+            }
+        }
+
+        @media (max-width: 350px) {
+            .knockout.final {
+                font-size: 0.65em;
+            }
+        }
+
+        .knockout.winner {
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 450px) {
+            .knockout.winner {
+                font-size: 1em;
+            }
+        }
+
+        .knockout.winner .winner-name {
+            font-size: 2em;
+            color: #193764;
+            font-weight: 700;
+        }
+
+        .knockout .matches {
+            padding: 1em 0;
+        }
+
+        .knockout .matches .match {
+            padding: 0.2em 0;
+        }
+
+        .knockout .matches .match input {
+            text-align: center;
+            width: 2em;
+            height: 1.5em;
+            margin: 0.6em 0.1em;
+            font-size: 2em;
+        }
+
+        .knockout .matches .match .v {
+            padding: 0.8em 0.1em;
+            font-size: 2em;
+        }
+
+        .flag {
+            font-size: 0.2rem;
+            width: 12em;
+            height: 9em;
+            position: relative;
+            margin: 1em;
+        }
+
+        .argentina {
+            box-shadow: 0 3em #74acdf inset, 0 6em #fff inset, 0 9em #74acdf inset;
+        }
+
+        .argentina:before {
+            width: 0.6em;
+            height: 0.6em;
+            border-radius: 50%;
+            content: "";
+            background: #fecc00;
+            position: absolute;
+            top: 0.83em;
+            left: 1.23em;
+            font-size: 4em;
+        }
+
+        .australia {
+            background: #003399;
+        }
+
+        .australia:before {
+            content: "✷";
+            color: #fff;
+            font-size: 1.5em;
+            position: absolute;
+            top: 0.3em;
+            left: 5.5em;
+            text-shadow: 1.2em 1.2em #fff, -1em 1.5em #fff, 0 3.6em #fff;
+        }
+
+        .australia:after {
+            content: "✷";
+            color: #fff;
+            font-size: 3em;
+            position: absolute;
+            top: 1.6em;
+            left: 0.6em;
+        }
+
+        .australia>div:nth-child(1) {
+            position: relative;
+            width: 6em;
+            height: 4em;
+        }
+
+        .australia>div:nth-child(2):before {
+            content: "★";
+            color: #fff;
+            font-size: 0.8em;
+            z-index: 5;
+            position: absolute;
+            top: 4.8em;
+            left: 12.4em;
+        }
+
+        .brazil {
+            background: #009b3a;
+        }
+
+        .brazil:before {
+            background: #fedf00;
+            position: absolute;
+            content: "";
+            top: 1.8em;
+            left: 2.7em;
+            width: 6.5em;
+            height: 5.7em;
+            transform: rotate(30deg) skew(-30deg);
+        }
+
+        .brazil>div {
+            overflow: hidden;
+            position: absolute;
+            width: 4.4em;
+            height: 4.2em;
+            content: "";
+            background: #003399;
+            border-radius: 50%;
+            top: 4.6em;
+            left: 5.9em;
+            transform: translate(-50%, -50%);
+        }
+
+        .brazil>div:before {
+            content: "";
+            z-index: 2;
+            width: 6em;
+            height: 4em;
+            border-radius: 50%;
+            position: absolute;
+            top: 1.3em;
+            left: -2em;
+            border: 0.3em solid #fff;
+        }
+
+        .brazil>div:after {
+            color: #fff;
+            font-size: 0.2em;
+            position: absolute;
+            top: 9em;
+            left: 3em;
+            content: "✹";
+            text-shadow: 10.5em -4em #fff, 0.6em 2em #fff, 1em 4em #fff, 1.6em 6em #fff, 2.4em 1em #fff, 3.6em 0 #fff, 4.4em 5em #fff, 6em 8em #fff, 7.6em 1em #fff, 8.2em 8em #fff, 8.7em 2em #fff, 9em 4em #fff, 12em 3em #fff, 13em 6em #fff, 12em 5em #fff, 10em 5em #fff, 11em 2em #fff, 8em 2.5em #fff;
+        }
+
+        .china {
+            background: #de2910;
+        }
+
+        .china:before {
+            content: "★︎";
+            color: #fedf00;
+            font-size: 3em;
+            position: absolute;
+            top: 0.1em;
+            left: 0.2em;
+        }
+
+        .china:after {
+            content: "★";
+            color: #fedf00;
+            font-size: 1em;
+            position: absolute;
+            top: 1.5em;
+            left: 4em;
+            transform: rotate(25deg);
+            text-shadow: -1em -1em, 0.2em 1.5em, -0.5em 2.8em;
+        }
+
+        .england {
+            background: #cc0000;
+        }
+
+        .england:before {
+            background: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5.4em;
+            height: 3.75em;
+            content: "";
+            box-shadow: 6.75em 0 #fff, 0em 5.25em #fff, 6.75em 5.25em #fff;
+        }
+
+        .france {
+            box-shadow: 4em 0 #003399 inset, 8em 0 white inset, 12em 0 #ee0A30 inset;
+        }
+
+        .germany {
+            box-shadow: 0 3em #000 inset, 0 6em #cc0000 inset, 0 9em #fedf00 inset;
+        }
+
+        .ghana {
+            box-shadow: 0 3em #cf142b inset, 0 6em #fedf00 inset, 0 9em #006233 inset;
+        }
+
+        .ghana:before {
+            content: "★";
+            position: absolute;
+            top: 0.67em;
+            left: 1.2em;
+            font-size: 3.8em;
+        }
+
+        .iceland {
+            background: #fff;
+        }
+
+        .iceland:before {
+            background: #003399;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3.5em;
+            height: 3.5em;
+            content: "";
+            box-shadow: 5.5em 0 #003399, 8.55em 0 #003399, 0 5.5em #003399, 8.55em 5.5em #003399, 5.5em 5.5em #003399;
+        }
+
+        .iceland:after {
+            background: #de2910;
+            position: absolute;
+            top: 0;
+            left: 4em;
+            width: 1.05em;
+            height: 1em;
+            content: "";
+            box-shadow: 0 1em #de2910, 0 2em #de2910, 0 3em #de2910, 0 4em #de2910, 0 5em #de2910, 0 6em #de2910, 0 7em #de2910, -3.98em 4em #de2910, -3em 4em #de2910, -2em 4em #de2910, -1em 4em #de2910, 1em 4em #de2910, 2em 4em #de2910, 3em 4em #de2910, 4em 4em #de2910, 5em 4em #de2910, 6em 4em #de2910, 7em 4em #de2910, 0 8em #de2910;
+        }
+
+        .italy {
+            box-shadow: 4em 0 #009b3a inset, 8em 0 #fff inset, 12em 0 #cf142b inset;
+        }
+
+        .japan {
+            background: #fff;
+        }
+
+        .japan:before {
+            width: 1.5em;
+            height: 1.5em;
+            border-radius: 50%;
+            content: "";
+            background: #cf142b;
+            position: absolute;
+            top: 0.4em;
+            left: 0.75em;
+            font-size: 4em;
+        }
+
+        .netherlands {
+            box-shadow: 0 3em #de2910 inset, 0 6em #fff inset, 0 9em #003399 inset;
+        }
+
+        .russia {
+            box-shadow: 0 3em #fff inset, 0 6em #003399 inset, 0 9em #de2910 inset;
+        }
+
+        .south-africa {
+            background: linear-gradient(#de2910 30%, #fff 30%, #fff 70%, #003399 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .south-africa:before {
+            position: absolute;
+            content: "";
+            width: 4.5em;
+            height: 5em;
+            background: #000;
+            transform: rotate(45deg);
+            top: 2.25em;
+            left: -2.5em;
+            box-shadow: 0 0 0 0.5em #fecc00, 0 0 0 2.5em #009b3a, 0 0 0 3.25em #fff;
+        }
+
+        .south-africa:after {
+            position: absolute;
+            content: "";
+            background: #009b3a;
+            width: 8em;
+            height: 2em;
+            top: 3.5em;
+            left: 4em;
+        }
+
+        .spain {
+            box-shadow: 0 2.5em #de2910 inset, 0 6.5em #fedf00 inset, 0 9em #de2910 inset;
+        }
+
+        .sweden {
+            background: #fecc00;
+        }
+
+        .sweden:before {
+            background: #006aa7;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3.5em;
+            height: 3.5em;
+            content: "";
+            box-shadow: 5.5em 0 #006aa7, 8.52em 0 #006aa7, 0 5.5em #006aa7, 8.52em 5.5em #006aa7, 5.5em 5.5em #006aa7;
+        }
+
+        .united-kingdom,
+        .australia>div:nth-child(1) {
+            background: linear-gradient(transparent 44%, #cc0000 44.1%, #cc0000 56%, transparent 56.1%), linear-gradient(90deg, transparent 44%, #cc0000 44.1%, #cc0000 56%, transparent 56.1%), linear-gradient(transparent 40%, #fff 40.1%, #fff 60%, transparent 60.1%), linear-gradient(90deg, transparent 40%, #fff 40.1%, #fff 60%, transparent 60.1%), linear-gradient(34deg, transparent 45%, #fff 45.1%, #fff 48%, #cc0000 48.1%, #cc0000 52%, #fff 52.1%, #fff 56%, transparent 56.1%), linear-gradient(-34deg, #003399 45%, #fff 45.1%, #fff 48%, #cc0000 48.1%, #cc0000 52%, #fff 52.1%, #fff 56%, #003399 56%);
+        }
+
+        .united-states {
+            position: relative;
+            box-shadow: 0 0.7em #bf0a30 inset, 0 1.4em #fff inset, 0 2.1em #bf0a30 inset, 0 2.8em #fff inset, 0 3.5em #bf0a30 inset, 0 4.2em #fff inset, 0 4.9em #bf0a30 inset, 0 5.6em #fff inset, 0 6.3em #bf0a30 inset, 0 7em #fff inset, 0 7.7em #bf0a30 inset, 0 8.4em #fff inset, 0 9em #bf0a30 inset;
+        }
+
+        .united-states:before {
+            position: absolute;
+            background: #00008b;
+            content: "";
+            width: 5.5em;
+            height: 4.9em;
+            top: 0;
+            left: 0;
+        }
+
+        .united-states:after {
+            color: #fff;
+            content: "★";
+            position: absolute;
+            top: 0.2em;
+            left: 0.2em;
+            font-size: 0.6em;
+            text-shadow: 0em 0em #fff, 1.6em 0em #fff, 3.2em 0em #fff, 4.8em 0em #fff, 6.4em 0em #fff, 8em 0em #fff, 0.8em 0.8em #fff, 2.4em 0.8em #fff, 4em 0.8em #fff, 5.6em 0.8em #fff, 7.2em 0.8em #fff, 0em 1.6em #fff, 1.6em 1.6em #fff, 3.2em 1.6em #fff, 4.8em 1.6em #fff, 6.4em 1.6em #fff, 8em 1.6em #fff, 0.8em 2.4em #fff, 2.4em 2.4em #fff, 4em 2.4em #fff, 5.6em 2.4em #fff, 7.2em 2.4em #fff, 0em 3.2em #fff, 1.6em 3.2em #fff, 3.2em 3.2em #fff, 4.8em 3.2em #fff, 6.4em 3.2em #fff, 8em 3.2em #fff, 0.8em 4em #fff, 2.4em 4em #fff, 4em 4em #fff, 5.6em 4em #fff, 7.2em 4em #fff, 0em 4.8em #fff, 1.6em 4.8em #fff, 3.2em 4.8em #fff, 4.8em 4.8em #fff, 6.4em 4.8em #fff, 8em 4.8em #fff, 0.8em 5.6em #fff, 2.4em 5.6em #fff, 4em 5.6em #fff, 5.6em 5.6em #fff, 7.2em 5.6em #fff, 0em 6.4em #fff, 1.6em 6.4em #fff, 3.2em 6.4em #fff, 4.8em 6.4em #fff, 6.4em 6.4em #fff, 8em 6.4em #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
+    <script>
+        /*
+    
+    Check out a much improved version of this app I made for the 2018 world cup at https://rzencoder.github.io/world-cup-predictor/
+    
+    */
+
+
+        /* World Cup predictor app using React
+        
+          I had a lot of fun making this app https://codepen.io/rzencoder/pen/dNjLNv and wanted to expand it into a usable app for different sports tournaments.
+          
+          It's working on Firefox, Chrome and Edge. I'll improve the code as I've only started learning React recently and I'm sure there are lots of improvements to be made.
+        */
+
+        //Countries array
+        const countriesArray = ['Italy', 'Spain', 'South Africa', 'Australia', 'Germany', 'Netherlands', 'Ghana', 'United States', 'France', 'Brazil', 'Russia', 'China', 'England', 'Argentina', 'Sweden', 'Japan'];
+
+        //Blank array to populate blank spaces in quarter/semi/final/winner sections
+        const blank = ['', '', '', '', '', '', '', ''];
+
+        //Which team plays which on progression to next round
+        const quarterOrder = [0, 3, 2, 1, 4, 7, 6, 5];
+        const semiOrder = [0, 2, 1, 3];
+        const finalOrder = [0, 1];
+
+        //Helper Functions
+        function sortTable(table) {
+            table.sort(function (a, b) {
+                return b.f - a.f;
+            });
+            table.sort(function (a, b) {
+                return b.gd - a.gd;
+            });
+            table.sort(function (a, b) {
+                return b.pts - a.pts;
+            });
+            return table;
+        }
+
+        //render table header
+        function TableHead() {
+            return /*#__PURE__*/(
+                React.createElement("thead", null, /*#__PURE__*/
+                    React.createElement("th", null), /*#__PURE__*/
+                    React.createElement("th", { className: "name" }), /*#__PURE__*/
+                    React.createElement("th", null, "P"), /*#__PURE__*/
+                    React.createElement("th", null, "W"), /*#__PURE__*/
+                    React.createElement("th", null, "D"), /*#__PURE__*/
+                    React.createElement("th", null, "L"), /*#__PURE__*/
+                    React.createElement("th", null, "F"), /*#__PURE__*/
+                    React.createElement("th", null, "A"), /*#__PURE__*/
+                    React.createElement("th", null, "GD"), /*#__PURE__*/
+                    React.createElement("th", null, "Pts")));
+
+
+        }
+
+        //display each row of table
+        Row.PropTypes = {
+            team: React.PropTypes.object.isRequired
+        };
+
+
+        function Row(props) {
+            //convert country name into css syntax for className
+            let flagClass = props.team.name.toLowerCase().replace(/\s/g, "-");
+            return /*#__PURE__*/(
+                React.createElement("tr", null, /*#__PURE__*/
+                    React.createElement("td", null, /*#__PURE__*/
+                        React.createElement("div", { className: 'flag ' + flagClass }, /*#__PURE__*/
+                            React.createElement("div", null))), /*#__PURE__*/
+
+
+                    React.createElement("td", { className: "name" }, props.team.name), /*#__PURE__*/
+                    React.createElement("td", null, props.team.p), /*#__PURE__*/
+                    React.createElement("td", null, props.team.w), /*#__PURE__*/
+                    React.createElement("td", null, props.team.d), /*#__PURE__*/
+                    React.createElement("td", null, props.team.l), /*#__PURE__*/
+                    React.createElement("td", null, props.team.f), /*#__PURE__*/
+                    React.createElement("td", null, props.team.a), /*#__PURE__*/
+                    React.createElement("td", null, props.team.gd), /*#__PURE__*/
+                    React.createElement("td", null, props.team.pts)));
+
+
+        }
+
+        //display matches and listen for change of result
+        const Matches = React.createClass({
+            displayName: "Matches",
+            propTypes: {
+                updateMatches: React.PropTypes.func.isRequired,
+                teams: React.PropTypes.array.isRequired,
+                num: React.PropTypes.number.isRequired
+            },
+
+            render: function () {
+                let games = [];
+                let matchNumber = this.props.num;
+                for (let i = 0; i < this.props.teams.length - 1; i++) {
+                    //if (window.CP.shouldStopExecution(0)) break;
+                    for (let j = 1; j < this.props.teams.length; j++) {
+                        //if (window.CP.shouldStopExecution(1)) break;
+                        if (i !== j && i < j) {
+                            matchNumber++;
+                            let flagClassHome = this.props.teams[i].name.toLowerCase().replace(/\s/g, "-");
+                            let flagClassAway = this.props.teams[j].name.toLowerCase().replace(/\s/g, "-");
+                            games.push( /*#__PURE__*/
+                                React.createElement("div", { className: "match" }, /*#__PURE__*/
+                                    React.createElement("div", { className: 'flag ' + flagClassHome }, /*#__PURE__*/
+                                        React.createElement("div", null)), /*#__PURE__*/
+
+                                    React.createElement("input", {
+                                        type: "number", min: "0", data: matchNumber,
+                                        onChange: e => { this.props.updateMatches(e, this.props.teams[i], matchNumber); }
+                                    }), /*#__PURE__*/
+
+                                    React.createElement("div", { className: "v" }, "v"), /*#__PURE__*/
+                                    React.createElement("input", {
+                                        type: "number", min: "0", data: matchNumber,
+                                        onChange: e => { this.props.updateMatches(e, this.props.teams[j], matchNumber); }
+                                    }), /*#__PURE__*/
+
+                                    React.createElement("div", { className: 'flag ' + flagClassAway }, /*#__PURE__*/
+                                        React.createElement("div", null))));
+
+
+
+                        }
+                    } 
+                    //window.CP.exitedLoop(1);
+                } 
+                //window.CP.exitedLoop(0);
+                return /*#__PURE__*/(
+                    React.createElement("div", { className: "matches" },
+                        games));
+
+
+            }
+        });
+
+
+        const Group = React.createClass({
+            displayName: "Group",
+            propTypes: {
+                teams: React.PropTypes.array.isRequired,
+                num: React.PropTypes.number.isRequired,
+                updateMatches: React.PropTypes.func.isRequired
+            },
+
+
+            render: function () {
+                let sortedTable = sortTable([...this.props.teams]);
+                return /*#__PURE__*/(
+                    React.createElement("div", { className: "container" }, /*#__PURE__*/
+                        React.createElement("div", { className: "table-container" }, /*#__PURE__*/
+                            React.createElement("table", null, /*#__PURE__*/
+                                React.createElement(TableHead, null), /*#__PURE__*/
+                                React.createElement("tbody", null,
+                                    sortedTable.map(team => {
+                                        return /*#__PURE__*/(
+                                            React.createElement(Row, { team: team }));
+
+                                    })))), /*#__PURE__*/
+
+
+
+                        React.createElement(Matches, {
+                            teams: this.props.teams,
+                            updateMatches: this.props.updateMatches,
+                            num: this.props.num * 6
+                        })));
+
+
+            }
+        });
+
+
+        // Display knockout stage matches
+        const Knockout = React.createClass({
+            displayName: "Knockout",
+            propTypes: {
+                teams: React.PropTypes.array.isRequired,
+                order: React.PropTypes.array.isRequired,
+                updateKnockout: React.PropTypes.array.isRequired
+            },
+
+
+            render: function () {
+                let teams = this.props.teams;
+                let games = [];
+                let matchNumber;
+                let position = -2;
+                let order = this.props.order;
+                for (let i = 0; i < order.length; i += 2) {
+                    //if (window.CP.shouldStopExecution(2)) break;
+                    let flagClassHome = this.props.teams[order[i]].name.toLowerCase().replace(/\s/g, "-");
+                    let flagClassAway = this.props.teams[order[i + 1]].name.toLowerCase().replace(/\s/g, "-");
+                    matchNumber = i;
+                    position += 2;
+                    games.push( /*#__PURE__*/
+                        React.createElement("div", { className: "match" }, /*#__PURE__*/
+                            React.createElement("div", { className: 'flag ' + flagClassHome }, /*#__PURE__*/
+                                React.createElement("div", null)), /*#__PURE__*/
+
+                            React.createElement("input", {
+                                type: "number", min: "0", data: matchNumber, "data-pos": position,
+                                onChange: e => { this.props.updateKnockout(e, this.props.teams[order[i]], this.props.round); }
+                            }), /*#__PURE__*/
+
+                            React.createElement("div", { className: "v" }, "v"), /*#__PURE__*/
+                            React.createElement("input", {
+                                type: "number", min: "0", data: matchNumber, "data-pos": position + 1,
+                                onChange: e => { this.props.updateKnockout(e, this.props.teams[order[i + 1]], this.props.round); }
+                            }), /*#__PURE__*/
+
+                            React.createElement("div", { className: 'flag ' + flagClassAway }, /*#__PURE__*/
+                                React.createElement("div", null))));
+
+
+
+                } 
+                //window.CP.exitedLoop(2);
+                return /*#__PURE__*/(
+                    React.createElement("div", { className: "matches" },
+                        games));
+
+
+            }
+        });
+
+
+        //display winner of final game
+        Win.PropTypes = {
+            winner: React.PropTypes.array.isRequired
+        };
+
+
+        function Win(props) {
+            let flagClass = props.winner[0].name.toLowerCase().replace(/\s/g, "-");
+            return /*#__PURE__*/(
+                React.createElement("div", { className: "knockout winner" }, /*#__PURE__*/
+                    React.createElement("h2", null, "Winner"), /*#__PURE__*/
+                    React.createElement("div", { className: "flag " + flagClass }, /*#__PURE__*/
+                        React.createElement("div", null)), /*#__PURE__*/
+
+                    React.createElement("div", { className: "winner-name" }, props.winner[0].name)));
+
+
+        }
+
+        //main application component
+        const App = React.createClass({
+            displayName: "App",
+            propTypes: {
+                initialCountries: React.PropTypes.array.isRequired,
+                quarterOrder: React.PropTypes.array.isRequired,
+                semiOrder: React.PropTypes.array.isRequired,
+                finalOrder: React.PropTypes.array.isRequired,
+                blank: React.PropTypes.array.isRequired
+            },
+
+
+            getInitialState: function () {
+                return {
+                    teams: this.formatTeams(this.props.initialCountries),
+                    matchArray: [],
+                    quarterArray: [],
+                    semiArray: [],
+                    finalArray: [],
+                    quarterFinals: this.formatTeams(this.props.blank).slice(0, 8),
+                    semiFinals: this.formatTeams(this.props.blank).slice(0, 4),
+                    final: this.formatTeams(this.props.blank).slice(0, 2),
+                    winner: this.formatTeams(this.props.blank).slice(0, 1),
+                    round: "quarter"
+                };
+
+            },
+
+            formatTeams: function (teamArray) {
+                let array = [];
+                teamArray.map((team, i) => {
+                    array.push({
+                        name: team,
+                        group: Math.ceil((i + 0.1) * 0.25),
+                        p: 0,
+                        w: 0,
+                        d: 0,
+                        l: 0,
+                        f: 0,
+                        a: 0,
+                        gd: 0,
+                        pts: 0
+                    });
+
+                });
+                return array;
+            },
+
+            updateMatches: function (e, team) {
+                let foundMatch;
+                let opponent = {};
+                let matchNumber = e.target.getAttribute('data');
+                let found = this.state.matchArray.some(function (el) {
+                    if (el.matchNumber === matchNumber && el.team === team) {
+                        foundMatch = el;
+                        return el;
+                    }
+                });
+                let a = this.state.matchArray.some(function (el) {
+                    if (el.matchNumber === matchNumber && el.team !== team) {
+                        opponent = el;
+                        return el;
+                    }
+                });
+                if (found) {
+                    foundMatch.goalsScored = e.target.value;
+                    foundMatch.goalsAgainst = opponent.goalsScored || 0;
+                    opponent.goalsScored = opponent.goalsScored || 0;
+                    opponent.goalsAgainst = e.target.value;
+                    this.setState(this.state);
+                }
+                if (!found) {
+                    opponent.goalsScored = opponent.goalsScored;
+                    opponent.goalsAgainst = e.target.value;
+                    this.state.matchArray.push({
+                        team: team,
+                        goalsScored: e.target.value,
+                        goalsAgainst: opponent.goalsScored || 0,
+                        matchNumber: matchNumber
+                    });
+
+                    this.setState(this.state);
+                }
+                this.updateTable(team);
+                this.updateTable(opponent.team);
+            },
+
+            resetTable: team => {
+                team.p = 0;
+                team.f = 0;
+                team.a = 0;
+                team.gd = 0;
+                team.w = 0;
+                team.d = 0;
+                team.l = 0;
+                team.pts = 0;
+            },
+
+            updateTable(team) {
+                if (team) {
+                    this.resetTable(team);
+                }
+                let totalMatches = this.state.matchArray.filter(match => {
+                    return match.team === team;
+                });
+                totalMatches.forEach(match => {
+                    if (match.goalsScored > match.goalsAgainst) {
+                        team.w += 1;
+                        team.pts += 3;
+                    } else if (match.goalsScored === match.goalsAgainst) {
+                        team.d += 1;
+                        team.pts += 1;
+                    } else if (match.goalsScored < match.goalsAgainst) {
+                        team.l += 1;
+                    }
+                    team.p = totalMatches.length;
+                    team.f += parseInt(match.goalsScored);
+                    team.a += parseInt(match.goalsAgainst);
+                    team.gd = team.f - team.a;
+                });
+                this.setState(this.state);
+                this.groupWinners();
+            },
+
+            groupWinners: function () {
+                this.state.quarterFinals = [];
+                let a = [...this.state.teams];
+                let b = [];
+                while (a.length) {
+                    //if (window.CP.shouldStopExecution(3)) break;
+                    b.push(a.splice(0, 4));
+                } 
+                //window.CP.exitedLoop(3);
+                b.forEach(group => {
+                    group.sort(function (a, b) {
+                        return b.f - a.f;
+                    });
+                    group.sort(function (a, b) {
+                        return b.gd - a.gd;
+                    });
+                    group.sort(function (a, b) {
+                        return b.pts - a.pts;
+                    });
+                    this.state.quarterFinals.push(group[0]);
+                    this.state.quarterFinals.push(group[1]);
+                    this.setState(this.state);
+                });
+            },
+
+            updateKnockout: function (e, team, round, position) {
+                let foundMatch;
+                let opponent = {};
+                let matchNumber = e.target.getAttribute('data');
+                let pos = e.target.dataset.pos;
+                let matchArray;
+                let nextRound;
+                if (round === 'quarter') {
+                    matchArray = this.state.quarterArray;
+                    nextRound = this.state.semiFinals;
+                }
+                if (round === 'semi') {
+                    matchArray = this.state.semiArray;
+                    nextRound = this.state.final;
+                }
+                if (round === 'final') {
+                    matchArray = this.state.finalArray;
+                }
+                let found = matchArray.some(function (el) {
+                    if (el.matchNumber === matchNumber && el.team === team) {
+                        foundMatch = el;
+                        return el;
+                    }
+                });
+                let a = matchArray.some(function (el) {
+                    if (el.matchNumber === matchNumber && el.team !== team) {
+                        opponent = el;
+                        return el;
+                    }
+                });
+                if (found) {
+                    foundMatch.goalsScored = e.target.value;
+                    foundMatch.goalsAgainst = opponent.goalsScored || 0;
+                    opponent.goalsScored = opponent.goalsScored || 0;
+                    opponent.goalsAgainst = e.target.value;
+                    opponent.team = opponent.team;
+                    this.setState(this.state);
+                }
+                if (!found) {
+                    opponent.goalsScored = opponent.goalsScored || 0;
+                    opponent.goalsAgainst = e.target.value;
+                    opponent.team = opponent.team;
+                    matchArray[pos] = {
+                        team: team,
+                        goalsScored: e.target.value,
+                        goalsAgainst: opponent.goalsScored || 0,
+                        matchNumber: matchNumber
+                    };
+
+                    this.setState(this.state);
+                }
+                nextRound = [];
+                let newArray = [...matchArray];
+                let totalMatches = newArray.filter(match => {
+                    return match === matchArray[pos];
+                });
+                totalMatches.forEach(match => {
+                    if (match.goalsScored > match.goalsAgainst) {
+                        match.win = true;
+                        opponent.win = false;
+                    } else {
+                        match.win = false;
+                        opponent.win = true;
+                    }
+                });
+                let i = 0;
+                newArray.forEach(team => {
+                    if (team.win) {
+                        if (round === 'quarter') {
+                            this.state.semiFinals[i] = team.team;
+                            i++;
+                        }
+                        if (round === 'semi') {
+                            this.state.final[i] = team.team;
+                            i++;
+                        }
+                        if (round === 'final') {
+                            this.state.winner[i] = team.team;
+                            i++;
+                        }
+                    }
+                });
+                this.setState(this.state);
+            },
+
+            render: function () {
+                let teams = [...this.state.teams];
+                let teamGroups = [];
+                while (teams.length) {
+                    //if (window.CP.shouldStopExecution(4)) break;
+                    teamGroups.push(teams.splice(0, 4));
+                } 
+                //window.CP.exitedLoop(4);
+                let groups = [];
+                teamGroups.forEach((group, i) => {
+                    groups.push( /*#__PURE__*/
+                        React.createElement(Group, {
+                            teams: group,
+                            num: i,
+                            updateMatches: this.updateMatches
+                        }));
+                    i++;
+                });
+                return /*#__PURE__*/(
+                    React.createElement("div", null, /*#__PURE__*/
+                        React.createElement("h1", null, "World Cup Predictor"), /*#__PURE__*/
+                        React.createElement("h2", { className: "group-stage" }, "Group Stage"), /*#__PURE__*/
+                        React.createElement("div", { className: "wrap" },
+                            groups), /*#__PURE__*/
+
+                        React.createElement("div", { className: "knockout quarters" }, /*#__PURE__*/
+                            React.createElement("h2", null, "Quarter Finals"), /*#__PURE__*/
+                            React.createElement(Knockout, {
+                                teams: this.state.quarterFinals,
+                                order: this.props.quarterOrder,
+                                updateKnockout: this.updateKnockout,
+                                round: "quarter"
+                            })), /*#__PURE__*/
+
+                        React.createElement("div", { className: "knockout semi" }, /*#__PURE__*/
+                            React.createElement("h2", null, "Semi Finals"), /*#__PURE__*/
+                            React.createElement(Knockout, {
+                                teams: this.state.semiFinals,
+                                order: this.props.semiOrder,
+                                updateKnockout: this.updateKnockout,
+                                round: "semi"
+                            })), /*#__PURE__*/
+
+                        React.createElement("div", { className: "knockout final" }, /*#__PURE__*/
+                            React.createElement("h2", null, "Final"), /*#__PURE__*/
+                            React.createElement(Knockout, {
+                                teams: this.state.final,
+                                order: this.props.finalOrder,
+                                updateKnockout: this.updateKnockout,
+                                round: "final"
+                            })), /*#__PURE__*/
+
+                        React.createElement(Win, { winner: this.state.winner })));
+
+
+            }
+        });
+
+
+        ReactDOM.render( /*#__PURE__*/React.createElement(App, {
+            initialCountries: countriesArray,
+            quarterOrder: quarterOrder,
+            semiOrder: semiOrder,
+            finalOrder: finalOrder,
+            blank: blank
+        }),
+            document.getElementById('app'));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Deed Balance</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-size: 1vh;
+        }
+        .architects {
+            font-family: 'Architects Daughter', cursive;
+        }
+        .amiri {
+            font-family: 'Amiri', serif;
+        }
+        
+        /* Scale animations */
+        .top-scale {
+            transition: transform 0.3s ease;
+        }
+        .pan {
+            transition: transform 0.3s ease;
+        }
+        
+        /* Chain effect using box-shadow */
+        .chain::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 30%;
+            height: 1.3em;
+            width: 0.3em;
+            border-radius: 0.15em;
+            background-color: #BCBCBC;
+            box-shadow: 
+                0 1.7em 0 #BCBCBC, 0 3.5em 0 #BCBCBC, 0 5.3em 0 #BCBCBC,
+                0 7.1em 0 #BCBCBC, 0 8.9em 0 #BCBCBC, 0 10.6em 0 #BCBCBC,
+                0 12.3em 0 #BCBCBC, 0 14.3em 0 #BCBCBC, 0 16em 0 #BCBCBC,
+                0 17.7em 0 #BCBCBC, 0 19.5em 0 #BCBCBC, 0 21.3em 0 #BCBCBC,
+                0 23.1em 0 #BCBCBC, 0 24.9em 0 #BCBCBC, 0 26.7em 0 #BCBCBC,
+                0 28.5em 0 #BCBCBC, 0 30.3em 0 #BCBCBC, 0 32.1em 0 #BCBCBC,
+                0 33.9em 0 #BCBCBC, 0 35.7em 0 #BCBCBC, 0 37.5em 0 #BCBCBC;
+        }
+
+        /* Deed ball animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        .deed-ball {
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .deed-ball:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        /* Modal animation */
+        @keyframes modalShow {
+            from {
+                transform: translate(-50%, -50%) scale(0);
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        .modal-show {
+            animation: modalShow 0.3s ease;
+        }
+
+        /* Confetti */
+        @keyframes confettiFall {
+            to {
+                transform: translateY(120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
+    <!-- Header -->
+    <div class="fixed top-8 left-0 right-0 text-center z-10">
+        <h1 class="text-[5em] font-bold text-white amiri drop-shadow-2xl mb-[0.2em]">ميزان الأعمال</h1>
+        <p class="text-[2.5em] text-white/90 architects">Daily Deed Balance</p>
+    </div>
+
+    <!-- Table/Floor -->
+    <div class="fixed bottom-0 left-0 right-0 h-[40vh] bg-gradient-to-t from-slate-700 via-slate-600 to-slate-500"></div>
+
+    <!-- Main Scale Container -->
+    <div class="flex flex-col items-center justify-end min-h-screen pb-[2em] gap-[2em]">
+        <!-- Scale Structure -->
+        <div class="relative flex flex-col items-center pointer-events-none mb-[2em]" style="font-size: 1em;">
+            <!-- Top Scale Beam -->
+            <div class="absolute top-0 z-10">
+                <!-- Support Top -->
+                <div class="absolute -top-[5em] left-1/2 -translate-x-1/2 w-[3em] h-[5em] bg-gradient-to-t from-amber-700 to-amber-900">
+                    <!-- Top decoration -->
+                    <div class="absolute -bottom-[5em] left-1/2 -translate-x-1/2 h-[1em] w-[4em] bg-amber-600 rounded-[0.5em]"></div>
+                    <!-- Round top -->
+                    <div class="absolute -top-[3em] w-[3em] h-[3em] bg-gray-300 rounded-full"></div>
+                </div>
+
+                <!-- Main Beam -->
+                <div id="top-scale" class="top-scale relative w-[70em] h-[3em] bg-amber-700 rounded-[1em] shadow-2xl">
+                    <!-- Center circle -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[6em] h-[6em] rounded-full bg-amber-700"></div>
+                    
+                    <!-- Left support -->
+                    <div class="absolute top-1/2 -translate-y-1/2 -left-[1.2em] w-[1.2em] h-[0.9em] bg-amber-900">
+                        <div class="absolute top-1/2 -translate-y-1/2 -left-[2em] bg-amber-600 w-[2em] h-[2.5em] rounded-[1em]"></div>
+                    </div>
+                    
+                    <!-- Right support -->
+                    <div class="absolute top-1/2 -translate-y-1/2 -right-[1.2em] w-[1.2em] h-[0.9em] bg-amber-900">
+                        <div class="absolute top-1/2 -translate-y-1/2 -right-[2em] bg-amber-600 w-[2em] h-[2.5em] rounded-[1em]"></div>
+                    </div>
+
+                    <!-- Left Pan (Good Deeds) -->
+                    <div id="good-pan" class="pan pointer-events-auto absolute -left-[12.5em] top-[0.4em] w-[24em] h-[45em] origin-top">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[3em] font-bold amiri pointer-events-none -mt-[20em]">حسنات</div>
+                        <div class="absolute bottom-[4em] left-1/2 -translate-x-1/2 architects text-[4em] text-white bg-black/30 px-[0.5em] py-[0.2em] rounded-[0.3em] pointer-events-none min-w-[2em] text-center">
+                            <span id="good-count">0</span>
+                        </div>
+                        
+                        <!-- Pan ring -->
+                        <div class="absolute top-[2.5em] left-1/2 -translate-x-1/2 w-[4em] h-[4em] rounded-full border-[0.7em] border-gray-600">
+                            <div class="absolute -top-[3.2em] left-1/2 -translate-x-1/2 h-[4em] w-[0.7em] bg-gray-400 rounded-[0.4em]"></div>
+                        </div>
+
+                        <!-- Chains -->
+                        <div class="chain absolute h-[37em] w-[0.8em] left-1/2 -translate-x-1/2 top-[5.5em] overflow-hidden origin-top rotate-[18deg]"></div>
+                        <div class="chain absolute h-[37em] w-[0.8em] left-1/2 -translate-x-1/2 top-[5.5em] overflow-hidden origin-top -rotate-[18deg]"></div>
+                        <div class="chain absolute h-[37em] w-[0.8em] left-1/2 -translate-x-1/2 top-[5.5em] overflow-hidden origin-top z-20"></div>
+
+                        <!-- Pan bottom -->
+                        <div class="absolute bottom-0 w-[20em] h-[2em] bg-gray-600 ml-[2em] z-10">
+                            <div class="absolute top-0 -left-[2em] w-[2em] h-[2em] bg-gradient-to-br from-transparent from-50% to-gray-600 to-50%"></div>
+                            <div class="absolute top-0 -right-[2em] w-[2em] h-[2em] bg-gradient-to-bl from-gray-600 from-50% to-transparent to-50%"></div>
+                            <div class="absolute -top-[1em] -left-[2.5em] w-[25em] h-[1em] bg-gray-500 rounded-[0.5em] z-20"></div>
+                            
+                            <!-- Deed balls container -->
+                            <div id="good-deeds-container" class="absolute bottom-[2em] left-0 w-full flex flex-wrap gap-[0.5em] justify-center items-end px-[1em] pb-[1em]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right Pan (Bad Deeds) -->
+                    <div id="bad-pan" class="pan pointer-events-auto absolute -right-[12.5em] top-[0.4em] w-[24em] h-[45em] origin-top">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[3em] font-bold amiri pointer-events-none -mt-[20em]">سيئات</div>
+                        <div class="absolute bottom-[4em] left-1/2 -translate-x-1/2 architects text-[4em] text-white bg-black/30 px-[0.5em] py-[0.2em] rounded-[0.3em] pointer-events-none min-w-[2em] text-center">
+                            <span id="bad-count">0</span>
+                        </div>
+                        
+                        <!-- Pan ring -->
+                        <div class="absolute top-[2.5em] left-1/2 -translate-x-1/2 w-[4em] h-[4em] rounded-full border-[0.7em] border-gray-600">
+                            <div class="absolute -top-[3.2em] left-1/2 -translate-x-1/2 h-[4em] w-[0.7em] bg-gray-400 rounded-[0.4em]"></div>
+                        </div>
+
+                        <!-- Chains -->
+                        <div class="chain absolute h-[37em] w-[0.8em] left-1/2 -translate-x-1/2 top-[5.5em] overflow-hidden origin-top rotate-[18deg]"></div>
+                        <div class="chain absolute h-[37em] w-[0.8em] left-1/2 -translate-x-1/2 top-[5.5em] overflow-hidden origin-top -rotate-[18deg]"></div>
+                        <div class="chain absolute h-[37em] w-[0.8em] left-1/2 -translate-x-1/2 top-[5.5em] overflow-hidden origin-top z-20"></div>
+
+                        <!-- Pan bottom -->
+                        <div class="absolute bottom-0 w-[20em] h-[2em] bg-gray-600 ml-[2em] z-10">
+                            <div class="absolute top-0 -left-[2em] w-[2em] h-[2em] bg-gradient-to-br from-transparent from-50% to-gray-600 to-50%"></div>
+                            <div class="absolute top-0 -right-[2em] w-[2em] h-[2em] bg-gradient-to-bl from-gray-600 from-50% to-transparent to-50%"></div>
+                            <div class="absolute -top-[1em] -left-[2.5em] w-[25em] h-[1em] bg-gray-500 rounded-[0.5em] z-20"></div>
+                            
+                            <!-- Deed balls container -->
+                            <div id="bad-deeds-container" class="absolute bottom-[2em] left-0 w-full flex flex-wrap gap-[0.5em] justify-center items-end px-[1em] pb-[1em]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center stick -->
+            <div class="h-[35em] w-[3em] rounded-t-[1.5em] bg-amber-700 relative mb-[1.8em]">
+                <div class="absolute w-[4em] h-[6em] rounded-[2em] -left-[0.5em] top-[13em] bg-amber-700"></div>
+                <div class="absolute top-[15em] w-[5em] h-[8em] bg-amber-700 rounded-[2.5em] -left-[1em]"></div>
+            </div>
+
+            <!-- Base -->
+            <div class="relative w-[18em] h-[1.2em] bg-gray-500 rounded-t-[0.8em]">
+                <div class="absolute -top-[1.8em] left-[2em] w-[14em] h-[1.8em] bg-gray-300 rounded-t-[0.8em]"></div>
+                <div class="absolute top-[1.2em] -left-[1.5em] w-[21em] h-[2em] bg-gray-600 rounded-t-[0.8em]"></div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="relative z-10 flex gap-[3em] mb-[1em]">
+            <div class="dropdown dropdown-top">
+                <button tabindex="0" class="btn btn-success btn-lg text-[2.5em] architects font-bold shadow-xl">
+                    + حسنة<br>Good Deed
+                </button>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow-2xl bg-base-100 rounded-box w-80 text-[1.5em] mb-2">
+                    <li><a onclick="addDeed('prayer', 'good')">🕌 Prayer (صلاة) - 10</a></li>
+                    <li><a onclick="addDeed('quran', 'good')">📖 Quran Reading - 8</a></li>
+                    <li><a onclick="addDeed('charity', 'good')">💰 Charity (صدقة) - 7</a></li>
+                    <li><a onclick="addDeed('kindness', 'good')">❤️ Act of Kindness - 5</a></li>
+                    <li><a onclick="addDeed('dhikr', 'good')">📿 Dhikr/Dua - 4</a></li>
+                    <li><a onclick="addDeed('smile', 'good')">😊 Smile/Good Word - 2</a></li>
+                </ul>
+            </div>
+
+            <button onclick="showResults()" class="btn btn-primary btn-lg text-[2em] architects font-bold shadow-xl">
+                📊 Results
+            </button>
+
+            <div class="dropdown dropdown-top">
+                <button tabindex="0" class="btn btn-error btn-lg text-[2.5em] architects font-bold shadow-xl">
+                    + سيئة<br>Bad Deed
+                </button>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow-2xl bg-base-100 rounded-box w-80 text-[1.5em] mb-2">
+                    <li><a onclick="addDeed('major-sin', 'bad')">⚠️ Major Sin - 10</a></li>
+                    <li><a onclick="addDeed('neglect', 'bad')">🚫 Neglecting Prayer - 8</a></li>
+                    <li><a onclick="addDeed('lie', 'bad')">🤥 Lying - 7</a></li>
+                    <li><a onclick="addDeed('gossip', 'bad')">💬 Gossip/Backbiting - 6</a></li>
+                    <li><a onclick="addDeed('anger', 'bad')">😠 Anger/Harsh Words - 5</a></li>
+                    <li><a onclick="addDeed('waste', 'bad')">⏰ Time Wasting - 3</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <dialog id="results_modal" class="modal">
+        <div class="modal-box max-w-4xl modal-show">
+            <h3 class="font-bold text-5xl amiri mb-4 text-center" id="modal-title"></h3>
+            <p class="text-2xl mb-4 architects text-center" id="modal-message"></p>
+            
+            <div class="stats stats-vertical lg:stats-horizontal shadow w-full mb-4">
+                <div class="stat">
+                    <div class="stat-title">Good Deeds</div>
+                    <div class="stat-value text-success" id="modal-good-total">0</div>
+                    <div class="stat-desc" id="modal-good-weight"></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Bad Deeds</div>
+                    <div class="stat-value text-error" id="modal-bad-total">0</div>
+                    <div class="stat-desc" id="modal-bad-weight"></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Balance</div>
+                    <div class="stat-value" id="modal-balance">0</div>
+                    <div class="stat-desc">Weight difference</div>
+                </div>
+            </div>
+
+            <div class="alert shadow-lg mb-4">
+                <div class="w-full">
+                    <h4 class="font-bold text-xl mb-2 architects">📝 Suggestions:</h4>
+                    <ul class="list-disc list-inside space-y-2 text-lg architects" id="modal-suggestions"></ul>
+                </div>
+            </div>
+
+            <div class="modal-action">
+                <form method="dialog" class="flex gap-2">
+                    <button onclick="resetScale()" class="btn btn-warning">🔄 Reset Day</button>
+                    <button class="btn btn-primary">Close</button>
+                </form>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+
+    <script>
+        const deedCategories = {
+            good: {
+                'prayer': { name: '🕌', weight: 10, color: 'from-blue-400 to-blue-600' },
+                'quran': { name: '📖', weight: 8, color: 'from-green-400 to-green-600' },
+                'charity': { name: '💰', weight: 7, color: 'from-yellow-400 to-yellow-600' },
+                'kindness': { name: '❤️', weight: 5, color: 'from-pink-400 to-pink-600' },
+                'dhikr': { name: '📿', weight: 4, color: 'from-purple-400 to-purple-600' },
+                'smile': { name: '😊', weight: 2, color: 'from-orange-400 to-orange-600' }
+            },
+            bad: {
+                'major-sin': { name: '⚠️', weight: 10, color: 'from-gray-700 to-black' },
+                'neglect': { name: '🚫', weight: 8, color: 'from-red-800 to-black' },
+                'lie': { name: '🤥', weight: 7, color: 'from-red-700 to-red-900' },
+                'gossip': { name: '💬', weight: 6, color: 'from-purple-700 to-purple-900' },
+                'anger': { name: '😠', weight: 5, color: 'from-orange-700 to-orange-900' },
+                'waste': { name: '⏰', weight: 3, color: 'from-gray-600 to-gray-800' }
+            }
+        };
+
+        let goodDeeds = [];
+        let badDeeds = [];
+
+        function addDeed(category, type) {
+            const deed = {
+                id: Date.now() + Math.random(),
+                category: category,
+                ...deedCategories[type][category]
+            };
+
+            if (type === 'good') {
+                goodDeeds.push(deed);
+                renderDeed(deed, 'good-deeds-container');
+            } else {
+                badDeeds.push(deed);
+                renderDeed(deed, 'bad-deeds-container');
+            }
+
+            updateScale();
+        }
+
+        function renderDeed(deed, containerId) {
+            const container = document.getElementById(containerId);
+            const size = Math.max(40, Math.min(60, deed.weight * 5));
+            
+            const ball = document.createElement('div');
+            ball.className = `deed-ball bg-gradient-to-br ${deed.color} rounded-full shadow-2xl flex items-center justify-center text-white font-bold border-4 border-white/50`;
+            ball.style.width = size + 'px';
+            ball.style.height = size + 'px';
+            ball.style.fontSize = (size / 3) + 'px';
+            ball.title = `${deed.name} Weight: ${deed.weight} - Click to remove`;
+            ball.dataset.id = deed.id;
+            ball.innerHTML = deed.name;
+            
+            ball.onclick = () => removeDeed(deed.id, containerId === 'good-deeds-container' ? 'good' : 'bad');
+            
+            container.appendChild(ball);
+        }
+
+        function removeDeed(id, type) {
+            if (type === 'good') {
+                goodDeeds = goodDeeds.filter(d => d.id !== id);
+            } else {
+                badDeeds = badDeeds.filter(d => d.id !== id);
+            }
+            
+            const ball = document.querySelector(`[data-id="${id}"]`);
+            if (ball) {
+                ball.style.transform = 'scale(0)';
+                setTimeout(() => ball.remove(), 300);
+            }
+            
+            updateScale();
+        }
+
+        function updateScale() {
+            const goodWeight = goodDeeds.reduce((sum, d) => sum + d.weight, 0);
+            const badWeight = badDeeds.reduce((sum, d) => sum + d.weight, 0);
+            
+            document.getElementById('good-count').textContent = goodWeight;
+            document.getElementById('bad-count').textContent = badWeight;
+            
+            const topScale = document.getElementById('top-scale');
+            const goodPan = document.getElementById('good-pan');
+            const badPan = document.getElementById('bad-pan');
+            
+            const maxDeg = 30;
+            const diff = goodWeight - badWeight;
+            let degs = (diff * maxDeg) / Math.max(goodWeight, badWeight, 5);
+            
+            if (degs > maxDeg) degs = maxDeg;
+            if (degs < -maxDeg) degs = -maxDeg;
+            
+            topScale.style.transform = `rotate(${degs}deg)`;
+            goodPan.style.transform = `rotate(${-degs}deg)`;
+            badPan.style.transform = `rotate(${-degs}deg)`;
+        }
+
+        function showResults() {
+            const modal = document.getElementById('results_modal');
+            const goodWeight = goodDeeds.reduce((sum, d) => sum + d.weight, 0);
+            const badWeight = badDeeds.reduce((sum, d) => sum + d.weight, 0);
+            const balance = goodWeight - badWeight;
+            
+            document.getElementById('modal-good-total').textContent = goodDeeds.length;
+            document.getElementById('modal-good-weight').textContent = `Total weight: ${goodWeight}`;
+            document.getElementById('modal-bad-total').textContent = badDeeds.length;
+            document.getElementById('modal-bad-weight').textContent = `Total weight: ${badWeight}`;
+            document.getElementById('modal-balance').textContent = balance > 0 ? `+${balance}` : balance;
+            
+            let title, message, suggestions;
+            
+            if (balance > 10) {
+                title = "يوم مبارك! 🌟 Blessed Day!";
+                message = "MashaAllah! Your good deeds significantly outweigh the bad.";
+                suggestions = [
+                    "Keep up this amazing momentum!",
+                    "Consider extra voluntary prayers (Sunnah/Nafl)",
+                    "Make dua for those struggling",
+                    "Share your positivity with others"
+                ];
+            } else if (balance > 0) {
+                title = "الحمد لله 🙏 Good Progress!";
+                message = "Great! You have more good deeds than bad.";
+                suggestions = [
+                    "You're on the right path!",
+                    "Read or listen to Quran",
+                    "Do a random act of kindness",
+                    "Aim to improve tomorrow"
+                ];
+            } else if (balance === 0) {
+                title = "يوم متوازن ⚖️ Balanced Day";
+                message = "Your deeds are balanced. Let's tip it toward good!";
+                suggestions = [
+                    "Add one more good deed before bed",
+                    "Reflect on what went well today",
+                    "Make sincere tawbah (repentance)",
+                    "Set intentions for tomorrow"
+                ];
+            } else {
+                title = "استغفر الله 💙 Time to Reflect";
+                message = "Bad deeds outweigh the good. But tomorrow is a fresh start!";
+                suggestions = [
+                    "Make sincere tawbah and seek forgiveness",
+                    "Pray and reconnect with Allah",
+                    "Do good deeds to erase the bad",
+                    "Read Quran and reflect",
+                    "Remember: Allah is Most Merciful"
+                ];
+            }
+            
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            
+            const suggestionsList = document.getElementById('modal-suggestions');
+            suggestionsList.innerHTML = suggestions.map(s => `<li>${s}</li>`).join('');
+            
+            modal.showModal();
+        }
+
+        function resetScale() {
+            if (confirm('Reset your day? This will clear all deeds.')) {
+                goodDeeds = [];
+                badDeeds = [];
+                document.getElementById('good-deeds-container').innerHTML = '';
+                document.getElementById('bad-deeds-container').innerHTML = '';
+                updateScale();
+            }
+        }
+    </script>
+</body>
+</html>

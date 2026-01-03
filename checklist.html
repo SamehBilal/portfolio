@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Life Checklist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .checked-item {
+            background-color: #f0fdfa;
+            border-color: #2dd4bf;
+        }
+        .progress-bar {
+            transition: width 0.5s ease-out;
+        }
+        
+        /* SVG Checkbox Animation Styles */
+        .checkbox-container {
+            position: relative;
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+        }
+        
+        .checkbox-input {
+            position: absolute;
+            opacity: 0;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .checkbox-box {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #cbd5e1;
+            border-radius: 6px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-input:checked ~ .checkbox-box {
+            background: #14b8a6;
+            border-color: #14b8a6;
+        }
+        
+        .checkbox-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+        }
+        
+        .checkbox-path {
+            fill: none;
+            stroke: white;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            transition: stroke-dashoffset 0.4s cubic-bezier(0.65, 0, 0.45, 1);
+        }
+        
+        .checkbox-input:checked ~ .checkbox-svg .checkbox-path {
+            stroke-dashoffset: 0;
+        }
+
+        [dir="rtl"] {
+            direction: rtl;
+        }
+        
+        [dir="rtl"] body {
+            text-align: right;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 p-4 md:p-8">
+    <!-- Language Selector -->
+    <div class="max-w-4xl mx-auto mb-4">
+        <div class="flex justify-end gap-2">
+            <button onclick="changeLanguage('en')" class="lang-btn px-4 py-2 rounded-lg bg-white shadow hover:shadow-md transition-all text-sm font-medium" data-lang="en">
+                English
+            </button>
+            <button onclick="changeLanguage('ar')" class="lang-btn px-4 py-2 rounded-lg bg-white shadow hover:shadow-md transition-all text-sm font-medium" data-lang="ar">
+                العربية
+            </button>
+            <button onclick="changeLanguage('fr')" class="lang-btn px-4 py-2 rounded-lg bg-white shadow hover:shadow-md transition-all text-sm font-medium" data-lang="fr">
+                Français
+            </button>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-teal-900 mb-2" data-translate="title">
+                Islamic Life Checklist
+            </h1>
+            <p class="text-teal-700 text-lg" data-translate="subtitle">
+                A journey of faith, growth, and service
+            </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg mb-8">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-semibold text-gray-700" data-translate="progress">Progress</span>
+                <span class="text-sm font-bold text-teal-600" id="progress-text">
+                    0 / 50
+                </span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                <div id="progress-bar" class="bg-gradient-to-r from-teal-500 to-emerald-500 h-full rounded-full progress-bar" style="width: 0%"></div>
+            </div>
+            <p class="text-xs text-gray-500 mt-2 text-center" id="progress-percentage">
+                <span data-translate="complete">Complete</span> - <span data-translate="keepGoing">Keep going!</span> 🌙
+            </p>
+        </div>
+
+        <!-- Checklist Items -->
+        <div id="checklist-container" class="space-y-3"></div>
+
+        <!-- Footer -->
+        <div class="mt-12 text-center text-gray-600 text-sm">
+            <p class="mb-2" data-translate="footer">May Allah accept all your efforts 🤲</p>
+            <p class="text-xs" data-translate="autoSave">Your progress is saved automatically</p>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                title: "Islamic Life Checklist",
+                subtitle: "A journey of faith, growth, and service",
+                progress: "Progress",
+                complete: "Complete",
+                keepGoing: "Keep going!",
+                footer: "May Allah accept all your efforts 🤲",
+                autoSave: "Your progress is saved automatically",
+                categories: {
+                    spiritual: "spiritual",
+                    knowledge: "knowledge",
+                    charity: "charity",
+                    community: "community",
+                    family: "family",
+                    personal: "personal"
+                },
+                items: [
+                    "Learn to recite Surah Al-Fatiha",
+                    "Memorize your first Surah",
+                    "Learn how to perform Wudu",
+                    "Pray your first Salah",
+                    "Fast your first day of Ramadan",
+                    "Complete your first full Ramadan",
+                    "Give your first Sadaqah",
+                    "Learn the 5 Pillars of Islam",
+                    "Read a book about the Prophet's life",
+                    "Attend Jummah prayer",
+                    "Visit a mosque for the first time",
+                    "Make a Muslim friend",
+                    "Attend an Islamic lecture or halaqah",
+                    "Learn the meaning of Ayatul Kursi",
+                    "Memorize the 99 Names of Allah",
+                    "Pray Tahajjud for the first time",
+                    "Complete reading the Quran",
+                    "Learn about the Seerah",
+                    "Give Zakat",
+                    "Feed someone who is fasting",
+                    "Attend Eid prayer",
+                    "Visit the sick",
+                    "Volunteer at a community service",
+                    "Learn basic Arabic",
+                    "Understand Tafsir of a Surah",
+                    "Perform Umrah",
+                    "Perform Hajj",
+                    "Help organize an Islamic event",
+                    "Teach someone about Islam",
+                    "Read Sahih Bukhari or Muslim",
+                    "Establish consistent daily Adhkar",
+                    "Pray all 5 daily prayers on time for a month",
+                    "Make Dua at Laylatul Qadr",
+                    "Help a family in need",
+                    "Build or maintain a good relationship with parents",
+                    "Forgive someone who wronged you",
+                    "Seek forgiveness from someone you wronged",
+                    "Plant a tree or do environmental good",
+                    "Study Islamic jurisprudence (Fiqh)",
+                    "Attend an Islamic conference",
+                    "Learn about the Sahaba",
+                    "Make a habit of daily Quran recitation",
+                    "Sponsor an orphan or contribute to orphan care",
+                    "Visit the grave of a loved one and make Dua",
+                    "Learn the etiquette of visiting the Prophet's mosque",
+                    "Maintain family ties (Silat al-Rahim)",
+                    "Overcome a bad habit for the sake of Allah",
+                    "Make sincere Tawbah and renew your faith",
+                    "Help someone memorize Quran",
+                    "Leave a legacy of continuous charity (Sadaqah Jariyah)"
+                ]
+            },
+            ar: {
+                title: "قائمة الحياة الإسلامية",
+                subtitle: "رحلة من الإيمان والنمو والخدمة",
+                progress: "التقدم",
+                complete: "مكتمل",
+                keepGoing: "استمر!",
+                footer: "تقبل الله جميع جهودك 🤲",
+                autoSave: "يتم حفظ تقدمك تلقائياً",
+                categories: {
+                    spiritual: "روحاني",
+                    knowledge: "معرفة",
+                    charity: "خيري",
+                    community: "مجتمعي",
+                    family: "عائلي",
+                    personal: "شخصي"
+                },
+                items: [
+                    "تعلم قراءة سورة الفاتحة",
+                    "حفظ أول سورة لك",
+                    "تعلم كيفية الوضوء",
+                    "صلِّ أول صلاة لك",
+                    "صم أول يوم من رمضان",
+                    "أكمل أول رمضان كامل",
+                    "تصدق بأول صدقة لك",
+                    "تعلم أركان الإسلام الخمسة",
+                    "اقرأ كتاباً عن حياة النبي",
+                    "حضور صلاة الجمعة",
+                    "زيارة المسجد لأول مرة",
+                    "اصنع صداقة مسلمة",
+                    "حضور محاضرة إسلامية أو حلقة",
+                    "تعلم معنى آية الكرسي",
+                    "حفظ أسماء الله الحسنى",
+                    "صلِّ التهجد لأول مرة",
+                    "أكمل قراءة القرآن",
+                    "تعلم عن السيرة النبوية",
+                    "أخرج الزكاة",
+                    "أطعم صائماً",
+                    "حضور صلاة العيد",
+                    "زيارة المريض",
+                    "تطوع في خدمة مجتمعية",
+                    "تعلم اللغة العربية الأساسية",
+                    "فهم تفسير سورة",
+                    "أداء العمرة",
+                    "أداء فريضة الحج",
+                    "ساعد في تنظيم حدث إسلامي",
+                    "علّم شخصاً عن الإسلام",
+                    "اقرأ صحيح البخاري أو مسلم",
+                    "أسس أذكاراً يومية ثابتة",
+                    "صلِّ الصلوات الخمس في وقتها لشهر",
+                    "ادعُ في ليلة القدر",
+                    "ساعد عائلة محتاجة",
+                    "بناء أو الحفاظ على علاقة جيدة مع الوالدين",
+                    "اسامح من أساء إليك",
+                    "اطلب المغفرة ممن أسأت إليه",
+                    "ازرع شجرة أو افعل خيراً بيئياً",
+                    "ادرس الفقه الإسلامي",
+                    "حضور مؤتمر إسلامي",
+                    "تعلم عن الصحابة",
+                    "اجعل تلاوة القرآن اليومية عادة",
+                    "اكفل يتيماً أو ساهم في رعاية الأيتام",
+                    "زر قبر عزيز وادعُ له",
+                    "تعلم آداب زيارة مسجد النبي",
+                    "حافظ على صلة الرحم",
+                    "تغلب على عادة سيئة من أجل الله",
+                    "تب توبة نصوحة وجدد إيمانك",
+                    "ساعد شخصاً على حفظ القرآن",
+                    "اترك إرثاً من الصدقة الجارية"
+                ]
+            },
+            fr: {
+                title: "Liste de vie islamique",
+                subtitle: "Un voyage de foi, de croissance et de service",
+                progress: "Progrès",
+                complete: "Terminé",
+                keepGoing: "Continue!",
+                footer: "Qu'Allah accepte tous vos efforts 🤲",
+                autoSave: "Votre progression est sauvegardée automatiquement",
+                categories: {
+                    spiritual: "spirituel",
+                    knowledge: "connaissance",
+                    charity: "charité",
+                    community: "communauté",
+                    family: "famille",
+                    personal: "personnel"
+                },
+                items: [
+                    "Apprendre à réciter la Sourate Al-Fatiha",
+                    "Mémoriser votre première Sourate",
+                    "Apprendre comment faire les ablutions",
+                    "Prier votre première Salah",
+                    "Jeûner votre premier jour de Ramadan",
+                    "Compléter votre premier Ramadan complet",
+                    "Donner votre première Sadaqah",
+                    "Apprendre les 5 Piliers de l'Islam",
+                    "Lire un livre sur la vie du Prophète",
+                    "Assister à la prière du Jummah",
+                    "Visiter une mosquée pour la première fois",
+                    "Se faire un ami musulman",
+                    "Assister à une conférence islamique ou halaqah",
+                    "Apprendre le sens d'Ayatul Kursi",
+                    "Mémoriser les 99 Noms d'Allah",
+                    "Prier Tahajjud pour la première fois",
+                    "Terminer la lecture du Coran",
+                    "Apprendre la Seerah",
+                    "Donner la Zakat",
+                    "Nourrir quelqu'un qui jeûne",
+                    "Assister à la prière de l'Aïd",
+                    "Visiter les malades",
+                    "Faire du bénévolat dans un service communautaire",
+                    "Apprendre l'arabe de base",
+                    "Comprendre le Tafsir d'une Sourate",
+                    "Accomplir la Omra",
+                    "Accomplir le Hajj",
+                    "Aider à organiser un événement islamique",
+                    "Enseigner l'Islam à quelqu'un",
+                    "Lire Sahih Bukhari ou Muslim",
+                    "Établir des Adhkar quotidiens constants",
+                    "Prier les 5 prières quotidiennes à l'heure pendant un mois",
+                    "Faire des Duas pendant Laylatul Qadr",
+                    "Aider une famille dans le besoin",
+                    "Construire ou maintenir une bonne relation avec les parents",
+                    "Pardonner quelqu'un qui vous a fait du tort",
+                    "Demander pardon à quelqu'un que vous avez blessé",
+                    "Planter un arbre ou faire du bien environnemental",
+                    "Étudier la jurisprudence islamique (Fiqh)",
+                    "Assister à une conférence islamique",
+                    "Apprendre sur les Sahaba",
+                    "Prendre l'habitude de la récitation quotidienne du Coran",
+                    "Parrainer un orphelin ou contribuer aux soins des orphelins",
+                    "Visiter la tombe d'un être cher et faire des Duas",
+                    "Apprendre l'étiquette de la visite de la mosquée du Prophète",
+                    "Maintenir les liens familiaux (Silat al-Rahim)",
+                    "Surmonter une mauvaise habitude pour Allah",
+                    "Faire une Tawbah sincère et renouveler votre foi",
+                    "Aider quelqu'un à mémoriser le Coran",
+                    "Laisser un héritage de charité continue (Sadaqah Jariyah)"
+                ]
+            }
+        };
+
+        const checklistItems = [
+            { id: 1, category: "spiritual" },
+            { id: 2, category: "spiritual" },
+            { id: 3, category: "spiritual" },
+            { id: 4, category: "spiritual" },
+            { id: 5, category: "spiritual" },
+            { id: 6, category: "spiritual" },
+            { id: 7, category: "charity" },
+            { id: 8, category: "knowledge" },
+            { id: 9, category: "knowledge" },
+            { id: 10, category: "spiritual" },
+            { id: 11, category: "spiritual" },
+            { id: 12, category: "community" },
+            { id: 13, category: "community" },
+            { id: 14, category: "knowledge" },
+            { id: 15, category: "spiritual" },
+            { id: 16, category: "spiritual" },
+            { id: 17, category: "spiritual" },
+            { id: 18, category: "knowledge" },
+            { id: 19, category: "charity" },
+            { id: 20, category: "charity" },
+            { id: 21, category: "spiritual" },
+            { id: 22, category: "community" },
+            { id: 23, category: "community" },
+            { id: 24, category: "knowledge" },
+            { id: 25, category: "knowledge" },
+            { id: 26, category: "spiritual" },
+            { id: 27, category: "spiritual" },
+            { id: 28, category: "community" },
+            { id: 29, category: "community" },
+            { id: 30, category: "knowledge" },
+            { id: 31, category: "spiritual" },
+            { id: 32, category: "spiritual" },
+            { id: 33, category: "spiritual" },
+            { id: 34, category: "charity" },
+            { id: 35, category: "family" },
+            { id: 36, category: "personal" },
+            { id: 37, category: "personal" },
+            { id: 38, category: "charity" },
+            { id: 39, category: "knowledge" },
+            { id: 40, category: "community" },
+            { id: 41, category: "knowledge" },
+            { id: 42, category: "spiritual" },
+            { id: 43, category: "charity" },
+            { id: 44, category: "personal" },
+            { id: 45, category: "knowledge" },
+            { id: 46, category: "family" },
+            { id: 47, category: "personal" },
+            { id: 48, category: "spiritual" },
+            { id: 49, category: "community" },
+            { id: 50, category: "charity" }
+        ];
+
+        const categoryColors = {
+            spiritual: "bg-emerald-100 text-emerald-800 border-emerald-300",
+            knowledge: "bg-blue-100 text-blue-800 border-blue-300",
+            charity: "bg-amber-100 text-amber-800 border-amber-300",
+            community: "bg-purple-100 text-purple-800 border-purple-300",
+            family: "bg-pink-100 text-pink-800 border-pink-300",
+            personal: "bg-indigo-100 text-indigo-800 border-indigo-300"
+        };
+
+        let currentLang = localStorage.getItem('islamicChecklistLang') || 'en';
+        let checkedItems = {};
+        
+        try {
+            const saved = localStorage.getItem('islamicChecklist');
+            if (saved) {
+                checkedItems = JSON.parse(saved);
+            }
+        } catch (e) {
+            console.error('Error loading saved data:', e);
+        }
+
+        function saveProgress() {
+            localStorage.setItem('islamicChecklist', JSON.stringify(checkedItems));
+        }
+
+        function updateProgress() {
+            const checkedCount = Object.values(checkedItems).filter(Boolean).length;
+            const total = checklistItems.length;
+            const progress = (checkedCount / total) * 100;
+
+            document.getElementById('progress-text').textContent = `${checkedCount} / ${total}`;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            const completeText = document.querySelector('[data-translate="complete"]').textContent;
+            const keepGoingText = document.querySelector('[data-translate="keepGoing"]').textContent;
+            document.getElementById('progress-percentage').innerHTML = `${progress.toFixed(1)}% ${completeText} - ${keepGoingText} 🌙`;
+        }
+
+        function toggleItem(id) {
+            checkedItems[id] = !checkedItems[id];
+            saveProgress();
+            updateProgress();
+            renderItem(id);
+        }
+
+        function renderItem(id) {
+            const item = checklistItems.find(i => i.id === id);
+            const element = document.getElementById(`item-${id}`);
+            const isChecked = checkedItems[id];
+            const itemText = translations[currentLang].items[id - 1];
+            const categoryText = translations[currentLang].categories[item.category];
+
+            element.className = `bg-white rounded-xl p-4 shadow-md hover:shadow-xl transition-all duration-200 cursor-pointer border-2 ${
+                isChecked ? 'checked-item' : 'border-transparent hover:border-teal-200'
+            }`;
+
+            element.innerHTML = `
+                <div class="flex items-start gap-4">
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="checkbox-input" ${isChecked ? 'checked' : ''} onchange="toggleItem(${id})">
+                        <div class="checkbox-box"></div>
+                        <svg class="checkbox-svg" viewBox="0 0 30 30">
+                            <path class="checkbox-path" d="M 6 14 L 12 20 L 24 8"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-lg transition-all duration-200 ${
+                            isChecked ? 'text-gray-500 line-through' : 'text-gray-800'
+                        }">
+                            ${itemText}
+                        </p>
+                        <span class="inline-block mt-2 px-3 py-1 rounded-full text-xs font-medium border ${categoryColors[item.category]}">
+                            ${categoryText}
+                        </span>
+                    </div>
+                    <div class="flex-shrink-0 text-sm font-bold text-gray-400">
+                        #${item.id}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            container.innerHTML = '';
+            
+            checklistItems.forEach(item => {
+                const div = document.createElement('div');
+                div.id = `item-${item.id}`;
+                container.appendChild(div);
+                renderItem(item.id);
+            });
+
+            updateProgress();
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('islamicChecklistLang', lang);
+            
+            // Update direction for Arabic
+            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', lang);
+            
+            // Update all translated elements
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            // Highlight active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('bg-teal-500', 'text-white');
+                    btn.classList.remove('bg-white');
+                } else {
+                    btn.classList.remove('bg-teal-500', 'text-white');
+                    btn.classList.add('bg-white');
+                }
+            });
+            
+            renderChecklist();
+        }
+
+        // Initialize
+        changeLanguage(currentLang);
+    </script>
+</body>
+</html>

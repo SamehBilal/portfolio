@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+          }
+          
+          :root {
+            --bg: hsl(199, 33%, 15%);
+            --text: hsl(200, 23%, 72%);
+            --primary: hsl(178, 60%, 48%);
+            --accent: hsl(39, 88%, 58%);
+            --secondary: hsl(200, 35%, 19%);
+            --gray: hsl(200, 23%, 72%);
+            --shadow: 0 0.2em 0 0 hsl(208, 35%, 7%, 0.5);
+          }
+          
+          html {
+            color-scheme: dark;
+          }
+          
+          body {
+            font-size: clamp(1rem, 4vw, 2rem);
+            font-family: monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+          }
+          
+          main {
+            min-height: 100vh;
+            display: grid;
+            gap: 1em;
+            place-content: center;
+            text-align: center;
+            justify-items: center;
+            padding-inline: 1rem;
+          }
+          
+          h1 {
+            margin: 0;
+            font-size: 1.5em;
+          }
+          
+          input[type="number"] {
+            --_shadow-offset: 0.35em;
+            width: min(100%, 30rem);
+            font: inherit;
+            padding: 0.5em 0.7em;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            background-color: var(--bg);
+            border: 1px solid var(--secondary);
+            border-radius: 0.3em;
+            box-shadow: var(--shadow);
+            transform: translateY(-0.2em);
+          }
+          
+          input[type="number"]:focus {
+            box-shadow: none;
+            transform: none;
+          }
+          
+          input[type="number"]:focus {
+            outline: 1px solid transparent;
+            border-color: var(--primary);
+          }
+          
+          input[type="number"]:invalid {
+            border-color: var(--accent);
+          }
+          
+          /* Chrome, Safari, Edge, Opera */
+          input::-webkit-outer-spin-button,
+          input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+          
+          /* Firefox */
+          input[type="number"] {
+            -moz-appearance: textfield;
+          }
+          
+          .results {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+          
+            & span {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: bold;
+              width: 2.5em;
+              aspect-ratio: 1/ 1;
+              padding: 0.5em;
+              background-color: var(--secondary);
+              border-radius: 0.25em;
+              box-shadow: var(--shadow);
+          
+              &.true {
+                background-color: var(--primary);
+                color: var(--bg);
+              }
+            }
+          }
+          
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Is it divisible?</h1>
+      
+        <input type="number" pattern="[0-9]" id="number" placeholder="e.g. 362880">
+      
+        <div class="results">
+          <span>1</span>
+          <span>2</span>
+          <span>3</span>
+          <span>4</span>
+          <span>5</span>
+          <span>6</span>
+          <span>7</span>
+          <span>8</span>
+          <span>9</span>
+        </div>
+      </main>
+      <script>
+        class NumberDivisibilityChecker {
+            constructor(number) {
+              this.number = parseInt(number);
+              this.divisibilityResults = [
+                this.isDivisibleByOne(),
+                this.isDivisibleByTwo(),
+                this.isDivisibleByThree(),
+                this.isDivisibleByFour(),
+                this.isDivisibleByFive(),
+                this.isDivisibleBySix(),
+                this.isDivisibleBySeven(),
+                this.isDivisibleByEight(),
+                this.isDivisibleByNine()
+              ];
+            }
+          
+            isDivisibleByOne() {
+              return this.number % 1 == 0;
+            }
+            isDivisibleByTwo() {
+              return this.number % 2 == 0;
+            }
+            isDivisibleByThree() {
+              return this.number % 3 == 0;
+            }
+            isDivisibleByFour() {
+              return this.number % 4 == 0;
+            }
+            isDivisibleByFive() {
+              return this.number % 5 == 0;
+            }
+            isDivisibleBySix() {
+              return this.number % 6 == 0;
+            }
+            isDivisibleBySeven() {
+              return this.number % 7 == 0;
+            }
+            isDivisibleByEight() {
+              return this.number % 8 == 0;
+            }
+            isDivisibleByNine() {
+              return this.number % 9 == 0;
+            }
+          }
+          
+          const input = document.getElementById("number");
+          const spans = document.querySelectorAll("span");
+          
+          input.addEventListener("input", (e) => {
+            if (isNaN(parseInt(e.target.value))) {
+              spans.forEach((span) => {
+                span.classList.remove("true");
+              });
+          
+              return;
+            }
+          
+            const divisibility = new NumberDivisibilityChecker(e.target.value);
+          
+            spans.forEach((span, idx) => {
+              if (
+                divisibility.divisibilityResults[idx] == true &&
+                [...spans].indexOf(span) == idx
+              ) {
+                span.classList.add("true");
+              } else {
+                span.classList.remove("true");
+              }
+            });
+          });
+          
+      </script>
+</body>
+</html>

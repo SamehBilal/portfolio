@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pluris</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Indie+Flower|Inknut+Antiqua|Lora|Ravi+Prakash" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"  />
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+
+    <style>
+        .tickets-container {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #DDDCE1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    ;
+}
+
+.tickets-container .item {
+    width: 1050px;
+    height: 400px;
+    background: #fff;
+    display: flex;
+    border-radius: 16px;
+}
+
+
+.tickets-container .item-right {
+    margin-right: 20px;
+    width: 30%;
+    position: relative;
+    height: 100%;
+    padding-left: 10px;
+}
+
+
+h4 {
+    margin-left: 10px;
+    margin-bottom: 0;
+    color: #999;
+}
+
+
+.ref {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    color: #999;
+    margin-bottom: 25px;
+
+}
+
+.icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.day {
+    font-size: 12px;
+    width: 25%;
+}
+
+
+.meter {
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.buy {
+    display: flex;
+    justify-content: space-around;
+}
+
+.buy-button {
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 28px;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+}
+
+.tickets-container .item-right .up-border, .tickets-container .item-right .down-border {
+    padding: 14px 15px;
+    background-color: #ddd;
+    border-radius: 50%;
+    position: absolute
+}
+
+.tickets-container .item-right .up-border {
+    top: -12px;
+    right: -35px;
+}
+
+.tickets-container .item-right .down-border {
+    bottom: -13px;
+    right: -35px;
+}
+
+.tickets-container .item-right .num {
+    margin: 0;
+    font-size: 60px;
+    text-align: center;
+    color: #111;
+}
+
+
+.tickets-container .item-left {
+    width: 70%;
+    height: 100%;
+    border-left: 3px dotted #999;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+} 
+
+.barcode {
+    margin-right: 40px;
+}
+
+
+
+
+.penis {
+    width: 100%;
+    height: 100%;
+}
+
+.slide-container {
+    width: 100%;
+    height: auto;
+}
+
+
+.slides {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+
+.slides * {
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.slides input { display: none; }
+
+.slide-container { display: block; }
+
+.slide {
+    top: 0;
+    opacity: 0;
+    width: auto;
+    min-width: 600px;
+    height: 100%;
+    position: absolute;
+    transform: scale(0);
+    transition: all .7s ease-out;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    border-bottom-right-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.nav label {
+    width: 20%;
+    height: 60%;
+    display: none;
+    position: absolute;
+	opacity: 0;
+    z-index: 9;
+    cursor: pointer;
+    transition: opacity .2s;
+    color: #FFF;
+    font-size: 80px;
+    text-align: center;
+    line-height: 380px;
+    font-family: "Varela Round", sans-serif;
+    background-color: none;
+    text-shadow: 0px 0px 15px rgb(119, 119, 119);
+}
+
+
+
+.slide:hover + .nav label { opacity: 0.5; }
+
+.nav label:hover { opacity: 1; }
+
+.nav .next { right: 0; }
+
+input:checked + .slide-container  .slide {
+    opacity: 1;
+
+    transform: scale(1);
+
+    transition: opacity .4s ease-in-out;
+}
+
+input:checked + .slide-container .nav label { display: block; }
+
+.nav-dots {
+	width: 100%;
+    top: 310px;
+	height: 11px;
+	display: block;
+	position: absolute;
+	text-align: center;
+}
+
+.nav-dots .nav-dot {
+	top: 60px;
+	width: 11px;
+	height: 11px;
+	margin: 0 4px;
+	position: relative;
+	border-radius: 100%;
+	display: inline-block;
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+.nav-dots .nav-dot:hover {
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+input#img-1:checked ~ .nav-dots label#img-dot-1,
+input#img-2:checked ~ .nav-dots label#img-dot-2,
+input#img-3:checked ~ .nav-dots label#img-dot-3,
+input#img-4:checked ~ .nav-dots label#img-dot-4,
+input#img-5:checked ~ .nav-dots label#img-dot-5,
+input#img-6:checked ~ .nav-dots label#img-dot-6, 
+input#img-7:checked ~ .nav-dots label#img-dot-7,
+input#img-8:checked ~ .nav-dots label#img-dot-8,
+input#img-9:checked ~ .nav-dots label#img-dot-9 {
+	background: rgba(23, 35, 57, 0.8);
+}
+
+@media only screen and (max-width: 43rem) {
+    .tickets-container .item {
+    width: 100%;
+    margin-right: 20px
+}
+    div.tickets-container {
+        margin: 0 20px auto
+    }
+}
+
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="tickets-container">
+
+    <div class="item">
+        <div class="item-right">
+            <h4>apartment</h4>
+            <h2 class="num">Howald</h2>
+            <p class="ref">1ZNX7 | 21/10/2022</p>
+
+            <div class="icons">
+                <p class="day">
+                    <iconify-icon icon="ph:bed-thin" width="32" height="32"></iconify-icon>  2
+                </p>
+
+                <p class="day">
+                    <iconify-icon icon="ph:arrows-out-simple-thin" width="32" height="32"></iconify-icon>  104<span class="meter">&#13217;</span>
+                </p>
+
+                <p class="day">
+                    <iconify-icon icon="ph:bathtub-thin" width="32" height="32"></iconify-icon>  1
+                </p>
+
+                <p class="day">
+                    <iconify-icon icon="ph:chart-bar-thin" width="32" height="32"></iconify-icon>  1
+                </p>
+
+
+                <p class="day">
+                    <iconify-icon icon="ph:car-thin" width="32" height="32"></iconify-icon>  2
+                </p>
+
+                <p class="day">
+                    <iconify-icon icon="ph:calendar-thin" width="32" height="32"></iconify-icon>  2021
+                </p>
+
+                <p class="day">
+                    <iconify-icon icon="ph:train-thin" width="32" height="32"></iconify-icon> 5"
+                </p>
+
+                <p class="day">
+                    <iconify-icon icon="ph:battery-charging-thin" width="32" height="32"></iconify-icon>  A
+                </p>
+            </div>
+    
+
+            <div class="buy">
+                <span class="up-border"></span>
+                <span class="down-border"></span>
+                <p>1 360 000€</p>
+                <button class="buy-button">Buy</button>
+            </div>
+        </div> <!-- end item-right --> 
+
+        <div class="item-left">
+
+            <div class="barcode">
+                <iconify-icon icon="el:barcode" width="65" height="400" rotate="90deg"></iconify-icon>
+            </div>
+            <div class="penis">
+                <ul class="slides">
+                    <input type="radio" name="radio-btn" id="img-1" checked />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img          src="https://i1.static.athome.eu/images/annonces2/image_/7d/f6/57/2fb443b439014571145d599c61d57b4a_1.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-6" class="prev">&#x2039;</label>
+                            <label for="img-2" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+                
+                    <input type="radio" name="radio-btn" id="img-2" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="https://i1.static.athome.eu/images/annonces2/image_/7d/f6/57/2fb443b439014571145d599c61d57b4a_2.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-1" class="prev">&#x2039;</label>
+                            <label for="img-3" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+                
+                    <input type="radio" name="radio-btn" id="img-3" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="https://i1.static.athome.eu/images/annonces2/image_/7d/f6/57/2fb443b439014571145d599c61d57b4a_3.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-2" class="prev">&#x2039;</label>
+                            <label for="img-4" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+                
+                    <input type="radio" name="radio-btn" id="img-4" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="https://i1.static.athome.eu/images/annonces2/image_/7d/f6/57/2fb443b439014571145d599c61d57b4a_4.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-3" class="prev">&#x2039;</label>
+                            <label for="img-5" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+                
+                    <input type="radio" name="radio-btn" id="img-5" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="https://i1.static.athome.eu/images/annonces2/image_/7d/f6/57/2fb443b439014571145d599c61d57b4a_5.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-4" class="prev">&#x2039;</label>
+                            <label for="img-6" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+                
+                    <input type="radio" name="radio-btn" id="img-6" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="https://i1.static.athome.eu/images/annonces2/image_/7d/f6/57/2fb443b439014571145d599c61d57b4a_6.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-5" class="prev">&#x2039;</label>
+                            <label for="img-7" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+
+                    <input type="radio" name="radio-btn" id="img-7" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="https://i1.static.athome.eu/images/annonces2/image_/7d/f6/57/2fb443b439014571145d599c61d57b4a_7.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-6" class="prev">&#x2039;</label>
+                            <label for="img-8" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+
+                    <input type="radio" name="radio-btn" id="img-8" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="https://i1.static.athome.eu/images/annonces2/image_/7d/f6/57/2fb443b439014571145d599c61d57b4a_8.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-7" class="prev">&#x2039;</label>
+                            <label for="img-9" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+
+                    <input type="radio" name="radio-btn" id="img-9" />
+                    <li class="slide-container">
+                        <div class="slide">
+                            <img src="https://i1.static.athome.eu/images/annonces2/image_/7d/f6/57/2fb443b439014571145d599c61d57b4a_9.jpg" />
+                        </div>
+                        <div class="nav">
+                            <label for="img-8" class="prev">&#x2039;</label>
+                            <label for="img-1" class="next">&#x203a;</label>
+                        </div>
+                    </li>
+                
+                    <li class="nav-dots">
+                        <label for="img-1" class="nav-dot" id="img-dot-1"></label>
+                        <label for="img-2" class="nav-dot" id="img-dot-2"></label>
+                        <label for="img-3" class="nav-dot" id="img-dot-3"></label>
+                        <label for="img-4" class="nav-dot" id="img-dot-4"></label>
+                        <label for="img-5" class="nav-dot" id="img-dot-5"></label>
+                        <label for="img-6" class="nav-dot" id="img-dot-6"></label>
+                        <label for="img-7" class="nav-dot" id="img-dot-7"></label>
+                        <label for="img-8" class="nav-dot" id="img-dot-8"></label>
+                        <label for="img-9" class="nav-dot" id="img-dot-9"></label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div> <!-- end item-left -->
+    </div> <!-- end item -->
+</div>    
+
+<script src="main.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+</body>
+</html> 

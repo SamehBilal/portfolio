@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>متعقّب الفلوتيلا</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- DaisyUI plugin -->
+  <script>
+    tailwind.config = {
+      plugins: [daisyui],
+      daisyui: {
+        rtl: true,
+      },
+    };
+  </script>
+  <style>
+    body {
+      /* اختياري: خلفية خفيفة */
+      background-color: #f9fafb;
+    }
+  </style>
+</head>
+<body class="bg-merino" cz-shortcut-listen="true">
+    <!-- Navigation Bar -->
+    <nav class="bg-alabaster w-full sticky top-0 z-50 relative">
+        <div class="flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-[60px] py-4 w-full">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <div class="logo-crop-container">
+                    <a href="/">
+                    <img src="/media/images/logo2.png" alt="GSF Logo" class="logo-crop-img w-auto">
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Mobile Tracker Link - Between logo and hamburger menu -->
+            <div class="lg:hidden">
+                <a href="/tracker/#help" class="font-montserrat font-black text-thunder text-sm hover:opacity-80 px-3 py-2 border border-gray-300 rounded">
+                    TRACKER
+                </a>
+            </div>
+            
+            <!-- Mobile Navigation Button - Always visible on mobile -->
+            <div class="lg:hidden">
+                <button id="mobile-menu-button" class="text-thunder p-2 flex items-center justify-center border border-gray-300 rounded">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-8 font-montserrat font-black text-thunder text-base">
+                <a href="/about/" class="hover:opacity-80">ABOUT</a>
+
+                <a href="/tracker/" class="hover:opacity-80">TRACKER</a> 
+
+                <a href="/live/" class="hover:opacity-80">LIVESTREAM</a>
+
+                <a href="/contact-officials/" class="hover:opacity-80">CONTACT OFFICIALS</a>
+
+                <a href="/press/" class="hover:opacity-80">MEDIA</a>
+            </div>
+
+            <!-- Desktop Right Side -->
+            <div class="hidden lg:flex items-center justify-end gap-4 w-[400px]">
+                <!-- Social Media + Language Switcher Section -->
+                <div class="flex flex-col items-end gap-2">
+                    <!-- Social Media Icons -->
+                    <div class="flex items-center gap-4">
+                        <a href="https://instagram.com/globalsumudflotilla" target="_blank" class="text-thunder hover:opacity-80">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@globalsumudflotilla" target="_blank" class="text-thunder hover:opacity-80">
+                            <i class="fab fa-tiktok text-xl"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@globalsumudflotilla" target="_blank" class="text-thunder hover:opacity-80">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                        <a href="https://x.com/gbsumudflotilla" target="_blank" class="text-thunder hover:opacity-80">
+                            <i class="fab fa-x-twitter text-xl"></i>
+                        </a>
+                        <a href="https://t.me/globalsumudflotilla" target="_blank" class="text-thunder hover:opacity-80">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </a>
+                    </div>
+                    <!-- Language Switcher - positioned directly below social media icons -->
+                    <div class="flex items-center gap-2 font-montserrat font-black text-thunder text-sm">
+                        <span class="text-xs opacity-70">LANGUAGE:</span>
+                        <select onchange="changeLanguage(this.value)" class="bg-transparent border-none text-thunder font-black cursor-pointer focus:outline-none">
+                            <option value="en" selected="">ENGLISH</option>
+                            <option value="ar">العربية</option>
+                            <option value="es">ESPAÑOL</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- GET INVOLVED button - alongside the social media section -->
+                <a href="/get-involved/" class="bg-jungle-green text-pampas font-montserrat font-black text-sm md:text-base px-6 py-6 rounded-full hover:opacity-90 transition-opacity text-center w-[225px]">
+                    GET INVOLVED
+                </a>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-alabaster border-t border-gray-200 absolute top-full left-0 right-0 z-40 shadow-lg">
+            <div class="px-4 pt-2 pb-3 space-y-1">
+                <a href="/about/" class="block px-3 py-2 font-montserrat font-black text-thunder text-base hover:opacity-80">ABOUT</a>
+
+                <a href="/tracker/" class="block px-3 py-2 font-montserrat font-black text-thunder text-base hover:opacity-80">TRACKER</a>
+
+                <a href="/live/" class="block px-3 py-2 font-montserrat font-black text-thunder text-base hover:opacity-80">LIVESTREAM</a>
+
+                <a href="/contact-officials/" class="block px-3 py-2 font-montserrat font-black text-thunder text-base hover:opacity-80">CONTACT OFFICIALS</a>
+
+                <a href="/press/" class="block px-3 py-2 font-montserrat font-black text-thunder text-base hover:opacity-80">MEDIA</a>
+
+                <!-- Mobile Language Switcher -->
+                <div class="px-3 py-2">
+                    <select onchange="changeLanguage(this.value)" class="bg-transparent border border-thunder text-thunder font-montserrat font-medium text-sm px-2 py-1 rounded w-full">
+                        <option value="en" selected="">ENGLISH</option>
+                        <option value="ar">العربية</option>
+                        <option value="es">ESPAÑOL</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center justify-between pt-4">
+                    <div class="flex items-center gap-4">
+                        <a href="https://instagram.com/globalsumudflotilla" target="_blank" class="text-thunder hover:opacity-80">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@globalsumudflotilla" target="_blank" class="text-thunder hover:opacity-80">
+                            <i class="fab fa-tiktok text-xl"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@globalsumudflotilla" target="_blank" class="text-thunder hover:opacity-80">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                        <a href="https://x.com/gbsumudflotilla" target="_blank" class="text-thunder hover:opacity-80">
+                            <i class="fab fa-x-twitter text-xl"></i>
+                        </a>
+                        <a href="https://t.me/globalsumudflotilla" target="_blank" class="text-thunder hover:opacity-80">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </a>
+                    </div>
+                    <a href="/get-involved/" class="bg-tropical-rain-forest text-pampas px-4 py-3 rounded-full font-montserrat font-black text-sm hover:opacity-90 transition-opacity">
+                        GET INVOLVED
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+<div class="min-h-screen bg-white">
+    <div class="container mx-auto px-4 py-8">
+        
+        <!-- Page Title -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                FLOTILLA TRACKER
+            </h1>
+           
+        </div>
+        
+        <!-- Full Width Map Embed -->
+        <div class="w-full">
+            <div class="bg-gray-200 rounded-lg overflow-hidden" style="max-height: 700px; height: min(700px, calc(100vh - 200px));">
+                <iframe src="https://flotilla-orpin.vercel.app" width="100%" height="100%" title="interactive_map" style="border: none; min-height: 400px;"></iframe>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    
+    <!-- Footer -->
+    <footer class="bg-thunder w-full">
+        <div class="px-4 md:px-20 py-8">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <!-- Left side: Links -->
+                    <div class="flex flex-col sm:flex-row items-center gap-6">
+                        <a href="/get-involved/" class="font-montserrat font-semibold text-pampas hover:opacity-80 transition-opacity">
+                            GET INVOLVED
+                        </a>
+                        <a href="/about/" class="font-montserrat font-semibold text-pampas hover:opacity-80 transition-opacity">
+                            ABOUT
+                        </a>
+                        <a href="mailto:globalsumudflotilla@proton.me" class="font-montserrat font-semibold text-pampas hover:opacity-80 transition-opacity">
+                            PRESS CONTACT
+                        </a>
+                        <a href="/#help" class="font-montserrat font-semibold text-pampas hover:opacity-80 transition-opacity">
+                            HOW TO HELP
+                        </a>
+
+                        
+                    
+                    </div>
+                    
+                    <!-- Right side: Copyright -->
+                    <div class="font-montserrat text-pampas text-sm text-center md:text-right">
+                        © 2025 Global Sumud Flotilla. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Include basic functionality script -->
+    
+    
+    
+
+
+</body>
+</html>

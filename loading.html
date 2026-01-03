@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #39162e;
+  font-family: "Fredoka One", cursive;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.message {
+  position: absolute;
+}
+.message p {
+  font-size: 42px;
+  color: #15e1a1;
+}
+
+.outer-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1f1a1a;
+  z-index: 9;
+}
+.outer-container .container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  transform: translatey(-200px);
+}
+.outer-container .container .letters {
+  display: flex;
+  justify-content: center;
+  margin-left: 1rem;
+  position: absolute;
+  color: #af5792;
+  font-size: 1.5rem;
+  letter-spacing: 1rem;
+  text-align: center;
+}
+.outer-container .container .bowl {
+  width: 15.75rem;
+  height: 6.25rem;
+  background: #dec8c8;
+  border-radius: 0.4rem 0.34em 7rem 7rem;
+  border-bottom: 0.4rem solid #b39c9c;
+  position: relative;
+}
+.outer-container .container .bowl .loader {
+  position: absolute;
+  width: 0;
+  height: 0.5rem;
+  background: #ff635c;
+  top: 0.5rem;
+}
+    </style>
+</head>
+<body>
+    <div class="message">
+	<p>Eat your soup bratee</p>
+</div>
+
+<div class="outer-container">
+	<div class="container">
+		<p class="letters">LOADING</p>
+		<div class="bowl">
+			<div class="loader"></div>
+		</div>
+	</div>
+</div>
+
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/SplitText.min.js"></script>
+<script>
+    const timeline = gsap.timeline({});
+const timeline2 = gsap.timeline({});
+
+let splitMessage = SplitText.create(".message", {
+	type: "chars",
+	charsClass: "char"
+});
+
+let split = SplitText.create(".letters", {
+	type: "chars",
+	charsClass: "char"
+});
+
+timeline
+	.to(".container", {
+		y: "0",
+		duration: 1,
+		opacity: 1,
+		ease: "elastic.out(1,0.3)"
+	})
+	.to(".loader", {
+		width: "100%",
+		duration: 7,
+		ease: "expoScale(0.5,7,none)"
+	})
+	.to(".outer-container", {
+		y: "100vh",
+		duration: 1.5,
+		ease: "bounce.out"
+	})
+	.from(splitMessage.chars, {
+		opacity: 0,
+		y: 50,
+		ease: "back(4)",
+		stagger: {
+			from: "end",
+			each: 0.05
+		}
+	});
+
+split.chars.forEach((spl) => {
+	timeline2.fromTo(
+		spl,
+		{
+			y: "0px",
+			opacity: 0
+		},
+		{
+			y: "-100px",
+			opacity: 1,
+			yoyo: true,
+			repeat: -1,
+			delay: 0.2,
+			rotation: () => gsap.utils.random(-30, 30)
+		}
+	);
+});
+
+</script>
+</body>
+</html>

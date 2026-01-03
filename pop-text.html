@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+  --ease-one: linear(
+    0, 0.2342, 0.4374, 0.6093 37.49%,
+    0.6835, 0.7499, 0.8086, 0.8593, 0.9023,
+    0.9375, 0.9648, 0.9844, 0.9961, 1
+  );
+  --ease-two: linear(
+    0, 0.2178 2.1%, 1.1144 8.49%,
+    1.2959 10.7%, 1.3463 11.81%,
+    1.3705 12.94%, 1.3726, 1.3643 14.48%,
+    1.3151 16.2%, 1.0317 21.81%,
+    0.941 24.01%, 0.8912 25.91%,
+    0.8694 27.84%, 0.8698 29.21%,
+    0.8824 30.71%, 1.0122 38.33%, 1.0357,
+    1.046 42.71%, 1.0416 45.7%,
+    0.9961 53.26%, 0.9839 57.54%,
+    0.9853 60.71%, 1.0012 68.14%,
+    1.0056 72.24%, 0.9981 86.66%, 1
+  );
+}
+
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+h1 {
+  font-size: clamp(3rem, 8vw + 1rem, 10rem);
+  font-family: sans-serif;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+span:nth-of-type(1) {
+  line-height: 0.8;
+}
+
+
+h1 > span:nth-of-type(2),
+span:nth-of-type(3) {
+  color: hsl(0 0% 100%);
+  position: relative;
+}
+
+span:nth-of-type(3) {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform-origin: 100% 20%;
+  scale: 0.35;
+  z-index: 3;
+}
+
+h1 > span:nth-of-type(2) {
+  line-height: 1.2;
+  transform-origin: 50% 100%;
+  display: inline-flex;
+  align-items: center;
+}
+
+h1 > span:nth-of-type(2)::after {
+  content: "";
+  position: absolute;
+  inset: 0.25rem -0.5rem -0.5rem -0.5rem;
+  background: red;
+/*   scale: 0 0.05; */
+  z-index: -1;
+  transform-origin: 50% 100%;
+  scale: 0 0.05;
+  animation:
+    pop-x 0.8s 0.5s forwards var(--ease-one),
+    pop-y 1s 1.4s both var(--ease-two); 
+}
+
+:root:has(:checked) h1 > span:nth-of-type(2) span:nth-of-type(1) {
+  transform-origin: 50% 110%;
+  line-height: 1;
+  scale: 1 0;
+  animation:
+    pop-y 1s 1.4s both var(--ease-two); 
+}
+
+@keyframes pop-x {
+  to { scale: 1 0.05; }
+}
+
+@keyframes pop-y {
+  to { scale: 1 1; }
+}
+
+.controls {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+h2 {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  margin: 0;
+  opacity: 0.5;
+}
+
+
+
+
+/* Socials stuff */
+.x-link, .bear-link {
+	color: hsl(0 0% 10%);
+	position: fixed;
+	bottom: 1rem;
+	left: 1rem;
+	width: 48px;
+	aspect-ratio: 1;
+	display: grid;
+	place-items: center;
+	opacity: 0.8;
+}
+
+.bear-link {
+	bottom: unset;
+	top: 1rem;
+}
+
+:where(.x-link, .bear-link):is(:hover, :focus-visible) {
+	opacity: 1;
+}
+.bear-link svg {
+	width: 75%;
+}
+.x-link svg {
+	width: 50%;
+}
+    </style>
+</head>
+<body>
+    <h1>
+  <span aria-hidden="true">make it&nbsp;</span>
+  <span aria-hidden="true">
+    <span>pop</span>
+    <span>.</span></span>
+  <span aria-hidden="true">™</span>
+  <span class="sr-only">make it pop.</span>
+</h1>
+
+<h2>tap to restart.</h2>
+
+<div class="controls">
+  <label for="bounce">Bounce text?</label>
+  <input type="checkbox" id="bounce" />
+</div>
+
+        <a class="bear-link" href="https://jhey.dev/links" target="_blank" rel="noreferrer noopener">
+      <svg class="w-9" viewBox="0 0 969 955" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="161.191" cy="320.191" r="133.191" stroke="currentColor" stroke-width="20"></circle><circle cx="806.809" cy="320.191" r="133.191" stroke="currentColor" stroke-width="20"></circle><circle cx="695.019" cy="587.733" r="31.4016" fill="currentColor"></circle><circle cx="272.981" cy="587.733" r="31.4016" fill="currentColor"></circle><path d="M564.388 712.083C564.388 743.994 526.035 779.911 483.372 779.911C440.709 779.911 402.356 743.994 402.356 712.083C402.356 680.173 440.709 664.353 483.372 664.353C526.035 664.353 564.388 680.173 564.388 712.083Z" fill="currentColor"></path><rect x="310.42" y="448.31" width="343.468" height="51.4986" fill="#FF1E1E"></rect><path fill-rule="evenodd" clip-rule="evenodd" d="M745.643 288.24C815.368 344.185 854.539 432.623 854.539 511.741H614.938V454.652C614.938 433.113 597.477 415.652 575.938 415.652H388.37C366.831 415.652 349.37 433.113 349.37 454.652V511.741L110.949 511.741C110.949 432.623 150.12 344.185 219.845 288.24C289.57 232.295 384.138 200.865 482.744 200.865C581.35 200.865 675.918 232.295 745.643 288.24Z" fill="currentColor"></path></svg>
+    </a>
+    <a class="x-link" href="https://twitter.com/intent/follow?screen_name=jh3yy" target="_blank" rel="noreferrer noopener">
+      <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" fill="currentColor"/></svg>
+    </a>
+
+    <script>
+        const INPUT = document.querySelector('#bounce');
+const restart = event => {
+  if (INPUT.checked) {
+    const animations = document.getAnimations();
+    for (const anim of animations) {
+      anim.currentTime = 0;
+      anim.play();
+    }
+  } else {
+    const header = document.querySelector('h1');
+    const markup = header.innerHTML;
+    header.remove();
+    requestAnimationFrame(() => {
+      document.body.appendChild(Object.assign(document.createElement('h1'), {
+        innerHTML: markup }));
+
+    });
+    console.info({ markup });
+  }
+};
+document.body.addEventListener('click', restart);
+    </script>
+</body>
+</html>

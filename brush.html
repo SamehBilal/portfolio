@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://unpkg.com/normalize.css') layer(normalize);
+
+@layer normalize, base, demo, scroll, debug;
+
+@layer scroll {
+  @supports (animation-timeline: scroll()) {
+    @property --active {
+      initial-value: 0;
+      inherits: true;
+      syntax: '<number>';
+    }
+
+    p span {
+      animation: activate both ease-in-out;
+      animation-timeline: view();
+      opacity: 0;
+    }
+
+    @keyframes activate {
+      50% {
+        opacity: 1;
+      }
+    }
+
+    :root {
+      --scroll-ease: linear(
+        -0 0%,
+        0.0048 9.8%,
+        0.0192 19.5%,
+        0.043 29.02%,
+        0.0761 38.26%,
+        0.1181 47.13%,
+        0.1685 55.56%,
+        0.227 63.44%,
+        0.2929 70.71%,
+        0.3656 77.3%,
+        0.4445 83.15%,
+        0.5285 88.19%,
+        0.6173 92.39%,
+        0.7099 95.7%,
+        0.805 98.08%,
+        0.9021 99.52%,
+        1 100%
+      );
+    }
+
+    .section__content svg:nth-of-type(1) path {
+      --dest: 0;
+      stroke-dashoffset: 1.025;
+      stroke-dasharray: 1.025;
+      animation: draw both var(--scroll-ease);
+      animation-timeline: view();
+      animation-range: entry 25% entry 75%;
+    }
+
+    .section__content {
+      margin-bottom: 15vh;
+    }
+
+    .section__buffer {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 15vh;
+      background: linear-gradient(canvas, transparent);
+    }
+
+    .section__content svg:nth-of-type(2) {
+      translate: 0 2%;
+    }
+
+    .section__content svg:nth-of-type(2) path {
+      stroke-dashoffset: 0;
+      stroke-dasharray: 1.025;
+      --dest: -1.025;
+      animation: draw both ease-out;
+      animation-timeline: view();
+      animation-range: exit -25% exit 50%;
+    }
+
+    @keyframes draw {
+      to {
+        stroke-dashoffset: var(--dest, 1.025);
+      }
+    }
+
+    footer {
+      view-timeline: --footer;
+    }
+
+    footer h2 {
+      animation: reveal both linear;
+      animation-timeline: --footer;
+      animation-range: entry 75% entry 100%;
+      position: fixed;
+    }
+
+    @keyframes reveal {
+      0% {
+        filter: blur(10px);
+        opacity: 0;
+      }
+    }
+  }
+}
+
+@layer debug {
+  [data-blend='false'] .section__content {
+    mix-blend-mode: normal;
+  }
+  [data-debug='true'] .section__content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 10px dashed hotpink;
+  }
+  [data-debug='true'] .section__content svg {
+    outline: 10px dashed hotpink;
+  }
+}
+
+@layer demo {
+  :root {
+    --bg: black;
+  }
+
+  header {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(transparent 50%, canvas);
+  }
+
+  section {
+    position: relative;
+  }
+
+  .section__content {
+    background: white;
+    mix-blend-mode: lighten;
+    z-index: 2;
+  }
+
+  .section__text {
+    background: var(--bg);
+    height: 100vh;
+    display: grid;
+    place-items: center;
+  }
+
+  .section__stick {
+    position: absolute;
+    inset: 0;
+    top: 0;
+    /* height: 100vh; */
+    place-items: center;
+    z-index: -1;
+  }
+
+  .section__content svg {
+    overflow: visible !important;
+  }
+
+  .section__text p {
+    margin: 0;
+    --font-level: 5;
+    color: white;
+    /* background: black; */
+    display: flex;
+    flex-direction: column;
+    gap: 2lh;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    text-wrap: balance;
+    text-align: center;
+  }
+
+  footer {
+    height: 100vh;
+    display: grid;
+    align-content: end;
+    position: relative;
+  }
+
+  footer h2 {
+    --font-level: 5;
+    text-transform: none;
+    opacity: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -2;
+  }
+
+  video {
+    position: sticky;
+    top: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100vh;
+    filter: brightness(0.65);
+  }
+
+  footer {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  header {
+    align-content: center;
+  }
+
+  h1 {
+    --font-level: 7;
+    position: relative;
+    margin: 0;
+  }
+
+  h1 span {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    display: inline-block;
+    translate: -50% 50%;
+    font-size: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: hsl(6 100% 50%);
+  }
+
+  h2 {
+    --font-level: 1;
+    margin: 0;
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+}
+
+@layer base {
+  :root {
+    --font-size-min: 16;
+    --font-size-max: 20;
+    --font-ratio-min: 1.2;
+    --font-ratio-max: 1.33;
+    --font-width-min: 320;
+    --font-width-max: 1500;
+  }
+
+  :where(.fluid) {
+    --fluid-min: calc(
+      var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0))
+    );
+    --fluid-max: calc(
+      var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0))
+    );
+    --fluid-preferred: calc(
+      (var(--fluid-max) - var(--fluid-min)) /
+        (var(--font-width-max) - var(--font-width-min))
+    );
+    --fluid-type: clamp(
+      (var(--fluid-min) / 16) * 1rem,
+      ((var(--fluid-min) / 16) * 1rem) -
+        (((var(--fluid-preferred) * var(--font-width-min)) / 16) * 1rem) +
+        (var(--fluid-preferred) * var(--variable-unit, 100vi)),
+      (var(--fluid-max) / 16) * 1rem
+    );
+    font-size: var(--fluid-type);
+  }
+
+  *,
+  *:after,
+  *:before {
+    box-sizing: border-box;
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
+      Helvetica, Arial, sans-serif, system-ui;
+  }
+
+  body::before {
+    --size: 45px;
+    --line: color-mix(in lch, canvasText, transparent 70%);
+    content: '';
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background: linear-gradient(
+          90deg,
+          var(--line) 1px,
+          transparent 1px var(--size)
+        )
+        50% 50% / var(--size) var(--size),
+      linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
+        var(--size) var(--size);
+    mask: linear-gradient(-20deg, transparent 50%, white);
+    top: 0;
+    transform-style: flat;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .bear-link {
+    color: canvasText;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 48px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    opacity: 0.8;
+  }
+
+  :where(.x-link, .bear-link):is(:hover, :focus-visible) {
+    opacity: 1;
+  }
+
+  .bear-link svg {
+    width: 75%;
+  }
+
+  /* Utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+div.tp-dfwv {
+  width: 290px;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+      <h1 class="fluid"><span>All-New</span>CSS Pro</h1>
+      <h2 class="fluid">Scroll-driven video masks</h2>
+    </header>
+    <main>
+      <section>
+        <div class="section__content">
+          <svg
+            viewBox="0 0 1025 437"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M779.402 65.498c-194-9-503 52-503 83s387-53 387-10-523 31-523 101c0 53 784-128 784-54 0 59-937.4 72.7-937.4 141.3 0 45.7 1011.4-124.3 1011.4-75.3s-1029 83-1029 140 1158.998-162.7 1077.998-83c-65.998 65-1099.998 90-1090.998 139 8.7 47.5 1090.998-121 1090.998-53s-1067.998 21-1067.998 110c0 57 919-27 1073.998-33"
+              stroke="#000"
+              stroke-width="80"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              pathLength="1"
+            />
+          </svg>
+          <div class="section__text">
+            <p class="fluid">
+              <span>All CSS. All powerful.</span>
+              <span>Drop HTML. Style it up.</span>
+              <span>You got this.</span>
+            </p>
+          </div>
+          <svg
+            viewBox="0 0 1025 370"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M-24 22.001c0 29 1075-54 1075-15s-1073 37-1073 76 1068-53 1068-14-1071 39-1071 77 1069-33 1069 5-890 23-890 63 718.5-9.9 716 30c-2 32-65 16-274 54"
+              stroke="#000"
+              stroke-width="80"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              pathLength="1"
+            />
+          </svg>
+          <div class="section__buffer"></div>
+        </div>
+        <div class="section__stick">
+          <video
+            autoplay
+            muted
+            loop
+          ></video>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <h2 class="fluid">Rad.</h2>
+      <p>made by @jh3yy ʕ •ᴥ•ʔ '24</p>
+    </footer>
+    <a
+      class="bear-link"
+      href="https://twitter.com/intent/follow?screen_name=jh3yy"
+      target="_blank"
+      rel="noreferrer noopener"
+    >
+      <svg
+        class="w-9"
+        viewBox="0 0 969 955"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="161.191"
+          cy="320.191"
+          r="133.191"
+          stroke="currentColor"
+          stroke-width="20"
+        ></circle>
+        <circle
+          cx="806.809"
+          cy="320.191"
+          r="133.191"
+          stroke="currentColor"
+          stroke-width="20"
+        ></circle>
+        <circle
+          cx="695.019"
+          cy="587.733"
+          r="31.4016"
+          fill="currentColor"
+        ></circle>
+        <circle
+          cx="272.981"
+          cy="587.733"
+          r="31.4016"
+          fill="currentColor"
+        ></circle>
+        <path
+          d="M564.388 712.083C564.388 743.994 526.035 779.911 483.372 779.911C440.709 779.911 402.356 743.994 402.356 712.083C402.356 680.173 440.709 664.353 483.372 664.353C526.035 664.353 564.388 680.173 564.388 712.083Z"
+          fill="currentColor"
+        ></path>
+        <rect
+          x="310.42"
+          y="448.31"
+          width="343.468"
+          height="51.4986"
+          fill="#FF1E1E"
+        ></rect>
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M745.643 288.24C815.368 344.185 854.539 432.623 854.539 511.741H614.938V454.652C614.938 433.113 597.477 415.652 575.938 415.652H388.37C366.831 415.652 349.37 433.113 349.37 454.652V511.741L110.949 511.741C110.949 432.623 150.12 344.185 219.845 288.24C289.57 232.295 384.138 200.865 482.744 200.865C581.35 200.865 675.918 232.295 745.643 288.24Z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </a>
+
+
+    <script>
+        const config = {
+  src: 'https://assets.codepen.io/605876/skateboarder--opt.mp4',
+  debug: false,
+  blend: true };
+
+
+const video = document.querySelector('video');
+
+const sync = () => {
+  video.src = config.src;
+  document.documentElement.dataset.debug = config.debug;
+  document.documentElement.dataset.blend = config.blend;
+};
+sync();
+    </script>
+</body>
+</html>

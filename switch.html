@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @charset "UTF-8";
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  -webkit-user-drag: none;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: #292929;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.thanks,
+.text {
+  position: absolute;
+  bottom: 5px;
+  padding: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-family: sans-serif;
+  z-index: 10;
+}
+
+.thanks {
+  right: 5px;
+  background-color: #3a0839;
+}
+
+.text {
+  left: 5px;
+}
+
+.rect {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0, 100%, 0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+}
+.rect--blue {
+  background-color: #0dcaff;
+  z-index: 1;
+}
+.rect--red {
+  background-color: #ff4e48;
+  z-index: 2;
+}
+.rect--black {
+  background-color: #292929;
+  z-index: 3;
+}
+
+.n-switch {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 450px;
+  height: 190px;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.n-switch__wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+/**
+* Joycons
+*/
+.joycon {
+  position: absolute;
+  width: 60px;
+  height: 100%;
+  top: 0;
+}
+.joycon--left {
+  left: 0;
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+  background-color: #0dcaff;
+}
+.joycon--right {
+  right: 0;
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+  background-color: #ff4e48;
+}
+
+/**
+* Stick
+*/
+.stick {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  left: 50%;
+  background-color: #1b1b1b;
+  border: 3px solid #101010;
+  border-radius: 50%;
+  transform: translate(-50%, 0);
+}
+.stick--left {
+  top: 40px;
+  margin-left: 2px;
+}
+.stick--right {
+  bottom: 75px;
+  margin-left: -2px;
+}
+
+/**
+* Pad
+*/
+.pad {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  left: 12px;
+}
+.pad--left {
+  top: 80px;
+}
+.pad--left span::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 5px;
+  color: #383838;
+  transform: translate(-50%, -50%);
+}
+.pad--left span:nth-child(1)::before {
+  content: "▲";
+  margin-top: -1px;
+}
+.pad--left span:nth-child(2)::before {
+  content: "▶";
+  margin-left: 1px;
+}
+.pad--left span:nth-child(3)::before {
+  content: "▼";
+  margin-top: 1px;
+}
+.pad--left span:nth-child(4)::before {
+  content: "◀";
+  margin-left: -1px;
+}
+.pad--right {
+  top: 27px;
+  left: 6px;
+}
+.pad span {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #1b1b1b;
+  border: 1px solid #101010;
+  color: #fff;
+  font-size: 5px;
+  text-align: center;
+  font-family: sans-serif;
+  line-height: 12px;
+  text-transform: uppercase;
+}
+.pad span:nth-child(1) {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.pad span:nth-child(2) {
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+}
+.pad span:nth-child(3) {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.pad span:nth-child(4) {
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+/**
+* Screen
+*/
+.screen {
+  position: absolute;
+  left: 50%;
+  width: 330px;
+  height: 100%;
+  transform: translate(-50%, 0);
+}
+.screen__wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #1b1b1b;
+}
+.screen__wrapper::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 93%;
+  height: 91%;
+  background-color: #1f1f1f;
+  transform: translate(-50%, -50%);
+}
+
+/**
+* Buttons
+*/
+.btn-photo,
+.btn-home {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  bottom: 48px;
+  background-color: #1b1b1b;
+  border: 1px solid #101010;
+}
+
+.btn-photo {
+  right: 11px;
+}
+
+.btn-home {
+  left: 12px;
+  border-radius: 50%;
+}
+
+.btn-select,
+.btn-start {
+  position: absolute;
+  top: 18px;
+  width: 10px;
+  height: 2px;
+  background-color: #1b1b1b;
+}
+
+.btn-select {
+  right: 4px;
+}
+
+.btn-start {
+  left: 4px;
+}
+.btn-start::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 10px;
+  background-color: #1b1b1b;
+  transform: translate(-50%, -50%);
+}
+    </style>
+</head>
+<body>
+    	<div class="n-switch">
+		
+		<div class="n-switch__wrapper">
+
+			<div class="joycon joycon--left">
+
+				<div class="btn-select"></div>
+				
+				<div class="stick stick--left"></div>
+
+				<div class="pad pad--left">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+
+				<div class="btn-photo"></div>
+
+			</div>
+
+			<div class="joycon joycon--right">
+
+				<div class="btn-start"></div>
+
+				<div class="stick stick--right"></div>
+
+				<div class="pad pad--right">
+					<span>X</span>
+					<span>A</span>
+					<span>B</span>
+					<span>Y</span>
+				</div>
+
+				<div class="btn-home"></div>
+
+			</div>
+			
+			<div class="screen">
+				
+				<div class="screen__wrapper"></div>				
+
+			</div>
+			
+		</div>
+
+	</div>
+
+	<div class="rect rect--black">
+	</div>
+
+	<div class="rect rect--red">
+	</div>
+
+	<div class="rect rect--blue">
+	</div>
+
+
+<p class="text"><a href="https://www.linkedin.com/in/nicofonseca" target="_blakn">Linkedin</a>
+</p>
+	
+	<p class="thanks">Thanks to <a href="https://codepen.io/sol0mka/" target="_blank">LegoMushroom</a> for the <a href="http://mojs.io/" target="_blank">MoJS library</a></p>
+
+
+    <script src="https://cdn.jsdelivr.net/mojs/0.288.1/mo.min.js"></script>
+    <script>
+        
+class Sparks extends mojs.CustomShape {
+  getShape() {return '<path d="M74,31.5 c0,0-8.9-12-37.5-12S1,31.5,1,31.5"/>';}}
+
+mojs.addShape('sparks', Sparks);
+
+
+
+const nSwitch = document.querySelector('.n-switch');
+const nSwitchWrapper = document.querySelector('.n-switch__wrapper');
+const screen = document.querySelector('.screen__wrapper');
+const joyconLeft = document.querySelector('.joycon--left');
+const joyconRight = document.querySelector('.joycon--right');
+const rectRed = document.querySelector('.rect--red');
+const rectBlue = document.querySelector('.rect--blue');
+const rectBlack = document.querySelector('.rect--black');
+
+const timeline = new mojs.Timeline({ speed: 1, delay: 50 });
+const timeline2 = new mojs.Timeline({ speed: 1, delay: 500 });
+const timelineMaster = new mojs.Timeline({ speed: 1, repeat: 999 });
+
+
+
+
+
+
+const screenAnim1 = new mojs.Html({
+  el: screen,
+  y: { 800: 0, duration: 2000, easing: 'expo.inout' },
+  scaleY: { 1.1: 1, duration: 1800, curve: 'M0, 100 C0, 100 25.265952727015524, -9.988635655345929 50, -10 C74.73404727298447, -10.011364344654075 100, 0 100, 0 ' },
+  isShowStart: true,
+  isForce3d: true });
+
+
+
+const screenAnim2 = new mojs.Html({
+  el: nSwitchWrapper,
+  angleZ: { 5: 0, duration: 1500, delay: 1800, curve: 'M0, 100 C0, 100 10, 0 10, 0 C10, 0 13.142857142857146, 100.57142857142854 70, 100 C126.85714285714286, 99.42857142857149 100, 100 100, 100 ' },
+  isShowStart: true,
+  isForce3d: true });
+
+
+
+const screenAnim3 = new mojs.Html({
+  el: nSwitchWrapper,
+  angleZ: { 360: 0, duration: 1200, delay: 2350, curve: 'M0, 0 C0, 0 20.00803116702666, 90.97486981612458 50, 100 C81.13482597583048, 107.0251301838754 100, 100 100, 100 ' },
+  isShowStart: true,
+  isForce3d: true });
+
+
+
+const screenAnim4 = new mojs.Html({
+  el: nSwitchWrapper,
+  y: { 0: 800, duration: 1500, delay: 3500, easing: 'expo.inout' },
+  scaleY: { 1: 1, duration: 1400, delay: 3800, curve: 'M0, 0 C0, 0 50, -22.285714285714285 50, -22.285714285714285 C50, -22.285714285714285 100, 0 100, 0 ' },
+  isShowStart: true,
+  isForce3d: true });
+
+
+
+
+
+
+const joyConLeftAnim1 = new mojs.Html({
+  el: joyconLeft,
+  opacity: { 0: 1, duration: 100, delay: 2150, easing: 'expo.inout' },
+  scale: { 0.9: 1, duration: 650, delay: 2000, easing: 'expo.inout' },
+  y: { "-300": 0, duration: 650, delay: 2150, curve: 'M0, 0 C0, 0 16.61276026876357, 78.04133169733505 35, 95 C65.95866830266502, 104.81581115980781 100, 100 100, 100 ' },
+  isShowStart: true,
+  isForce3d: true });
+
+
+
+
+const joyConRightAnim1 = new mojs.Html({
+  el: joyconRight,
+  opacity: { 0: 1, duration: 100, delay: 1600, easing: 'expo.inout' },
+  scale: { 0.9: 1, duration: 600, delay: 1300, easing: 'expo.inout' },
+  y: { "-200": 0, duration: 800, delay: 1600, curve: 'M0, 0 C0, 0 16.61276026876357, 78.04133169733505 35, 95 C65.95866830266502, 104.81581115980781 100, 100 100, 100 ' },
+  isShowStart: true,
+  isForce3d: true });
+
+
+
+
+const spark1 = new mojs.Shape({
+  shape: 'sparks',
+  parent: nSwitch,
+  radius: 25,
+  fill: 'none',
+  delay: 2400,
+  strokeWidth: { 5: 0 },
+  stroke: 'white',
+  strokeDasharray: '100%',
+  strokeDashoffset: { '100%': '-100%' },
+  duration: 800,
+  easing: 'cubic.out',
+  strokeLinecap: 'round',
+  isForce3d: true,
+  left: '0%',
+  top: '95%',
+  angle: -130 });
+
+
+const spark2 = new mojs.Shape({
+  shape: 'sparks',
+  parent: nSwitch,
+  radius: 25,
+  fill: 'none',
+  delay: 2400,
+  strokeWidth: { 5: 0 },
+  stroke: 'white',
+  strokeDasharray: '100%',
+  strokeDashoffset: { '100%': '-100%' },
+  duration: 800,
+  easing: 'cubic.out',
+  strokeLinecap: 'round',
+  isForce3d: true,
+  left: '100%',
+  top: '5%',
+  angle: 55 });
+
+
+
+
+const curveLine1 = new mojs.Burst({
+  left: "100%", top: "100%",
+  degree: 180,
+  parent: nSwitch,
+  angle: 45,
+  radius: { 0: 20 },
+  count: 4,
+  className: 'clickright',
+  children: {
+    shape: 'line',
+    radius: 3,
+    delay: 1850,
+    radiusY: 0,
+    scale: 0.8,
+    stroke: '#ffffff',
+    strokeDasharray: '100%',
+    strokeDashoffset: { '-100%': '100%' },
+    duration: 200,
+    easing: 'quad.out' } });
+
+
+
+
+
+const curveLine2 = new mojs.Burst({
+  left: "0", top: "100%",
+  parent: nSwitch,
+  degree: 180,
+  angle: -225,
+  radius: { 0: 100 },
+  count: 4,
+  className: 'clickleft',
+  children: {
+    shape: 'line',
+    radius: 3,
+    delay: 2350,
+    radiusY: 0,
+    scale: 0.8,
+    stroke: '#ffffff',
+    strokeDasharray: '100%',
+    strokeDashoffset: { '-100%': '100%' },
+    duration: 800,
+    easing: 'quad.out' } });
+
+
+
+
+
+
+
+timeline.
+add(
+spark1,
+spark2,
+curveLine1,
+curveLine2,
+screenAnim1,
+screenAnim2,
+screenAnim3,
+screenAnim4,
+joyConRightAnim1,
+joyConLeftAnim1);
+
+
+
+
+const rectBlueAnim1 = new mojs.Html({
+  el: rectBlue,
+  isShowStart: false,
+  isForce3d: true,
+  y: { "100%": "0%", duration: 900, easing: 'expo.out' } }).
+then({
+  y: { "0%": "100%", delay: 2800, duration: 500, easing: 'expo.in' } });
+
+
+const rectRedAnim1 = new mojs.Html({
+  el: rectRed,
+  isShowStart: false,
+  isForce3d: true,
+  y: { "100%": "0%", duration: 700, delay: 200, easing: 'expo.out' } }).
+then({
+  y: { "0%": "100%", delay: 2700, duration: 500, easing: 'expo.in' } });
+
+
+
+const rectBlackAnim1 = new mojs.Html({
+  el: rectBlack,
+  isShowStart: false,
+  isForce3d: true,
+  y: { "100%": "0%", duration: 500, delay: 350, easing: 'expo.out' } }).
+then({
+  y: { "0%": "100%", delay: 2500, duration: 600, easing: 'expo.in' } });
+
+
+
+timeline2.add(
+rectBlueAnim1,
+rectRedAnim1,
+rectBlackAnim1);
+
+
+timelineMaster.add(timeline, timeline2).play();
+    </script>
+</body>
+</html>
