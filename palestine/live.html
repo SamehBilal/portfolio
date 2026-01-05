@@ -10,15 +10,14 @@
         content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
     <meta content="Sameh Bilal" name="author" />
     <meta name="twitter:title" content="Palestine Crisis" />
-    <meta name="twitter:site" content="{{ url()->current() }}" />
     <meta name="twitter:creator" content="Sameh Bilal" />
     <meta name="twitter:description"
-        content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
+        content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="assets/img/logo2.png" />
     <meta property="og:title" content="Palestine Crisis" />
     <meta property="og:description"
-        content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
+        content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="assets/img/logo2.png" />
     <!--== Favicon ==-->
@@ -34,45 +33,17 @@
     <link rel="apple-touch-icon" href="logo.PNG">
     <link rel="manifest" href="/manifest.json">
 
-    <!-- build:css assets/css/app.min.css -->
-    <!--== jqvmap Min CSS ==-->
+    <!--== CSS ==-->
     <link href="assets/css/jqvmap.min.css" rel="stylesheet" />
-    <!--== ChartJS Min CSS ==-->
     <link href="assets/css/chart.min.css" rel="stylesheet" />
-    <!--== DataTables Min CSS ==-->
     <link href="assets/css/datatables.min.css" rel="stylesheet" />
-    <!--== Select2 Min CSS ==-->
     <link href="assets/css/select2.min.css" rel="stylesheet" />
-    <!--== Bootstrap Min CSS ==-->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <!--== Material Design Icons Min CSS ==-->
     <link href="assets/css/materialdesignicons.min.css" rel="stylesheet" />
-    <!--== Material Design Icons Min CSS ==-->
-    <!-- <link href="assets/css/line.css" rel="stylesheet" /> -->
-
-    <!--== Main Style CSS ==-->
     <link href="assets/css/style.css" rel="stylesheet" />
-    <!-- endbuild -->
-
-    <!--[if lt IE 9]>
-    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <script type="application/ld+json">
-        {
-        "@context": "https://schema.org",
-        "@type": "Website",
-        "name": "Palestine Crisis",
-        "alternateName": "Palestine Crisis",
-        "url": "{{ url()->current() }}",
-        "logo": "assets/img/logo2.png",
-        }
-    </script>
 </head>
 
-<body class="body-dark" style="height:100vh!Important;">
-
+<body class="body-dark main-container" style="height:100vh!Important;">
     <!--== Start Header Wrapper ==-->
     <header class="header-wrapper">
         <div class="container">
@@ -85,13 +56,9 @@
 
                 <div class="col-sm-6 col-lg-4">
                     <div class="last-update-wrap text-center">
-                        <!-- @php
-                        $live = App\Models\Livetracker::findOrFail(1);
-                        $attacks = App\Models\Attack::orderBy('total_deaths','desc')->get();
-                        @endphp -->
-                        <p class="mb-0">Updated: <span class="last-update"><!-- {{
-                                $live->last_update->format('Y-m-d G:i A') }} -->2024-02-19 23:59 PM</span> <img src="assets/img/live.gif"
-                                alt="" height="40px"></p>
+                        <p class="mb-0"><span data-i18n="Updated">Updated</span>: <span class="last-update">0</span>
+                            <span data-i18n="minutes ago"></span> <img src="assets/img/live.gif" alt=""
+                                height="40px"></p>
                     </div>
                 </div>
 
@@ -99,11 +66,10 @@
                     <div class="navbar-wrap">
                         <nav class="menubar">
                             <ul class="nav">
-                                <li><a href="live.html">Live Tracker</a></li>
-                                <li><a href="map.html">Original Map</a>
-                                </li>
-                                <li><a href="brands.html">Support</a></li>
-                                <li><a href="live-ar.html" class="language-link">AR</a></li>
+                                <li><a href="live.html" data-i18n="Live Tracker">Live Tracker</a></li>
+                                <li><a href="map.html" data-i18n="Original Map">Original Map</a></li>
+                                <li><a href="brands.html" data-i18n="Support">Support</a></li>
+                                <li><a href="live-ar.html" class="language-link" data-lang="ar">AR</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -119,7 +85,8 @@
             <div class="container">
                 <div class="row justify-content-center help-button ">
                     <a class="text-highlight underline text-center" href="https://www.buymeacoffee.com/samehbilal"
-                        target="_blank" rel="noreferrer">Help keep this website running! 🙏</a>
+                        target="_blank" rel="noreferrer"><span data-i18n="Help keep this website running!">Help keep
+                            this website running!</span> 🙏</a>
                 </div>
                 <div class="row">
                     <div class="col-xl-6">
@@ -131,11 +98,9 @@
                                             <img src="assets/img/people.png" alt="corona-icon" />
                                         </div>
                                         <div class="tracker-block__content">
-                                            <h4>Total Deaths</h4>
-                                            <h2><span class="cases-no infected"><!-- {{ number_format($live->total_deaths)
-                                                    }} -->29,496</span> <span class="new-no">(+<span
-                                                        class="today_infected">9,528</span>)</span>
-                                            </h2>
+                                            <h4 data-i18n="Total Deaths">Total Deaths</h4>
+                                            <h2><span class="cases-no total-deaths">0</span> <span
+                                                    class="new-no">(+<span class="previous_total_deaths">0</span>)</span></h2>
                                         </div>
                                     </div>
                                 </div>
@@ -148,11 +113,9 @@
                                             <img src="assets/img/patient.png" alt="corona-icon" />
                                         </div>
                                         <div class="tracker-block__content">
-                                            <h4>Total Injured</h4>
-                                            <h2><span class="cases-no current_cases"><!-- {{
-                                                    number_format($live->total_injuries) }} -->72,030</span> <span
-                                                    class="new-no">(+<span class="today_injuries">16,584</span>)</span>
-                                            </h2>
+                                            <h4 data-i18n="Total Injured">Total Injured</h4>
+                                            <h2><span class="cases-no total-injuries">0</span> <span
+                                                    class="new-no">(+<span class="previous_total_injuries">0</span>)</span></h2>
                                         </div>
                                     </div>
                                 </div>
@@ -165,11 +128,9 @@
                                             <img src="assets/img/man (2).png" alt="corona-icon" />
                                         </div>
                                         <div class="tracker-block__content">
-                                            <h4>Total Children</h4>
-                                            <h2><span class="cases-no deaths"><!-- {{ number_format($live->children_deaths)
-                                                    }} -->12,730</span> <span class="new-no">(+<span
-                                                        class="today_deaths">4,660</span>)</span>
-                                            </h2>
+                                            <h4 data-i18n="Total Children">Total Children</h4>
+                                            <h2><span class="cases-no children-deaths">0</span> <span
+                                                    class="new-no">(+<span class="previous_children_deaths">0</span>)</span></h2>
                                         </div>
                                     </div>
                                 </div>
@@ -182,17 +143,13 @@
                                             <img src="assets/img/woman (3).png" alt="corona-icon" />
                                         </div>
                                         <div class="tracker-block__content">
-                                            <h4>Total Women</h4>
-                                            <h2><span class="cases-no recovered"><!-- {{ number_format($live->women_deaths)
-                                                    }} -->8,573</span> <span class="new-no">(+<span
-                                                        class="today_recovered">2,370</span>)</span>
-                                            </h2>
+                                            <h4 data-i18n="Total Women">Total Women</h4>
+                                            <h2><span class="cases-no women-deaths">0</span> <span
+                                                    class="new-no">(+<span class="previous_women_deaths">0</span>)</span></h2>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="row">
@@ -200,47 +157,41 @@
                                 <div class="tracker-block tracker-block--2">
                                     <div class="tracker-block__header with-option">
                                         <div class="section-head">
-                                            <h2>From OCT the 7th</h2>
-                                            <p>Updated <span class="last-update"></span> <!-- {{
-                                                $live->last_update->diffForHumans() }} -->1 year ago</p>
+                                            <h2 data-i18n="From OCT the 7th">From OCT the 7th</h2>
+                                            <p><span data-i18n="Updated">Updated</span> <span
+                                                    class="last-update">0</span> <span data-i18n="minutes ago">minutes
+                                                    ago</span></p>
                                         </div>
                                         <div class="select-country">
-                                            <!-- {{-- <label for="select1" class="sr-only">Region</label> --}} -->
                                             <select class="country" id="select1" name="country"
                                                 style="width: 164px!Important;">
-                                                <!-- @foreach ($attacks as $attack)
-                                                <option value="{{ $attack->regions->code }}"
-                                                    class="{{ $attack->regions->name }}"
-                                                    data-image="assets/img/palestine.webp">
-                                                    {{ __('content.'.$attack->regions->name) }}
-                                                </option>
-                                                @endforeach -->
+                                                <!-- Will be populated by JavaScript -->
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="tracker-block__body">
                                         <div class="track-item">
-                                            <p class="track-item__title track-item__title-deaths">Total Displaced</p>
-                                            <h4 class="track-item__no infected"><!-- {{ number_format($live->total_displaced)
-                                                }} -->2,001,014 <span class="new-no-new">(+<span
-                                                        class="today_recovered">101,041</span>)</span></h4>
+                                            <p class="track-item__title track-item__title-deaths"
+                                                data-i18n="Total Displaced">Total Displaced</p>
+                                            <h4 class="track-item__no total-displaced">0 <span
+                                                    class="new-no-new">(+<span class="previous_total_displaced">0</span>)</span>
+                                            </h4>
                                         </div>
 
                                         <div class="track-item">
-                                            <p class="track-item__title track-item__title-recovered">Total Elders</p>
-                                            <h4 class="track-item__no deaths"><!-- {{ number_format($live->elders_deaths) }} -->
-                                                699<span class="new-no-new">(+<span
-                                                        class="today_recovered">5</span>)</span></h4>
+                                            <p class="track-item__title track-item__title-recovered"
+                                                data-i18n="Total Elders">Total Elders</p>
+                                            <h4 class="track-item__no elders-deaths">0<span class="new-no-new">(+<span
+                                                        class="previous_elders_deaths">0</span>)</span></h4>
                                         </div>
 
                                         <div class="track-item">
-                                            <p class="track-item__title">Destroyed Residential Units
-                                            </p>
-                                            <h4 class="track-item__no recovered"><!-- {{
-                                                number_format($live->total_destroyed_residential_units) }} -->306,600 <span
-                                                    class="new-no-new">(+<span
-                                                        class="today_recovered">16,600</span>)</span></h4>
+                                            <p class="track-item__title" data-i18n="Destroyed Residential Units">
+                                                Destroyed Residential Units</p>
+                                            <h4 class="track-item__no destroyed-units">0 <span
+                                                    class="new-no-new">(+<span class="previous_destroyed_units">0</span>)</span>
+                                            </h4>
                                         </div>
                                     </div>
                                 </div>
@@ -259,6 +210,7 @@
                             </div>
 
                             <div class="map-status" id="map-statuss">
+                                <!-- SVG Palestine Map - keeping the same SVG -->
                                 <svg class="palestine-map map-dashboard" xmlns:mapsvg="http://mapsvg.com"
                                     xmlns:dc="http://purl.org/dc/elements/1.1/"
                                     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -361,27 +313,17 @@
                         <div class="cases-by-country" id="cases-by-country">
                             <div class="cases-by-country__top">
                                 <div class="header-content d-flex">
-                                    <h4>Deaths by Region</h4>
+                                    <h4 data-i18n="Deaths by Region">Deaths by Region</h4>
                                 </div>
                             </div>
 
                             <div class="cases-by-country__bottom">
-                                <ul class="cases-country-lists">
-                                    <li class="country-search">
-                                        <h6 class="country-name">All Regions</h6>
-                                        <span class="cases-no infected"><!-- {{ $attacks->take(2)->sum('total_deaths');
-                                            }} -->29496</span>
-                                    </li>
-                                    <!-- @foreach ($attacks as $key => $attack)
-                                    <li class="country-search {{ $key > 10 ? " region-disabled":"" }}"
-                                        style='{{  $key > 10 ? "display:none;":"" }}'>
-                                        <h6 class="country-name">{{ __('content.'.$attack->regions->name) }}</h6>
-                                        <span class="cases-no infected">{{ $attack->total_deaths }}</span>
-                                    </li>
-                                    @endforeach -->
+                                <ul class="cases-country-lists" id="region-list">
+                                    <!-- Will be populated by JavaScript -->
                                 </ul>
                                 <div class="text-center">
-                                    <button class="btn-show-all" data-display="all"> View all Regions</button>
+                                    <button class="btn-show-all" data-display="all" data-i18n="View all Regions">View
+                                        all Regions</button>
                                 </div>
                             </div>
                         </div>
@@ -392,36 +334,20 @@
                             <table class="list-view__table display table">
                                 <thead class="list-view__head">
                                     <tr>
-                                        <th>Region</th>
-                                        <th>Injured</th>
-                                        <th>Deaths</th>
-                                        <th>Women</th>
-                                        <th>Children</th>
-                                        <th>Elders</th>
-                                        <th>Deaths %</th>
-                                        <th>Destroyed Residential Units</th>
-                                        <th>Displaced</th>
+                                        <th data-i18n="Region">Region</th>
+                                        <th data-i18n="Injured">Injured</th>
+                                        <th data-i18n="Deaths">Deaths</th>
+                                        <th data-i18n="Women">Women</th>
+                                        <th data-i18n="Children">Children</th>
+                                        <th data-i18n="Elders">Elders</th>
+                                        <th data-i18n="Deaths %">Deaths %</th>
+                                        <th data-i18n="Destroyed Residential Units">Destroyed Residential Units</th>
+                                        <th data-i18n="Displaced">Displaced</th>
                                     </tr>
                                 </thead>
 
-                                <tbody class="list-view__body">
-                                    <!-- @foreach ($attacks as $attack)
-                                    <tr class="country-item">
-                                        <td>
-                                            <img src="assets/img/palestine.webp" alt="Palestine"> {{
-                                            __('content.'.$attack->regions?->name) }}
-                                        </td>
-                                        <td>{{ number_format( $attack->total_injuries) }}</td>
-                                        <td>{{ number_format( $attack->total_deaths) }}</td>
-                                        <td>{{ number_format( $attack->women_deaths) }}</td>
-                                        <td>{{ number_format( $attack->children_deaths) }}</td>
-                                        <td>{{ number_format( $attack->elders_deaths) }}</td>
-                                        <td>{{ number_format($attack->total_injuries ?
-                                            ($attack->total_deaths/$attack->total_injuries)*100 :'100') }}%</td>
-                                        <td>{{ number_format( $attack->total_destroyed_residential_units) }}</td>
-                                        <td>{{ number_format( $attack->total_displaced) }}</td>
-                                    </tr>
-                                    @endforeach -->
+                                <tbody class="list-view__body" id="regions-table-body">
+                                    <!-- Will be populated by JavaScript -->
                                 </tbody>
                             </table>
                         </div>
@@ -434,9 +360,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6">
-                        <div class="corona-chart-stats report-item mt-0" id="chart-canvas">
+                        <div class="corona-chart-stats report-item mt-0" id="chart-report">
                             <div class="chart-status-top">
-                                <h3>Total Deaths By Day</h3>
+                                <h3 data-i18n="Total Deaths By Day">Total Deaths By Day</h3>
                             </div>
                             <div class="chart-wrap">
                                 <canvas id="chart-canvas" style="width: 100%; height: 100%"></canvas>
@@ -446,25 +372,25 @@
 
                     <div class="col-lg-6 col-xl-3">
                         <div class="today-activities-chart report-item">
-                            <h3>Total Deaths By Classification</h3>
+                            <h3 data-i18n="Total Deaths By Classification">Total Deaths By Classification</h3>
 
                             <div class="activities-wrap worldwide-stats">
                                 <div class="activities-block">
                                     <div class="activities-block-item">
-                                        <h6>Total Deaths</h6>
-                                        <h4 class="infected"><!-- {{ number_format($live->total_deaths) }} -->29,496</h4>
+                                        <h6 data-i18n="Total Deaths">Total Deaths</h6>
+                                        <h4 class="total-deaths">0</h4>
                                     </div>
                                     <div class="activities-block-item">
-                                        <h6>Total Women</h6>
-                                        <h4 class="current_cases"><!-- {{ number_format($live->women_deaths) }} -->8,573</h4>
+                                        <h6 data-i18n="Total Women">Total Women</h6>
+                                        <h4 class="women-deaths">0</h4>
                                     </div>
                                     <div class="activities-block-item">
-                                        <h6>Total Children</h6>
-                                        <h4 class="recovered"><!-- {{ number_format($live->children_deaths) }} -->12,730</h4>
+                                        <h6 data-i18n="Total Children">Total Children</h6>
+                                        <h4 class="children-deaths">0</h4>
                                     </div>
                                     <div class="activities-block-item">
-                                        <h6>Total Elders</h6>
-                                        <h4 class="deaths"><!-- {{ number_format($live->elders_deaths) }} -->699</h4>
+                                        <h6 data-i18n="Total Elders">Total Elders</h6>
+                                        <h4 class="elders-deaths">0</h4>
                                     </div>
                                 </div>
                                 <div class="charts">
@@ -483,41 +409,41 @@
 
                     <div class="col-lg-6 col-xl-3 final-div-mobile">
                         <div class="today-view report-item worldwide-stats">
-                            <h3>Medical Sector</h3>
+                            <h3 data-i18n="Medical Sector">Medical Sector</h3>
 
                             <div class="tracker-block tracker-block--3 text-center">
                                 <div class="tracker-block__top">
-                                    <h4>From OCT the 7th</h4>
-                                    <p>Updated <span class="last-update"></span> <!-- {{
-                                        $live->last_update->diffForHumans() }} -->1 year ago</p>
-                                    <h5 class="tracker-block__bottom__item-title track-item__title-recovered">Doctors/Medics</h5>
-                                    <h2 class="tracker-block__top-total-cases infected"><!-- {{
-                                        number_format($live->total_medical_deaths) }} -->345</h2>
-                                    <h6 class="new-no">+<span class="today_infected">220<!-- {{
-                                            number_format($live->total_medical_injured) }} --></span> (Injured)</h6>
+                                    <h4 data-i18n="1:34 AM From OCT the 7th">From OCT the 7th</h4>
+                                    <p><span data-i18n="Updated">Updated</span> <span class="last-update">0</span> <span
+                                            data-i18n="minutes ago">minutes ago</span></p>
+                                    <h5 class="tracker-block__bottom__item-title track-item__title-recovered"
+                                        data-i18n="Doctors/Medics">Doctors/Medics</h5>
+                                    <h2 class="tracker-block__top-total-cases medical-deaths">0</h2>
+                                    <h6 class="new-no">+<span class="medical-injured">0</span> (<span
+                                            data-i18n="Injured">Injured</span>)</h6>
                                 </div>
 
                                 <div class="tracker-block__bottom">
                                     <div class="tracker-block__bottom-wrap">
                                         <div class="tracker-block__bottom__item">
-                                            <h5 class="tracker-block__bottom__item-title title-deaths">Broken Ambulances</h5>
-                                            <h2 class="tracker-block__bottom__item-no deaths"><!-- {{
-                                                number_format($live->total_ambulances_broken) }} -->102</h2>
-                                            <h6 class="new-no">+<span class="today_deaths"><!-- {{
-                                                    number_format($live->total_ambulances_semi_broken) }} -->60</span> (Semi Broken)</h6>
+                                            <h5 class="tracker-block__bottom__item-title title-deaths"
+                                                data-i18n="Broken Ambulances">Broken Ambulances</h5>
+                                            <h2 class="tracker-block__bottom__item-no ambulances-broken">0</h2>
+                                            <h6 class="new-no">+<span class="ambulances-semi-broken">0</span> (<span
+                                                    data-i18n="Semi Broken">Semi Broken</span>)</h6>
                                         </div>
                                         <div class="tracker-block__bottom__item">
-                                            <h5 class="tracker-block__bottom__item-title title-active">Closed Health Care Centers</h5>
-                                            <h2 class="tracker-block__bottom__item-no current_cases"><!-- {{
-                                                number_format($live->total_clinics_broken) }} -->53</h2>
-                                            <h6 class="new-no"><span class="today_active_cases">Out Of</span> (72)</h6>
+                                            <h5 class="tracker-block__bottom__item-title title-active"
+                                                data-i18n="Closed Health Care Centers">Closed Health Care Centers</h5>
+                                            <h2 class="tracker-block__bottom__item-no clinics-broken">0</h2>
+                                            <h6 class="new-no"><span data-i18n="Out Of">Out Of</span> (<span class="total_clinics">0</span>)</h6>
                                         </div>
                                     </div>
                                     <div class="tracker-block__bottom__item recovered-item">
-                                        <h5 class="tracker-block__bottom__item-title title-recovered">Hospitals Out Of Service</h5>
-                                        <h2 class="tracker-block__bottom__item-no recovered"><!-- {{
-                                            number_format($live->total_hospitals_broken) }} -->26</h2>
-                                        <h6 class="new-no"><span class="today_recovered">Out Of</span> (35)</h6>
+                                        <h5 class="tracker-block__bottom__item-title title-recovered"
+                                            data-i18n="Hospitals Out Of Service">Hospitals Out Of Service</h5>
+                                        <h2 class="tracker-block__bottom__item-no hospitals-broken">0</h2>
+                                        <h6 class="new-no"><span data-i18n="Out Of">Out Of</span> (<span class="total_hospitals">0</span>)</h6>
                                     </div>
                                 </div>
                             </div>
@@ -531,8 +457,7 @@
             <div class="text-center footer">
                 <p class="text-reset ">©
                     <script>document.write(new Date().getFullYear())</script>. made with <svg
-                        xmlns="http://www.w3.org/2000/svg" height="1em"
-                        viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                         <style>
                             svg {
                                 fill: #00cbad
@@ -548,198 +473,32 @@
     </main>
     <!--== End Main Content Wrapper ==-->
 
-
     <!--=======================Javascript============================-->
-    <!-- build:js assets/js/app.min.js -->
-    <!--=== Modernizr Min Js ===-->
     <script src="assets/js/modernizr.min.js"></script>
-    <!--=== jQuery Min Js ===-->
     <script src="assets/js/jquery.min.js"></script>
-    <!--=== jQuery Migration Min Js ===-->
     <script src="assets/js/jquery-migrate.min.js"></script>
-    <!--=== Popper Min Js ===-->
     <script src="assets/js/popper.min.js"></script>
-    <!--=== Bootstrap Min Js ===-->
     <script src="assets/js/bootstrap.min.js"></script>
-    <!--=== Select2 Min Js ===-->
     <script src="assets/js/select2.full.min.js"></script>
-    <!--=== Data Table Min Js ===-->
     <script src="assets/js/datatables.min.js"></script>
-    <!--=== ChartJS Min Js ===-->
     <script src="assets/js/chart.min.js"></script>
-    <!--=== jQuery Vector Map Min Js ===-->
     <script src="assets/js/jquery.vmap.min.js"></script>
-    <!--=== jQuery Vector World Min Js ===-->
     <script src="assets/js/jquery.vmap.world.js"></script>
 
-    <!--=== APP Js ===-->
+    <!--=== Our New App Js ===-->
     <script src="assets/js/app.js"></script>
+
+    <!--=== Live Page Specific Script ===-->
+    <script src="assets/js/live.js"></script>
+
     <!--=== Active Js ===-->
     <script src="assets/js/active.js"></script>
 
-    <script>
-        var regions = [
-            @foreach($attacks as $attack)
-                {
-                "region_name": "{{ __('content.'.$attack->regions->name) }}",
-                "region_code": "{{ $attack->regions->code }}",
-                "deaths": {{ $attack-> total_deaths }}
-                },
-        @endforeach
-        {
-            "region_name": "{{ __('content.Jaffa') }}",
-                "region_code": "PS-JFA",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Nazaeth') }}",
-                "region_code": "PS-NAZ",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Dead Sea') }}",
-                "region_code": "PS-DS",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Allyd') }}",
-                "region_code": "PS-ALD",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Safad') }}",
-                "region_code": "PS-SAF",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Acre') }}",
-                "region_code": "PS-ACE",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Baysan') }}",
-                "region_code": "PS-BSN",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Tiberias') }}",
-                "region_code": "PS-TBA",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Lake Tiberias') }}",
-                "region_code": "PS-LTB",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Beersheba') }}",
-                "region_code": "PS-BSB",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Khan Yunis') }}",
-                "region_code": "PS-KYS",
-                    "deaths": 19667
-        },
-        {
-            "region_name": "{{ __('content.Alramlah') }}",
-                "region_code": "PS-ALR",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Haifa') }}",
-                "region_code": "PS-HFA",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Deir El Balah') }}",
-                "region_code": "PS-DEB",
-                    "deaths": 19667
-        },
-        {
-            "region_name": "{{ __('content.North Gaza') }}",
-                "region_code": "PS-NGZ",
-                    "deaths": 19667
-        },
-        {
-            "region_name": "{{ __('content.Rafah') }}",
-                "region_code": "PS-RFH",
-                    "deaths": 19667
-        },
-        ];
-
-
-        var temp_array = regions.map(function (item) {
-            return item.deaths;
-        });
-        var highest_value = Math.max.apply(Math, temp_array);
-
-        $(function () {
-
-            for (i = 0; i < regions.length; i++) {
-
-                $('#' + regions[i].region_code)
-                    .css({ 'fill': 'rgba(11, 104, 170,' + regions[i].deaths / (highest_value / 100) + ')' })
-                    .data('region', regions[i]);
-            }
-
-            $('.palestine-map path').mouseover(function (e) {
-                var region_data = $(this).data('region');
-                $('<div class="info_panel">' +
-                    region_data.region_name + '<br>' +
-                    '{{ __("content.Deaths") }}: ' + region_data.deaths.toLocaleString("en-UK") +
-                    '</div>'
-                )
-                    .appendTo('body');
-            })
-                .mouseleave(function () {
-                    $('.info_panel').remove();
-                })
-                .mousemove(function (e) {
-                    var mouseX = e.pageX, //X coordinates of mouse
-                        mouseY = e.pageY; //Y coordinates of mouse
-
-                    $('.info_panel').css({
-                        top: mouseY - 50,
-                        left: mouseX - ($('.info_panel').width() / 2)
-                    });
-                });
-
-        });
-
-        $('.btn-show-all').on('click', function () {
-            var type = $(this).attr('data-display');
-
-            if (type == 'all') {
-                $('.region-disabled').css('display', 'flex');
-                $(this).text('{{ __("content.View less Regions") }}');
-                $(this).attr('data-display', 'less');
-            } else {
-                $(this).text('{{ __("content.View all Regions") }}');
-                $('.region-disabled').css('display', 'none');
-                $(this).attr('data-display', 'all');
-            }
-        })
-
-        $('#select1').on('change', function () {
-            $('.map-dashboard').find('path').css({
-                'stroke': 'rgb(247, 247, 247)',
-                'stroke-width:': '0.400293px',
-            });
-            let value = $(this).val();
-            $('#' + value).css({
-                /* 'fill' : '#00CBAD', */
-                'stroke': 'red',
-                'stroke-width:': '1px',
-            });
-        })
-    </script>
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
-        data-id="samehbilal" data-description="Support me on Buy me a coffee!" data-color="#00CBAD" data-position="Right"
-        data-x_margin="18" data-y_margin="18"></script>
-    <!-- endbuild -->
+        data-id="samehbilal" data-description="Support me on Buy me a coffee!" data-color="#00CBAD"
+        data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
-    <script src="/sw.js"></script>
+    <script src="sw.js"></script>
     <script>
         if (!navigator.serviceWorker.controller) {
             navigator.serviceWorker.register("/sw.js").then(function (reg) {
@@ -747,7 +506,6 @@
             });
         }
     </script>
-
 </body>
 
 </html>

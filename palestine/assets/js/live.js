@@ -7,25 +7,25 @@ function initializePalestineMap() {
     const regions = []; // Will be populated from attacks data
     // Map region IDs to SVG path IDs
     const regionIdMap = {
-    1: 'RBH',  // West Bank -> Ramallah (aggregate)
-    4: 'NBS',  // Nablus
-    5: 'RBH',  // Ramallah
-    9: 'JEN',  // Jenin
-    10: 'BTH', // Bethlehem
-    12: 'TKM', // Tulkarm
-    16: 'HBN', // Hebron
-    20: 'GZA', // Gaza (main)
-    22: 'JEM', // Jerusalem
-    23: 'JRH', // Jericho
-    24: 'SLT', // Salfit
-    25: 'TBS', // Tubas
-    26: 'QQA', // Qalqilya
-    // ADD THESE 4 LINES:
-    18: 'KYS', // Khan Yunis
-    27: 'DEB', // Deir El Balah
-    28: 'NGZ', // North Gaza
-    29: 'RFH'  // Rafah
-  };
+        1: 'RBH',  // West Bank -> Ramallah (aggregate)
+        4: 'NBS',  // Nablus
+        5: 'RBH',  // Ramallah
+        9: 'JEN',  // Jenin
+        10: 'BTH', // Bethlehem
+        12: 'TKM', // Tulkarm
+        16: 'HBN', // Hebron
+        20: 'GZA', // Gaza (main)
+        22: 'JEM', // Jerusalem
+        23: 'JRH', // Jericho
+        24: 'SLT', // Salfit
+        25: 'TBS', // Tubas
+        26: 'QQA', // Qalqilya
+        // ADD THESE 4 LINES:
+        18: 'KYS', // Khan Yunis
+        27: 'DEB', // Deir El Balah
+        28: 'NGZ', // North Gaza
+        29: 'RFH'  // Rafah
+    };
     // Populate regions array from attacksManager
     attacksManager.attacks.forEach(function (attack) {
         const svgCode = regionIdMap[attack.region_id] || attack.region_id;
@@ -210,16 +210,37 @@ function populateRegionSelect() {
 
         // Handle select change to highlight map region
         jQuery(select).on('change', function () {
-            var value = jQuery(this).val();
+            var regionId = parseInt(jQuery(this).val());
+
+            // Map to get SVG code
+            const regionIdMap = {
+                1: 'RBH', 4: 'NBS', 5: 'RBH', 9: 'JEN', 10: 'BTH',
+                12: 'TKM', 16: 'HBN', 20: 'GZA', 22: 'JEM', 23: 'JRH',
+                24: 'SLT', 25: 'TBS', 26: 'QQA', 18: 'KYS', 27: 'DEB',
+                28: 'NGZ', 29: 'RFH'
+            };
+
+            var svgCode = regionIdMap[regionId];
+
+            // Reset all regions to their original colors
             document.querySelectorAll('.map-dashboard path').forEach(function (path) {
-                path.style.stroke = '#fff';
-                path.style.strokeWidth = '0.5px';
+                var deaths = parseInt(path.getAttribute('data-deaths')) || 0;
+
+                if (deaths < 10) {
+                    path.style.fill = '#1C202B';
+                } else if (deaths >= 10 && deaths < 100) {
+                    path.style.fill = '#163957';
+                } else {
+                    path.style.fill = '#0B68AA';
+                }
             });
 
-            var selectedPath = document.querySelector('#PS-' + value);
+            // Highlight selected region with red fill
+            var selectedPath = document.querySelector('#PS-' + svgCode);
             if (selectedPath) {
-                selectedPath.style.stroke = 'red';
-                selectedPath.style.strokeWidth = '2px';
+                selectedPath.style.fill = 'red';
+            } else {
+                console.log('Path not found for:', svgCode, '(region ID:', regionId, ')');
             }
         });
     }

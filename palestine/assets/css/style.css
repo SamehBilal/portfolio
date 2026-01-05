@@ -391,6 +391,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 
 .tracker-block__header.with-option .select-country {
     position: relative;
+    width: auto;
 }
 
 @media only screen and (max-width: 767.98px) {
@@ -1362,6 +1363,7 @@ only screen and (min-width: 992px) and (max-width: 1199.98px) {
 
 .map-content-wrap .tracker-block__body {
     height: 100%;
+    width: inherit;
 }
 
 .map-content-wrap::-webkit-scrollbar {

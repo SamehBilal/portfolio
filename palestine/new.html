@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Original Map - Palestine Crisis</title>
+    <title>Palestine Crisis - Timeline Map</title>
     <meta name="description"
-        content="Palestine Crisis - Interactive map showing all Palestinian regions with detailed statistics." />
+        content="Palestine Crisis - Interactive timeline map showing Palestinian regions with historical statistics." />
     <meta content="Sameh Bilal" name="author" />
+
     <!--== Favicon ==-->
     <link rel="shortcut icon" href="assets/palestine_favicon.png" type="image/x-icon" />
 
@@ -16,6 +17,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&display=swap"
         rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
 
     <!-- PWA  -->
     <meta name="theme-color" content="#292833" />
@@ -32,45 +36,206 @@
     <link href="assets/css/style.css" rel="stylesheet" />
 
     <style>
-        /*.info_panel {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            pointer-events: none;
-            z-index: 9999;
-            font-size: 14px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }*/
+        /* Timeline Styles */
+        .timeline-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            z-index: 1000;
+            overflow: hidden;
+        }
 
+        .timeline {
+            position: absolute;
+            bottom: 0;
+            height: 80px;
+            padding-left: 50%;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .date {
+            color: #fff;
+            width: 150px;
+            height: 80px;
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 10px;
+        }
+
+        .date::before {
+            content: '';
+            position: absolute;
+            height: 60px;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .date.active::before {
+            background: rgba(0, 203, 173, 0.8);
+            height: 70px;
+        }
+
+        .focus {
+            position: relative;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .focus a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .date.active .focus a {
+            color: #00cbad;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .focus::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .date.active .focus::before {
+            width: 16px;
+            height: 16px;
+            border-color: #00cbad;
+            background: #00cbad;
+            box-shadow: 0 0 15px rgba(0, 203, 173, 0.5);
+        }
+
+        .goal_wrap {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #fff;
+            text-align: center;
+            border-radius: 50%;
+            line-height: 50px;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            transition: all 0.5s ease;
+            background: rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+        }
+
+        .goal_wrap:hover {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            font-size: 28px;
+            border-color: #00cbad;
+            color: #00cbad;
+            box-shadow: 0 0 20px rgba(0, 203, 173, 0.5);
+        }
+
+        .goal_wrap.active {
+            top: -100px;
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            font-size: 32px;
+            border-color: #00cbad;
+            background: rgba(0, 203, 173, 0.2);
+            color: #00cbad;
+            box-shadow: 0 0 25px rgba(0, 203, 173, 0.7);
+        }
+
+        .bounce {
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
+
+            50% {
+                transform: translateX(-50%) scale(1.2);
+            }
+        }
+
+        /* Map Styles */
         .palestine-map path {
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: opacity 0.2s, fill 0.3s;
         }
 
         .palestine-map path:hover {
             opacity: 0.8;
         }
 
-        /*.map-widget {
-            background: #1e2139;
-            border-radius: 10px;
-            padding: 30px;
-            margin: 30px 0;
+        .main-content-wrapper {
+            padding-bottom: 100px;
         }
 
-        .map-content-wrap {
-            background: #252942;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }*/
+        /* Background transition */
+        body {
+            transition: background-color 0.5s ease;
+        }
+
+        /* Timeline controls */
+        .timeline-controls {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .timeline-btn {
+            background: rgba(0, 203, 173, 0.2);
+            border: 1px solid #00cbad;
+            color: #00cbad;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-btn:hover {
+            background: rgba(0, 203, 173, 0.4);
+        }
+
+        .timeline-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
-<body class="body-dark main-container" style="height:100vh!Important;">
+<body class="body-dark main-container">
     <!--== Start Header Wrapper ==-->
     <header class="header-wrapper">
         <div class="container">
@@ -85,7 +250,8 @@
                     <div class="last-update-wrap text-center">
                         <p class="mb-0"><span data-i18n="Updated">Updated</span>: <span class="last-update">0</span>
                             <span data-i18n="minutes ago">minutes ago</span> <img src="assets/img/live.gif" alt=""
-                                height="40px"></p>
+                                height="40px">
+                        </p>
                     </div>
                 </div>
 
@@ -108,10 +274,9 @@
 
     <!--== Start Main Content Wrapper ==-->
     <main class="main-content-wrapper">
-
-            <div class="map-widget map-report position-relative">
-                <div class="corona-map-tracker">
-                    <svg id="Layer_1" class="palestine-map" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
+        <div class="map-widget map-report position-relative">
+            <div class="corona-map-tracker">
+                <svg id="Layer_1" class="palestine-map" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920">
                         <defs>
                             <style>
                                 .cls-1,
@@ -165,41 +330,42 @@
                         <path title="Lake Tiberias" id="PS-LTB" class="cls-2"
                             d="m826.87,329.8c-8.04-16.2-14.02-29.22-20.84-41.79-13.03-24.04-13.23-23.94,6.88-42.45,2.75-2.53,5.19-6.17,8.44-7.2,7.06-2.25,16.18-6.45,21.51-3.84,8.5,4.16,17.94,10.75,16.11,23.88-1.19,8.57.41,17.63-1.46,25.97-1.57,6.99-6.22,13.34-9.78,19.83-2.34,4.26-4.77,8.6-7.88,12.3-4.14,4.93-8.99,9.27-12.97,13.3Z" />
                     </svg>
-                </div>
-                <div class="map-content-wrap tracker-block tracker-block--4">
-                    <div class="tracker-block__body">
-                        <div class="select-country">
-                            <label for="select3" class="sr-only"></label>
-                            <select class="country" name="country" id="region-select" style="width: 100%">
-                                <!-- Will be populated by JavaScript -->
-                            </select>
-                        </div>
-                        <div class="track-item">
-                            <p class="track-item__title" data-i18n="Total Deaths">Total Deaths</p>
-                            <h4 class="track-item__no total-deaths">0</h4>
-                        </div>
-                        <div class="track-item">
-                            <p class="track-item__title" data-i18n="Total Injured">Total Injured</p>
-                            <h4 class="track-item__no total-injuries">0</h4>
-                        </div>
-                        <div class="track-item">
-                            <p class="track-item__title" data-i18n="Women Deaths">Women Deaths</p>
-                            <h4 class="track-item__no women-deaths">0</h4>
-                        </div>
-                        <div class="track-item">
-                            <p class="track-item__title" data-i18n="Children Deaths">Children Deaths</p>
-                            <h4 class="track-item__no children-deaths">0</h4>
-                        </div>
-                        <div class="track-item">
-                            <p class="track-item__title" data-i18n="Total Displaced">Total Displaced</p>
-                            <h4 class="track-item__no total-displaced">0</h4>
-                        </div>
+            </div>
+            <div class="map-content-wrap tracker-block tracker-block--4">
+                <div class="tracker-block__body">
+                    <div class="select-country">
+                        <label for="select3" class="sr-only"></label>
+                        <select class="country" name="country" id="region-select" style="width: 100%">
+                            <option value="">Select Region</option>
+                        </select>
+                    </div>
+                    <div class="track-item">
+                        <p class="track-item__title" data-i18n="Total Deaths">Total Deaths</p>
+                        <h4 class="track-item__no total-deaths">0</h4>
+                    </div>
+                    <div class="track-item">
+                        <p class="track-item__title" data-i18n="Total Injured">Total Injured</p>
+                        <h4 class="track-item__no total-injuries">0</h4>
+                    </div>
+                    <div class="track-item">
+                        <p class="track-item__title" data-i18n="Women Deaths">Women Deaths</p>
+                        <h4 class="track-item__no women-deaths">0</h4>
+                    </div>
+                    <div class="track-item">
+                        <p class="track-item__title" data-i18n="Children Deaths">Children Deaths</p>
+                        <h4 class="track-item__no children-deaths">0</h4>
+                    </div>
+                    <div class="track-item">
+                        <p class="track-item__title" data-i18n="Total Displaced">Total Displaced</p>
+                        <h4 class="track-item__no total-displaced">0</h4>
                     </div>
                 </div>
             </div>
+        </div>
+
         <div class="last-update-wrap text-center credits" dir="ltr">
             <div class="text-center footer">
-                <p class="text-reset ">©
+                <p class="text-reset">©
                     <script>document.write(new Date().getFullYear())</script>. made with <svg
                         xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                         <style>
@@ -216,6 +382,17 @@
     </main>
     <!--== End Main Content Wrapper ==-->
 
+    <!--== Timeline ==-->
+    <div class="timeline-container">
+        <div class="timeline-controls">
+            <button class="timeline-btn" id="prev-btn"><i class="fa fa-chevron-left"></i></button>
+            <button class="timeline-btn" id="next-btn"><i class="fa fa-chevron-right"></i></button>
+        </div>
+        <div class="timeline" id="timeline">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </div>
+
     <!--== JavaScript ==-->
     <script src="assets/js/modernizr.min.js"></script>
     <script src="assets/js/jquery.min.js"></script>
@@ -224,11 +401,424 @@
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/select2.full.min.js"></script>
 
-    <!--=== Our App Js ===-->
-    <script src="assets/js/app.js"></script>
-    <script src="assets/js/map.js"></script>
-    <script src="assets/js/active.js"></script>
+    <script>
+        // Timeline Data Configuration
+        const timelineData = {
+            2016: {
+                year: 2016,
+                title: 'Pre-Conflict Period',
+                hasGoal: true,
+                icon: 'fa-calendar',
+                bgColor: '#1e2139',
+                regions: {
+                    'Gaza': { deaths: 150, injuries: 450, womenDeaths: 45, childrenDeaths: 38, displaced: 2000 },
+                    'Hebron': { deaths: 45, injuries: 120, womenDeaths: 12, childrenDeaths: 10, displaced: 500 },
+                    'Jerusalem': { deaths: 30, injuries: 90, womenDeaths: 8, childrenDeaths: 7, displaced: 300 },
+                    'Nablus': { deaths: 25, injuries: 75, womenDeaths: 6, childrenDeaths: 5, displaced: 250 },
+                    'Beersheba': { deaths: 20, injuries: 60, womenDeaths: 5, childrenDeaths: 4, displaced: 200 }
+                }
+            },
+            2017: {
+                year: 2017,
+                title: 'Escalation Begins',
+                hasGoal: false,
+                bgColor: '#252942',
+                regions: {
+                    'Gaza': { deaths: 280, injuries: 850, womenDeaths: 85, childrenDeaths: 70, displaced: 5000 },
+                    'Hebron': { deaths: 75, injuries: 225, womenDeaths: 22, childrenDeaths: 19, displaced: 1200 },
+                    'Jerusalem': { deaths: 55, injuries: 165, womenDeaths: 16, childrenDeaths: 14, displaced: 800 },
+                    'Nablus': { deaths: 45, injuries: 135, womenDeaths: 13, childrenDeaths: 11, displaced: 600 },
+                    'Beersheba': { deaths: 35, injuries: 105, womenDeaths: 10, childrenDeaths: 9, displaced: 450 }
+                }
+            },
+            2018: {
+                year: 2018,
+                title: 'Major Offensive',
+                hasGoal: true,
+                icon: 'fa-exclamation-triangle',
+                bgColor: '#2d3250',
+                regions: {
+                    'Gaza': { deaths: 1520, injuries: 4560, womenDeaths: 456, childrenDeaths: 380, displaced: 45000 },
+                    'Hebron': { deaths: 320, injuries: 960, womenDeaths: 96, childrenDeaths: 80, displaced: 8500 },
+                    'Jerusalem': { deaths: 245, injuries: 735, womenDeaths: 73, childrenDeaths: 61, displaced: 6200 },
+                    'Nablus': { deaths: 180, injuries: 540, womenDeaths: 54, childrenDeaths: 45, displaced: 4500 },
+                    'Beersheba': { deaths: 125, injuries: 375, womenDeaths: 37, childrenDeaths: 31, displaced: 3100 }
+                }
+            },
+            2019: {
+                year: 2019,
+                title: 'Continued Conflict',
+                hasGoal: false,
+                bgColor: '#1e2139',
+                regions: {
+                    'Gaza': { deaths: 2340, injuries: 7020, womenDeaths: 702, childrenDeaths: 585, displaced: 78000 },
+                    'Hebron': { deaths: 485, injuries: 1455, womenDeaths: 145, childrenDeaths: 121, displaced: 15600 },
+                    'Jerusalem': { deaths: 365, injuries: 1095, womenDeaths: 109, childrenDeaths: 91, displaced: 11700 },
+                    'Nablus': { deaths: 280, injuries: 840, womenDeaths: 84, childrenDeaths: 70, displaced: 8900 },
+                    'Beersheba': { deaths: 195, injuries: 585, womenDeaths: 58, childrenDeaths: 49, displaced: 6200 }
+                }
+            },
+            2020: {
+                year: 2020,
+                title: 'Humanitarian Crisis',
+                hasGoal: false,
+                bgColor: '#252942',
+                regions: {
+                    'Gaza': { deaths: 3850, injuries: 11550, womenDeaths: 1155, childrenDeaths: 962, displaced: 125000 },
+                    'Hebron': { deaths: 745, injuries: 2235, womenDeaths: 223, childrenDeaths: 186, displaced: 28500 },
+                    'Jerusalem': { deaths: 580, injuries: 1740, womenDeaths: 174, childrenDeaths: 145, displaced: 22000 },
+                    'Nablus': { deaths: 425, injuries: 1275, womenDeaths: 127, childrenDeaths: 106, displaced: 16200 },
+                    'Beersheba': { deaths: 295, injuries: 885, womenDeaths: 88, childrenDeaths: 74, displaced: 11500 }
+                }
+            },
+            2021: {
+                year: 2021,
+                title: 'Severe Escalation',
+                hasGoal: true,
+                icon: 'fa-fire',
+                bgColor: '#2d3250',
+                regions: {
+                    'Gaza': { deaths: 5280, injuries: 15840, womenDeaths: 1584, childrenDeaths: 1320, displaced: 185000 },
+                    'Hebron': { deaths: 965, injuries: 2895, womenDeaths: 289, childrenDeaths: 241, displaced: 42000 },
+                    'Jerusalem': { deaths: 785, injuries: 2355, womenDeaths: 235, childrenDeaths: 196, displaced: 35000 },
+                    'Nablus': { deaths: 620, injuries: 1860, womenDeaths: 186, childrenDeaths: 155, displaced: 28000 },
+                    'Beersheba': { deaths: 425, injuries: 1275, womenDeaths: 127, childrenDeaths: 106, displaced: 19500 }
+                }
+            },
+            2022: {
+                year: 2022,
+                title: 'Ongoing Devastation',
+                hasGoal: false,
+                bgColor: '#1e2139',
+                regions: {
+                    'Gaza': { deaths: 7420, injuries: 22260, womenDeaths: 2226, childrenDeaths: 1855, displaced: 265000 },
+                    'Hebron': { deaths: 1285, injuries: 3855, womenDeaths: 385, childrenDeaths: 321, displaced: 62000 },
+                    'Jerusalem': { deaths: 1045, injuries: 3135, womenDeaths: 313, childrenDeaths: 261, displaced: 52000 },
+                    'Nablus': { deaths: 825, injuries: 2475, womenDeaths: 247, childrenDeaths: 206, displaced: 41500 },
+                    'Beersheba': { deaths: 580, injuries: 1740, womenDeaths: 174, childrenDeaths: 145, displaced: 29000 }
+                }
+            },
+            2023: {
+                year: 2023,
+                title: 'Critical Emergency',
+                hasGoal: true,
+                icon: 'fa-medkit',
+                bgColor: '#252942',
+                regions: {
+                    'Gaza': { deaths: 12580, injuries: 37740, womenDeaths: 3774, childrenDeaths: 3145, displaced: 485000 },
+                    'Hebron': { deaths: 2145, injuries: 6435, womenDeaths: 643, childrenDeaths: 536, displaced: 115000 },
+                    'Jerusalem': { deaths: 1785, injuries: 5355, womenDeaths: 535, childrenDeaths: 446, displaced: 96000 },
+                    'Nablus': { deaths: 1420, injuries: 4260, womenDeaths: 426, childrenDeaths: 355, displaced: 78000 },
+                    'Beersheba': { deaths: 985, injuries: 2955, womenDeaths: 295, childrenDeaths: 246, displaced: 54000 }
+                }
+            },
+            2024: {
+                year: 2024,
+                title: 'Current Situation',
+                hasGoal: false,
+                bgColor: '#2d3250',
+                regions: {
+                    'Gaza': { deaths: 18250, injuries: 54750, womenDeaths: 5475, childrenDeaths: 4562, displaced: 720000 },
+                    'Hebron': { deaths: 3125, injuries: 9375, womenDeaths: 937, childrenDeaths: 781, displaced: 168000 },
+                    'Jerusalem': { deaths: 2580, injuries: 7740, womenDeaths: 774, childrenDeaths: 645, displaced: 142000 },
+                    'Nablus': { deaths: 2045, injuries: 6135, womenDeaths: 613, childrenDeaths: 511, displaced: 115000 },
+                    'Beersheba': { deaths: 1420, injuries: 4260, womenDeaths: 426, childrenDeaths: 355, displaced: 79000 }
+                }
+            },
+            2025: {
+                year: 2025,
+                title: 'Latest Data',
+                hasGoal: true,
+                icon: 'fa-chart-line',
+                bgColor: '#1e2139',
+                regions: {
+                    'Gaza': { deaths: 21450, injuries: 64350, womenDeaths: 6435, childrenDeaths: 5362, displaced: 850000 },
+                    'Hebron': { deaths: 3680, injuries: 11040, womenDeaths: 1104, childrenDeaths: 920, displaced: 195000 },
+                    'Jerusalem': { deaths: 3025, injuries: 9075, womenDeaths: 907, childrenDeaths: 756, displaced: 168000 },
+                    'Nablus': { deaths: 2385, injuries: 7155, womenDeaths: 715, childrenDeaths: 596, displaced: 135000 },
+                    'Beersheba': { deaths: 1650, injuries: 4950, womenDeaths: 495, childrenDeaths: 412, displaced: 92000 }
+                }
+            }
+        };
 
+        // State management
+        let currentYearIndex = 0;
+        const years = Object.keys(timelineData).map(Number).sort((a, b) => a - b);
+        let selectedRegion = '';
+
+        // Generate timeline HTML
+        function generateTimeline() {
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+
+            years.forEach((year, index) => {
+                const data = timelineData[year];
+                const dateDiv = document.createElement('div');
+                dateDiv.className = 'date';
+                dateDiv.setAttribute('data-index', index);
+                dateDiv.setAttribute('data-year', year);
+
+                if (data.hasGoal) {
+                    const goalWrap = document.createElement('div');
+                    goalWrap.className = 'goal_wrap';
+                    goalWrap.setAttribute('data-year', year);
+                    goalWrap.setAttribute('data-title', data.title);
+
+                    const icon = document.createElement('i');
+                    icon.className = 'fa ' + data.icon;
+                    icon.setAttribute('aria-hidden', 'true');
+
+                    goalWrap.appendChild(icon);
+                    dateDiv.appendChild(goalWrap);
+                }
+
+                const focusP = document.createElement('p');
+                focusP.className = 'focus';
+
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = year;
+
+                focusP.appendChild(link);
+                dateDiv.appendChild(focusP);
+
+                timeline.appendChild(dateDiv);
+            });
+
+            // Add click handlers
+            addTimelineClickHandlers();
+        }
+
+        // Add click handlers to timeline elements
+        function addTimelineClickHandlers() {
+            document.querySelectorAll('.date').forEach(dateEl => {
+                dateEl.addEventListener('click', function () {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    navigateToYear(index);
+                });
+            });
+
+            document.querySelectorAll('.goal_wrap').forEach(goalEl => {
+                goalEl.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const year = parseInt(this.getAttribute('data-year'));
+                    const index = years.indexOf(year);
+                    navigateToYear(index);
+                });
+            });
+        }
+
+        // Navigate to specific year
+        function navigateToYear(index) {
+            if (index < 0 || index >= years.length) return;
+
+            currentYearIndex = index;
+            const year = years[index];
+            const data = timelineData[year];
+
+            // Update active states
+            document.querySelectorAll('.date').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.goal_wrap').forEach(el => {
+                el.classList.remove('active', 'bounce');
+            });
+
+            const activeDate = document.querySelector(`.date[data-index="${index}"]`);
+            if (activeDate) {
+                activeDate.classList.add('active');
+                const goalWrap = activeDate.querySelector('.goal_wrap');
+                if (goalWrap) {
+                    goalWrap.classList.add('active', 'bounce');
+                }
+            }
+
+            // Animate timeline position
+            const timeline = document.getElementById('timeline');
+            const offset = index * 150;
+            timeline.style.transform = `translateX(-${offset}px)`;
+
+            // Update background color
+            document.body.style.backgroundColor = data.bgColor;
+
+            // Update region select and data
+            updateRegionSelect(year);
+            updateMapData(year, selectedRegion || Object.keys(data.regions)[0]);
+
+            // Update navigation buttons
+            updateNavigationButtons();
+
+            // Update header with year info
+            updateHeader(year, data.title);
+        }
+
+        // Update region select dropdown
+        function updateRegionSelect(year) {
+            const select = document.getElementById('region-select');
+            const data = timelineData[year];
+            const currentValue = select.value;
+
+            select.innerHTML = '<option value="">All Regions</option>';
+
+            Object.keys(data.regions).forEach(region => {
+                const option = document.createElement('option');
+                option.value = region;
+                option.textContent = region;
+                if (region === currentValue) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            });
+
+            // Initialize or refresh Select2
+            if (typeof $ !== 'undefined' && $.fn.select2) {
+                $(select).select2({
+                    minimumResultsForSearch: -1
+                });
+            }
+        }
+
+        // Update map data display
+        function updateMapData(year, region) {
+            const data = timelineData[year];
+            let stats;
+
+            if (region && data.regions[region]) {
+                stats = data.regions[region];
+                selectedRegion = region;
+            } else {
+                // Calculate totals
+                stats = {
+                    deaths: 0,
+                    injuries: 0,
+                    womenDeaths: 0,
+                    childrenDeaths: 0,
+                    displaced: 0
+                };
+
+                Object.values(data.regions).forEach(regionData => {
+                    stats.deaths += regionData.deaths;
+                    stats.injuries += regionData.injuries;
+                    stats.womenDeaths += regionData.womenDeaths;
+                    stats.childrenDeaths += regionData.childrenDeaths;
+                    stats.displaced += regionData.displaced;
+                });
+                selectedRegion = '';
+            }
+
+            // Animate numbers
+            animateNumber('.total-deaths', stats.deaths);
+            animateNumber('.total-injuries', stats.injuries);
+            animateNumber('.women-deaths', stats.womenDeaths);
+            animateNumber('.children-deaths', stats.childrenDeaths);
+            animateNumber('.total-displaced', stats.displaced);
+        }
+
+        // Animate number changes
+        function animateNumber(selector, targetValue) {
+            const element = document.querySelector(selector);
+            const currentValue = parseInt(element.textContent.replace(/,/g, '')) || 0;
+            const duration = 800;
+            const steps = 30;
+            const increment = (targetValue - currentValue) / steps;
+            let current = currentValue;
+            let step = 0;
+
+            const timer = setInterval(() => {
+                step++;
+                current += increment;
+
+                if (step >= steps) {
+                    12:09 AM
+                    current = targetValue;
+                    clearInterval(timer);
+                }
+
+                element.textContent = Math.round(current).toLocaleString();
+            }, duration / steps);
+        }
+
+        // Update navigation buttons
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            prevBtn.disabled = currentYearIndex === 0;
+            nextBtn.disabled = currentYearIndex === years.length - 1;
+        }
+
+        // Update header with current year info
+        function updateHeader(year, title) {
+            const lastUpdate = document.querySelector('.last-update');
+            if (lastUpdate) {
+                lastUpdate.textContent = `${year} - ${title}`;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            // Generate timeline
+            generateTimeline();
+
+            // Navigate to first year
+            navigateToYear(0);
+
+            // Add navigation button handlers
+            document.getElementById('prev-btn').addEventListener('click', function () {
+                if (currentYearIndex > 0) {
+                    navigateToYear(currentYearIndex - 1);
+                }
+            });
+
+            document.getElementById('next-btn').addEventListener('click', function () {
+                if (currentYearIndex < years.length - 1) {
+                    navigateToYear(currentYearIndex + 1);
+                }
+            });
+
+            // Add region select change handler
+            const regionSelect = document.getElementById('region-select');
+            regionSelect.addEventListener('change', function () {
+                const year = years[currentYearIndex];
+                updateMapData(year, this.value);
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowLeft') {
+                    if (currentYearIndex > 0) {
+                        navigateToYear(currentYearIndex - 1);
+                    }
+                } else if (e.key === 'ArrowRight') {
+                    if (currentYearIndex < years.length - 1) {
+                        navigateToYear(currentYearIndex + 1);
+                    }
+                }
+            });
+
+            // Add SVG map click handlers if map exists
+            const mapPaths = document.querySelectorAll('.palestine-map path');
+            mapPaths.forEach(path => {
+                path.addEventListener('click', function () {
+                    const regionName = this.getAttribute('title');
+                    if (regionName) {
+                        const select = document.getElementById('region-select');
+                        select.value = regionName;
+
+                        // Trigger Select2 update if available
+                        if (typeof $ !== 'undefined' && $.fn.select2) {
+                            $(select).trigger('change');
+                        }
+
+                        const year = years[currentYearIndex];
+                        updateMapData(year, regionName);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!--=== Original App Scripts ===-->
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/active.js"></script>
 
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
         data-id="samehbilal" data-description="Support me on Buy me a coffee!" data-color="#00CBAD"
