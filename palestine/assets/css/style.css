@@ -255,7 +255,7 @@ Header Style
 }
 
 .menubar .nav li:not(:last-child) {
-    margin-right: 70px;
+    margin-right: 40px;
 }
 
 
@@ -1902,11 +1902,11 @@ font-weight: bold;
 }
 
 .corona-map-tracker .palestine-map {
-    position: relative;
-    left: 45%;
-    display: block;
-    max-width: 450px;
-    height: 100%;
+    /* position: relative;
+    left: 65%;
+    display: block; */
+    max-width: 350px;
+    height: 80%;
 }
 
 .map-dashboard{

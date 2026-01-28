@@ -259,7 +259,7 @@ Header Style
 }
 
 .menubar .nav li:not(:last-child) {
-    margin-left: 70px;
+    margin-left: 40px;
 }
 
 @media only screen and (min-width: 767.99px) and (max-width: 1440px) {
