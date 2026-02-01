@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/3.0.1/modern-normalize.min.css">
+    <script>
+(function () {var a={};var f=/iPhone/i,h=/iPod/i,i=/iPad/i,r=/\biOS-universal(?:.+)Mac\b/i,g=/\bAndroid(?:.+)Mobile\b/i,j=/Android/i,c=/(?:SD4930UR|\bSilk(?:.+)Mobile\b)/i,d=/Silk/i,b=/Windows Phone/i,k=/\bWindows(?:.+)ARM\b/i,m=/BlackBerry/i,n=/BB10/i,o=/Opera Mini/i,p=/\b(CriOS|Chrome)(?:.+)Mobile/i,q=/Mobile(?:.+)Firefox\b/i;function s(l){return function($){return $.test(l)}}function e(l){var $=(l=l||("undefined"!=typeof navigator?navigator.userAgent:"")).split("[FBAN");void 0!==$[1]&&(l=$[0]),void 0!==($=l.split("Twitter"))[1]&&(l=$[0]);var a=s(l),e={apple:{phone:a(f)&&!a(b),ipod:a(h),tablet:!a(f)&&a(i)&&!a(b),universal:a(r),device:(a(f)||a(h)||a(i))&&!a(b)},amazon:{phone:a(c),tablet:!a(c)&&a(d),device:a(c)||a(d)},android:{phone:!a(b)&&a(c)||!a(b)&&a(g),tablet:!a(b)&&!a(c)&&!a(g)&&(a(d)||a(j)),device:!a(b)&&(a(c)||a(d)||a(g)||a(j))||a(/\bokhttp\b/i)},windows:{phone:a(b),tablet:a(k),device:a(b)||a(k)},other:{blackberry:a(m),blackberry10:a(n),opera:a(o),firefox:a(q),chrome:a(p),device:a(m)||a(n)||a(o)||a(q)||a(p)},any:!1,phone:!1,tablet:!1};return e.any=e.apple.universal||e.apple.device||e.android.device||e.windows.device||e.other.device,e.phone=e.apple.phone||e.android.phone||e.windows.phone,e.tablet=e.apple.tablet||e.android.tablet||e.windows.tablet,e}a=e();if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=a}else if(typeof define==="function"&&define.amd){define(function(){return a})}else{this["isMobile"]=a}})();
+
+isMobile.any || document.querySelector('html').classList.add('is-desktop');
+</script>
+    <style>
+        html {
+  scroll-timeline: --page-scroll block;
+}
+
+.heading {
+  font-size: clamp(8rem, 11.077vw + 0.731rem, 12.5rem);
+  line-height: 0.95;
+}
+
+.progress-bar {
+  display: inline-block;
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 5rem;
+  left: 5.5rem;
+  position: fixed;
+  top: 50%;
+  transform: rotate(90deg) translate(-50%, -50%);
+  transform-origin: top left;
+  width: 27.5rem;
+}
+.progress-bar > * {
+  line-height: 1.5;
+}
+
+.progress-bar__text::before, .progress-bar__text::after, .progress-bar__text {
+  font-size: 5rem;
+  font-weight: bold;
+  left: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.progress-bar__text {
+  color: transparent;
+  -webkit-text-stroke: 2px black;
+}
+.progress-bar__text::before, .progress-bar__text::after {
+  line-height: 1.5;
+}
+.progress-bar__text::before {
+  color: #fff;
+  content: attr(data-text);
+}
+.progress-bar__text::after {
+  -webkit-animation: clip-fill auto linear;
+          animation: clip-fill auto linear;
+  animation-timeline: --page-scroll;
+  background: #d080ff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  content: attr(data-text);
+}
+
+@-webkit-keyframes clip-fill {
+  from {
+    -webkit-clip-path: inset(0 100% 0 0);
+            clip-path: inset(0 100% 0 0);
+  }
+  to {
+    -webkit-clip-path: inset(0 0 0 0);
+            clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes clip-fill {
+  from {
+    -webkit-clip-path: inset(0 100% 0 0);
+            clip-path: inset(0 100% 0 0);
+  }
+  to {
+    -webkit-clip-path: inset(0 0 0 0);
+            clip-path: inset(0 0 0 0);
+  }
+}
+.c-author {
+  color: #404040;
+  margin: 50px 0 10px;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+}
+
+.c-author__link {
+  color: #404040;
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+}
+.c-author__link::before, .c-author__link::after {
+  bottom: 0;
+  content: "";
+  height: 8px;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+}
+.c-author__link::before {
+  background-color: #dbdbdb;
+  width: 100%;
+}
+.c-author__link::after {
+  background-color: #c584f8;
+  transition: width 0.3s ease-in-out;
+  width: 0;
+  will-change: width;
+}
+.c-author__link:hover::after {
+  width: 100%;
+}
+    </style>
+</head>
+<body>
+    <main class="font-[Open_Sans]">
+  <section class="flex p-24 min-h-screen">
+    <div class="flex flex-col xl:flex-row justify-between grow-1 gap-24">
+      <div class="reverse-scroll">
+        <h1 class="heading font-semibold leading-[0.8]">behind<br />curtain</h1>
+        <p class="pt-8 px-2">She tried the little golden key in the lock, and to her great delight it fitted !</p>
+        <p class="pt-2 px-2">Alice opened the door and found that it led into a small passage</p>
+      </div>
+      <div class="grow-1 flex xl:justify-end items-end"><img class="reverse-scroll w-full max-w-[760px]" src="https://assets.codepen.io/204808/alice-curtain.jpg" alt="Alice" /></div>
+    </div>
+  </section>
+  <section class="section-stick min-h-screen bg-black flex justify-center items-center text-white">
+    <p class="opacity-reveal text-7xl text-center w-3/5 font-medium">It was all very well to say "Drink me," but the wise little Alice was not going to do that</p>
+  </section>
+  <section class="relative min-h-screen bg-white mt-[-1px]">
+    <video class="w-screen h-screen object-cover" src="https://assets.codepen.io/204808/alice-in-wonderland-vid.mov" muted autoplay loop playsinline></video>
+    <h1 style="filter: url('#liquify');" class="liquify-scroll absolute text-center top-1/2 translate-y-[-50%] w-full text-8xl font-semibold px-60">Alice's Adventures in Wonderland</h1>
+    <svg class="hidden">
+      <filter id="liquify">
+        <feTurbulence baseFrequency="0.015" numOctaves="3" result="warp" type="fractalNoise"></feTurbulence>
+        <feDisplacementMap id="liquid" in="SourceGraphic" in2="warp" scale="100" xChannelSelector="R" yChannelSelector="B"></feDisplacementMap>
+      </filter>
+    </svg>
+  </section>
+</main>
+
+<!-- <div class="progress-bar">
+  <div class="progress-bar__text" data-text="PROGRESS">PROGRESS</div>
+</div> -->
+
+<div class="c-author">
+  Built with 💜 by <a target="_blank" class="c-author__link" href="https://www.linkedin.com/in/iamryanyu/">Ryan Yu</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollSmoother.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/SplitText.min.js"></script>
+<script>
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
+
+ScrollSmoother.create({
+  smooth: 1,
+  effects: true,
+  normalizeScroll: true
+});
+
+// const splitLetters = SplitText.create(
+//   document.querySelector(".opacity-reveal")
+// );
+const splitLetters = new SplitText(".opacity-reveal", {
+  type: "chars"
+});
+gsap.set(splitLetters.chars, { opacity: "0.2", y: 0 });
+
+gsap
+  .timeline({
+    scrollTrigger: {
+      trigger: ".section-stick",
+      pin: true,
+      start: "center center",
+      end: "+=1500",
+      //markers: true,
+      scrub: 1
+    }
+  })
+  .to(splitLetters.chars, {
+    opacity: "1",
+    duration: 1,
+    ease: "none",
+    stagger: 1
+  })
+  .to({}, { duration: 10 })
+  .to(".opacity-reveal", {
+    opacity: "0",
+    scale: 1.2,
+    duration: 50
+  });
+
+const reverseTrigger = gsap.utils.toArray(".reverse-scroll");
+reverseTrigger.forEach((element) => {
+  console.log(element);
+  gsap.to(element, {
+    yPercent: 30,
+    scrollTrigger: {
+      trigger: element,
+      start: 0,
+      end: "+=100%",
+      scrub: true,
+      pin: true
+      // markers: true
+    }
+  });
+});
+
+gsap.set(".liquify-scroll", { opacity: 0 });
+// gsap.to("#liquid", {
+//   attr: { scale: 0 },
+//   scrollTrigger: {
+//     trigger: ".liquify-scroll",
+//     start: "top center",
+//     end: "+=100",
+//     // scrub: true,
+//     // pin: true,
+//     markers: true
+//   }
+// });
+
+gsap
+  .timeline({
+    scrollTrigger: {
+      trigger: ".liquify-scroll",
+      start: "top bottom",
+      end: "bottom 60%",
+      scrub: true
+      // pin: true,
+      // markers: true
+    }
+  })
+  .to(
+    "#liquid",
+    {
+      attr: { scale: 0 }
+    },
+    0
+  )
+  .to(
+    ".liquify-scroll",
+    {
+      opacity: 1,
+      y: 0
+    },
+    0
+  );
+
+</script>
+</body>
+</html>
