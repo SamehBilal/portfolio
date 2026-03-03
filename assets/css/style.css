@@ -1958,6 +1958,19 @@ ul.extra-skills li i {
     padding: 0.5em;
 }
 
+.project-item.style-two .project-image .lenovo-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    line-height: 20px;
+    background: #E12326 !important;
+    border-radius: 20%;
+    padding: 0.5em;
+}
+
 .project-item.style-two .project-image .lms-btn {
     display: flex;
     flex-direction: column;
@@ -1966,7 +1979,7 @@ ul.extra-skills li i {
     width: 72px;
     height: 72px;
     line-height: 20px;
-    background: #25476A !important;
+    background: #fff !important;
     border-radius: 20%;
     padding: 0.5em;
 }
@@ -1996,13 +2009,18 @@ ul.extra-skills li i {
     width: auto;
 }
 
+.project-item.style-two .project-image .lenovo-btn img {
+    height: 32px;
+    width: auto;
+}
+
 .project-item.style-two .project-image .arabiatalents-btn img {
     height: 32px;
     width: auto;
 }
 
 .project-item.style-two .project-image .lms-btn img {
-    height: 32px;
+    height: 42px;
     width: auto;
 }
 
@@ -3644,7 +3662,7 @@ ul.blog_pagination li a:hover {
         transition-duration: var(--transition);
         transition-behavior: allow-discrete;
         transition-timing-function: var(--ease);
-        translate: -50% 0;
+        translate: -25% 0;
         padding: 0 !important;
         clip-path: inset(0 0 0 0 round 21px);
         box-shadow: 0 4px 8px 0 hsl(0 0% 0% / 0.2) !important;
@@ -4062,7 +4080,7 @@ html[data-theme="light"] .themed-logo-solid img {
 }
 
 .icon-snake path {
-    stroke: light-dark(black, #fff);
+    stroke: light-dark(#F9812E, #fff);
 }
 
 
@@ -5123,7 +5141,7 @@ h6 .char {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 100vh;
+	/* min-height: 100vh; */
 }
 
 .section-snake {
@@ -5151,10 +5169,25 @@ h6 .char {
 	position: relative;
 }
 
+.card-snake::before {
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background: linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size), linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size);
+    -webkit-mask: linear-gradient(-20deg, transparent 50%, white);
+    mask: linear-gradient(-20deg, transparent 50%, white);
+    top: 0;
+    transform-style: flat;
+    pointer-events: none;
+    z-index: -1;
+}
+
 .card-snake {
 	--r: 30px; /* radius */
 	--s: 40px; /* inner curve size */
-	background-color: #fff;
+	background-color: light-dark(#000, #fff);
+    overflow-x: hidden;
 	padding: 24px;
 	width: 100%;
 	text-align: left;
@@ -5170,10 +5203,24 @@ h6 .char {
 	);
 }
 
+.card-circle::before {
+    content: '';
+    height: 50px;
+    width: 50px;
+    position: fixed;
+    background: linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size), linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size);
+    -webkit-mask: linear-gradient(-20deg, transparent 50%, #F9812E);
+    mask: linear-gradient(-20deg, transparent 50%, #F9812E);
+    top: 0;
+    transform-style: flat;
+    pointer-events: none;
+    z-index: 1;
+}
+
 .card-circle {
 	width: 60px;
 	height: 60px;
-	background-color: #fff;
+	background-color: light-dark(#000, #fff);
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -5183,7 +5230,7 @@ h6 .char {
 	justify-content: center;
 	align-items: center;
 	font-weight: 700;
-    color: #1a1a1a
+    color: light-dark(#fff, #1D1D1D);
 }
 
 .card-title {
@@ -5191,7 +5238,7 @@ h6 .char {
 	font-weight: 700;
 	margin-bottom: 10px;
 	padding-right: 70px;
-    color:#1a1a1a
+    color: light-dark(#fff, #1D1D1D);
 }
 
 .card-desc {
@@ -5199,7 +5246,7 @@ h6 .char {
 	line-height: 1.5;
 	color: #666;
 	margin-bottom: 12px;
-	padding-right: 65px;
+	padding-right: 5px;
 }
 
 .card-figure {
