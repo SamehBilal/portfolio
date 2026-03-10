@@ -211,3 +211,119 @@ VanillaTilt.init(document.querySelector(".c-fe30__inner"), {
 articleLinks.forEach(link => {
   link.addEventListener("focus", () => link.dispatchEvent(new Event("mouseenter")));
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── Data ── */
+    const slides = [
+      ["Requirements", "System Design", "DB Modeling", "Core Impl.", "Code Review"],
+      ["API Design", "Auth Layer", "Endpoints", "Rate Limit", "API Docs"],
+      ["Profiling", "Bottlenecks", "Caching", "Queues", "Monitoring"],
+      ["DB Schema", "Backend Core", "API Layer", "Frontend", "Deploy"],
+    ];
+
+    const connections = [
+      [0, 1], [1, 2], [2, 3], [3, 4]   // linear 1→2→3→4→5
+    ];
+
+    /* ── Steps renderer ── */
+    const stepsBar = document.getElementById("stepsBar");
+
+    function buildSteps(labels) {
+      stepsBar.innerHTML = "";
+
+      // 3 step buttons
+      labels.forEach((label, i) => {
+        const btn = document.createElement("div");
+        btn.className = `step-btn step-${i + 1}`;
+        btn.innerHTML = `
+      <div class="step-header">
+        <span class="step-num">0${i + 1}</span>
+        <div class="step-indicators">
+          <span class="end-dot"   style="anchor-name: --s${i + 1}-end"></span>
+          <span class="start-dot" style="anchor-name: --s${i + 1}-start"></span>
+        </div>
+      </div>
+      <span class="step-label">${label}</span>`;
+        stepsBar.appendChild(btn);
+      });
+
+      // 2 connector arrows using JS-computed positions (anchor API fallback)
+      requestAnimationFrame(() => {
+        for (let i = 0; i < 2; i++) {
+          const fromBtn = stepsBar.querySelectorAll(".step-btn")[i];
+          const toBtn = stepsBar.querySelectorAll(".step-btn")[i + 1];
+          if (!fromBtn || !toBtn) continue;
+
+          const fromDot = fromBtn.querySelector(".start-dot");
+          const toDot = toBtn.querySelector(".end-dot");
+          const barRect = stepsBar.getBoundingClientRect();
+          const fR = fromDot.getBoundingClientRect();
+          const tR = toDot.getBoundingClientRect();
+
+          const arrow = document.createElement("div");
+          arrow.className = `step-arrow arrow-${i + 1}-${i + 2}`;
+
+          const top = Math.min(fR.top, tR.top) - barRect.top - 18;
+          const left = fR.left + fR.width / 2 - barRect.left;
+          const right = barRect.right - (tR.left + tR.width / 2);
+          const height = 18;
+
+          arrow.style.cssText = `
+        top:${top}px; left:${left}px; right:${right}px; height:${height}px;
+      `;
+          stepsBar.appendChild(arrow);
+
+          // show arrow on hover of adjacent steps
+          const s1 = stepsBar.querySelectorAll(".step-btn")[i];
+          const s2 = stepsBar.querySelectorAll(".step-btn")[i + 1];
+          [s1, s2].forEach(s => {
+            s.addEventListener("mouseenter", () => { arrow.style.opacity = "1"; arrow.style.transition = "none"; });
+            s.addEventListener("mouseleave", () => { arrow.style.opacity = "0"; arrow.style.transition = "opacity 0.15s"; });
+          });
+        }
+      });
+    }
+
+    buildSteps(slides[0]);
+
+    /* ── Snake Menu ── */
+    const menuContainer = document.querySelector(".snake-menu-container");
+    const menuItems = document.querySelectorAll(".menu-item");
+    const track = document.getElementById("cardsTrack");
+    let currentx = 0;
+
+    menuItems.forEach((item, i) => {
+      item.addEventListener("click", () => {
+        if (i === currentx) return;
+        if (i < currentx) {
+          menuContainer.className = "snake-menu-container right instant";
+          void menuContainer.offsetHeight;
+          menuContainer.className = `snake-menu-container left pos${i}`;
+        } else {
+          menuContainer.className = "snake-menu-container left instant";
+          void menuContainer.offsetHeight;
+          menuContainer.className = `snake-menu-container right pos${i}`;
+        }
+        menuItems[currentx].classList.remove("active");
+        menuItems[i].classList.add("active");
+        track.style.transform = `translateX(-${i * 810}px)`;
+        buildSteps(slides[i]);
+        currentx = i;
+      });
+    });
