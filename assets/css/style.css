@@ -76,7 +76,7 @@ Version      : 1.0
     --card-hover-icon-background-color: light-dark(rgba(24, 24, 27, 0.04), rgba(249, 129, 46, 0.1));
     --card-hover-icon-border-color: light-dark(rgba(24, 24, 27, 0.34), rgba(249, 129, 46, 0.2));
     --blur-opacity: light-dark(.1, .01);
-    --arrow-color: light-dark(#d9620d, #F9812E);
+    --arrow-color: light-dark(#18181B, #F9812E);
     --glow: light-dark(#d9620d, #F9812E);
     --border-subtle: light-dark(rgba(24, 24, 27, 0.12), rgba(255, 255, 255, 0.1));
     --btn-size: 68px;
@@ -5282,19 +5282,6 @@ h6 .char {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .services-container {
     display: flex;
     flex-direction: column;
@@ -5330,7 +5317,7 @@ h6 .char {
 .snake-menu-container {
     overflow: hidden;
     position: relative;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
     width: 100%;
     max-width: 560px;
     /* 4 items × ~130px + gaps */
@@ -5348,7 +5335,7 @@ h6 .char {
     fill: none;
     stroke: var(--card-label-color);
     stroke-dasharray: 22 100;
-    stroke-width: 1.5px;
+    stroke-width: 1px;
     transition: stroke 0.4s;
 }
 
@@ -5479,14 +5466,19 @@ h6 .char {
 .card .icon {
     z-index: 2;
     position: relative;
-    display: table;
-    padding: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    flex-shrink: 0;
 }
 
 .card .icon::after {
     content: "";
     position: absolute;
-    inset: 4.5px;
+    inset: 0;
     border-radius: 50%;
     background-color: var(--card-icon-background-color);
     border: 1px solid var(--card-icon-border-color);
@@ -5884,13 +5876,14 @@ h6 .char {
 
 /* ── Mobile stacked cards ── */
 @media (max-width: 600px) {
-    body {
+    .services-container {
         gap: 24px;
         padding: 60px 12px 32px;
     }
 
     .snake-menu-container {
         max-width: 100%;
+        padding-bottom: 15px;
     }
 
     .menu-item {
@@ -5913,6 +5906,8 @@ h6 .char {
     }
 
     .steps {
+        display: flex;
+        flex-direction: column;
         gap: 6px;
     }
 
