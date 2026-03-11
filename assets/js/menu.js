@@ -297,10 +297,10 @@ articleLinks.forEach(link => {
           const arrow = document.createElement("div");
           arrow.className = `step-arrow arrow-${i + 1}-${i + 2}`;
 
-          const top    = Math.min(fR.top, tR.top) - barRect.top - 18;
+          const top    = Math.min(fR.top, tR.top) - barRect.top - 36;
           const left   = fR.left + fR.width / 2 - barRect.left;
           const right  = barRect.right - (tR.left + tR.width / 2);
-          const height = 18;
+          const height = 36;
 
           arrow.style.cssText = `top:${top}px;left:${left}px;right:${right}px;height:${height}px;`;
           stepsBar.appendChild(arrow);

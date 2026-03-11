@@ -5876,7 +5876,7 @@ h6 .char {
 .step-arrow::after {
     content: "▼";
     position: absolute;
-    bottom: -4px;
+    bottom: -14px;
     right: -5px;
     font-size: 8px;
     color: var(--arrow-color);
