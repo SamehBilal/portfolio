@@ -2108,6 +2108,19 @@ ul.extra-skills li i {
     padding: 0.5em;
 }
 
+.project-item.style-two .project-image .zilika-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    line-height: 20px;
+    background: #fff !important;
+    border-radius: 20%;
+    padding: 0.5em;
+}
+
 .project-item.style-two .project-image .nvidia-studio-btn img {
     height: 24px;
     width: auto;
@@ -2180,6 +2193,11 @@ ul.extra-skills li i {
 
 .project-item.style-two .project-image .grand-btn img {
     height: auto;
+    width: auto;
+}
+
+.project-item.style-two .project-image .zilika-btn img {
+    height: 42px;
     width: auto;
 }
 

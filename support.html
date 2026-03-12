@@ -304,9 +304,8 @@
             .bear-link {
                 color: canvasText;
                 position: fixed;
-                top: 1rem;
+                top: 0rem;
                 left: 1rem;
-                width: 48px;
                 aspect-ratio: 1;
                 display: grid;
                 place-items: center;
@@ -317,9 +316,7 @@
                 opacity: 1;
             }
 
-            .bear-link svg {
-                width: 75%;
-            }
+            
 
             /* Utilities */
             .sr-only {
@@ -380,13 +377,107 @@
             margin: 0;
             white-space: pre;
         }
+
+        .logo-outer {
+            -webkit-box-flex: 0;
+            -ms-flex: none;
+            flex: none;
+        }
+
+
+        .logo {
+            z-index: 9;
+            padding: 2px 0;
+            position: relative;
+        }
+
+        .logo img {
+            width: 120px;
+        }
+
+        .logo {
+            display: inline-block;
+            position: relative;
+            font-size: 2vmin;
+            opacity: 1 !important;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        .logo-letter {
+            position: relative !important;
+            display: block;
+            float: left;
+            width: 3vmin;
+            height: 3vmin;
+            border-top: 0.25vmin solid light-dark(#000, #fff);
+            line-height: 3vmin;
+            text-align: center;
+            z-index: 9999;
+            opacity: 1 !important;
+            transition: all 0.3s;
+            color: light-dark(#000, #fff);
+            /* font-family: "Courgette", cursive; */
+        }
+
+        .logo-letter:before {
+            position: absolute;
+            top: -0.25vmin;
+            right: -0.25vmin;
+            display: block;
+            width: 0.25vmin;
+            height: 3vmin;
+            background: #F9812E;
+            content: "";
+            transition: all 0.3s;
+        }
+
+        .logo-letter .is-active:before {
+            top: -0.25vmin;
+            height: 0.25vmin;
+        }
+
+        .logo-letter .is-active:last-child:before {
+            height: 0.25vmin;
+            top: -0.25vmin;
+        }
+
+        .logo-letter:nth-child(2) {
+            transform: translateY(3vmin);
+        }
+
+        .logo-letter:nth-child(2).is-active {
+            transform: translateY(0);
+        }
+
+        .logo-letter:nth-child(3) {
+            transform: translateY(6vmin);
+        }
+
+        .logo-letter:nth-child(3).is-active {
+            transform: translateY(0);
+        }
+
+        .logo-letter:nth-child(4) {
+            transform: translateY(9vmin);
+        }
+
+        .logo-letter:nth-child(4).is-active {
+            transform: translateY(0);
+        }
+
+        .logo-letter:nth-child(5) {
+            transform: translateY(12vmin);
+        }
+
+        .logo-letter:nth-child(5).is-active {
+            transform: translateY(0);
+        }
     </style>
 </head>
 
 <body>
-    <a class="bear-link" href="https://twitter.com/intent/follow?screen_name=jh3yy" target="_blank"
-        rel="noreferrer noopener">
-        <svg class="w-9" viewBox="0 0 969 955" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- <svg class="w-9" viewBox="0 0 969 955" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="161.191" cy="320.191" r="133.191" stroke="currentColor" stroke-width="20"></circle>
             <circle cx="806.809" cy="320.191" r="133.191" stroke="currentColor" stroke-width="20"></circle>
             <circle cx="695.019" cy="587.733" r="31.4016" fill="currentColor"></circle>
@@ -398,8 +489,18 @@
             <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M745.643 288.24C815.368 344.185 854.539 432.623 854.539 511.741H614.938V454.652C614.938 433.113 597.477 415.652 575.938 415.652H388.37C366.831 415.652 349.37 433.113 349.37 454.652V511.741L110.949 511.741C110.949 432.623 150.12 344.185 219.845 288.24C289.57 232.295 384.138 200.865 482.744 200.865C581.35 200.865 675.918 232.295 745.643 288.24Z"
                 fill="currentColor"></path>
-        </svg>
-    </a>
+        </svg> -->
+        <!-- START LOGO DESIGN AREA -->
+        <div class="logo-outer bear-link">
+            <div class='logo'>
+                <span class="logo-letter is-active">S</span>
+                <span class="logo-letter is-active">A</span>
+                <span class="logo-letter is-active">M</span>
+                <span class="logo-letter is-active">E</span>
+                <span class="logo-letter is-active">H</span>
+            </div>
+        </div>
+    
     <header>
         <canvas></canvas>
         <div class="content">
@@ -1460,6 +1561,16 @@
                 }
             }
         }());
+        
+    </script>
+
+    <!-- JQUERY JS -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+
+    <script>
+         $(".logo").hover(function () {
+        $('.logo-letter').toggleClass('is-active');
+    });
     </script>
 
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
