@@ -18,7 +18,7 @@
         ---------------------------------------- */
         function headerStyle() {
             if (!$('.main-header').length) return;
-            
+
             var windowpos = $(window).scrollTop();
             var siteHeader = $('.main-header');
             var scrollLink = $('.scroll-top');
@@ -37,17 +37,17 @@
         ---------------------------------------- */
         var progressWrap = $('.progress-wrap');
         var progressPath = progressWrap.find('path')[0];
-        
+
         if (progressPath) {
             var pathLength = progressPath.getTotalLength();
-            
+
             // Setup progress circle
             progressPath.style.transition = 'none';
             progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
             progressPath.style.strokeDashoffset = pathLength;
             progressPath.getBoundingClientRect();
             progressPath.style.transition = 'stroke-dashoffset 10ms linear';
-            
+
             // Update progress function
             function updateProgress() {
                 var scroll = $(window).scrollTop();
@@ -55,25 +55,25 @@
                 var progress = pathLength - (scroll * pathLength / height);
                 progressPath.style.strokeDashoffset = progress;
             }
-            
+
             // Click handler
             progressWrap.on('click', function (e) {
                 e.preventDefault();
                 $('html, body').animate({ scrollTop: 0 }, 550);
             });
-            
+
             // Scroll handler
             $(window).on('scroll', function () {
                 updateProgress();
                 headerStyle();
-                
+
                 if ($(this).scrollTop() > 150) {
                     progressWrap.addClass('active-progress');
                 } else {
                     progressWrap.removeClass('active-progress');
                 }
             });
-            
+
             // Initial update
             updateProgress();
         }
@@ -176,7 +176,7 @@
            PROJECT FILTER & ISOTOPE
         ---------------------------------------- */
         var $projectGrid = $('.project-masonry-active');
-        
+
         if ($projectGrid.length && $.fn.isotope && $.fn.imagesLoaded) {
             // Initialize Isotope
             $projectGrid.imagesLoaded(function () {
@@ -201,15 +201,16 @@
            MAGNIFIC POPUP
         ---------------------------------------- */
         if ($.fn.magnificPopup) {
-            if ($('.work-popup').length) {
-                $('.work-popup').magnificPopup({
+            $('.project-image').each(function () {
+                $(this).magnificPopup({
+                    delegate: '.work-popup',
                     type: 'image',
                     removalDelay: 300,
                     mainClass: 'mfp-with-zoom',
                     gallery: { enabled: true },
                     zoom: { enabled: false }
                 });
-            }
+            });
 
             if ($('.popup-youtube, .popup-vimeo, .popup-gmaps').length) {
                 $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
@@ -267,14 +268,14 @@
            SCROLLER ANIMATION
         ---------------------------------------- */
         var scrollers = document.querySelectorAll(".scroller");
-        
+
         if (scrollers.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
             scrollers.forEach(function (scroller) {
                 scroller.setAttribute("data-animated", "true");
-                
+
                 var scrollerInner = scroller.querySelector(".scroller__inner");
                 if (!scrollerInner) return;
-                
+
                 var scrollerContent = Array.from(scrollerInner.children);
                 scrollerContent.forEach(function (item) {
                     var duplicatedItem = item.cloneNode(true);
@@ -302,7 +303,7 @@
        WINDOW LOAD
        ========================================================================== */
     $(window).on('load', function () {
-        
+
         // Fade out preloader elements
         $('.loadersss').fadeOut();
         $('#preloader-areasss').delay(350).fadeOut('slow');
@@ -341,13 +342,13 @@
         if ($.fn.isotope && $.fn.imagesLoaded) {
             var $projectGrid = $('.project-masonry-active');
             var $blogGrid = $('.blog-standard-wrap');
-            
+
             if ($projectGrid.length) {
                 $projectGrid.imagesLoaded(function () {
                     $projectGrid.isotope('layout');
                 });
             }
-            
+
             if ($blogGrid.length) {
                 $blogGrid.imagesLoaded(function () {
                     $blogGrid.isotope({

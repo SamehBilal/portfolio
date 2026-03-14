@@ -346,3 +346,32 @@ articleLinks.forEach(link => {
         currentx = i;
       });
     });
+
+    
+// Scroll spy: update active nav link based on section in view
+const sections = ['about', 'service', 'works', 'stories', 'contact'];
+const navLinks = document.querySelectorAll('.c-main-menu__link');
+
+function updateActiveLink() {
+  let current = '';
+  const offset = window.innerHeight * 0.35;
+
+  sections.forEach(id => {
+    const section = document.getElementById(id);
+    if (section && section.getBoundingClientRect().top <= offset) {
+      current = id;
+    }
+  });
+
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href').replace('#', '');
+    link.classList.toggle('is-magic-active', href === current);
+    link.toggleAttribute('aria-current', href === current);
+  });
+
+  // Re-run magic area to follow the new active link
+  initMagic();
+}
+
+window.addEventListener('scroll', _.throttle(updateActiveLink, 100), { passive: true });
+updateActiveLink();

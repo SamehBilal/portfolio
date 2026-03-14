@@ -2082,6 +2082,19 @@ ul.extra-skills li i {
     padding: 0.5em;
 }
 
+.project-item.style-two .project-image .fbc-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    line-height: 20px;
+    background: #F2F3F4 !important;
+    border-radius: 20%;
+    padding: 0.5em;
+}
+
 .project-item.style-two .project-image .raid-btn {
     display: flex;
     flex-direction: column;
