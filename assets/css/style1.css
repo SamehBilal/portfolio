@@ -22,6 +22,12 @@
     --grey-bg: #E6EAEE;
     --size: 25px;
     --line: color-mix(in lch, canvasText, transparent 70%);
+    --black: #404040;
+    --white: #fff;
+    --gray: light-dark(rgba(64, 64, 64, 0.15), #444);
+    --font-courgett: "Courgette", cursive;
+    --font-open-sans: "Open Sans", sans-serif;
+    --font-light: 300;
 
     /* Services card variables */
     --background-color: light-dark(#FAFAFA, #18181B);
