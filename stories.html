@@ -23,7 +23,7 @@
     <!-- SPACING CSS -->
     <link rel="stylesheet" href="assets/css/spacing.css" />
     <!-- MAIN STYLE CSS -->
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/style1.css" />
     <!-- RESPONSIVE CSS -->
     <link rel="stylesheet" href="assets/css/responsive.css">
 
@@ -309,7 +309,7 @@
             <div class="container">
                 <div class="header-inner d-flex align-items-center">
                     <!-- START LOGO DESIGN AREA -->
-                    <div class="logo-outer">
+                    <div class="logo-outer" onclick="location.href='index.html'">
                         <div class='logo'>
                             <span class="logo-letter is-active">S</span>
                             <span class="logo-letter is-active">A</span>
@@ -333,16 +333,9 @@
                                         <span class="logo-letter is-active">H</span>
                                     </div>
                                 </div>
-                                <!-- Toggle Button -->
-                                <button type="button" class="navbar-toggle" data-bs-toggle="collapse"
-                                    data-bs-target=".navbar-collapse">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
                             </div>
                             <div class="o-page">
-                                <div class="o-header">
+                                <!-- <div class="o-header">
                                     <nav class="c-main-menu navbar-collapse collapse" aria-labelledby="mainmenulabel">
                                         <h2 id="mainmenulabel" class="u-visually-hidden">Main Menu</h2>
                                         <ul class="c-main-menu__list navigation onepage clearfix">
@@ -358,7 +351,7 @@
                                             </li>
                                         </ul>
                                     </nav>
-                                </div>
+                                </div>  -->
                             </div>
                         </nav>
                         <!-- / END NAV DESIGN AREA -->
@@ -758,6 +751,52 @@
             </article>
         </div>
     </main>
+
+    <div class="c-author">
+        <h6>
+            <span class="fluid">Less noise.</span><br />
+            <span class="fluid" aria-hidden="true" data-splitting=''>More <span
+                    style="color: #F9812E;">impact.</span></span><span class="sr-only">More
+                <span style="color: #F9812E;">impact.</span></span>
+        </h6>
+    </div>
+
+     <!-- START FOOTER DESIGN AREA -->
+    <footer class="main-footer">
+        <div class="footer-bottom pt-50 pb-40">
+            <div class="container footer-poistion">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="copyright-text">
+                            <p>
+                                Copyright @<span id="currentYear"></span>,
+                                <span id="owl" class="ascii owl" aria-hidden="true">
+                                    ,___,
+                                    [o,o]
+                                    /)__)
+                                    -"--"-
+                                </span>
+                                <span class="sr-only">
+                                    Decorative owl animation indicating site activity
+                                </span>
+                                All Rights Reserved.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="copyright-text extra-copyright">
+                            <p>
+                                Crafted with <span style="color: #F9812E;">🧡</span> <a target="_blank"
+                                    class="c-author__link" href="https://samehbilal.github.io/portfolio">Sameh
+                                    Bilal</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- / END FOOTER DESIGN AREA -->
 
     <!-- JQUERY JS -->
     <script src="assets/js/jquery-3.7.1.min.js"></script>

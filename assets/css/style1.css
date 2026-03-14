@@ -1208,6 +1208,10 @@ body.loaded { overflow: hidden !important; height: 100% !important; }
 .o-header { align-items: center; display: flex; justify-content: space-between; padding: 1.25rem; }
 .o-main-section { position: relative; margin: 0 auto; max-width: 37.5rem; }
 
+.u-visually-hidden {
+    clip: rect(1px, 1px, 1px, 1px); -webkit-clip-path: inset(50%); clip-path: inset(50%); height: 1px;
+    margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; 
+}
 .c-main-menu { font-weight: 500; }
 .c-main-menu__list { display: flex; list-style: none; margin: 0; padding: 0; }
 .c-main-menu__link {
@@ -1496,14 +1500,17 @@ h6 .char {
         container-type: inline-size; position: absolute;
         bottom: anchor(top); left: anchor(center);
         color: color-mix(in hsl, canvasText, #0000 40%);
+        width: 150%; right: 80%; top: 250%;
     }
     .arrow svg { width: 100%; scale: -1 -1; }
     .arrow label {
         font-family: "Gloria Hallelujah", cursive; position: absolute;
         bottom: 25%; rotate: 8deg; font-size: 20cqi; white-space: nowrap;
+        top: 50%; right: 110%;
     }
 
     .nav li svg { width: 24px; color: light-dark(#fff, #000) !important; }
+
 }
 
 /* ============================================================
