@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Scroll Cards</title>
+    <title>Stories — Sameh Bilal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-     <!-- BOOTSTRAP CSS -->
+    <!-- BOOTSTRAP CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <!-- FONT AWESOME CSS -->
     <link rel="stylesheet" href="assets/fonts/remixicon.css" />
@@ -26,290 +26,22 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <!-- RESPONSIVE CSS -->
     <link rel="stylesheet" href="assets/css/responsive.css">
+    <!-- STORIES PAGE CSS -->
+    <link rel="stylesheet" href="assets/css/stories.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.css">
-
-    <style>
-        /* ── Portfolio theme tokens ── */
-        :root {
-            --primary-color: #F9812E;
-            --border-color: rgba(119, 119, 125, .2);
-            --size: 25px;
-            --line: color-mix(in lch, canvasText, transparent 70%);
-            --ease-one: linear(
-                0, 0.2342, 0.4374, 0.6093 37.49%,
-                0.6835, 0.7499, 0.8086, 0.8593, 0.9023,
-                0.9375, 0.9648, 0.9844, 0.9961, 1
-            );
-            --ease-two: linear(
-                0, 0.2178 2.1%, 1.1144 8.49%,
-                1.2959 10.7%, 1.3463 11.81%,
-                1.3705 12.94%, 1.3726, 1.3643 14.48%,
-                1.3151 16.2%, 1.0317 21.81%,
-                0.941 24.01%, 0.8912 25.91%,
-                0.8694 27.84%, 0.8698 29.21%,
-                0.8824 30.71%, 1.0122 38.33%, 1.0357,
-                1.046 42.71%, 1.0416 45.7%,
-                0.9961 53.26%, 0.9839 57.54%,
-                0.9853 60.71%, 1.0012 68.14%,
-                1.0056 72.24%, 0.9981 86.66%, 1
-            );
-        }
-
-        [data-theme="light"] { color-scheme: light only; }
-        [data-theme="dark"]  { color-scheme: dark only;  }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html { color-scheme: light dark; }
-
-        body {
-            font-family: "Poppins", sans-serif;
-            font-size: 16px;
-            background: light-dark(#fff, #000);
-            color: light-dark(#444, #e2e2e2);
-            min-height: 100vh;
-            display: grid;
-            gap: 2rem;
-            overflow-x: hidden;
-        }
-
-        /* Grid background — same as portfolio body::before */
-        body::before {
-            content: '';
-            height: 80vh;
-            width: 100vw;
-            position: fixed;
-            background:
-                linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size),
-                linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% / var(--size) var(--size);
-            -webkit-mask: linear-gradient(-20deg, transparent 50%, white);
-            mask: linear-gradient(-20deg, transparent 50%, white);
-            top: 0;
-            transform-style: flat;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* ─────────────────────────────────────────
-           POP TEXT HERO
-        ───────────────────────────────────────── */
-        .pop-hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 1svh;
-            cursor: pointer;
-            margin-top: 30svh;
-        }
-
-        .pop-hero h1 {
-            font-size: clamp(1rem, 8vw + 0.5rem, 5rem);
-            font-family: "Poppins", sans-serif;
-            font-weight: 700;
-            position: relative;
-            display: flex;
-            align-items: flex-end;
-            line-height: 1;
-            color: light-dark(#111, #e2e2e2);
-            user-select: none;
-        }
-
-        .pop-hero h1 .pre-text {
-            line-height: 0.8;
-            color: light-dark(#444, #a1a1aa);
-            font-weight: 300;
-        }
-
-        .pop-hero h1 .pop-word {
-            color: light-dark(#fff, #fff);
-            position: relative;
-            line-height: 1.2;
-            transform-origin: 50% 100%;
-            display: inline-flex;
-            align-items: center;
-            z-index: 1;
-        }
-
-        .pop-hero h1 .pop-word::after {
-            content: "";
-            position: absolute;
-            inset: 0.25rem -0.5rem -0.5rem -0.5rem;
-            background: var(--primary-color);
-            z-index: -1;
-            transform-origin: 50% 100%;
-            scale: 0 0.05;
-            animation:
-                pop-x 0.8s 0.5s forwards var(--ease-one),
-                pop-y 1s 1.4s both var(--ease-two);
-        }
-
-        .pop-hero h1 .trademark {
-            color: light-dark(#111, #e2e2e2);
-            position: absolute;
-            bottom: 1.4rem;
-            right: -0.5rem;
-            transform-origin: 100% 20%;
-            scale: 0.35;
-            z-index: 3;
-            line-height: 1;
-        }
-
-        @keyframes pop-x {
-            to { scale: 1 0.05; }
-        }
-        @keyframes pop-y {
-            to { scale: 1 1; }
-        }
-
-        /* replay on click */
-        .pop-hero h1.replay .pop-word::after {
-            animation: none;
-            scale: 0 0.05;
-        }
-
-        /* scroll hint */
-        .scroll-hint {
-            position: relative;
-            margin-top: 10rem;
-            translate: -50% 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.4rem;
-            opacity: 0.45;
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            animation: bounce-hint 2s 2.5s ease-in-out infinite both;
-        }
-        .scroll-hint svg { width: 20px; }
-        @keyframes bounce-hint {
-            0%, 100% { translate: -50% 0; }
-            50%       { translate: -50% 6px; }
-        }
-
-        main {
-            place-content: end center;
-        }
-
-        /* ── Scroll animation ── */
-        @keyframes slide-in {
-            from {
-                scale: .85;
-                rotate: calc((var(--side, 1) * (5deg * var(--amp, 1))));
-            }
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-            @supports (animation-timeline: view()) {
-                .card-animation-layer {
-                    animation: slide-in linear both;
-                    animation-timeline: view();
-                    animation-range: cover 0% contain 15%;
-                }
-            }
-        }
-
-        /* ── Grid layout ── */
-        main {
-            --cols: 2;
-            display: grid;
-            grid-template-columns: repeat(var(--cols), minmax(0, 200px));
-            gap: 1.5rem;
-            padding-inline: 1.5rem;
-            padding-block: 0svh 50svh;
-            place-items: start;
-        }
-
-        @media (width >= 720px)  { main { --cols: 4; } }
-        @media (width >= 1200px) { main { --cols: 6; } }
-        @media (width >= 1920px) { main { --cols: 8; } }
-
-        /* ── Transform origins per column ── */
-        main > .card-animation-layer { display: grid; gap: 0.5rem; }
-
-        main > .card-animation-layer:nth-of-type(2n + 1) { transform-origin: 25vw 100%;  --side: -1; }
-        main > .card-animation-layer:nth-of-type(2n)     { transform-origin: -25vw 100%; --side: 1;  }
-
-        @media (width >= 720px) {
-            main > .card-animation-layer:nth-of-type(4n + 1) { transform-origin: 50vw 100%;  --side: -1; --amp: 2; }
-            main > .card-animation-layer:nth-of-type(4n + 2) { transform-origin: 25vw 100%;  --side: -1; }
-            main > .card-animation-layer:nth-of-type(4n + 3) { transform-origin: -25vw 100%; --side: 1;  }
-            main > .card-animation-layer:nth-of-type(4n)     { transform-origin: -50vw 100%; --side: 1; --amp: 2; }
-        }
-
-        @media (width >= 1200px) {
-            main > .card-animation-layer:nth-of-type(6n + 1) { transform-origin: 75vw 100%;  --side: -1; --amp: 3; }
-            main > .card-animation-layer:nth-of-type(6n + 2) { transform-origin: 50vw 100%;  --side: -1; --amp: 2; }
-            main > .card-animation-layer:nth-of-type(6n + 3) { transform-origin: 25vw 100%;  --side: -1; }
-            main > .card-animation-layer:nth-of-type(6n + 4) { transform-origin: -25vw 100%; --side: 1;  }
-            main > .card-animation-layer:nth-of-type(6n + 5) { transform-origin: -50vw 100%; --side: 1; --amp: 2; }
-            main > .card-animation-layer:nth-of-type(6n)     { transform-origin: -75vw 100%; --side: 1; --amp: 3; }
-        }
-
-        /* ── Card — portfolio style ── */
-        .card {
-            background: light-dark(#fff, #1D1D1D);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 1.25rem 1rem 1rem;
-            box-shadow:
-                rgba(255, 255, 255, 0.025) 0px 0.362176px 0.651917px -1px inset,
-                rgba(255, 255, 255, 0.036) 0px 3px 5.4px -2px inset;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            border-color: var(--primary-color);
-            box-shadow:
-                rgba(255, 255, 255, 0.025) 0px 0.362176px 0.651917px -1px inset,
-                rgba(249, 129, 46, 0.15) 0px 8px 20px -4px;
-        }
-
-        .card img {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 0.75rem;
-            background: light-dark(#f5f5f5, #2a2a2a);
-            display: block;
-        }
-
-        .card p {
-            font-size: 13px;
-            line-height: 1.5;
-            color: light-dark(#666, #a1a1aa);
-            margin-bottom: 0.5rem;
-        }
-
-        .card a {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--primary-color);
-            text-decoration: none;
-            letter-spacing: 0.02em;
-            transition: opacity 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .card a::after { content: '↗'; font-size: 11px; }
-        .card a:hover  { opacity: 0.75; }
-    </style>
 </head>
 <body>
-     <!-- START MENU DESIGN AREA -->
+
+    <!-- ── HEADER ── -->
     <header class="main-header">
         <div class="header-upper">
             <div class="container">
                 <div class="header-inner d-flex align-items-center">
-                    <!-- START LOGO DESIGN AREA -->
+
+                    <!-- LOGO -->
                     <div class="logo-outer" onclick="location.href='index.html'">
-                        <div class='logo'>
+                        <div class="logo">
                             <span class="logo-letter is-active">S</span>
                             <span class="logo-letter is-active">A</span>
                             <span class="logo-letter is-active">M</span>
@@ -317,14 +49,13 @@
                             <span class="logo-letter is-active">H</span>
                         </div>
                     </div>
-                    <!-- / END LOGO DESIGN AREA -->
-                    <!-- START NAV DESIGN AREA -->
+
+                    <!-- NAV -->
                     <div class="nav-outer clearfix mx-auto">
-                        <!-- Main Menu -->
                         <nav class="main-menu navbar-expand-lg">
                             <div class="navbar-header">
                                 <div class="mobile-logo">
-                                    <div class='logo'>
+                                    <div class="logo">
                                         <span class="logo-letter is-active">S</span>
                                         <span class="logo-letter is-active">A</span>
                                         <span class="logo-letter is-active">M</span>
@@ -333,161 +64,82 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="o-page">
-                                <!-- <div class="o-header">
-                                    <nav class="c-main-menu navbar-collapse collapse" aria-labelledby="mainmenulabel">
-                                        <h2 id="mainmenulabel" class="u-visually-hidden">Main Menu</h2>
-                                        <ul class="c-main-menu__list navigation onepage clearfix">
-                                            <li><a aria-current="page"
-                                                    class="is-magic-active c-main-menu__link nav-link-click"
-                                                    href="#about">About</a></li>
-                                            <li><a class="c-main-menu__link nav-link-click" href="#service">Services</a>
-                                            </li>
-                                            <li><a class="c-main-menu__link nav-link-click" href="#works">Works</a></li>
-                                            <li><a class="c-main-menu__link nav-link-click" href="#stories">Stories</a>
-                                            </li>
-                                            <li><a class="c-main-menu__link nav-link-click" href="#contact">Contact</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>  -->
-                            </div>
+                            <div class="o-page"></div>
                         </nav>
-                        <!-- / END NAV DESIGN AREA -->
                     </div>
-                    <!-- / END NAV DESIGN AREA -->
 
+                    <!-- ACTIONS -->
                     <div class="menu-btns align-items-center">
-                        <a href="#contact" class="theme-btn">Hire Me
-                            <i class="ri-shake-hands-line"></i></a>
+                        <a href="#contact" class="theme-btn">
+                            Hire Me <i class="ri-shake-hands-line"></i>
+                        </a>
                         <form class="form">
                             <div class="arrow">
                                 <label>drag me.</label>
-                                <svg aria-hidden="true" viewBox="0 0 144 141" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M129.189 0.0490494C128.744 0.119441 126.422 0.377545 124.03 0.635648C114.719 1.6446 109.23 2.4893 108.058 3.09936C107.119 3.56864 106.674 4.34295 106.674 5.44576C106.674 6.71281 107.424 7.51058 109.043 7.97986C110.403 8.37875 110.825 8.42567 118.87 9.52847C121.778 9.92736 124.288 10.3028 124.475 10.3732C124.663 10.4436 122.951 11.1006 120.676 11.8749C110.028 15.4414 100.412 20.7677 91.7339 27.9242C88.38 30.7164 81.6957 37.4271 79.2096 40.5009C73.8387 47.2116 69.6874 54.8139 66.5681 63.7302C65.9348 65.4665 65.3484 66.8978 65.2546 66.8978C65.1374 66.8978 63.7771 66.7336 62.2291 66.5693C52.9649 65.5134 43.1847 68.1649 34.1316 74.2186C24.7735 80.46 18.5349 87.7338 10.5371 101.742C2.53943 115.726 -1.0959 127.482 0.287874 135.014C0.89767 138.463 2.0469 140.035 3.97011 140.082C5.28352 140.105 5.37733 139.659 4.20465 139.049C3.05541 138.463 2.6567 137.9 2.32835 136.281C0.616228 128.021 6.24512 113.028 17.4325 96.1104C23.2725 87.241 28.362 81.9147 35.5622 77.1046C43.8649 71.5437 52.7069 69.033 61.1737 69.8308C64.9967 70.1828 64.6917 69.9247 64.1992 72.4822C62.2525 82.5013 63.8005 92.6378 67.9753 97.354C73.1116 103.079 81.9771 102 85.0027 95.2657C86.3395 92.2858 86.3864 87.7103 85.1434 83.9796C83.1498 78.0901 80.007 73.8197 75.4335 70.8163C73.8152 69.7604 70.4848 68.1883 69.875 68.1883C69.359 68.1883 69.4294 67.6487 70.2268 65.3257C72.3377 59.2486 75.457 52.7021 78.4122 48.244C83.2436 40.9232 91.4524 32.5701 99.1687 27.103C105.806 22.4102 113.241 18.5386 120.512 16.0045C123.772 14.8548 129.87 13.1889 130.081 13.3766C130.128 13.447 129.541 14.362 128.791 15.4414C124.78 21.0258 122.716 26.0706 122.388 30.998C122.224 33.7198 122.341 34.588 122.88 34.2595C122.998 34.1891 123.678 32.969 124.405 31.5611C126.281 27.8069 131.722 20.6738 139.579 11.6402C141.127 9.85697 142.652 7.86254 143.027 7.08823C144.552 4.03792 143.52 1.48035 140.377 0.471397C139.439 0.166366 138.102 0.0490408 134.584 0.0255769C132.074 -0.021351 129.635 0.00212153 129.189 0.0490494ZM137.117 4.92955C137.187 5.0234 136.718 5.63346 136.061 6.29045L134.865 7.48712L131.042 6.73627C128.931 6.33739 126.727 5.9385 126.14 5.8681C124.827 5.68039 124.123 5.32843 124.968 5.28151C125.296 5.28151 126.868 5.11725 128.486 4.953C131.3 4.64797 136.812 4.62451 137.117 4.92955ZM71.5168 72.5292C76.2075 74.899 79.4441 78.8175 81.3204 84.355C83.6189 91.1361 81.2266 96.8378 76.0433 96.8847C73.3227 96.9082 70.9773 95.2188 69.5936 92.2389C68.2802 89.4232 67.6938 86.5606 67.5765 82.1259C67.4593 78.3248 67.6 76.4242 68.2333 72.7403L68.4912 71.2856L69.359 71.5906C69.8515 71.7548 70.8132 72.1772 71.5168 72.5292Z"
-                                        fill="currentColor" />
+                                <svg aria-hidden="true" viewBox="0 0 144 141" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M129.189 0.0490494C128.744 0.119441 126.422 0.377545 124.03 0.635648C114.719 1.6446 109.23 2.4893 108.058 3.09936C107.119 3.56864 106.674 4.34295 106.674 5.44576C106.674 6.71281 107.424 7.51058 109.043 7.97986C110.403 8.37875 110.825 8.42567 118.87 9.52847C121.778 9.92736 124.288 10.3028 124.475 10.3732C124.663 10.4436 122.951 11.1006 120.676 11.8749C110.028 15.4414 100.412 20.7677 91.7339 27.9242C88.38 30.7164 81.6957 37.4271 79.2096 40.5009C73.8387 47.2116 69.6874 54.8139 66.5681 63.7302C65.9348 65.4665 65.3484 66.8978 65.2546 66.8978C65.1374 66.8978 63.7771 66.7336 62.2291 66.5693C52.9649 65.5134 43.1847 68.1649 34.1316 74.2186C24.7735 80.46 18.5349 87.7338 10.5371 101.742C2.53943 115.726 -1.0959 127.482 0.287874 135.014C0.89767 138.463 2.0469 140.035 3.97011 140.082C5.28352 140.105 5.37733 139.659 4.20465 139.049C3.05541 138.463 2.6567 137.9 2.32835 136.281C0.616228 128.021 6.24512 113.028 17.4325 96.1104C23.2725 87.241 28.362 81.9147 35.5622 77.1046C43.8649 71.5437 52.7069 69.033 61.1737 69.8308C64.9967 70.1828 64.6917 69.9247 64.1992 72.4822C62.2525 82.5013 63.8005 92.6378 67.9753 97.354C73.1116 103.079 81.9771 102 85.0027 95.2657C86.3395 92.2858 86.3864 87.7103 85.1434 83.9796C83.1498 78.0901 80.007 73.8197 75.4335 70.8163C73.8152 69.7604 70.4848 68.1883 69.875 68.1883C69.359 68.1883 69.4294 67.6487 70.2268 65.3257C72.3377 59.2486 75.457 52.7021 78.4122 48.244C83.2436 40.9232 91.4524 32.5701 99.1687 27.103C105.806 22.4102 113.241 18.5386 120.512 16.0045C123.772 14.8548 129.87 13.1889 130.081 13.3766C130.128 13.447 129.541 14.362 128.791 15.4414C124.78 21.0258 122.716 26.0706 122.388 30.998C122.224 33.7198 122.341 34.588 122.88 34.2595C122.998 34.1891 123.678 32.969 124.405 31.5611C126.281 27.8069 131.722 20.6738 139.579 11.6402C141.127 9.85697 142.652 7.86254 143.027 7.08823C144.552 4.03792 143.52 1.48035 140.377 0.471397C139.439 0.166366 138.102 0.0490408 134.584 0.0255769C132.074 -0.021351 129.635 0.00212153 129.189 0.0490494ZM137.117 4.92955C137.187 5.0234 136.718 5.63346 136.061 6.29045L134.865 7.48712L131.042 6.73627C128.931 6.33739 126.727 5.9385 126.14 5.8681C124.827 5.68039 124.123 5.32843 124.968 5.28151C125.296 5.28151 126.868 5.11725 128.486 4.953C131.3 4.64797 136.812 4.62451 137.117 4.92955ZM71.5168 72.5292C76.2075 74.899 79.4441 78.8175 81.3204 84.355C83.6189 91.1361 81.2266 96.8378 76.0433 96.8847C73.3227 96.9082 70.9773 95.2188 69.5936 92.2389C68.2802 89.4232 67.6938 86.5606 67.5765 82.1259C67.4593 78.3248 67.6 76.4242 68.2333 72.7403L68.4912 71.2856L69.359 71.5906C69.8515 71.7548 70.8132 72.1772 71.5168 72.5292Z" fill="currentColor"/>
                                 </svg>
                             </div>
                             <button aria-pressed="false">
                                 <span class="sr-only">Toggle theme</span>
-                                <svg aria-hidden="true" class="toggle-scene" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="32 32 134 134">
+                                <svg aria-hidden="true" class="toggle-scene" xmlns="http://www.w3.org/2000/svg" viewBox="32 32 134 134">
                                     <defs>
-                                        <marker id="e" orient="auto" overflow="visible" refx="0" refy="0">
-                                            <path class="toggle-scene__cord-end" fill-rule="evenodd"
-                                                stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                                        </marker>
-                                        <marker id="d" orient="auto" overflow="visible" refx="0" refy="0">
-                                            <path class="toggle-scene__cord-end" fill-rule="evenodd"
-                                                stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                                        </marker>
-                                        <marker id="c" orient="auto" overflow="visible" refx="0" refy="0">
-                                            <path class="toggle-scene__cord-end" fill-rule="evenodd"
-                                                stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                                        </marker>
-                                        <marker id="b" orient="auto" overflow="visible" refx="0" refy="0">
-                                            <path class="toggle-scene__cord-end" fill-rule="evenodd"
-                                                stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                                        </marker>
-                                        <marker id="a" orient="auto" overflow="visible" refx="0" refy="0">
-                                            <path class="toggle-scene__cord-end" fill-rule="evenodd"
-                                                stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                                        </marker>
-                                        <clippath id="g" clippathunits="userSpaceOnUse">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677"
-                                                d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z">
-                                            </path>
-                                        </clippath>
-                                        <clippath id="f" clippathunits="userSpaceOnUse">
-                                            <path
-                                                d="M-868.418 945.051c-4.188 73.011 78.255 53.244 150.216 52.941 82.387-.346 98.921-19.444 98.921-47.058 0-27.615-4.788-42.55-73.823-42.55-69.036 0-171.436-30.937-175.314 36.667z">
-                                            </path>
-                                        </clippath>
+                                        <marker id="e" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                        <marker id="d" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                        <marker id="c" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                        <marker id="b" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                        <marker id="a" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                        <clippath id="g" clippathunits="userSpaceOnUse"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path></clippath>
+                                        <clippath id="f" clippathunits="userSpaceOnUse"><path d="M-868.418 945.051c-4.188 73.011 78.255 53.244 150.216 52.941 82.387-.346 98.921-19.444 98.921-47.058 0-27.615-4.788-42.55-73.823-42.55-69.036 0-171.436-30.937-175.314 36.667z"></path></clippath>
                                     </defs>
                                     <g class="toggle-scene__cords">
-                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none"
-                                            stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493"
-                                            transform="translate(-24.503 256.106)"></path>
-                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none"
-                                            stroke-linecap="square" stroke-width="6"
-                                            d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507"
-                                            transform="translate(-24.503 256.106)"></path>
-                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none"
-                                            stroke-linecap="square" stroke-width="6"
-                                            d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468"
-                                            transform="translate(-24.503 256.106)"></path>
-                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none"
-                                            stroke-linecap="square" stroke-width="6"
-                                            d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782"
-                                            transform="translate(-24.503 256.106)"></path>
-                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none"
-                                            stroke-linecap="square" stroke-width="6"
-                                            d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623"
-                                            transform="translate(-24.503 256.106)"></path>
-                                        <g class="line toggle-scene__dummy-cord">
-                                            <line marker-end="url(#a)" x1="98" x2="98" y1="240" y2="380"></line>
-                                        </g>
-                                        <circle class="toggle-scene__hit-spot" cx="98.7255" cy="380.5405" r="60"
-                                            fill="transparent">
-                                        </circle>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493" transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507" transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468" transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782" transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623" transform="translate(-24.503 256.106)"></path>
+                                        <g class="line toggle-scene__dummy-cord"><line marker-end="url(#a)" x1="98" x2="98" y1="240" y2="380"></line></g>
+                                        <circle class="toggle-scene__hit-spot" cx="98.7255" cy="380.5405" r="60" fill="transparent"></circle>
                                     </g>
                                     <g class="toggle-scene__bulb bulb" transform="translate(844.069 -645.213)">
-                                        <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="4.677"
-                                            d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z">
-                                        </path>
-                                        <path class="bulb__cap-shine" d="M-778.379 802.873h25.512v118.409h-25.512z"
-                                            clip-path="url(#g)" transform="matrix(.52452 0 0 .90177 -368.282 82.976)">
-                                        </path>
-                                        <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="4"
-                                            d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z">
-                                        </path>
-                                        <path class="bulb__cap-outline" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round" stroke-width="4.677"
-                                            d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z">
-                                        </path>
+                                        <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+                                        <path class="bulb__cap-shine" d="M-778.379 802.873h25.512v118.409h-25.512z" clip-path="url(#g)" transform="matrix(.52452 0 0 .90177 -368.282 82.976)"></path>
+                                        <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z"></path>
+                                        <path class="bulb__cap-outline" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
                                         <g class="bulb__filament" fill="none" stroke-linecap="round" stroke-width="5">
                                             <path d="M-752.914 823.875l-8.858-33.06"></path>
                                             <path d="M-737.772 823.875l8.858-33.06"></path>
                                         </g>
-                                        <path class="bulb__bulb" stroke-linecap="round" stroke-width="5"
-                                            d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z">
-                                        </path>
-                                        <circle class="bulb__flash" cx="-745.343" cy="743.939" r="83.725" fill="none"
-                                            stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="10">
-                                        </circle>
-                                        <path class="bulb__shine" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round" stroke-width="12"
-                                            d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957">
-                                        </path>
+                                        <path class="bulb__bulb" stroke-linecap="round" stroke-width="5" d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z"></path>
+                                        <circle class="bulb__flash" cx="-745.343" cy="743.939" r="83.725" fill="none" stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></circle>
+                                        <path class="bulb__shine" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957"></path>
                                     </g>
                                 </svg>
                                 <div class="grab-handle"></div>
                             </button>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
     </header>
-    <!-- / END MENU DESIGN AREA -->
+    <!-- /HEADER -->
 
-    <!-- ── POP TEXT HERO ── -->
-    <section class="pop-hero" id="pop-hero">
-        <h1 id="pop-heading">
-            <span class="pre-text" aria-hidden="true">make it&nbsp;</span>
+
+    <!-- ── HERO ── -->
+    <section class="stories-hero" id="stories-hero">
+        <h1 id="stories-heading">
+            <span class="pre-text" aria-hidden="true">things i&nbsp;</span>
             <span class="pop-word" aria-hidden="true">
-                <span>pop</span>
-                <span class="trademark">™</span>
+                <span>built</span>
+                <span class="trademark">✦</span>
             </span>
-            <span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">make it pop.</span>
+            <span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">
+                things i built — stories & fun projects
+            </span>
         </h1>
 
-        <!-- scroll hint arrow -->
         <div class="scroll-hint" aria-hidden="true">
             <span>scroll</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -496,271 +148,24 @@
         </div>
     </section>
 
-    <main>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Roboto.svg" alt="">
-                <p>Sort of short and tiny amount of content here.</p>
-                <a href="#">Cool art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Entertainment.svg" alt="">
-                <p>The words in this example are tolerable, passable and fair, but do draw out a bit.</p>
-                <a href="#">By Pablo Stanley</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Mechanical+Love.svg" alt="">
-                <p>I'm brief comparatively.</p>
-                <a href="#">Find more</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Waiting.svg" alt="">
-                <p>Sometimes the message is just right.</p>
-                <a href="#">Share good art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Waiting.svg" alt="">
-                <p>Sometimes the message is just right.</p>
-                <a href="#">Share good art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Entertainment.svg" alt="">
-                <p>The words in this example are tolerable, passable and fair, but do draw out a bit.</p>
-                <a href="#">By Pablo Stanley</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Mechanical+Love.svg" alt="">
-                <p>I'm brief comparatively.</p>
-                <a href="#">Find more</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Roboto.svg" alt="">
-                <p>Sort of short and tiny amount of content here.</p>
-                <a href="#">Cool art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Mechanical+Love.svg" alt="">
-                <p>I'm brief comparatively.</p>
-                <a href="#">Find more</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Entertainment.svg" alt="">
-                <p>The words in this example are tolerable, passable and fair, but do draw out a bit.</p>
-                <a href="#">By Pablo Stanley</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Roboto.svg" alt="">
-                <p>Sort of short and tiny amount of content here.</p>
-                <a href="#">Cool art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Waiting.svg" alt="">
-                <p>Sometimes the message is just right.</p>
-                <a href="#">Share good art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Roboto.svg" alt="">
-                <p>Sort of short and tiny amount of content here.</p>
-                <a href="#">Cool art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Entertainment.svg" alt="">
-                <p>The words in this example are tolerable, passable and fair, but do draw out a bit.</p>
-                <a href="#">By Pablo Stanley</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Mechanical+Love.svg" alt="">
-                <p>I'm brief comparatively.</p>
-                <a href="#">Find more</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Waiting.svg" alt="">
-                <p>Sometimes the message is just right.</p>
-                <a href="#">Share good art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Waiting.svg" alt="">
-                <p>Sometimes the message is just right.</p>
-                <a href="#">Share good art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Entertainment.svg" alt="">
-                <p>The words in this example are tolerable, passable and fair, but do draw out a bit.</p>
-                <a href="#">By Pablo Stanley</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Mechanical+Love.svg" alt="">
-                <p>I'm brief comparatively.</p>
-                <a href="#">Find more</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Roboto.svg" alt="">
-                <p>Sort of short and tiny amount of content here.</p>
-                <a href="#">Cool art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Mechanical+Love.svg" alt="">
-                <p>I'm brief comparatively.</p>
-                <a href="#">Find more</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Entertainment.svg" alt="">
-                <p>The words in this example are tolerable, passable and fair, but do draw out a bit.</p>
-                <a href="#">By Pablo Stanley</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Roboto.svg" alt="">
-                <p>Sort of short and tiny amount of content here.</p>
-                <a href="#">Cool art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Waiting.svg" alt="">
-                <p>Sometimes the message is just right.</p>
-                <a href="#">Share good art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Roboto.svg" alt="">
-                <p>Sort of short and tiny amount of content here.</p>
-                <a href="#">Cool art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Entertainment.svg" alt="">
-                <p>The words in this example are tolerable, passable and fair, but do draw out a bit.</p>
-                <a href="#">By Pablo Stanley</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Mechanical+Love.svg" alt="">
-                <p>I'm brief comparatively.</p>
-                <a href="#">Find more</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Waiting.svg" alt="">
-                <p>Sometimes the message is just right.</p>
-                <a href="#">Share good art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Waiting.svg" alt="">
-                <p>Sometimes the message is just right.</p>
-                <a href="#">Share good art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Entertainment.svg" alt="">
-                <p>The words in this example are tolerable, passable and fair, but do draw out a bit.</p>
-                <a href="#">By Pablo Stanley</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Mechanical+Love.svg" alt="">
-                <p>I'm brief comparatively.</p>
-                <a href="#">Find more</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Roboto.svg" alt="">
-                <p>Sort of short and tiny amount of content here.</p>
-                <a href="#">Cool art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Mechanical+Love.svg" alt="">
-                <p>I'm brief comparatively.</p>
-                <a href="#">Find more</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Entertainment.svg" alt="">
-                <p>The words in this example are tolerable, passable and fair, but do draw out a bit.</p>
-                <a href="#">By Pablo Stanley</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Roboto.svg" alt="">
-                <p>Sort of short and tiny amount of content here.</p>
-                <a href="#">Cool art</a>
-            </article>
-        </div>
-        <div class="card-animation-layer">
-            <article class="card">
-                <img src="https://assets.codepen.io/2585/Waiting.svg" alt="">
-                <p>Sometimes the message is just right.</p>
-                <a href="#">Share good art</a>
-            </article>
-        </div>
+
+    <!-- ── CARDS ── -->
+    <main id="stories-grid">
+        <p class="cards-loading" aria-live="polite">Loading stories…</p>
     </main>
 
+
+    <!-- ── TAGLINE ── -->
     <div class="c-author">
         <h6>
             <span class="fluid">Less noise.</span><br />
-            <span class="fluid" aria-hidden="true" data-splitting=''>More <span
-                    style="color: #F9812E;">impact.</span></span><span class="sr-only">More
-                <span style="color: #F9812E;">impact.</span></span>
+            <span class="fluid" aria-hidden="true" data-splitting=''>More <span style="color: #F9812E;">impact.</span></span>
+            <span class="sr-only">More <span style="color: #F9812E;">impact.</span></span>
         </h6>
     </div>
 
-     <!-- START FOOTER DESIGN AREA -->
+
+    <!-- ── FOOTER ── -->
     <footer class="main-footer">
         <div class="footer-bottom pt-50 pb-40">
             <div class="container footer-poistion">
@@ -768,16 +173,14 @@
                     <div class="col-lg-6">
                         <div class="copyright-text">
                             <p>
-                                Copyright @<span id="currentYear"></span>,
+                                Copyright &copy;<span id="currentYear"></span>,
                                 <span id="owl" class="ascii owl" aria-hidden="true">
                                     ,___,
                                     [o,o]
                                     /)__)
                                     -"--"-
                                 </span>
-                                <span class="sr-only">
-                                    Decorative owl animation indicating site activity
-                                </span>
+                                <span class="sr-only">Decorative owl animation indicating site activity</span>
                                 All Rights Reserved.
                             </p>
                         </div>
@@ -785,9 +188,8 @@
                     <div class="col-lg-6">
                         <div class="copyright-text extra-copyright">
                             <p>
-                                Crafted with <span style="color: #F9812E;">🧡</span> <a target="_blank"
-                                    class="c-author__link" href="https://samehbilal.github.io/portfolio">Sameh
-                                    Bilal</a>
+                                Crafted with <span style="color: #F9812E;">🧡</span>
+                                <a target="_blank" class="c-author__link" href="https://samehbilal.github.io/portfolio">Sameh Bilal</a>
                             </p>
                         </div>
                     </div>
@@ -795,45 +197,62 @@
             </div>
         </div>
     </footer>
-    <!-- / END FOOTER DESIGN AREA -->
+    <!-- /FOOTER -->
 
-    <!-- JQUERY JS -->
+
+    <!-- SCRIPTS -->
     <script src="assets/js/jquery-3.7.1.min.js"></script>
-    <!-- BOOTSTRAP JS-->
     <script src="assets/js/bootstrap.min.js"></script>
-    <!-- APPEAR JS -->
     <script src="assets/js/appear.min.js"></script>
-    <!-- jquery smooth-scroll JS -->
     <script src="assets/js/smooth-scroll.js"></script>
-    <!-- GSAP JS -->
     <script src="assets/js/gsap.min.js"></script>
-    <!-- MAGNIFICANT JS -->
     <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <!-- SLICK JS-->
     <script src="assets/js/slick.min.js"></script>
-    <!-- NICE SELECT JS-->
     <script src="assets/js/jquery.nice-select.min.js"></script>
-    <!-- IMAGE LOADER JS-->
     <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-    <!-- ISOTOPE JS-->
     <script src="assets/js/isotope.pkgd.min.js"></script>
-    <!--  WOW ANIMATION JS-->
     <script src="assets/js/wow.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
-    <!-- SCRIPT JS-->
     <script src="assets/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.3/dist/vanilla-tilt.min.js"></script>
-
     <script src="assets/js/menu.js"></script>
     <script src="https://assets.codepen.io/16327/MorphSVGPlugin3.min.js"></script>
     <script type="module" src="assets/js/lights.js"></script>
     <script type="module" src="assets/js/splitting.js"></script>
     <script type="module" src="assets/js/owl.js"></script>
 
-    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
-        data-id="samehbilal" data-description="Support my work" data-message="Support my work" data-color="#F9812E"
+    <!-- Stories: load cards from JSON -->
+    <script>
+        (async () => {
+            const grid = document.getElementById('stories-grid');
+
+            try {
+                const res  = await fetch('data/stories.json');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const stories = await res.json();
+
+                grid.innerHTML = stories.map(s => `
+                    <div class="card-animation-layer">
+                        <article class="card">
+                            <img src="${s.image}" alt="${s.label}" loading="lazy">
+                            <p>${s.description}</p>
+                            <a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>
+                        </article>
+                    </div>
+                `).join('');
+
+            } catch (err) {
+                grid.innerHTML = `<p class="cards-error">Could not load stories. (${err.message})</p>`;
+                console.error('[stories]', err);
+            }
+        })();
+    </script>
+
+    <script data-name="BMC-Widget" data-cfasync="false"
+        src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+        data-id="samehbilal" data-description="Support my work"
+        data-message="Support my work" data-color="#F9812E"
         data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 </body>
 </html>
