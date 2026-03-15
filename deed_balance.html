@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ميزان الأعمال · Deed Balance</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --primary:#F9812E;
+  --bg:#000;
+  --surface:#1D1D1D;
+  --surface2:#262626;
+  --border:rgba(119,119,125,.22);
+  --text:#e2e2e2;
+  --muted:#71717a;
+  --size:25px;
+  --line:rgba(255,255,255,.055);
+  --good:#22c55e;
+  --good-dim:rgba(34,197,94,.13);
+  --bad:#ef4444;
+  --bad-dim:rgba(239,68,68,.13);
+  --border-radius:.8em;
+  --brown:#6B4D36;
+  --dark-brown:#4F3522;
+  --light-brown:#9A6E54;
+  --light-gray:#888;
+  --dark-gray:#555;
+  --gray:#6B6B6B;
+}
+html{color-scheme:dark}
+[data-theme="light"]{
+  color-scheme:light;
+  --bg:#fff;--surface:#fff;--surface2:#f5f5f5;
+  --border:rgba(0,0,0,.1);--text:#222;--muted:#888;
+  --line:rgba(0,0,0,.055);
+  --brown:#8A6345;--dark-brown:#755134;--light-brown:#BA8A68;
+  --light-gray:#BCBCBC;--dark-gray:#898785;--gray:#A0A0A0;
+}
+
+body{
+  font-family:"Poppins",sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;position:relative;
+}
+body::before{
+  content:'';height:80vh;width:100vw;position:fixed;
+  background:
+    linear-gradient(90deg,var(--line) 1px,transparent 1px var(--size)) 50% 50%/var(--size) var(--size),
+    linear-gradient(var(--line) 1px,transparent 1px var(--size)) 50% 50%/var(--size) var(--size);
+  -webkit-mask:linear-gradient(-20deg,transparent 50%,white);
+  mask:linear-gradient(-20deg,transparent 50%,white);
+  top:0;pointer-events:none;z-index:0;
+}
+
+.theme-btn{
+  position:fixed;top:1.2rem;right:1.2rem;z-index:100;
+  width:38px;height:38px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text);cursor:pointer;display:grid;place-items:center;
+  font-size:16px;transition:border-color .2s;
+}
+.theme-btn:hover{border-color:var(--primary)}
+
+.page{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  padding:2rem 1rem 4rem;
+}
+.page-title{
+  text-align:center;margin-bottom:1.5rem;
+  font-size:clamp(1.3rem,4vw,2.2rem);font-weight:700;line-height:1.1;
+}
+.page-title span{color:var(--primary)}
+.page-title small{display:block;font-family:"Amiri",serif;font-size:.5em;color:var(--muted);font-weight:400;margin-top:.3em}
+
+/* ═══════════════════════════════
+   CSS SCALE
+   font-size is the single knob for responsiveness
+   ═══════════════════════════════ */
+.scale-scene{
+  /* shrinks fluidly: full size at 900px, min at 320px */
+  font-size:clamp(4px, 1.1vw, 10px);
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;
+  pointer-events:none;
+  margin-bottom:2rem;
+  /* leave room above for the top knob */
+  padding-top:8em;
+}
+
+/* knob above beam */
+.beam-top{
+  position:absolute;top:0;left:calc(50% - 1.5em);
+  width:3em;height:5em;
+  background:linear-gradient(to top,var(--brown) 90%,var(--dark-brown) 91%);
+  z-index:3;
+}
+.beam-top::after{
+  content:"";position:absolute;bottom:5em;left:calc(50% - 2em);
+  height:1em;width:4em;background:var(--light-brown);border-radius:.5em;
+}
+.beam-top::before{
+  content:"";position:absolute;top:-3em;
+  width:3em;height:3em;background:var(--light-gray);border-radius:50%;
+}
+
+/* beam wrapper — absolute so it overlaps the stick top */
+.beam-wrap{position:absolute;top:5em;z-index:2;left:50%;transform:translateX(-50%)}
+
+.beam{
+  position:relative;width:70em;height:3em;
+  background:radial-gradient(3.3em 3.3em at center,rgba(0,0,0,.12) 5em,var(--brown)),var(--brown);
+  border-radius:1em;
+  transition:transform .45s cubic-bezier(.25,.46,.45,.94);
+  transform-origin:50% 50%;
+}
+.beam::after{
+  content:"";position:absolute;
+  width:6em;height:6em;border-radius:3em;
+  background:var(--brown);top:calc(50% - 3em);left:calc(50% - 3em);
+}
+.beam-support{
+  width:1.2em;height:.9em;background:var(--dark-brown);
+  position:absolute;top:calc(50% - .45em);left:-1.2em;
+}
+.beam-support::before{
+  content:"";position:absolute;top:calc(50% - 1.25em);left:-2em;
+  background:var(--light-brown);width:2em;height:2.5em;border-radius:1em;
+}
+.beam-support.right{left:auto;right:-1.2em;transform:scaleX(-1)}
+
+/* pan */
+.pan{
+  width:24em;height:38em;position:absolute;
+  left:-12.5em;top:.4em;
+  transform-origin:top center;
+  transition:transform .45s cubic-bezier(.25,.46,.45,.94);
+  pointer-events:all;
+}
+.pan.right{left:auto;right:-12.5em}
+.pan__ring{
+  position:absolute;top:2.5em;left:calc(50% - 2em);
+  width:4em;height:4em;border-radius:50%;
+  border:.7em solid var(--dark-gray);
+}
+.pan__ring::after{
+  content:"";position:absolute;top:-3.2em;left:calc(50% - .35em);
+  height:4em;width:.7em;background:var(--gray);border-radius:.4em;
+}
+.chain{
+  position:absolute;height:32em;width:.8em;
+  left:calc(50% - .4em);top:5.5em;overflow:hidden;transform-origin:top;
+}
+.chain.cl{height:34em;transform:rotate(18deg)}
+.chain.cr{height:34em;transform:rotate(-18deg)}
+.chain.co{z-index:2}
+.chain::after{
+  --c:var(--light-gray);
+  content:"";position:absolute;top:0;left:.3em;
+  height:1.3em;width:.3em;border-radius:.15em;background:var(--light-gray);
+  box-shadow:0 1.7em 0 var(--c),0 3.5em 0 var(--c),0 5.3em 0 var(--c),0 7.1em 0 var(--c),0 8.9em 0 var(--c),0 10.6em 0 var(--c),0 12.3em 0 var(--c),0 14.3em 0 var(--c),0 16em 0 var(--c),0 17.7em 0 var(--c),0 19.5em 0 var(--c),0 21.3em 0 var(--c),0 23.1em 0 var(--c),0 24.9em 0 var(--c),0 26.7em 0 var(--c),0 28.5em 0 var(--c),0 30.3em 0 var(--c),0 32.1em 0 var(--c),0 33.9em 0 var(--c),0 35.7em 0 var(--c),0 37.5em 0 var(--c);
+}
+.chain::before{
+  --c:var(--light-gray);
+  content:"";position:absolute;top:.9em;left:0;
+  height:.6em;width:.2em;border-radius:.45em;border:.3em solid var(--c);
+  filter:drop-shadow(0 1.8em 0 var(--c)) drop-shadow(0 3.6em 0 var(--c)) drop-shadow(0 7.2em 0 var(--c)) drop-shadow(0 14.4em 0 var(--c)) drop-shadow(0 28.8em 0 var(--c));
+}
+.pan__bottom{
+  width:20em;height:2em;background:var(--dark-gray);
+  margin-left:2em;position:absolute;bottom:0;z-index:1;
+}
+.pan__bottom::after{
+  content:"";position:absolute;top:0;left:-2em;width:2em;height:2em;
+  background-image:linear-gradient(to top right,transparent 50%,var(--dark-gray) 0);
+}
+.pan__bottom::before{
+  content:"";position:absolute;top:0;right:-2em;width:2em;height:2em;
+  background-image:linear-gradient(to bottom right,var(--dark-gray) 50%,transparent 0);
+}
+.pan__bottom-top{
+  position:absolute;top:-1em;left:-2.5em;
+  width:25em;height:1em;background:var(--gray);border-radius:.5em;z-index:2;
+}
+
+/* pan label & weight number */
+.pan-label{
+  position:absolute;top:7.5em;width:100%;text-align:center;
+  font-family:"Amiri",serif;font-size:2.4em;font-weight:700;
+  pointer-events:none;user-select:none;line-height:1.1;
+}
+.pan-label small{display:block;font-family:"Poppins",sans-serif;font-size:.4em;letter-spacing:.1em;text-transform:uppercase;opacity:.55;margin-top:.15em}
+.pan-label.g{color:var(--good)}.pan-label.b{color:var(--bad)}
+
+/* ── Single weight shape on pan ── */
+.pan-shape-wrap{
+  position:absolute;bottom:3.2em;left:50%;
+  transform:translateX(-50%);
+  display:flex;align-items:flex-end;justify-content:center;
+  pointer-events:none;z-index:3;
+  transition:opacity .3s;
+}
+.pan-shape-wrap.empty{opacity:0}
+
+/* the shape itself — JS sets width/height/border-radius via CSS vars */
+.pan-shape{
+  transition:width .4s ease,height .4s ease,border-radius .4s ease,background .4s ease,box-shadow .4s ease;
+  display:flex;align-items:center;justify-content:center;
+  font-family:"Poppins",sans-serif;font-weight:700;
+  user-select:none;
+}
+
+/* ── Scale stick & base ── */
+.scale__stick{
+  height:28em;width:3em;position:relative;
+  border-radius:1.5em 1.5em 0 0;background:var(--brown);
+}
+.scale__stick::after{
+  content:"";position:absolute;border-radius:2em;
+  width:4em;height:6em;left:-.5em;top:8em;background:var(--brown);
+}
+.scale__stick::before{
+  content:"";position:absolute;
+  width:5em;height:8em;top:10em;left:-1em;
+  background:var(--brown);border-radius:2.5em;
+}
+.scale__lower-stick{
+  width:4em;height:14em;
+  background:var(--dark-brown);
+  border-radius:var(--border-radius) var(--border-radius) 0 0;
+  margin-bottom:1.8em;
+}
+.scale__base{
+  position:relative;width:18em;height:1.2em;
+  background:var(--gray);
+  border-radius:var(--border-radius) var(--border-radius) 0 0;
+}
+.scale__base::before{
+  content:"";position:absolute;top:-1.8em;left:2em;
+  width:14em;height:1.8em;background:var(--light-gray);
+  border-radius:var(--border-radius) var(--border-radius) 0 0;
+}
+.scale__base::after{
+  content:"";position:absolute;top:1.2em;left:-1.5em;
+  width:21em;height:2em;background:var(--dark-gray);
+  border-radius:var(--border-radius) var(--border-radius) 0 0;
+}
+
+/* ════════════════════════════════
+   UI PANEL
+   ════════════════════════════════ */
+.ui-panel{
+  width:min(820px,96vw);
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:1.5rem;position:relative;z-index:2;
+}
+
+.counters{display:flex;gap:.8rem;margin-bottom:1.2rem}
+.ctr{
+  flex:1;padding:.8rem 1rem;border-radius:14px;
+  border:1px solid var(--border);background:var(--surface2);
+  text-align:center;transition:border-color .3s,box-shadow .3s;
+}
+.ctr .lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.ctr .lbl .ar{display:block;font-family:"Amiri",serif;font-size:1.6em;letter-spacing:0;color:inherit;margin-top:-.1em}
+.ctr .val{font-size:1.8rem;font-weight:700;line-height:1;margin-top:.2rem}
+.ctr .wt{font-size:.7rem;color:var(--muted);margin-top:.15rem}
+.ctr.g{border-color:var(--good-dim)}.ctr.g .val{color:var(--good)}
+.ctr.b{border-color:var(--bad-dim)}.ctr.b .val{color:var(--bad)}
+.ctr.lit-g{box-shadow:0 0 0 1px var(--good);border-color:var(--good)}
+.ctr.lit-b{box-shadow:0 0 0 1px var(--bad);border-color:var(--bad)}
+
+.bar-wrap{margin-bottom:1.2rem}
+.bar-track{height:5px;background:var(--surface2);border-radius:3px;position:relative;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;position:absolute;top:0;transition:width .5s,left .5s,right .5s,background .4s}
+.bar-lbl{font-size:.72rem;color:var(--muted);text-align:center;margin-top:.45rem}
+
+.deed-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
+.col-hd{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.5rem;font-weight:500}
+.deed-btn{
+  display:flex;align-items:center;gap:.55rem;width:100%;
+  padding:.5rem .75rem;margin-bottom:.35rem;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);cursor:pointer;
+  font-family:"Poppins",sans-serif;font-size:.78rem;font-weight:500;
+  text-align:left;transition:border-color .18s,background .18s;
+}
+.deed-btn:hover{border-color:var(--primary);background:#2a2a2a}
+.deed-btn .ic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:13px;flex-shrink:0}
+.deed-btn .wb{margin-left:auto;font-size:.62rem;padding:2px 7px;border-radius:20px;font-weight:600;flex-shrink:0}
+.good-col .deed-btn .ic{background:var(--good-dim)}
+.good-col .deed-btn .wb{background:var(--good-dim);color:var(--good)}
+.bad-col .deed-btn .ic{background:var(--bad-dim)}
+.bad-col .deed-btn .wb{background:var(--bad-dim);color:var(--bad)}
+
+.act-row{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
+.btn-p{padding:.6rem 1.4rem;border-radius:12px;font-size:.82rem;font-weight:500;background:var(--primary);color:#fff;border:none;cursor:pointer;font-family:"Poppins",sans-serif;transition:background .18s}
+.btn-p:hover{background:#d96b1a}
+.btn-g{padding:.6rem 1.4rem;border-radius:12px;font-size:.82rem;font-weight:500;background:transparent;color:var(--text);border:1px solid var(--border);cursor:pointer;font-family:"Poppins",sans-serif;transition:border-color .18s,color .18s}
+.btn-g:hover{border-color:var(--primary);color:var(--primary)}
+
+/* modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(5px);z-index:200;display:none;place-items:center;padding:1rem}
+.modal-bg.open{display:grid}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2rem;max-width:460px;width:100%;position:relative;max-height:90vh;overflow-y:auto}
+.modal h2{font-size:1.3rem;font-weight:700;margin-bottom:.3rem}
+.modal p{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:1.2rem}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-bottom:1.2rem}
+.stat{background:var(--surface2);border-radius:12px;padding:.75rem;text-align:center}
+.stat .sl{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.stat .sv{font-size:1.4rem;font-weight:700;margin-top:.15rem}
+.sugs{list-style:none;margin-bottom:1.4rem}
+.sugs li{padding:.4rem 0;font-size:.8rem;color:var(--muted);border-bottom:1px solid var(--border);display:flex;gap:.5rem}
+.sugs li::before{content:'→';color:var(--primary);flex-shrink:0}
+.modal-acts{display:flex;gap:.6rem;flex-wrap:wrap}
+.x-btn{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.3rem;line-height:1}
+
+/* mobile */
+@media(max-width:600px){
+  .deed-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .stats .stat:last-child{grid-column:span 2}
+  .counters{gap:.5rem}
+  .scale-scene{font-size:clamp(4px, 3.2vw, 8px)}
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<button class="theme-btn" id="themeBtn">☀</button>
+
+<div class="page">
+  <div class="page-title">
+    ميزان الأعمال · <span>Deed Balance</span>
+    <small>يوم في حياتك — A day in your life</small>
+  </div>
+
+  <!-- SCALE -->
+  <div class="scale-scene">
+    <div class="beam-top"></div>
+
+    <div class="beam-wrap">
+      <div class="beam" id="beam">
+        <div class="beam-support"></div>
+        <div class="beam-support right"></div>
+
+        <!-- LEFT PAN — حسنات -->
+        <div class="pan" id="panL">
+          <div class="pan-label g">حسنات<small>good deeds</small></div>
+          <div class="pan__ring"></div>
+          <div class="chain co"></div>
+          <div class="chain cl"></div>
+          <div class="chain cr"></div>
+          <div class="pan__bottom">
+            <div class="pan-shape-wrap empty" id="gShapeWrap">
+              <div class="pan-shape" id="gShape"></div>
+            </div>
+            <div class="pan__bottom-top"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT PAN — سيئات -->
+        <div class="pan right" id="panR">
+          <div class="pan-label b">سيئات<small>bad deeds</small></div>
+          <div class="pan__ring"></div>
+          <div class="chain co"></div>
+          <div class="chain cl"></div>
+          <div class="chain cr"></div>
+          <div class="pan__bottom">
+            <div class="pan-shape-wrap empty" id="bShapeWrap">
+              <div class="pan-shape" id="bShape"></div>
+            </div>
+            <div class="pan__bottom-top"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scale__stick"></div>
+    <div class="scale__lower-stick"></div>
+    <div class="scale__base"></div>
+  </div>
+
+  <!-- UI PANEL -->
+  <div class="ui-panel">
+    <div class="counters">
+      <div class="ctr g" id="ctrG">
+        <div class="lbl"><span class="ar">حسنات</span>Good Deeds</div>
+        <div class="val" id="gCount">0</div>
+        <div class="wt" id="gWt">weight: 0</div>
+      </div>
+      <div class="ctr b" id="ctrB">
+        <div class="lbl"><span class="ar">سيئات</span>Bad Deeds</div>
+        <div class="val" id="bCount">0</div>
+        <div class="wt" id="bWt">weight: 0</div>
+      </div>
+    </div>
+
+    <div class="bar-wrap">
+      <div class="bar-track">
+        <div class="bar-fill" id="barFill" style="width:0;left:50%"></div>
+      </div>
+      <div class="bar-lbl" id="barLbl">Add deeds to begin</div>
+    </div>
+
+    <div class="deed-grid">
+      <div class="good-col">
+        <div class="col-hd">+ Add Good Deed</div>
+        <button class="deed-btn" onclick="add('prayer','good')"><span class="ic">🕌</span>Prayer (صلاة)<span class="wb">+10</span></button>
+        <button class="deed-btn" onclick="add('quran','good')"><span class="ic">📖</span>Quran Reading<span class="wb">+8</span></button>
+        <button class="deed-btn" onclick="add('charity','good')"><span class="ic">💰</span>Charity (صدقة)<span class="wb">+7</span></button>
+        <button class="deed-btn" onclick="add('kindness','good')"><span class="ic">❤</span>Act of Kindness<span class="wb">+5</span></button>
+        <button class="deed-btn" onclick="add('dhikr','good')"><span class="ic">📿</span>Dhikr / Dua<span class="wb">+4</span></button>
+        <button class="deed-btn" onclick="add('smile','good')"><span class="ic">😊</span>Smile / Good Word<span class="wb">+2</span></button>
+      </div>
+      <div class="bad-col">
+        <div class="col-hd">+ Add Bad Deed</div>
+        <button class="deed-btn" onclick="add('major','bad')"><span class="ic">⚠</span>Major Sin<span class="wb">−10</span></button>
+        <button class="deed-btn" onclick="add('neglect','bad')"><span class="ic">🚫</span>Missed Prayer<span class="wb">−8</span></button>
+        <button class="deed-btn" onclick="add('lie','bad')"><span class="ic">🤥</span>Lying<span class="wb">−7</span></button>
+        <button class="deed-btn" onclick="add('gossip','bad')"><span class="ic">💬</span>Backbiting<span class="wb">−6</span></button>
+        <button class="deed-btn" onclick="add('anger','bad')"><span class="ic">😠</span>Harsh Words<span class="wb">−5</span></button>
+        <button class="deed-btn" onclick="add('waste','bad')"><span class="ic">⏰</span>Time Wasting<span class="wb">−3</span></button>
+      </div>
+    </div>
+
+    <div class="act-row">
+      <button class="btn-p" onclick="showResults()">View Results ↗</button>
+      <button class="btn-g" onclick="undoLast()">Undo Last</button>
+      <button class="btn-g" onclick="resetAll()">Reset Day</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <button class="x-btn" onclick="closeModal()">×</button>
+    <h2 id="mTitle"></h2>
+    <p id="mMsg"></p>
+    <div class="stats">
+      <div class="stat"><div class="sl">Good</div><div class="sv" id="mG" style="color:var(--good)"></div></div>
+      <div class="stat"><div class="sl">Bad</div><div class="sv" id="mB" style="color:var(--bad)"></div></div>
+      <div class="stat"><div class="sl">Balance</div><div class="sv" id="mBal"></div></div>
+    </div>
+    <ul class="sugs" id="mSugs"></ul>
+    <div class="modal-acts">
+      <button class="btn-p" onclick="closeModal()">Continue</button>
+      <button class="btn-g" onclick="resetAll();closeModal()">Reset &amp; Start Over</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const D={
+  good:{prayer:{w:10,e:'🕌'},quran:{w:8,e:'📖'},charity:{w:7,e:'💰'},kindness:{w:5,e:'❤'},dhikr:{w:4,e:'📿'},smile:{w:2,e:'😊'}},
+  bad:{major:{w:10,e:'⚠'},neglect:{w:8,e:'🚫'},lie:{w:7,e:'🤥'},gossip:{w:6,e:'💬'},anger:{w:5,e:'😠'},waste:{w:3,e:'⏰'}}
+};
+let goods=[],bads=[];
+
+function add(cat,type){
+  const item={id:Date.now()+Math.random(),cat,type,...D[type][cat]};
+  if(type==='good') goods.push(item); else bads.push(item);
+  sync();
+}
+function undoLast(){
+  const all=[...goods.map(d=>({...d,s:'good'})),...bads.map(d=>({...d,s:'bad'}))];
+  if(!all.length)return;
+  all.sort((a,b)=>b.id-a.id);
+  const last=all[0];
+  if(last.s==='good') goods=goods.filter(d=>d.id!==last.id);
+  else bads=bads.filter(d=>d.id!==last.id);
+  sync();
+}
+function resetAll(){goods=[];bads=[];sync()}
+
+/* ── Shape renderer ──
+   Weight 0   → hidden
+   Weight 1-9 → small circle
+   Weight 10-19 → medium circle
+   Weight 20-34 → rounded square
+   Weight 35-49 → square
+   Weight 50+  → large square (capped)
+   Color intensity grows with weight too.
+*/
+function updateShape(weight, shapeEl, wrapEl, isGood){
+  const MAX_W = 8;  // em units, max shape size (capped smaller)
+  const MIN_W = 3;
+  const MAX_WEIGHT = 40;
+
+  if(weight === 0){
+    wrapEl.classList.add('empty');
+    return;
+  }
+  wrapEl.classList.remove('empty');
+
+  const t = Math.min(weight / MAX_WEIGHT, 1); // 0..1
+  const size = MIN_W + (MAX_W - MIN_W) * t;   // em
+
+  // border-radius: fully round at low weight → square at high weight
+  const radiusPct = Math.max(8, 50 - t * 42); // 50% circle → 8% square
+
+  // color: dim at low, full at high
+  const alpha = 0.18 + t * 0.52; // 0.18..0.70
+  const baseR = isGood ? '34,197,94' : '239,68,68';
+  const borderC = isGood
+    ? `rgba(34,197,94,${0.3 + t*0.5})`
+    : `rgba(239,68,68,${0.3 + t*0.5})`;
+
+  const glowColor = isGood
+    ? `rgba(34,197,94,${t*0.35})`
+    : `rgba(239,68,68,${t*0.35})`;
+
+  // font size scales with shape
+  const fontSize = Math.max(1.4, size * 0.28);
+
+  shapeEl.style.cssText = `
+    width:${size}em;
+    height:${size}em;
+    border-radius:${radiusPct}%;
+    background:rgba(${baseR},${alpha});
+    border:2px solid ${borderC};
+    box-shadow:0 0 ${size*0.6}em ${glowColor};
+    font-size:${fontSize}em;
+    color:${isGood ? 'var(--good)' : 'var(--bad)'};
+  `;
+  shapeEl.textContent = weight;
+}
+
+function sync(){
+  const gw=goods.reduce((s,d)=>s+d.w,0);
+  const bw=bads.reduce((s,d)=>s+d.w,0);
+  const diff=gw-bw;
+  const total=gw+bw;
+
+  // counters
+  document.getElementById('gCount').textContent=goods.length;
+  document.getElementById('bCount').textContent=bads.length;
+  document.getElementById('gWt').textContent='weight: '+gw;
+  document.getElementById('bWt').textContent='weight: '+bw;
+
+  // shapes on pans
+  updateShape(gw, document.getElementById('gShape'), document.getElementById('gShapeWrap'), true);
+  updateShape(bw, document.getElementById('bShape'), document.getElementById('bShapeWrap'), false);
+
+  // glow on counters
+  const cG=document.getElementById('ctrG');
+  const cB=document.getElementById('ctrB');
+  cG.classList.toggle('lit-g', gw>bw && total>0);
+  cG.classList.remove('lit-b');
+  cB.classList.toggle('lit-b', bw>gw && total>0);
+  cB.classList.remove('lit-g');
+
+  // balance bar
+  const fill=document.getElementById('barFill');
+  const lbl=document.getElementById('barLbl');
+  if(total===0){
+    fill.style.cssText='width:0;left:50%';
+    lbl.textContent='Add deeds to begin';
+  } else {
+    const pct=Math.min(Math.abs(diff)/Math.max(total,1)*100, 48);
+    if(diff>0)       fill.style.cssText=`width:${pct}%;left:50%;right:auto;background:var(--good)`;
+    else if(diff<0)  fill.style.cssText=`width:${pct}%;right:50%;left:auto;background:var(--bad)`;
+    else             fill.style.cssText='width:0;left:50%';
+    const s=diff>0?'+':'';
+    lbl.textContent=`Balance: ${s}${diff}${diff>0?' — Good outweighs bad ✓':diff<0?' — Seek forgiveness and add good deeds':'— Perfectly balanced ⚖'}`;
+  }
+
+  // scale tilt
+  const maxDeg=20;
+  const max=Math.max(gw,bw,1);
+  const deg=Math.max(-maxDeg, Math.min(maxDeg, (gw-bw)/max*maxDeg));
+  document.getElementById('beam').style.transform=`rotate(${-deg}deg)`;
+  document.getElementById('panL').style.transform=`rotate(${deg}deg)`;
+  document.getElementById('panR').style.transform=`rotate(${deg}deg)`;
+}
+
+function showResults(){
+  const gw=goods.reduce((s,d)=>s+d.w,0);
+  const bw=bads.reduce((s,d)=>s+d.w,0);
+  const diff=gw-bw;
+  let title,msg,sugs;
+  if(diff>10){title='يوم مبارك · Blessed Day ✦';msg='MashaAllah! Your good deeds significantly outweigh the bad. Keep this momentum going.';sugs=["Maintain extra Nafl prayers","Share this positivity with family","Make dua for those struggling","Write down 3 things you're grateful for"];}
+  else if(diff>0){title='الحمد لله · Good Progress';msg="You're on the right path — good deeds outweigh bad. A little more effort for an exceptional day.";sugs=['Read or listen to a chapter of Quran','Do a random act of kindness','Make dhikr 100 times before sleep','Call a family member or friend'];}
+  else if(diff===0){title='يوم متوازن · Balanced Day ⚖';msg="Your deeds are perfectly balanced. Let's tip it toward good before the day ends.";sugs=["Add one good deed before bed","Reflect on today's blessings","Make sincere tawbah","Set a better intention for tomorrow"];}
+  else{title='استغفر الله · Time to Reflect';msg="Bad deeds outweigh good today — but every moment is a chance to turn around. Allah's mercy is vast.";sugs=["Make sincere tawbah now","Pray two rak'ahs of repentance","Read Ayat Al-Kursi before sleep","Begin tomorrow with Fajr on time","Remember: Allah loves those who repent"];}
+
+  document.getElementById('mTitle').textContent=title;
+  document.getElementById('mMsg').textContent=msg;
+  document.getElementById('mG').textContent=`${goods.length} (${gw})`;
+  document.getElementById('mB').textContent=`${bads.length} (${bw})`;
+  const bEl=document.getElementById('mBal');
+  bEl.textContent=(diff>=0?'+':'')+diff;
+  bEl.style.color=diff>0?'var(--good)':diff<0?'var(--bad)':'var(--text)';
+  document.getElementById('mSugs').innerHTML=sugs.map(s=>`<li>${s}</li>`).join('');
+  document.getElementById('modalBg').classList.add('open');
+}
+function closeModal(){document.getElementById('modalBg').classList.remove('open')}
+document.getElementById('modalBg').addEventListener('click',e=>{if(e.target===document.getElementById('modalBg'))closeModal()});
+
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  const dark=document.documentElement.dataset.theme==='dark';
+  document.documentElement.dataset.theme=dark?'light':'dark';
+  document.documentElement.style.colorScheme=dark?'light':'dark';
+  document.getElementById('themeBtn').textContent=dark?'☾':'☀';
+});
+</script>
+</body>
+</html>
