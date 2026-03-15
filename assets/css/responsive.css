@@ -35,6 +35,18 @@ Version      : 1.0
 
 /* Tablet Layout: 768px. */
 
+@media only screen and (max-width: 767px) {
+    .c-magic-area {
+        display: none;
+    }
+
+    .c-main-menu {
+        display: block;
+        left: 40% !important;
+        top: 1rem;
+    }
+}
+
 @media only screen and (min-width: 767px) and (max-width: 991px) {
     .about-social {
         margin-bottom: 30px;
@@ -327,6 +339,61 @@ Version      : 1.0
     }
 
 
+}
+
+/* ── Mobile stacked cards ── */
+@media (max-width: 600px) {
+    .services-container {
+        gap: 24px;
+        padding: 60px 12px 32px;
+    }
+
+    .snake-menu-container {
+        max-width: 100%;
+        padding-bottom: 15px;
+    }
+
+    .menu-item {
+        font-size: 10px;
+        gap: 3px;
+    }
+
+    .menu-item .micon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .cards-slide {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .card {
+        padding: 30px 14px 14px;
+    }
+
+    .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .step-btn {
+        padding: 6px 8px;
+    }
+
+    .step-label {
+        font-size: 9px;
+    }
+
+    .step-num {
+        font-size: 8px;
+    }
+
+    /* hide connector arrows on mobile — not enough room */
+    .step-arrow {
+        display: none;
+    }
 }
 
 
