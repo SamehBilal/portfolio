@@ -228,7 +228,7 @@
             const grid = document.getElementById('stories-grid');
 
             try {
-                const res  = await fetch('stories.json');
+                const res  = await fetch('data/stories.json');
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const stories = await res.json();
 
