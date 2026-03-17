@@ -299,14 +299,21 @@
         navcollapse.children('.megamenu').hide();
     });
 
+
     /* ==========================================================================
        WINDOW LOAD
        ========================================================================== */
     $(window).on('load', function () {
 
-        // Fade out preloader elements
-        $('.loadersss').fadeOut();
-        $('#preloader-areasss').delay(350).fadeOut('slow');
+        if (!sessionStorage.getItem("visited")) {
+
+            sessionStorage.setItem("visited", "true");
+            $('.loadersss').fadeOut();
+            setTimeout(function () {
+                $('#preloader-areasss').fadeOut('slow');
+            }, 500);
+
+        }
 
         // GSAP Preloader Animation
         if (typeof gsap !== 'undefined') {

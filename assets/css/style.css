@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    IMPORTS
    ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
@@ -241,6 +241,8 @@ label { cursor: pointer; font-weight: 500; margin-bottom: 5px; color: var(--main
 
 fieldset { border: 0 none; margin: 0 auto; padding: 0; }
 .no-padding { padding: 0; }
+
+.no-preloader #preloader-areasss, .no-preloader .preloader { display: none !important; }
 
 /* ============================================================
    05. COMMON COMPONENTS

@@ -72,6 +72,12 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <![endif]-->
+
+    <script>
+        if (sessionStorage.getItem("visited")) {
+            document.documentElement.classList.add("no-preloader");
+        }
+    </script>
 </head>
 
 <body>
@@ -288,7 +294,7 @@
                 <div class="col-lg-4">
                     <div class="about-image-part wow fadeInUp delay-0-3s">
                         <div class="about-image-part2">
-                            <img src="assets/images/about/profile.jpg" alt="About Me" />
+                            <img src="assets/images/about/profile.jpg" alt="About Me" loading="lazy" />
                         </div>
                         <h2>Sameh Bilal</h2>
                         <p>A Developer based in planet earth.</p>
@@ -333,54 +339,55 @@
                                     <!-- <h4>Bank lotpat kora amr main kaj.</h4> -->
                                     <h4>
                                         <img src="assets/images/client-logos/arabhardware.svg" alt="Arabhardware Logo"
-                                            height="40px" />
+                                            height="40px" loading="lazy" />
                                     </h4>
                                     <h4>
                                         <img src="assets/images/client-logos/Riot_Games-Logo.wine.png"
-                                            alt="Riot Games Logo" height="40px" />
+                                            alt="Riot Games Logo" height="40px" loading="lazy" />
                                     </h4>
                                     <h4>
-                                        <img src="assets/images/client-logos/nvidia.png" alt="NVIDIA Logo"
-                                            height="40px" />
+                                        <img src="assets/images/client-logos/nvidia.png" alt="NVIDIA Logo" height="40px"
+                                            loading="lazy" />
                                     </h4>
                                     <h4>
                                         <img src="assets/images/client-logos/lenovo-red.svg" alt="Lenovo Logo"
-                                            height="40px" />
+                                            height="40px" loading="lazy" />
                                     </h4>
                                     <h4 class="themed-logo-ubisoft">
                                         <img src="assets/images/client-logos/ubisoft-dark.png" alt="Ubisoft Logo"
-                                            height="40px" />
+                                            height="40px" loading="lazy" />
                                     </h4>
                                     <h4 class="themed-logo-nvidia-studio">
                                         <img src="assets/images/client-logos/nvidia-studio-light.webp"
-                                            alt="NVIDIA Studio Logo" height="40px" />
+                                            alt="NVIDIA Studio Logo" height="40px" loading="lazy" />
                                     </h4>
                                     <h4>
                                         <img src="assets/images/client-logos/Honor_of_Kings.png"
-                                            alt="Honor of Kings Logo" height="40px" />
+                                            alt="Honor of Kings Logo" height="40px" loading="lazy" />
                                     </h4>
                                     <h4>
-                                        <img src="assets/images/client-logos/razar.png" alt="Razar Logo"
-                                            height="40px" />
+                                        <img src="assets/images/client-logos/razar.png" alt="Razar Logo" height="40px"
+                                            loading="lazy" />
                                     </h4>
                                     <h4>
                                         <img src="assets/images/client-logos/tencent.png" alt="Tencent Logo"
-                                            height="40px" />
+                                            height="40px" loading="lazy" />
                                     </h4>
                                     <h4>
-                                        <img src="assets/images/client-logos/ea.png" alt="EA Logo" height="40px" />
+                                        <img src="assets/images/client-logos/ea.png" alt="EA Logo" height="40px"
+                                            loading="lazy" />
                                     </h4>
                                     <h4 class="themed-logo-arabia">
                                         <img src="assets/images/client-logos/arabia-light.png" alt="Arabia Logo"
-                                            height="40px" />
+                                            height="40px" loading="lazy" />
                                     </h4>
                                     <h4 class="themed-logo-moonton">
                                         <img src="assets/images/client-logos/moonton-light.png" alt="Moonton Logo"
-                                            height="40px" />
+                                            height="40px" loading="lazy" />
                                     </h4>
                                     <h4>
                                         <img src="assets/images/client-logos/mobile_legends.png"
-                                            alt="Mobile Legends Logo" height="40px" />
+                                            alt="Mobile Legends Logo" height="40px" loading="lazy" />
                                     </h4>
                                     <!-- <h4>Manusher taka ami mere khai</h4>
                                     <h4>Ami khuni hasinar lok</h4>
@@ -847,189 +854,189 @@
                         <div class="row">
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-2s">
-                                    <img src="assets/images/skills/php.svg" alt="PHP" />
+                                    <img src="assets/images/skills/php.svg" alt="PHP" loading="lazy" />
                                     <h5>PHP</h5>
                                     <!-- <span class="percent">99%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-3s">
-                                    <img src="assets/images/skills/laravel.svg" alt="Laravel" />
+                                    <img src="assets/images/skills/laravel.svg" alt="Laravel" loading="lazy" />
                                     <h5>Laravel</h5>
                                     <!-- <span class="percent">93%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-4s">
-                                    <img src="assets/images/skills/rest-api.jpg" alt="REST APIs" />
+                                    <img src="assets/images/skills/rest-api.jpg" alt="REST APIs" loading="lazy" />
                                     <h5>REST APIs</h5>
                                     <!-- <span class="percent">53%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-5s">
-                                    <img src="assets/images/skills/native_php.png" alt="Native PHP" />
+                                    <img src="assets/images/skills/native_php.png" alt="Native PHP" loading="lazy" />
                                     <h5>Native PHP</h5>
                                     <!-- <span class="percent">74%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-5s">
-                                    <img src="assets/images/skills/oauth.svg" alt="Auth" />
+                                    <img src="assets/images/skills/oauth.svg" alt="Auth" loading="lazy" />
                                     <h5>Auth</h5>
                                     <!-- <span class="percent">74%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-2s">
-                                    <img src="assets/images/skills/queues.png" alt="Queues" />
+                                    <img src="assets/images/skills/queues.png" alt="Queues" loading="lazy" />
                                     <h5>Queues</h5>
                                     <!-- <span class="percent">95%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-3s">
-                                    <img src="assets/images/skills/redis.svg" alt="Caching" />
+                                    <img src="assets/images/skills/redis.svg" alt="Caching" loading="lazy" />
                                     <h5>Caching</h5>
                                     <!-- <span class="percent">96%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-4s">
-                                    <img src="assets/images/skills/vuejs.svg" alt="Vue" />
+                                    <img src="assets/images/skills/vuejs.svg" alt="Vue" loading="lazy" />
                                     <h5>Vue</h5>
                                     <!-- <span class="percent">52%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-5s">
-                                    <img src="assets/images/skills/react.svg" alt="React" />
+                                    <img src="assets/images/skills/react.svg" alt="React" loading="lazy" />
                                     <h5>React</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-2s">
-                                    <img src="assets/images/skills/livewire.svg" alt="Livewire" />
+                                    <img src="assets/images/skills/livewire.svg" alt="Livewire" loading="lazy" />
                                     <h5>Livewire</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-3s">
-                                    <img src="assets/images/skills/tailwind.svg" alt="Tailwind CSS" />
+                                    <img src="assets/images/skills/tailwind.svg" alt="Tailwind CSS" loading="lazy" />
                                     <h5>Tailwind</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-4s">
-                                    <img src="assets/images/skills/html5.svg" alt="HTML5" />
+                                    <img src="assets/images/skills/html5.svg" alt="HTML5" loading="lazy" />
                                     <h5>HTML5</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-5s">
-                                    <img src="assets/images/skills/css3.svg" alt="CSS3" />
+                                    <img src="assets/images/skills/css3.svg" alt="CSS3" loading="lazy" />
                                     <h5>CSS3</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-2s">
-                                    <img src="assets/images/skills/mysql.svg" alt="MySQL" />
+                                    <img src="assets/images/skills/mysql.svg" alt="MySQL" loading="lazy" />
                                     <h5>MySQL</h5>
                                     <!-- <span class="percent">52%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-3s">
-                                    <img src="assets/images/skills/postgresql.svg" alt="PostgreSQL" />
+                                    <img src="assets/images/skills/postgresql.svg" alt="PostgreSQL" loading="lazy" />
                                     <h5>PostgreSQL</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-4s">
-                                    <img src="assets/images/skills/wordpress.png" alt="Wordpress" />
+                                    <img src="assets/images/skills/wordpress.png" alt="Wordpress" loading="lazy" />
                                     <h5>Wordpress</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-5s">
-                                    <img src="assets/images/skills/graphql.svg" alt="GraphQL" />
+                                    <img src="assets/images/skills/graphql.svg" alt="GraphQL" loading="lazy" />
                                     <h5>GraphQL</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-5s">
-                                    <img src="assets/images/skills/webhooks.png" alt="Webhooks" />
+                                    <img src="assets/images/skills/webhooks.png" alt="Webhooks" loading="lazy" />
                                     <h5>Webhooks</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-2s">
-                                    <img src="assets/images/skills/tpa.png" alt="Third-party APIs" />
+                                    <img src="assets/images/skills/tpa.png" alt="Third-party APIs" loading="lazy" />
                                     <h5>Third-party APIs</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-3s">
-                                    <img src="assets/images/skills/computer.png" alt="Skill" />
+                                    <img src="assets/images/skills/computer.png" alt="Skill" loading="lazy" />
                                     <h5>System Design</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-4s">
-                                    <img src="assets/images/skills/clean-code.png" alt="Skill" />
+                                    <img src="assets/images/skills/clean-code.png" alt="Skill" loading="lazy" />
                                     <h5>Clean Code</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-4s">
-                                    <img src="assets/images/skills/payment.png" alt="Payments" />
+                                    <img src="assets/images/skills/payment.png" alt="Payments" loading="lazy" />
                                     <h5>Payments</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item themed-logo-solid wow fadeInUp delay-0-5s">
-                                    <img src="assets/images/skills/solid-light.png" alt="Skill" />
+                                    <img src="assets/images/skills/solid-light.png" alt="Skill" loading="lazy" />
                                     <h5>SOLID</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-2s">
-                                    <img src="assets/images/skills/scalability.png" alt="Skill" />
+                                    <img src="assets/images/skills/scalability.png" alt="Skill" loading="lazy" />
                                     <h5>Scalability</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-3s">
-                                    <img src="assets/images/skills/docker-original.svg" alt="CI/CD" />
+                                    <img src="assets/images/skills/docker-original.svg" alt="CI/CD" loading="lazy" />
                                     <h5>CI/CD</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-4s">
-                                    <img src="assets/images/skills/shopify.png" alt="Shopify" />
+                                    <img src="assets/images/skills/shopify.png" alt="Shopify" loading="lazy" />
                                     <h5>Shopify</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-6">
                                 <div class="skill-item wow fadeInUp delay-0-5s">
-                                    <img src="assets/images/skills/zoho.png" alt="Zoho" />
+                                    <img src="assets/images/skills/zoho.png" alt="Zoho" loading="lazy" />
                                     <h5>Zoho</h5>
                                     <!-- <span class="percent">84%</span> -->
                                 </div>
@@ -1076,14 +1083,13 @@
                     <div class="col-lg-3 col-md-6 item backend fullstack architecture">
                         <div class="project-item style-two wow fadeInUp delay-0-2s">
                             <div class="project-image">
-                                <img src="assets/images/projects/63.jpg" alt="Nvidia Studio Space">
+                                <img src="assets/images/projects/63.jpg" alt="Nvidia Studio Space" loading="lazy">
                                 <a href="https://www.nvidiastudiospace.com/en/hubs/cairo" target="_blank"
                                     class="details-btn nvidia-studio-btn">
-                                    <img src="assets/images/client-logos/nvidia-studio-works.png" alt="">
+                                    <img src="assets/images/client-logos/nvidia-studio-works.png"
+                                        alt="Nvidia Studio Space" loading="lazy">
                                     <!-- <i class="ri-arrow-right-up-line"></i> -->
                                 </a>
-                                <!-- <a href="assets/images/projects/work1.jpg" class="details-btn work-popup"><i
-                                        class="ri-arrow-right-up-line"></i></a> -->
                                 <!-- <a href="https://www.youtube.com/watch?v=qZEPs3vmYB4"
                                     class="details-btn popup-youtube"><i class="ri-arrow-right-up-line"></i></a> -->
                             </div>
@@ -1098,10 +1104,11 @@
                     <div class="col-lg-3 col-md-6 item backend architecture integration">
                         <div class="project-item style-two wow fadeInUp delay-0-3s">
                             <div class="project-image">
-                                <img src="assets/images/projects/49.jpg" alt="Nvidia Office">
+                                <img src="assets/images/projects/49.jpg" alt="Nvidia Office" loading="lazy">
                                 <a href="https://nvidia.arabhardware.net/" target="_blank"
                                     class="details-btn nvidia-btn">
-                                    <img src="assets/images/client-logos/nvidia_works.png" alt="">
+                                    <img src="assets/images/client-logos/nvidia_works.png" alt="Nvidia Office"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1115,10 +1122,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack architecture integration">
                         <div class="project-item style-two wow fadeInUp delay-0-4s">
                             <div class="project-image">
-                                <img src="assets/images/projects/63.png" alt="ArabHardware">
+                                <img src="assets/images/projects/63.png" alt="ArabHardware" loading="lazy">
                                 <a href="https://arabhardware.net/" target="_blank"
                                     class="details-btn arabhardware-btn">
-                                    <img src="assets/images/client-logos/arabhardware-works.png" alt="">
+                                    <img src="assets/images/client-logos/arabhardware-works.png"
+                                        alt="ArabHardware Platform" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1132,9 +1140,10 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration integration">
                         <div class="project-item style-two wow fadeInUp delay-0-5s">
                             <div class="project-image">
-                                <img src="assets/images/projects/64.png" alt="ArabHardware Store">
+                                <img src="assets/images/projects/64.png" alt="ArabHardware Store" loading="lazy">
                                 <a href="https://ahw.store/" target="_blank" class="details-btn ahw-btn">
-                                    <img src="assets/images/client-logos/ahw-store-works.png" alt="">
+                                    <img src="assets/images/client-logos/ahw-store-works.png" alt="ArabHardware Store"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1148,10 +1157,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack architecture integration">
                         <div class="project-item style-two wow fadeInUp delay-0-6s">
                             <div class="project-image">
-                                <img src="assets/images/projects/65.png" alt="Arabiatalents">
+                                <img src="assets/images/projects/65.png" alt="Arabiatalents" loading="lazy">
                                 <a href="https://arabiatalents.com/" target="_blank"
                                     class="details-btn arabiatalents-btn">
-                                    <img src="assets/images/client-logos/arabia-works1.png" alt="">
+                                    <img src="assets/images/client-logos/arabia-works1.png" alt="Arabiatalents Platform"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1165,10 +1175,11 @@
                     <div class="col-lg-3 col-md-6 item backend integration integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/66.jpg" alt="Palestine Crisis Tracker">
+                                <img src="assets/images/projects/66.jpg" alt="Palestine Crisis Tracker" loading="lazy">
                                 <a href="https://samehbilal.github.io/palestine-crises/live.html" target="_blank"
                                     class="details-btn palestine-btn">
-                                    <img src="assets/images/client-logos/palestine.png" alt="">
+                                    <img src="assets/images/client-logos/palestine.png" alt="Palestine Crisis Tracker"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1182,19 +1193,24 @@
                     <div class="col-lg-3 col-md-6 item backend architecture integration">
                         <div class="project-item style-two wow fadeInUp delay-0-8s">
                             <div class="project-image">
-                                <img src="assets/images/projects/67.jpg" alt="Learning Management System">
+                                <img src="assets/images/projects/67.jpg" alt="Learning Management System"
+                                    loading="lazy">
                                 <div>
                                     <a href="assets/images/projects/53.jpg" class="details-btn lms-btn work-popup">
-                                        <img src="assets/images/client-logos/cardiff.jpg" alt="">
+                                        <img src="assets/images/client-logos/cardiff.jpg"
+                                            alt="Learning Management System" loading="lazy">
                                     </a>
                                     <a href="assets/images/projects/52.jpg" class="details-btn lms-btn work-popup">
-                                        <img src="assets/images/client-logos/cardiff.jpg" alt="">
+                                        <img src="assets/images/client-logos/cardiff.jpg"
+                                            alt="Learning Management System" loading="lazy">
                                     </a>
                                     <a href="assets/images/projects/51.jpg" class="details-btn lms-btn work-popup">
-                                        <img src="assets/images/client-logos/cardiff.jpg" alt="">
+                                        <img src="assets/images/client-logos/cardiff.jpg"
+                                            alt="Learning Management System" loading="lazy">
                                     </a>
                                     <a href="assets/images/projects/50.jpg" class="details-btn lms-btn work-popup">
-                                        <img src="assets/images/client-logos/cardiff.jpg" alt="">
+                                        <img src="assets/images/client-logos/cardiff.jpg"
+                                            alt="Learning Management System" loading="lazy">
                                     </a>
                                 </div>
                             </div>
@@ -1209,10 +1225,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/68.jpg" alt="Lenovo Legion">
+                                <img src="assets/images/projects/68.jpg" alt="Lenovo Legion" loading="lazy">
                                 <a href="https://arabhardware.com/events/lenovo-legion" target="_blank"
                                     class="details-btn lenovo-btn">
-                                    <img src="assets/images/client-logos/lenovo-red.svg" alt="Lenovo Logo">
+                                    <img src="assets/images/client-logos/lenovo-red.svg" alt="Lenovo Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1226,9 +1243,10 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/69.jpg" alt="ALM accounting">
+                                <img src="assets/images/projects/69.jpg" alt="ALM accounting" loading="lazy">
                                 <a href="https://alm-accounting.com/" target="_blank" class="details-btn alm-btn">
-                                    <img src="assets/images/client-logos/alm.webp" alt="ALM accounting Logo">
+                                    <img src="assets/images/client-logos/alm.webp" alt="ALM accounting Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1242,10 +1260,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/70.jpg" alt="Assasin's Creed Mirage">
+                                <img src="assets/images/projects/70.jpg" alt="Assasin's Creed Mirage" loading="lazy">
                                 <a href="https://arabhardware.com/events/ac-mirage" target="_blank"
                                     class="details-btn ubisoft-btn">
-                                    <img src="assets/images/client-logos/asc.png" alt="Assasin's Creed Mirage Logo">
+                                    <img src="assets/images/client-logos/asc.png" alt="Assasin's Creed Mirage Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1259,11 +1278,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/71.jpg" alt="Valorant">
+                                <img src="assets/images/projects/71.jpg" alt="Valorant" loading="lazy">
                                 <a href="https://arabhardware.com/events/valorant-reflex-tournament-ep02"
                                     target="_blank" class="details-btn riot-btn">
                                     <img src="assets/images/client-logos/Valorant_logo_-_pink_color_version.svg"
-                                        alt="Valorant Logo">
+                                        alt="Valorant Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1277,19 +1296,23 @@
                     <div class="col-lg-3 col-md-6 item backend architecture integration">
                         <div class="project-item style-two wow fadeInUp delay-0-8s">
                             <div class="project-image">
-                                <img src="assets/images/projects/72.jpg" alt="Point Of Sale">
+                                <img src="assets/images/projects/72.jpg" alt="Point Of Sale" loading="lazy">
                                 <div>
                                     <a href="assets/images/projects/74.jpg" class="details-btn pos-btn work-popup">
-                                        <img src="assets/images/client-logos/pos.png" alt="">
+                                        <img src="assets/images/client-logos/pos.png" alt="Point Of Sale"
+                                            loading="lazy">
                                     </a>
                                     <a href="assets/images/projects/73.jpg" class="details-btn pos-btn work-popup">
-                                        <img src="assets/images/client-logos/pos.png" alt="">
+                                        <img src="assets/images/client-logos/pos.png" alt="Point Of Sale"
+                                            loading="lazy">
                                     </a>
                                     <a href="assets/images/projects/72.jpg" class="details-btn pos-btn work-popup">
-                                        <img src="assets/images/client-logos/pos.png" alt="">
+                                        <img src="assets/images/client-logos/pos.png" alt="Point Of Sale"
+                                            loading="lazy">
                                     </a>
                                     <a href="assets/images/projects/48.jpg" class="details-btn pos-btn work-popup">
-                                        <img src="assets/images/client-logos/pos.png" alt="">
+                                        <img src="assets/images/client-logos/pos.png" alt="Point Of Sale"
+                                            loading="lazy">
                                     </a>
                                 </div>
                             </div>
@@ -1304,10 +1327,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/75.jpg" alt="League of Legends">
+                                <img src="assets/images/projects/75.jpg" alt="League of Legends" loading="lazy">
                                 <a href="https://arabhardware.com/events/iac-grand-finals-2022" target="_blank"
                                     class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/lol.png" alt="League of Legends Logo">
+                                    <img src="assets/images/client-logos/lol.png" alt="League of Legends Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1321,10 +1345,10 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/76.jpg" alt="PUBG">
+                                <img src="assets/images/projects/76.jpg" alt="PUBG" loading="lazy">
                                 <a href="https://arabhardware.com/events/pubg-mobile" target="_blank"
                                     class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/logo.png" alt="PUBG Logo">
+                                    <img src="assets/images/client-logos/logo.png" alt="PUBG Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1338,10 +1362,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/77.jpg" alt="Ramadan Raid">
+                                <img src="assets/images/projects/77.jpg" alt="Ramadan Raid" loading="lazy">
                                 <a href="https://ramadanraid25.arabhardware.com/" target="_blank"
                                     class="details-btn raid-btn">
-                                    <img src="assets/images/client-logos/raid-white.svg" alt="Ramadan Raid Logo">
+                                    <img src="assets/images/client-logos/raid-white.svg" alt="Ramadan Raid Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1355,10 +1380,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/78.jpg" alt="Grand Hospital">
+                                <img src="assets/images/projects/78.jpg" alt="Grand Hospital" loading="lazy">
                                 <a href="https://grand-hospital.com/ar/home-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9/"
                                     target="_blank" class="details-btn grand-btn">
-                                    <img src="assets/images/client-logos/grand.webp" alt="Grand Hospital Logo">
+                                    <img src="assets/images/client-logos/grand.webp" alt="Grand Hospital Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1372,10 +1398,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/79.jpg" alt="Honor Of Kings">
+                                <img src="assets/images/projects/79.jpg" alt="Honor Of Kings" loading="lazy">
                                 <a href="https://arabhardware.com/events/2022-honor-of-kings-mena-qualifiers"
                                     target="_blank" class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/Honor_of_Kings.png" alt="Honor Of Kings Logo">
+                                    <img src="assets/images/client-logos/Honor_of_Kings.png" alt="Honor Of Kings Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1389,10 +1416,10 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/81.jpg" alt="B-Tech">
+                                <img src="assets/images/projects/81.jpg" alt="B-Tech" loading="lazy">
                                 <a href="https://arabhardware.com/events/spider-man-build?lang=en" target="_blank"
                                     class="details-btn ahw-btn">
-                                    <img src="assets/images/client-logos/b-tech.svg" alt="B-Tech Logo">
+                                    <img src="assets/images/client-logos/b-tech.svg" alt="B-Tech Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1406,10 +1433,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/80.jpg" alt="Mobile Legends">
+                                <img src="assets/images/projects/80.jpg" alt="Mobile Legends" loading="lazy">
                                 <a href="https://arabhardware.com/events/mobile-legends-watch-parties" target="_blank"
                                     class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/mobile_legends.png" alt="Mobile Legends Logo">
+                                    <img src="assets/images/client-logos/mobile_legends.png" alt="Mobile Legends Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1423,9 +1451,10 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/82.jpg" alt="Oncreation">
+                                <img src="assets/images/projects/82.jpg" alt="Oncreation" loading="lazy">
                                 <a href="https://oncreation.net/" target="_blank" class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/oncreation.png" alt="Oncreation Logo">
+                                    <img src="assets/images/client-logos/oncreation.png" alt="Oncreation Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1439,9 +1468,10 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/83.jpg" alt="Nvidia Nights Cairo">
+                                <img src="assets/images/projects/83.jpg" alt="Nvidia Nights Cairo" loading="lazy">
                                 <a href="https://www.nvidiasn5.com/en" target="_blank" class="details-btn nvidia-btn">
-                                    <img src="assets/images/client-logos/nvidia_works.png" alt="Nvidia Logo">
+                                    <img src="assets/images/client-logos/nvidia_works.png" alt="Nvidia Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1455,10 +1485,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/84.jpg" alt="Nvidia Nights Dubai">
+                                <img src="assets/images/projects/84.jpg" alt="Nvidia Nights Dubai" loading="lazy">
                                 <a href="https://ns6.nvidiastudiospace.com/en" target="_blank"
                                     class="details-btn nvidia-btn">
-                                    <img src="assets/images/client-logos/nvidia_works.png" alt="Nvidia Logo">
+                                    <img src="assets/images/client-logos/nvidia_works.png" alt="Nvidia Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1472,9 +1503,9 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/85.jpg" alt="Zilika">
+                                <img src="assets/images/projects/85.jpg" alt="Zilika" loading="lazy">
                                 <a href="https://zilika.shop/" target="_blank" class="details-btn zilika-btn">
-                                    <img src="assets/images/client-logos/zilika.png" alt="Zilika Logo">
+                                    <img src="assets/images/client-logos/zilika.png" alt="Zilika Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1488,9 +1519,10 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/86.jpg" alt="Ultimate Twist">
+                                <img src="assets/images/projects/86.jpg" alt="Ultimate Twist" loading="lazy">
                                 <a href="https://ultimatetwistagency.com/" target="_blank" class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/ultimate_twist.svg" alt="Ultimate Twist Logo">
+                                    <img src="assets/images/client-logos/ultimate_twist.svg" alt="Ultimate Twist Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1504,9 +1536,9 @@
                     <div class="col-lg-3 col-md-6 item fullstack backend integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/87.jpg" alt="Bistro">
+                                <img src="assets/images/projects/87.jpg" alt="Bistro" loading="lazy">
                                 <a href="https://www.bistro.com.eg/" target="_blank" class="details-btn zilika-btn">
-                                    <img src="assets/images/client-logos/bistro.png" alt="Bistro Logo">
+                                    <img src="assets/images/client-logos/bistro.png" alt="Bistro Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1520,9 +1552,10 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/88.jpg" alt="Al-Taiseer">
+                                <img src="assets/images/projects/88.jpg" alt="Al-Taiseer" loading="lazy">
                                 <a href="https://al-taiseer.com/" target="_blank" class="details-btn zilika-btn">
-                                    <img src="assets/images/client-logos/taiseer.png" alt="Al-Taiseer Logo">
+                                    <img src="assets/images/client-logos/taiseer.png" alt="Al-Taiseer Logo"
+                                        loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1536,11 +1569,11 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/90.jpg" alt="Playground Valorant Case">
+                                <img src="assets/images/projects/90.jpg" alt="Playground Valorant Case" loading="lazy">
                                 <a href="https://arabhardware.com/events/playground-valorant" target="_blank"
                                     class="details-btn ahw-btn">
                                     <img src="assets/images/client-logos/ahw-store-works.png"
-                                        alt="Playground Valorant Case Logo">
+                                        alt="Playground Valorant Case Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1554,10 +1587,10 @@
                     <div class="col-lg-3 col-md-6 item fullstack integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/89.jpg" alt="PUBG Mobile Champions">
+                                <img src="assets/images/projects/89.jpg" alt="PUBG Mobile Champions" loading="lazy">
                                 <a href="https://arabhardware.com/events/pubg-mobile-champions-challenge-egypt"
                                     target="_blank" class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/logo.png" alt="PUBG Logo">
+                                    <img src="assets/images/client-logos/logo.png" alt="PUBG Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1571,12 +1604,12 @@
                     <div class="col-lg-3 col-md-6 item fullstack backend architecture integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/91.jpg" alt="WEDS">
+                                <img src="assets/images/projects/91.jpg" alt="WEDS" loading="lazy">
                                 <a href="assets/images/projects/60.jpg" class="details-btn lol-btn work-popup">
-                                    <img src="assets/images/client-logos/weds.png" alt="WEDS Logo">
+                                    <img src="assets/images/client-logos/weds.png" alt="WEDS Logo" loading="lazy">
                                 </a>
                                 <a href="assets/images/projects/59.jpg" class="details-btn lol-btn work-popup">
-                                    <img src="assets/images/client-logos/weds.png" alt="WEDS Logo">
+                                    <img src="assets/images/client-logos/weds.png" alt="WEDS Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1590,18 +1623,18 @@
                     <div class="col-lg-3 col-md-6 item backend architecture integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/62.jpg" alt="ISI System">
+                                <img src="assets/images/projects/62.jpg" alt="ISI System" loading="lazy">
                                 <a href="assets/images/projects/55.jpg" class="details-btn zilika-btn work-popup">
-                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo">
+                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo" loading="lazy">
                                 </a>
                                 <a href="assets/images/projects/56.jpg" class="details-btn zilika-btn work-popup">
-                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo">
+                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo" loading="lazy">
                                 </a>
                                 <a href="assets/images/projects/57.jpg" class="details-btn zilika-btn work-popup">
-                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo">
+                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo" loading="lazy">
                                 </a>
                                 <a href="assets/images/projects/58.jpg" class="details-btn zilika-btn work-popup">
-                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo">
+                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1615,9 +1648,9 @@
                     <div class="col-lg-3 col-md-6 item backend architecture integration">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/61.jpg" alt="Travio">
+                                <img src="assets/images/projects/61.jpg" alt="Travio" loading="lazy">
                                 <a href="assets/images/projects/54.jpg" class="details-btn travio-btn work-popup">
-                                    <img src="assets/images/client-logos/travio.jpg" alt="Travio Logo">
+                                    <img src="assets/images/client-logos/travio.jpg" alt="Travio Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1631,27 +1664,27 @@
                     <div class="col-lg-3 col-md-6 item fullstack">
                         <div class="project-item style-two wow fadeInUp delay-0-7s">
                             <div class="project-image">
-                                <img src="assets/images/projects/40.jpg" alt="FBC">
+                                <img src="assets/images/projects/40.jpg" alt="FBC" loading="lazy">
                                 <a href="assets/images/projects/42.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo">
+                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
                                 </a>
                                 <a href="assets/images/projects/47.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo">
+                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
                                 </a>
                                 <a href="assets/images/projects/46.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo">
+                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
                                 </a>
                                 <a href="assets/images/projects/45.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo">
+                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
                                 </a>
                                 <a href="assets/images/projects/44.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo">
+                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
                                 </a>
                                 <a href="assets/images/projects/43.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo">
+                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
                                 </a>
                                 <a href="assets/images/projects/41.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo">
+                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
                                 </a>
                             </div>
                             <div class="project-content">
@@ -1679,34 +1712,34 @@
             </div>
             <div class="client-logo-wrap">
                 <a class="client-logo-item wow fadeInUp delay-0-2s">
-                    <img src="assets/images/client-logos/nvidia.png" alt="brand Logo" />
+                    <img src="assets/images/client-logos/nvidia.png" alt="brand Logo" loading="lazy" />
                 </a>
                 <a class="client-logo-item themed-logo-ubisoft wow fadeInUp delay-0-3s">
-                    <img src="assets/images/client-logos/ubisoft-dark.png" alt="brand Logo" />
+                    <img src="assets/images/client-logos/ubisoft-dark.png" alt="brand Logo" loading="lazy" />
                 </a>
                 <a class="client-logo-item wow fadeInUp delay-0-4s">
-                    <img src="assets/images/client-logos/lenovo-red.svg" alt="brand Logo" />
+                    <img src="assets/images/client-logos/lenovo-red.svg" alt="brand Logo" loading="lazy" />
                 </a>
                 <a class="client-logo-item wow fadeInUp delay-0-5s">
-                    <img src="assets/images/client-logos/tencent.png" alt="brand Logo" />
+                    <img src="assets/images/client-logos/tencent.png" alt="brand Logo" loading="lazy" />
                 </a>
                 <a class="client-logo-item wow fadeInUp delay-0-6s">
-                    <img class="ea-logo" src="assets/images/client-logos/ea.png" alt="brand Logo" />
+                    <img class="ea-logo" src="assets/images/client-logos/ea.png" alt="brand Logo" loading="lazy" />
                 </a>
                 <a class="client-logo-item wow fadeInUp delay-0-2s">
-                    <img src="assets/images/client-logos/Riot_Games-Logo.wine.png" alt="brand Logo" />
+                    <img src="assets/images/client-logos/Riot_Games-Logo.wine.png" alt="brand Logo" loading="lazy" />
                 </a>
                 <a class="client-logo-item themed-logo-moonton wow fadeInUp delay-0-4s">
-                    <img src="assets/images/client-logos/moonton-light.png" alt="brand Logo" />
+                    <img src="assets/images/client-logos/moonton-light.png" alt="brand Logo" loading="lazy" />
                 </a>
                 <a class="client-logo-item wow fadeInUp delay-0-3s">
-                    <img src="assets/images/client-logos/mobile_legends.png" alt="brand Logo" />
+                    <img src="assets/images/client-logos/mobile_legends.png" alt="brand Logo" loading="lazy" />
                 </a>
                 <a class="client-logo-item themed-logo-arabia wow fadeInUp delay-0-5s">
-                    <img src="assets/images/client-logos/arabia-light.png" alt="brand Logo" />
+                    <img src="assets/images/client-logos/arabia-light.png" alt="brand Logo" loading="lazy" />
                 </a>
                 <a class="client-logo-item wow fadeInUp delay-0-6s">
-                    <img src="assets/images/client-logos/Honor_of_Kings.png" alt="brand Logo" />
+                    <img src="assets/images/client-logos/Honor_of_Kings.png" alt="brand Logo" loading="lazy" />
                 </a>
             </div>
         </div>
@@ -1741,7 +1774,7 @@
                             </div>
                             <div class="c-article__img-wrapper wow fadeInUp delay-0-4s">
                                 <img class="c-article__img" src="assets/images/stories/deed-balance.png"
-                                    alt="Ink transition with PNG sprite" />
+                                    alt="Ink transition with PNG sprite" loading="lazy" />
                             </div>
                         </a>
                     </article>
@@ -1759,7 +1792,7 @@
                             </div>
                             <div class="c-article__img-wrapper">
                                 <img class="c-article__img" src="assets/images/stories/hijra.png"
-                                    alt="Responsive Mondrian art with CSS grid" />
+                                    alt="Responsive Mondrian art with CSS grid" loading="lazy" />
                             </div>
                         </a>
                     </article>
@@ -1776,7 +1809,7 @@
                             </div>
                             <div class="c-article__img-wrapper wow fadeInUp delay-0-4s">
                                 <img class="c-article__img" src="assets/images/stories/diskussion.png"
-                                    alt="Responsive Mondrian art with CSS grid" />
+                                    alt="Responsive Mondrian art with CSS grid" loading="lazy" />
                             </div>
                         </a>
                     </article>
@@ -2267,15 +2300,15 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
     <!-- SCRIPT JS-->
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/script.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.3/dist/vanilla-tilt.min.js"></script>
 
-    <script src="assets/js/menu.js"></script>
+    <script src="assets/js/menu.js" defer></script>
     <script src="https://assets.codepen.io/16327/MorphSVGPlugin3.min.js"></script>
-    <script type="module" src="assets/js/lights.js"></script>
-    <script type="module" src="assets/js/splitting.js"></script>
-    <script type="module" src="assets/js/owl.js"></script>
+    <script type="module" src="assets/js/lights.js" defer></script>
+    <script type="module" src="assets/js/splitting.js" defer></script>
+    <script type="module" src="assets/js/owl.js" defer></script>
 
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
         data-id="samehbilal" data-description="Support my work" data-message="Support my work" data-color="#F9812E"
