@@ -6,7 +6,7 @@
     "url": "/hijra7.html"
   },
   {
-    "image": "https://assets.codepen.io/2585/Entertainment.svg",
+    "image": "/assets/images/projects/66.jpg",
     "description": "Real-time tracker visualizing the Palestine crisis with live statistics and an interactive data layer.",
     "label": "Crisis Tracker",
     "url": "https://samehbilal.github.io/palestine-crises/live.html"
@@ -15,13 +15,13 @@
     "image": "/assets/images/stories/deed-balance-story.png",
     "description": "A daily reflection tool that weighs good and bad actions into a simple visual result.",
     "label": "The Deeds Balance",
-    "url": "https://samehbilal.github.io/portfolio/deed-balance-scale.html"
+    "url": "/stories/deed_balance.html"
   },
   {
     "image": "https://assets.codepen.io/2585/Mechanical+Love.svg",
     "description": "A personal Islamic life-stats page with prayer counts, Hijri calendar support, and multi-language UI.",
     "label": "Islamic Life Stats",
-    "url": "#"
+    "url": "/stories/islamic_life_stats.html"
   },
   {
     "image": "https://assets.codepen.io/2585/Waiting.svg",
