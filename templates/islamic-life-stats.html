@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Islamic Life Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;outline:none;border:none}
+:root{
+  --primary:#F9812E;
+  --size:25px;
+  --line:color-mix(in lch,canvasText,transparent 70%);
+  --border-color:rgba(119,119,125,.2);
+  --heading-color:light-dark(#000,#fff);
+  --main-color:light-dark(#444,#e2e2e2);
+  --card-bg:light-dark(#fff,#1D1D1D);
+  --body-bg:light-dark(#fff,#000);
+}
+html{color-scheme:light dark;scroll-behavior:smooth}
+[data-theme="light"]{color-scheme:light only}
+[data-theme="dark"]{color-scheme:dark only}
+body{
+  font-family:"Poppins",sans-serif;
+  background:var(--body-bg);color:var(--main-color);
+  font-size:16px;line-height:28px;overflow-x:hidden;min-height:100vh;
+}
+body::before{
+  content:'';height:80vh;width:100vw;position:fixed;top:0;
+  background:
+    linear-gradient(90deg,var(--line) 1px,transparent 1px var(--size)) 50% 50%/var(--size) var(--size),
+    linear-gradient(var(--line) 1px,transparent 1px var(--size)) 50% 50%/var(--size) var(--size);
+  -webkit-mask:linear-gradient(-20deg,transparent 50%,white);
+  mask:linear-gradient(-20deg,transparent 50%,white);
+  pointer-events:none;z-index:0;
+}
+h1,h2,h3,h4{color:var(--heading-color);font-family:"Poppins",sans-serif}
+a{color:var(--main-color);text-decoration:none;transition:.5s}
+a:hover{color:var(--primary)}
+
+/* ── HEADER ── */
+.main-header{
+  position:fixed;left:0;top:0;z-index:999;width:100%;
+  background:transparent;transition:all 500ms ease;
+}
+.main-header.fixed{background:var(--card-bg);box-shadow:0 2px 20px rgba(0,0,0,.08)}
+.header-inner{
+  max-width:1280px;margin:0 auto;padding:28px 24px;
+  display:flex;align-items:center;gap:16px;transition:all 500ms ease;
+}
+.fixed .header-inner{padding:12px 24px}
+.logo{display:inline-block;font-size:2vmin;cursor:pointer}
+.logo-letter{
+  position:relative;display:block;float:left;
+  width:3vmin;height:3vmin;border-top:.25vmin solid var(--heading-color);
+  line-height:3vmin;text-align:center;z-index:9999;
+  transition:all .3s;color:var(--heading-color);font-size:1.1vmin;font-weight:700;
+}
+.logo-letter::before{
+  position:absolute;top:-.25vmin;right:-.25vmin;
+  display:block;width:.25vmin;height:3vmin;
+  background:#F9812E;content:"";transition:all .3s;
+}
+.logo-letter:nth-child(2){transform:translateY(3vmin)}
+.logo-letter:nth-child(3){transform:translateY(6vmin)}
+.logo-letter:nth-child(4){transform:translateY(9vmin)}
+.logo-letter:nth-child(5){transform:translateY(12vmin)}
+.logo-letter.is-active{transform:translateY(0)!important}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.lang-select{
+  font-family:"Poppins",sans-serif;font-size:13px;font-weight:500;
+  padding:8px 14px;border-radius:12px;cursor:pointer;
+  background:light-dark(rgba(0,0,0,.05),rgba(255,255,255,.07));
+  color:var(--main-color);border:1px solid var(--border-color);
+  -webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23F9812E' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  padding-right:30px;
+}
+.lang-select:focus{border-color:var(--primary)}
+.theme-btn{
+  background:transparent;color:var(--heading-color);
+  border:1px solid light-dark(#000,#fff);
+  font-size:13px;font-weight:500;font-family:"Poppins",sans-serif;
+  border-radius:15px;padding:10px 20px;cursor:pointer;transition:.3s;
+}
+.theme-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+.pill-btn{
+  display:inline-block;background:var(--primary);color:#fff;
+  border:1px solid var(--border-color);font-size:14px;font-weight:500;
+  font-family:"Poppins",sans-serif;border-radius:15px;padding:12px 28px;
+  transition:.3s;cursor:pointer;
+}
+.pill-btn:hover{background:#000;color:#fff}
+
+/* ── PAGES ── */
+.page{position:relative;z-index:1}
+.page-wrap{max-width:1280px;margin:0 auto;padding:0 24px 80px}
+
+/* ── INPUT SCREEN ── */
+#inputScreen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:120px 24px 80px;
+}
+.input-card{
+  width:100%;max-width:480px;
+  padding:48px;border-radius:20px;
+  border:1px solid rgba(0,0,0,.05);
+  box-shadow:rgba(255,255,255,.025) 0 .36px .65px -1px inset,rgba(255,255,255,.036) 0 3px 5.4px -2px inset;
+  background:var(--card-bg);text-align:center;
+}
+.input-emoji{font-size:56px;display:block;margin-bottom:20px;line-height:1}
+.input-card h1{font-size:clamp(24px,3.5vw,36px);font-weight:800;margin-bottom:10px}
+.input-card h1 span{color:var(--primary)}
+.input-card p{font-size:14px;color:light-dark(#888,#a0aec0);margin-bottom:32px;line-height:1.7}
+.date-label{display:block;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:light-dark(#888,#a0aec0);margin-bottom:10px;text-align:left}
+.date-input{
+  width:100%;padding:14px 18px;border-radius:12px;font-size:16px;
+  font-family:"Poppins",sans-serif;font-weight:500;
+  background:light-dark(rgba(0,0,0,.04),rgba(255,255,255,.06));
+  border:1px solid var(--border-color);color:var(--heading-color);
+  margin-bottom:20px;transition:.25s;
+  color-scheme:inherit;
+}
+.date-input:focus{border-color:var(--primary);background:light-dark(rgba(249,129,46,.04),rgba(249,129,46,.06))}
+.date-input::-webkit-calendar-picker-indicator{
+  filter:light-dark(none,invert(1));opacity:.6;cursor:pointer;
+}
+
+/* ── STATS SCREEN ── */
+#statsScreen{display:none}
+
+/* fixed top half */
+.top-half{
+  position:fixed;top:0;left:0;right:0;
+  height:50vh;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--body-bg);
+  transition:background .3s;
+}
+.top-half::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:1px;background:var(--border-color);
+}
+
+/* icon display */
+.icon-wrap{
+  display:flex;align-items:center;justify-content:center;
+  width:220px;height:220px;
+  transition:opacity .3s,transform .3s;
+}
+.icon-wrap.fade{opacity:0;transform:scale(.85)}
+
+/* calendar card */
+.cal-card{
+  border-radius:18px;overflow:hidden;
+  border:3px solid var(--border-color);min-width:160px;
+  box-shadow:0 8px 32px rgba(0,0,0,.15);
+}
+.cal-head{
+  background:var(--primary);color:#fff;
+  padding:12px 28px;font-size:14px;font-weight:700;text-align:center;
+}
+.cal-body{
+  background:var(--card-bg);padding:20px 28px 18px;text-align:center;
+}
+.cal-day{font-size:72px;font-weight:800;line-height:1;color:var(--heading-color)}
+.cal-month{font-size:14px;color:light-dark(#888,#a0aec0);margin-top:4px}
+
+/* big emoji icon */
+.big-icon{font-size:100px;line-height:1;display:block;animation:iconPulse 2.5s ease-in-out infinite}
+@keyframes iconPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.big-icon.bounce{animation:iconBounce 2s ease-in-out infinite}
+@keyframes iconBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+
+/* scrollable bottom half */
+.bottom-half{
+  position:fixed;bottom:0;left:0;right:0;
+  height:50vh;overflow-y:auto;overflow-x:hidden;
+  background:var(--body-bg);z-index:20;
+  transition:background .3s;
+}
+.bottom-half::-webkit-scrollbar{width:5px}
+.bottom-half::-webkit-scrollbar-thumb{background:var(--primary);border-radius:3px}
+.bottom-half::-webkit-scrollbar-track{background:transparent}
+
+/* fact sections */
+.fact-spacer{height:50vh}
+.fact-section{
+  min-height:50vh;display:flex;align-items:center;justify-content:center;
+  padding:48px 24px;transition:opacity .35s,transform .35s;
+}
+.fact-section:not(.active){opacity:.35;transform:scale(.96)}
+.fact-section.active{opacity:1;transform:scale(1)}
+.fact-inner{max-width:680px;width:100%;text-align:center}
+.fact-inner h2{
+  font-size:clamp(20px,3.5vw,32px);font-weight:700;
+  color:var(--heading-color);margin-bottom:14px;line-height:1.3;
+}
+.fact-inner p{font-size:14px;color:light-dark(#666,#a0aec0);margin-bottom:0;line-height:1.8}
+.fact-quote{
+  margin-top:20px;padding:18px 22px;border-radius:14px;
+  font-size:13px;font-style:italic;line-height:1.8;
+  color:light-dark(#555,#b0b8c8);
+  border:1px dashed var(--border-color);
+  background:light-dark(rgba(249,129,46,.04),rgba(249,129,46,.06));
+}
+.stat-num{
+  color:var(--primary);font-weight:800;font-family:"Poppins",sans-serif;
+  font-size:clamp(28px,5vw,46px);display:inline-block;line-height:1;
+}
+.stat-num.blue{color:#3b82f6}
+.stat-num.red{color:#ef4444}
+.stat-num.green{color:#10b981}
+.stat-num.purple{color:#9333ea}
+.stat-num.teal{color:#0d9488}
+.stat-num.amber{color:#f59e0b}
+.stat-num.indigo{color:#6366f1}
+
+/* section title */
+.section-title{margin-bottom:40px;text-align:center}
+.section-title p{font-size:14px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:light-dark(#888,#a0aec0);margin-bottom:6px}
+.section-title h2{font-size:clamp(28px,4vw,50px);font-weight:700;line-height:1.2}
+.section-title h2 span{color:var(--primary)}
+
+/* progress bar on fact 1 */
+.progress-row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.progress-item{text-align:center;min-width:120px}
+.progress-item label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:light-dark(#999,#718096);display:block;margin-bottom:8px}
+.progress-ring-wrap{position:relative;width:80px;height:80px;margin:0 auto 8px}
+.progress-ring-wrap svg{transform:rotate(-90deg)}
+.progress-ring-bg{fill:none;stroke:light-dark(rgba(0,0,0,.08),rgba(255,255,255,.08));stroke-width:6}
+.progress-ring-fill{fill:none;stroke:var(--primary);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.progress-ring-label{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--heading-color);
+}
+
+/* CTA strip */
+.cta-strip{
+  padding:60px 200px;border-radius:20px;text-align:center;margin-top:24px;
+  border:1px solid rgba(0,0,0,.05);
+  box-shadow:rgba(255,255,255,.025) 0 .36px .65px -1px inset,rgba(255,255,255,.036) 0 3px 5.4px -2px inset;
+  background:var(--card-bg);position:relative;z-index:1;
+}
+@media(max-width:768px){.cta-strip{padding:40px 24px}}
+.cta-strip h2{font-size:clamp(22px,3vw,38px);font-weight:800;text-transform:uppercase;line-height:1.2;margin-bottom:12px}
+.cta-strip h2 span{-webkit-text-stroke:1px var(--heading-color);color:transparent}
+.cta-strip p{font-size:14px;color:light-dark(#666,#a0aec0);margin-bottom:24px;line-height:1.8}
+
+/* footer */
+footer{padding:32px 0;border-top:1px solid var(--border-color);text-align:center;position:relative;z-index:1}
+footer p{font-size:13px;color:light-dark(#aaa,#666)}
+footer a{color:var(--primary)}
+
+/* scroll-up */
+.scroll-up{
+  position:fixed;bottom:30px;right:28px;width:44px;height:44px;border-radius:50%;
+  background:var(--primary);color:#fff;display:none;align-items:center;
+  justify-content:center;cursor:pointer;font-size:22px;z-index:999;
+  box-shadow:0 4px 16px rgba(249,129,46,.35);transition:.3s;
+}
+.scroll-up.show{display:flex}
+.scroll-up:hover{background:#000}
+
+/* rtl */
+[dir="rtl"]{direction:rtl;text-align:right}
+[dir="rtl"] .fact-inner{text-align:right}
+
+@media(max-width:768px){
+  .icon-wrap{width:150px;height:150px}
+  .big-icon{font-size:70px}
+  .cal-day{font-size:52px}
+  .fact-inner h2{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="main-header" id="mainHeader">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-letter is-active">S</span>
+      <span class="logo-letter is-active">A</span>
+      <span class="logo-letter is-active">M</span>
+      <span class="logo-letter is-active">E</span>
+      <span class="logo-letter is-active">H</span>
+    </div>
+    <div class="header-right">
+      <select class="lang-select" id="langSelect" onchange="setLang(this.value)">
+        <option value="en">🌐 English</option>
+        <option value="ar">🌐 العربية</option>
+        <option value="fr">🌐 Français</option>
+        <option value="es">🌐 Español</option>
+        <option value="de">🌐 Deutsch</option>
+        <option value="tr">🌐 Türkçe</option>
+        <option value="ur">🌐 اردو</option>
+        <option value="id">🌐 Bahasa Indonesia</option>
+      </select>
+      <button class="theme-btn" onclick="toggleTheme()">Toggle Theme ☀</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ INPUT SCREEN ═══ -->
+<div id="inputScreen" class="page">
+  <div class="input-card">
+    <span class="input-emoji">🌙</span>
+    <h1><span id="iTitle">Islamic</span> Life Journey</h1>
+    <p id="iSubtitle">Discover the blessings and moments Allah has given you</p>
+    <label class="date-label" for="birthdayInput" id="iLabel">When were you born?</label>
+    <input type="date" id="birthdayInput" class="date-input" />
+    <button class="pill-btn" style="width:100%;text-align:center" onclick="startJourney()" id="iBtn">
+      Begin Your Journey ✨
+    </button>
+  </div>
+</div>
+
+<!-- ═══ STATS SCREEN ═══ -->
+<div id="statsScreen">
+
+  <!-- top fixed half — icon -->
+  <div class="top-half">
+    <div class="icon-wrap" id="iconWrap">
+      <div id="iconInner"></div>
+    </div>
+  </div>
+
+  <!-- bottom scrollable half -->
+  <div class="bottom-half" id="bottomHalf">
+    <div class="fact-spacer"></div>
+    <div id="factsContainer"></div>
+    <div class="fact-spacer"></div>
+  </div>
+
+</div>
+
+<div class="scroll-up" id="scrollUp" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+/* ═══════════════════════════════════════
+   TRANSLATIONS
+═══════════════════════════════════════ */
+const T = {
+  en:{
+    title:"Islamic Life Journey",subtitle:"Discover the blessings and moments Allah has given you",
+    label:"When were you born?",btn:"Begin Your Journey ✨",reset:"Start Over",
+    sinceBorn:"Since you were born…",
+    f1:"A lot has happened in the {days} days since you were born.",
+    f2:"Your heart has beaten about {hb} times and pumped {bl} litres of blood.",
+    f2q:'"In the creation of the heavens and earth, and the alternation of night and day, are signs for those of understanding." — Quran 3:190',
+    f3:"You've taken about {br} breaths.",f3s:"Each breath is a gift from Allah.",
+    f3q:'"So which of the favours of your Lord would you deny?" — Quran 55:13',
+    f4:"You've spent {sl} days of your life asleep.",f4s:"Rest is a blessing and mercy from Allah.",
+    f4q:'"And We made your sleep a means for rest." — Quran 78:9',
+    f5:"{pr} opportunities to pray.",f5s:"5 daily prayers — {pr} chances to connect with Allah.",
+    f5q:'"Establish prayer. Indeed, prayer prohibits immorality and wrongdoing." — Quran 29:45',
+    f6:"{sj} potential prostrations (Sujood).",f6s:"Every Sujood is a moment of closeness to Allah.",
+    f6q:'"The closest a servant is to his Lord is when he is in prostration." — Hadith (Muslim)',
+    f7:'You could have said "Alhamdulillah" {ah} times.',f7s:"Gratitude fills the heart with peace.",
+    f7q:'"If you are grateful, I will surely increase you in favour." — Quran 14:7',
+    f8:'{sh} chances to say "SubhanAllah".',f8s:"Glory be to Allah in every moment.",
+    f8q:'"SubhanAllah and praise be to Him, the number of His creation." — Hadith',
+    f9:"{rm} blessed Ramadans witnessed.",f9s:"About {fd} days of fasting completed.",
+    f9q:'"O believers, fasting is prescribed for you as it was for those before you, so you may become righteous." — Quran 2:183',
+    f10:"The world has changed too.",f10s:"About {pop} more people have been born since you were born.",
+    f10q:'"O mankind, We created you from a male and female and made you peoples and tribes that you may know one another." — Quran 49:13',
+    f11:"Every moment is an opportunity for good deeds.",
+    f11s:"You've had {days} days to spread kindness, help others, and earn rewards.",
+    f11q:'"Whoever does an atom\'s weight of good will see it." — Quran 99:7',
+    f12:"Who knows what else will happen in your lifetime?",
+    f12s:"Make every moment count. Make the most of the time Allah has given you.",
+    f12q:'"By time, indeed mankind is in loss, except those who believe and do righteous deeds." — Quran 103:1-3',
+    days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    months:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+  },
+  ar:{
+    title:"رحلة الحياة الإسلامية",subtitle:"اكتشف البركات واللحظات التي منحك الله إياها",
+    label:"متى ولدت؟",btn:"ابدأ رحلتك ✨",reset:"ابدأ من جديد",
+    sinceBorn:"منذ أن ولدت…",
+    f1:"حدث الكثير في الأيام الـ {days} منذ ولادتك.",
+    f2:"نبض قلبك حوالي {hb} مرة وضخ {bl} لتر من الدم.",
+    f2q:'"إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِّأُولِي الْأَلْبَابِ" — القرآن 3:190',
+    f3:"أخذت حوالي {br} نفس.",f3s:"كل نفس هدية من الله.",
+    f3q:'"فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ" — القرآن 55:13',
+    f4:"قضيت {sl} يوماً نائماً.",f4s:"الراحة نعمة ورحمة من الله.",
+    f4q:'"وَجَعَلْنَا نَوْمَكُمْ سُبَاتًا" — القرآن 78:9',
+    f5:"{pr} فرصة للصلاة.",f5s:"5 صلوات يومية، {pr} فرصة للتواصل مع الله.",
+    f5q:'"وَأَقِمِ الصَّلَاةَ إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ" — القرآن 29:45',
+    f6:"{sj} سجدة محتملة.",f6s:"كل سجدة لحظة قرب من الله.",
+    f6q:'"أقرب ما يكون العبد من ربه وهو ساجد" — حديث (مسلم)',
+    f7:'كان بإمكانك قول "الحمد لله" {ah} مرة.',f7s:"الشكر يملأ القلب بالسلام.",
+    f7q:'"لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ" — القرآن 14:7',
+    f8:'{sh} فرصة لقول "سبحان الله".',f8s:"تسبيح الله في كل اللحظات.",
+    f8q:'"سبحان الله وبحمده عدد خلقه ورضا نفسه وزنة عرشه" — حديث',
+    f9:"{rm} رمضان مبارك شهدته.",f9s:"حوالي {fd} يوم صيام أكملته.",
+    f9q:'"يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الصِّيَامُ" — القرآن 2:183',
+    f10:"العالم تغير أيضاً.",f10s:"حوالي {pop} شخص ولدوا منذ ولادتك.",
+    f10q:'"يَا أَيُّهَا النَّاسُ إِنَّا خَلَقْنَاكُم مِّن ذَكَرٍ وَأُنثَىٰ" — القرآن 49:13',
+    f11:"كل لحظة فرصة للأعمال الصالحة.",f11s:"كان لديك {days} يوماً لنشر الخير.",
+    f11q:'"فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ" — القرآن 99:7',
+    f12:"من يعلم ما الذي سيحدث في حياتك؟",f12s:"اجعل كل لحظة تُحتسب.",
+    f12q:'"وَالْعَصْرِ إِنَّ الْإِنسَانَ لَفِي خُسْرٍ إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ" — القرآن 103:1-3',
+    days:["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"],
+    months:["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"]
+  },
+  fr:{
+    title:"Voyage de Vie Islamique",subtitle:"Découvrez les bénédictions qu'Allah vous a données",
+    label:"Quand êtes-vous né(e)?",btn:"Commencez Votre Voyage ✨",reset:"Recommencer",
+    sinceBorn:"Depuis votre naissance…",
+    f1:"Beaucoup de choses se sont passées dans les {days} jours depuis votre naissance.",
+    f2:"Votre cœur a battu environ {hb} fois et pompé {bl} litres de sang.",
+    f2q:'"Dans la création des cieux et de la terre il y a des signes pour les doués d\'intelligence." — Coran 3:190',
+    f3:"Vous avez pris environ {br} respirations.",f3s:"Chaque respiration est un don d'Allah.",
+    f3q:'"Lequel des bienfaits de votre Seigneur nierez-vous?" — Coran 55:13',
+    f4:"Vous avez passé {sl} jours à dormir.",f4s:"Le repos est une bénédiction d'Allah.",
+    f4q:'"Et fait de votre sommeil un repos." — Coran 78:9',
+    f5:"{pr} opportunités de prier.",f5s:"5 prières quotidiennes — {pr} chances de se connecter avec Allah.",
+    f5q:'"La Salat préserve de la turpitude et du blâmable." — Coran 29:45',
+    f6:"{sj} prosternations potentielles (Sujood).",f6s:"Chaque Sujood est un moment de proximité avec Allah.",
+    f6q:'"Le serviteur est le plus proche de son Seigneur en prosternation." — Hadith',
+    f7:'"Alhamdulillah" {ah} fois.',f7s:"La gratitude remplit le cœur de paix.",
+    f7q:'"Si vous êtes reconnaissants, J\'augmenterai Mes bienfaits." — Coran 14:7',
+    f8:'{sh} fois "SubhanAllah".',f8s:"Gloire à Allah en tout moment.",
+    f8q:'"SubhanAllah et louange à Lui, du nombre de Sa création." — Hadith',
+    f9:"{rm} Ramadans bénis.",f9s:"Environ {fd} jours de jeûne complétés.",
+    f9q:'"On vous a prescrit le jeûne pour que vous atteigniez la piété." — Coran 2:183',
+    f10:"Le monde a aussi changé.",f10s:"Environ {pop} personnes de plus sont nées depuis vous.",
+    f10q:'"Ô hommes, Nous vous avons créés d\'un mâle et d\'une femelle." — Coran 49:13',
+    f11:"Chaque moment est une opportunité.",f11s:"Vous avez eu {days} jours pour répandre la bonté.",
+    f11q:'"Quiconque fait un bien fût-ce du poids d\'un atome, le verra." — Coran 99:7',
+    f12:"Qui sait ce qui se passera?",f12s:"Faites compter chaque moment.",
+    f12q:'"Par le Temps! L\'homme est en perdition, sauf ceux qui croient." — Coran 103:1-3',
+    days:["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"],
+    months:["Jan","Fév","Mar","Avr","Mai","Juin","Juil","Aoû","Sep","Oct","Nov","Déc"]
+  },
+  es:{
+    title:"Viaje de Vida Islámico",subtitle:"Descubre las bendiciones que Allah te ha dado",
+    label:"¿Cuándo naciste?",btn:"Comienza Tu Viaje ✨",reset:"Empezar de Nuevo",
+    sinceBorn:"Desde que naciste…",
+    f1:"Han pasado muchas cosas en los {days} días desde que naciste.",
+    f2:"Tu corazón ha latido {hb} veces y bombeó {bl} litros de sangre.",
+    f2q:'"En la creación de los cielos y la tierra hay signos para los dotados de intelecto." — Corán 3:190',
+    f3:"Has tomado {br} respiraciones.",f3s:"Cada respiración es un regalo de Allah.",
+    f3q:'"¿Cuál de los favores de tu Señor negarás?" — Corán 55:13',
+    f4:"Has pasado {sl} días durmiendo.",f4s:"El descanso es bendición de Allah.",
+    f4q:'"E hicimos de vuestro sueño descanso." — Corán 78:9',
+    f5:"{pr} oportunidades para orar.",f5s:"5 oraciones diarias — {pr} oportunidades.",
+    f5q:'"La oración preserva de la inmoralidad." — Corán 29:45',
+    f6:"{sj} prosternaciones potenciales.",f6s:"Cada Sujood es cercanía con Allah.",
+    f6q:'"El siervo está más cerca de Allah en prosternación." — Hadiz',
+    f7:'"Alhamdulillah" {ah} veces.',f7s:"La gratitud llena el corazón de paz.",
+    f7q:'"Si agradecéis, os daré más." — Corán 14:7',
+    f8:'{sh} veces "SubhanAllah".',f8s:"Gloria a Allah en todos los momentos.",
+    f8q:'"SubhanAllah y alabanza a Él, del número de Su creación." — Hadiz',
+    f9:"{rm} Ramadanes benditos.",f9s:"Aproximadamente {fd} días de ayuno.",
+    f9q:'"Se os ha prescrito el ayuno para que alcancéis la piedad." — Corán 2:183',
+    f10:"El mundo también ha cambiado.",f10s:"{pop} personas más han nacido desde ti.",
+    f10q:'"Os hemos creado de varón y hembra y os hemos hecho naciones." — Corán 49:13',
+    f11:"Cada momento es oportunidad.",f11s:"Has tenido {days} días para difundir bondad.",
+    f11q:'"Quien haga el bien, aunque sea del peso de un átomo, lo verá." — Corán 99:7',
+    f12:"¿Quién sabe qué más pasará?",f12s:"Haz que cada momento cuente.",
+    f12q:'"¡Por el tiempo! El hombre está en pérdida, salvo los creyentes." — Corán 103:1-3',
+    days:["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],
+    months:["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"]
+  },
+  de:{
+    title:"Islamische Lebensreise",subtitle:"Entdecke die Segnungen, die Allah dir gegeben hat",
+    label:"Wann bist du geboren?",btn:"Beginne Deine Reise ✨",reset:"Neu Starten",
+    sinceBorn:"Seit deiner Geburt…",
+    f1:"Viel ist in den {days} Tagen seit deiner Geburt passiert.",
+    f2:"Dein Herz hat {hb} Mal geschlagen und {bl} Liter Blut gepumpt.",
+    f2q:'"In der Schöpfung der Himmel und der Erde sind Zeichen für die Verständigen." — Koran 3:190',
+    f3:"Du hast {br} Atemzüge genommen.",f3s:"Jeder Atemzug ist ein Geschenk Allahs.",
+    f3q:'"Welche der Wohltaten eures Herrn wollt ihr leugnen?" — Koran 55:13',
+    f4:"Du hast {sl} Tage schlafend verbracht.",f4s:"Ruhe ist ein Segen Allahs.",
+    f4q:'"Wir machten euren Schlaf zur Ruhe." — Koran 78:9',
+    f5:"{pr} Gelegenheiten zu beten.",f5s:"5 tägliche Gebete — {pr} Chancen.",
+    f5q:'"Das Gebet hält ab von schändlichen Dingen." — Koran 29:45',
+    f6:"{sj} potenzielle Niederwerfungen.",f6s:"Jede Sujood bringt Nähe zu Allah.",
+    f6q:'"Der Diener ist Allah am nächsten in der Niederwerfung." — Hadith',
+    f7:'"Alhamdulillah" {ah} Mal sagen können.',f7s:"Dankbarkeit erfüllt das Herz.",
+    f7q:'"Wenn ihr dankbar seid, werde Ich euch mehr geben." — Koran 14:7',
+    f8:'{sh} Mal "SubhanAllah".',f8s:"Ehre sei Allah in allen Momenten.",
+    f8q:'"SubhanAllah und Lob sei Ihm, in der Anzahl Seiner Schöpfung." — Hadith',
+    f9:"{rm} gesegnete Ramadane.",f9s:"Etwa {fd} Fastentage vollendet.",
+    f9q:'"Das Fasten ist euch vorgeschrieben damit ihr gottesfürchtig werdet." — Koran 2:183',
+    f10:"Die Welt hat sich verändert.",f10s:"Etwa {pop} Menschen wurden seit dir geboren.",
+    f10q:'"Wir haben euch zu Völkern und Stämmen gemacht." — Koran 49:13',
+    f11:"Jeder Moment ist eine Gelegenheit.",f11s:"Du hattest {days} Tage für gute Taten.",
+    f11q:'"Wer auch nur Gutes im Gewicht eines Stäubchens tut, wird es sehen." — Koran 99:7',
+    f12:"Wer weiß was noch passiert?",f12s:"Lass jeden Moment zählen.",
+    f12q:'"Bei der Zeit! Der Mensch ist in Verlust, außer denjenigen die glauben." — Koran 103:1-3',
+    days:["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],
+    months:["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"]
+  },
+  tr:{
+    title:"İslami Yaşam Yolculuğu",subtitle:"Allah'ın size verdiği nimetleri keşfedin",
+    label:"Ne zaman doğdunuz?",btn:"Yolculuğunuza Başlayın ✨",reset:"Yeniden Başla",
+    sinceBorn:"Doğduğunuzdan beri…",
+    f1:"Doğduğunuzdan beri {days} günde çok şey oldu.",
+    f2:"Kalbiniz {hb} kez attı ve {bl} litre kan pompaladı.",
+    f2q:'"Göklerin ve yerin yaratılışında akıl sahipleri için ibretler vardır." — Kuran 3:190',
+    f3:"{br} nefes aldınız.",f3s:"Her nefes Allah'tan bir hediyedir.",
+    f3q:'"Rabbinizin hangi nimetlerini yalanlıyorsunuz?" — Kuran 55:13',
+    f4:"{sl} gün uyuyarak geçirdiniz.",f4s:"Dinlenme Allah'tan bir rahmettir.",
+    f4q:'"Uykuyu sizin için rahatlama kıldık." — Kuran 78:9',
+    f5:"{pr} namaz kılma fırsatı.",f5s:"Günde 5 namaz — {pr} fırsat.",
+    f5q:'"Namaz insanı kötülüklerden alıkoyar." — Kuran 29:45',
+    f6:"{sj} potansiyel secde.",f6s:"Her secde Allah'a yakınlık anıdır.",
+    f6q:'"Kul, secdedeyken Rabbine en yakındır." — Hadis',
+    f7:'"Elhamdülillah" {ah} kez söyleyebilirdiniz.',f7s:"Şükür kalbi huzurla doldurur.",
+    f7q:'"Şükrederseniz, nimetimi artırırım." — Kuran 14:7',
+    f8:'{sh} "Sübhanallah" fırsatı.',f8s:"Her an Allah'ı tesbih etmek.",
+    f8q:'"Sübhanallah ve hamd, yaratıklarının sayısınca." — Hadis',
+    f9:"{rm} mübarek Ramazan.",f9s:"Yaklaşık {fd} gün oruç.",
+    f9q:'"Oruç, önceki ümmetlere farz kılındığı gibi size de farz kılındı." — Kuran 2:183',
+    f10:"Dünya da değişti.",f10s:"Doğduğunuzdan beri {pop} kişi daha doğdu.",
+    f10q:'"Sizi milletlere ve kabilelere ayırdık ki tanışasınız." — Kuran 49:13',
+    f11:"Her an fırsat.",f11s:"{days} gün iyilik yapma fırsatınız oldu.",
+    f11q:'"Zerre kadar hayır yapan onu görecektir." — Kuran 99:7',
+    f12:"Hayatınızda daha neler olacak?",f12s:"Her anı değerlendirin.",
+    f12q:'"Zamana andolsun, insan gerçekten ziyan içindedir." — Kuran 103:1-3',
+    days:["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"],
+    months:["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"]
+  },
+  ur:{
+    title:"اسلامی زندگی کا سفر",subtitle:"اللہ کی نعمتوں کو دریافت کریں",
+    label:"آپ کب پیدا ہوئے؟",btn:"اپنا سفر شروع کریں ✨",reset:"دوبارہ شروع کریں",
+    sinceBorn:"آپ کی پیدائش سے…",
+    f1:"آپ کی پیدائش کے بعد سے {days} دنوں میں بہت کچھ ہوا۔",
+    f2:"آپ کے دل نے {hb} بار دھڑکا اور {bl} لیٹر خون پمپ کیا۔",
+    f2q:'"آسمانوں اور زمین کی تخلیق میں عقل والوں کے لیے نشانیاں ہیں۔" — قرآن 3:190',
+    f3:"آپ نے {br} سانسیں لیں۔",f3s:"ہر سانس اللہ کی طرف سے تحفہ ہے۔",
+    f3q:'"تم اپنے رب کی کن نعمتوں کو جھٹلاؤ گے؟" — قرآن 55:13',
+    f4:"آپ نے {sl} دن سوتے ہوئے گزارے۔",f4s:"آرام اللہ کی رحمت ہے۔",
+    f4q:'"ہم نے تمہاری نیند کو آرام بنایا۔" — قرآن 78:9',
+    f5:"{pr} نماز پڑھنے کے مواقع۔",f5s:"روزانہ 5 نمازیں — {pr} مواقع۔",
+    f5q:'"نماز بے حیائی سے روکتی ہے۔" — قرآن 29:45',
+    f6:"{sj} ممکنہ سجدے۔",f6s:"ہر سجدہ اللہ کے قریب ہونے کا لمحہ۔",
+    f6q:'"بندہ سجدے میں اللہ کے سب سے قریب ہوتا ہے۔" — حدیث',
+    f7:'آپ {ah} بار "الحمد للہ" کہہ سکتے تھے۔',f7s:"شکر دل کو سکون دیتا ہے۔",
+    f7q:'"شکر کرو تو زیادہ دوں گا۔" — قرآن 14:7',
+    f8:'{sh} بار "سبحان اللہ"۔',f8s:"ہر لمحے میں تسبیح۔",
+    f8q:'"سبحان اللہ وبحمدہ عدد خلقہ۔" — حدیث',
+    f9:"{rm} رمضان دیکھے۔",f9s:"تقریباً {fd} دن کے روزے۔",
+    f9q:'"تم پر روزے فرض کیے گئے۔" — قرآن 2:183',
+    f10:"دنیا بھی بدل گئی۔",f10s:"آپ کے بعد سے {pop} لوگ پیدا ہوئے۔",
+    f10q:'"ہم نے تمہیں قوموں اور قبیلوں میں تقسیم کیا۔" — قرآن 49:13',
+    f11:"ہر لمحہ نیکی کا موقع۔",f11s:"آپ کو {days} دن ملے۔",
+    f11q:'"ذرہ برابر نیکی کرنے والا اسے دیکھے گا۔" — قرآن 99:7',
+    f12:"آپ کی زندگی میں اور کیا ہوگا؟",f12s:"ہر لمحے کو قیمتی بنائیں۔",
+    f12q:'"انسان خسارے میں ہے سوائے ایمان والوں کے۔" — قرآن 103:1-3',
+    days:["اتوار","پیر","منگل","بدھ","جمعرات","جمعہ","ہفتہ"],
+    months:["جنوری","فروری","مارچ","اپریل","مئی","جون","جولائی","اگست","ستمبر","اکتوبر","نومبر","دسمبر"]
+  },
+  id:{
+    title:"Perjalanan Hidup Islami",subtitle:"Temukan berkah yang Allah berikan kepada Anda",
+    label:"Kapan Anda lahir?",btn:"Mulai Perjalanan Anda ✨",reset:"Mulai Ulang",
+    sinceBorn:"Sejak Anda lahir…",
+    f1:"Banyak hal terjadi dalam {days} hari sejak Anda lahir.",
+    f2:"Jantung Anda berdetak {hb} kali dan memompa {bl} liter darah.",
+    f2q:'"Dalam penciptaan langit dan bumi terdapat tanda-tanda bagi orang berakal." — Al-Quran 3:190',
+    f3:"Anda mengambil {br} napas.",f3s:"Setiap napas adalah anugerah dari Allah.",
+    f3q:'"Nikmat Tuhan manakah yang kamu dustakan?" — Al-Quran 55:13',
+    f4:"Anda tidur selama {sl} hari.",f4s:"Istirahat adalah berkah dari Allah.",
+    f4q:'"Kami jadikan tidurmu untuk istirahat." — Al-Quran 78:9',
+    f5:"{pr} kesempatan shalat.",f5s:"5 shalat harian — {pr} kesempatan.",
+    f5q:'"Shalat mencegah dari perbuatan keji dan mungkar." — Al-Quran 29:45',
+    f6:"{sj} potensi sujud.",f6s:"Setiap sujud adalah kedekatan dengan Allah.",
+    f6q:'"Hamba paling dekat Allah ketika bersujud." — Hadits',
+    f7:'"Alhamdulillah" {ah} kali.',f7s:"Syukur mengisi hati dengan kedamaian.",
+    f7q:'"Jika bersyukur, Aku tambah nikmat-Ku." — Al-Quran 14:7',
+    f8:'{sh} kali "Subhanallah".',f8s:"Maha Suci Allah di setiap saat.",
+    f8q:'"Subhanallah dan segala puji bagi-Nya, sebanyak makhluk-Nya." — Hadits',
+    f9:"{rm} Ramadhan yang diberkahi.",f9s:"Sekitar {fd} hari puasa.",
+    f9q:'"Diwajibkan atas kamu berpuasa agar kamu bertakwa." — Al-Quran 2:183',
+    f10:"Dunia juga berubah.",f10s:"Sekitar {pop} orang lebih lahir sejak Anda.",
+    f10q:'"Kami jadikan kamu berbangsa-bangsa agar saling mengenal." — Al-Quran 49:13',
+    f11:"Setiap momen adalah kesempatan.",f11s:"Anda memiliki {days} hari untuk kebaikan.",
+    f11q:'"Barangsiapa berbuat kebaikan seberat dzarrah, akan melihatnya." — Al-Quran 99:7',
+    f12:"Siapa tahu apa lagi yang terjadi?",f12s:"Jadikan setiap momen berarti.",
+    f12q:'"Demi masa, sesungguhnya manusia dalam kerugian kecuali yang beriman." — Al-Quran 103:1-3',
+    days:["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"],
+    months:["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"]
+  }
+};
+
+/* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
+let lang      = 'en';
+let birthday  = null;
+let ticker    = null;
+let curIcon   = '';
+
+/* ═══════════════════════════════════════
+   LANGUAGE
+═══════════════════════════════════════ */
+function setLang(l) {
+  lang = l;
+  const isRTL = l === 'ar' || l === 'ur';
+  document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+  const t = T[l];
+  document.getElementById('iTitle').textContent    = t.title;
+  document.getElementById('iSubtitle').textContent = t.subtitle;
+  document.getElementById('iLabel').textContent    = t.label;
+  document.getElementById('iBtn').textContent      = t.btn;
+  if (birthday) generateFacts();
+}
+
+/* ═══════════════════════════════════════
+   THEME
+═══════════════════════════════════════ */
+function toggleTheme() {
+  const h = document.documentElement;
+  h.dataset.theme = h.dataset.theme === 'dark' ? 'light' : 'dark';
+}
+
+/* ═══════════════════════════════════════
+   FORMAT NUMBER
+═══════════════════════════════════════ */
+function fmt(n) {
+  if (n >= 1e12) return (n/1e12).toFixed(2) + 'T';
+  if (n >= 1e9)  return (n/1e9).toFixed(2)  + 'B';
+  if (n >= 1e6)  return (n/1e6).toFixed(2)  + 'M';
+  if (n >= 1e3)  return Math.round(n).toLocaleString();
+  return Math.round(n).toString();
+}
+
+/* ═══════════════════════════════════════
+   ICON SWITCHER
+═══════════════════════════════════════ */
+const ICONS = {
+  calendar: () => `<div class="cal-card">
+    <div class="cal-head" id="calDay">&nbsp;</div>
+    <div class="cal-body">
+      <div class="cal-day" id="calNum">&nbsp;</div>
+      <div class="cal-month" id="calMonth">&nbsp;</div>
+    </div>
+  </div>`,
+  heart:    () => `<span class="big-icon">❤️</span>`,
+  breath:   () => `<span class="big-icon">🌅</span>`,
+  sleep:    () => `<span class="big-icon">😴</span>`,
+  moon:     () => `<span class="big-icon bounce">🌙</span>`,
+  hands:    () => `<span class="big-icon">🤲</span>`,
+  message:  () => `<span class="big-icon">💬</span>`,
+  sparkle:  () => `<span class="big-icon">✨</span>`,
+  book:     () => `<span class="big-icon">📖</span>`,
+  globe:    () => `<span class="big-icon">🌍</span>`,
+  star:     () => `<span class="big-icon">⭐</span>`,
+  flag:     () => `<span class="big-icon">🏁</span>`,
+};
+
+function setIcon(name) {
+  if (curIcon === name) return;
+  curIcon = name;
+  const wrap = document.getElementById('iconWrap');
+  wrap.classList.add('fade');
+  setTimeout(() => {
+    document.getElementById('iconInner').innerHTML = ICONS[name]();
+    wrap.classList.remove('fade');
+    // fill calendar if needed
+    if (name === 'calendar' && birthday) fillCalendar();
+  }, 220);
+}
+
+function fillCalendar() {
+  const t  = T[lang];
+  const bd = new Date(birthday + 'T12:00:00');
+  const el1 = document.getElementById('calDay');
+  const el2 = document.getElementById('calNum');
+  const el3 = document.getElementById('calMonth');
+  if (el1) el1.textContent = t.days[bd.getDay()];
+  if (el2) el2.textContent = bd.getDate();
+  if (el3) el3.textContent = t.months[bd.getMonth()] + ' ' + bd.getFullYear();
+}
+
+/* ═══════════════════════════════════════
+   COMPUTE STATS
+═══════════════════════════════════════ */
+function computeStats() {
+  const now       = new Date();
+  const bd        = new Date(birthday + 'T12:00:00');
+  const ms        = now - bd;
+  const days      = ms / 86400000;
+  const years     = days / 365.25;
+  const secs      = ms / 1000;
+  return {
+    days:   Math.floor(days),
+    hb:     Math.floor(days * 100000),
+    bl:     Math.floor(days * 100000 * 0.07),
+    br:     Math.floor(days * 20000),
+    sl:     Math.floor(days / 3),
+    pr:     Math.floor(days * 5),
+    sj:     Math.floor(days * 5 * 2 * 17),
+    ah:     Math.floor(days * 100),
+    sh:     Math.floor(days * 100),
+    rm:     Math.floor(years),
+    fd:     Math.floor(years * 30),
+    pop:    Math.floor(secs * 2.3),
+  };
+}
+
+/* ═══════════════════════════════════════
+   GENERATE FACTS HTML
+═══════════════════════════════════════ */
+function n(cls, id) {
+  return `<span class="stat-num ${cls}" id="${id}">…</span>`;
+}
+
+function generateFacts() {
+  const t   = T[lang];
+  const tpl = [
+    { icon:'calendar', html:`
+      <h2>${t.f1.replace('{days}', n('','sd-days'))}</h2>
+      <p>${t.sinceBorn}</p>
+      <div class="progress-row">
+        <div class="progress-item">
+          <label>Years</label>
+          <div class="progress-ring-wrap">
+            <svg width="80" height="80" viewBox="0 0 80 80">
+              <circle class="progress-ring-bg" cx="40" cy="40" r="34"/>
+              <circle class="progress-ring-fill" id="ringYears" cx="40" cy="40" r="34"
+                stroke-dasharray="213.6" stroke-dashoffset="213.6"/>
+            </svg>
+            <div class="progress-ring-label" id="ringYearsLbl">0</div>
+          </div>
+        </div>
+        <div class="progress-item">
+          <label>Months</label>
+          <div class="progress-ring-wrap">
+            <svg width="80" height="80" viewBox="0 0 80 80">
+              <circle class="progress-ring-bg" cx="40" cy="40" r="34"/>
+              <circle class="progress-ring-fill" id="ringMonths" cx="40" cy="40" r="34"
+                stroke-dasharray="213.6" stroke-dashoffset="213.6"/>
+            </svg>
+            <div class="progress-ring-label" id="ringMonthsLbl">0</div>
+          </div>
+        </div>
+        <div class="progress-item">
+          <label>Weeks</label>
+          <div class="progress-ring-wrap">
+            <svg width="80" height="80" viewBox="0 0 80 80">
+              <circle class="progress-ring-bg" cx="40" cy="40" r="34"/>
+              <circle class="progress-ring-fill" id="ringWeeks" cx="40" cy="40" r="34"
+                stroke-dasharray="213.6" stroke-dashoffset="213.6"/>
+            </svg>
+            <div class="progress-ring-label" id="ringWeeksLbl">0</div>
+          </div>
+        </div>
+      </div>
+    `},
+    { icon:'heart', html:`
+      <h2>${t.f2.replace('{hb}', n('red','sd-hb')).replace('{bl}', n('red','sd-bl'))}</h2>
+      <div class="fact-quote">${t.f2q}</div>
+    `},
+    { icon:'breath', html:`
+      <h2>${t.f3.replace('{br}', n('','sd-br'))}</h2>
+      <p>${t.f3s}</p>
+      <div class="fact-quote">${t.f3q}</div>
+    `},
+    { icon:'sleep', html:`
+      <h2>${t.f4.replace('{sl}', n('indigo','sd-sl'))}</h2>
+      <p>${t.f4s}</p>
+      <div class="fact-quote">${t.f4q}</div>
+    `},
+    { icon:'moon', html:`
+      <h2>${t.f5.replace('{pr}', n('','sd-pr'))}</h2>
+      <p>${t.f5s.replace('{pr}', `<span id="sd-pr2">…</span>`)}</p>
+      <div class="fact-quote">${t.f5q}</div>
+    `},
+    { icon:'hands', html:`
+      <h2>${t.f6.replace('{sj}', n('green','sd-sj'))}</h2>
+      <p>${t.f6s}</p>
+      <div class="fact-quote">${t.f6q}</div>
+    `},
+    { icon:'message', html:`
+      <h2>${t.f7.replace('{ah}', n('amber','sd-ah'))}</h2>
+      <p>${t.f7s}</p>
+      <div class="fact-quote">${t.f7q}</div>
+    `},
+    { icon:'sparkle', html:`
+      <h2>${t.f8.replace('{sh}', n('purple','sd-sh'))}</h2>
+      <p>${t.f8s}</p>
+      <div class="fact-quote">${t.f8q}</div>
+    `},
+    { icon:'book', html:`
+      <h2>${t.f9.replace('{rm}', n('teal','sd-rm'))}</h2>
+      <p>${t.f9s.replace('{fd}', `<span id="sd-fd">…</span>`)}</p>
+      <div class="fact-quote">${t.f9q}</div>
+    `},
+    { icon:'globe', html:`
+      <h2>${t.f10}</h2>
+      <p>${t.f10s.replace('{pop}', n('blue','sd-pop'))}</p>
+      <div class="fact-quote">${t.f10q}</div>
+    `},
+    { icon:'star', html:`
+      <h2>${t.f11}</h2>
+      <p>${t.f11s.replace('{days}', `<span id="sd-days2">…</span>`)}</p>
+      <div class="fact-quote">${t.f11q}</div>
+    `},
+    { icon:'flag', html:`
+      <h2>${t.f12}</h2>
+      <p>${t.f12s}</p>
+      <div class="fact-quote">${t.f12q}</div>
+      <button class="pill-btn" style="margin-top:28px" onclick="resetJourney()">${t.reset}</button>
+    `},
+  ];
+
+  document.getElementById('factsContainer').innerHTML = tpl.map((f,i) =>
+    `<div class="fact-section${i===0?' active':''}" data-icon="${f.icon}">
+      <div class="fact-inner">${f.html}</div>
+    </div>`
+  ).join('');
+}
+
+/* ═══════════════════════════════════════
+   UPDATE LIVE STATS
+═══════════════════════════════════════ */
+function updateStats() {
+  if (!birthday) return;
+  const s   = computeStats();
+  const now = new Date();
+  const bd  = new Date(birthday + 'T12:00:00');
+  // years / months / weeks
+  const ageYears  = now.getFullYear() - bd.getFullYear() -
+    (now < new Date(now.getFullYear(), bd.getMonth(), bd.getDate()) ? 1 : 0);
+  const ageMonths = Math.floor(s.days / 30.44) % 12;
+  const ageWeeks  = Math.floor(s.days / 7) % 52;
+
+  function set(id, v) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = fmt(v);
+  }
+  set('sd-days',  s.days);
+  set('sd-days2', s.days);
+  set('sd-hb',    s.hb);
+  set('sd-bl',    s.bl);
+  set('sd-br',    s.br);
+  set('sd-sl',    s.sl);
+  set('sd-pr',    s.pr);
+  set('sd-pr2',   s.pr);
+  set('sd-sj',    s.sj);
+  set('sd-ah',    s.ah);
+  set('sd-sh',    s.sh);
+  set('sd-rm',    s.rm);
+  set('sd-fd',    s.fd);
+  set('sd-pop',   s.pop);
+
+  // rings — circumference = 2π×34 ≈ 213.6
+  const C = 213.6;
+  function setRing(id, lblId, val, max) {
+    const pct = Math.min(val / max, 1);
+    const el  = document.getElementById(id);
+    const lbl = document.getElementById(lblId);
+    if (el)  el.style.strokeDashoffset = C - (C * pct);
+    if (lbl) lbl.textContent = Math.round(val);
+  }
+  setRing('ringYears',  'ringYearsLbl',  ageYears,  100);
+  setRing('ringMonths', 'ringMonthsLbl', ageMonths, 12);
+  setRing('ringWeeks',  'ringWeeksLbl',  ageWeeks,  52);
+}
+
+/* ═══════════════════════════════════════
+   SCROLL HANDLER
+═══════════════════════════════════════ */
+function onScroll() {
+  const bh       = document.getElementById('bottomHalf');
+  const sections = document.querySelectorAll('.fact-section');
+  const mid      = bh.getBoundingClientRect().top + bh.clientHeight / 2;
+
+  let active = null;
+  sections.forEach(s => {
+    const r   = s.getBoundingClientRect();
+    const top = r.top + r.height / 2;
+    s.classList.remove('active');
+    if (!active || Math.abs(top - mid) < Math.abs(active.dist)) {
+      active = { el: s, dist: top - mid };
+    }
+  });
+  if (active) {
+    active.el.classList.add('active');
+    setIcon(active.el.dataset.icon);
+  }
+}
+
+/* ═══════════════════════════════════════
+   START / RESET
+═══════════════════════════════════════ */
+function startJourney() {
+  const val = document.getElementById('birthdayInput').value;
+  if (!val) { alert(T[lang].label); return; }
+
+  birthday = val;
+  document.getElementById('inputScreen').style.display = 'none';
+  document.getElementById('statsScreen').style.display = 'block';
+
+  generateFacts();
+  setIcon('calendar');
+  setTimeout(fillCalendar, 250);
+
+  updateStats();
+  clearInterval(ticker);
+  ticker = setInterval(updateStats, 250);
+
+  const bh = document.getElementById('bottomHalf');
+  bh.addEventListener('scroll', onScroll, { passive: true });
+  bh.scrollTop = 0;
+}
+
+function resetJourney() {
+  clearInterval(ticker);
+  birthday = null;
+  curIcon  = '';
+  document.getElementById('bottomHalf').removeEventListener('scroll', onScroll);
+  document.getElementById('statsScreen').style.display = 'none';
+  document.getElementById('inputScreen').style.display = 'flex';
+  document.getElementById('birthdayInput').value = '';
+  document.getElementById('factsContainer').innerHTML = '';
+}
+
+/* ═══════════════════════════════════════
+   BOOT
+═══════════════════════════════════════ */
+document.getElementById('birthdayInput').max = new Date().toISOString().split('T')[0];
+window.addEventListener('scroll', () => {
+  document.getElementById('mainHeader').classList.toggle('fixed', window.scrollY > 40);
+  document.getElementById('scrollUp').classList.toggle('show', window.scrollY > 300);
+});
+</script>
+</body>
+</html>
