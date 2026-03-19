@@ -3,7 +3,7 @@
     "image": "/assets/images/stories/hijra_story.png",
     "description": "An interactive map tracing the Prophet's Hijra journey from Makkah to Madinah with rich historical storytelling.",
     "label": "Hijra Map",
-    "url": "/hijra7.html"
+    "url": "portfolio/stories/hijra.html"
   },
   {
     "image": "/assets/images/projects/66.jpg",
@@ -15,7 +15,7 @@
     "image": "/assets/images/stories/deed-balance-story.png",
     "description": "A daily reflection tool that weighs good and bad actions into a simple visual result.",
     "label": "The Deeds Balance",
-    "url": "Portfolio/stories/deed-balance.html"
+    "url": "portfolio/stories/deed-balance.html"
   },
   {
     "image": "https://assets.codepen.io/2585/Mechanical+Love.svg",
