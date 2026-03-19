@@ -31,6 +31,12 @@
   },
   {
     "image": "https://assets.codepen.io/2585/Roboto.svg",
+    "description": "A logic-based UI puzzle focused on state, constraints, and interaction.",
+    "label": "The Diskussion Toggle",
+    "url": "portfolio/stories/diskussion-toggle-puzzle.html"
+  },
+  {
+    "image": "https://assets.codepen.io/2585/Roboto.svg",
     "description": "Portfolio site for DigitXa featuring a snake-menu component and firefly particle effects.",
     "label": "DigitXa Portfolio",
     "url": "#"
