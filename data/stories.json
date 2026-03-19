@@ -1,39 +1,39 @@
 [
   {
-    "image": "/assets/images/stories/hijra_story.png",
+    "image": "../assets/images/stories/hijra_story.png",
     "description": "An interactive map tracing the Prophet's Hijra journey from Makkah to Madinah with rich historical storytelling.",
     "label": "Hijra Map",
-    "url": "portfolio/stories/hijra.html"
+    "url": "stories/hijra.html"
   },
   {
-    "image": "/assets/images/projects/66.jpg",
+    "image": "../assets/images/projects/66.jpg",
     "description": "Real-time tracker visualizing the Palestine crisis with live statistics and an interactive data layer.",
     "label": "Crisis Tracker",
     "url": "https://samehbilal.github.io/palestine-crises/live.html"
   },
   {
-    "image": "/assets/images/stories/deed-balance-story.png",
+    "image": "../assets/images/stories/deed-balance-story.png",
     "description": "A daily reflection tool that weighs good and bad actions into a simple visual result.",
     "label": "The Deeds Balance",
-    "url": "portfolio/stories/deed-balance.html"
+    "url": "stories/deed-balance.html"
   },
   {
     "image": "https://assets.codepen.io/2585/Mechanical+Love.svg",
     "description": "A personal Islamic life-stats page with prayer counts, Hijri calendar support, and multi-language UI.",
     "label": "Islamic Life Stats",
-    "url": "portfolio/stories/islamic-life-stats.html"
+    "url": "stories/islamic-life-stats.html"
   },
   {
     "image": "https://assets.codepen.io/2585/Waiting.svg",
     "description": "A beautiful real-time map showing Muslim births and conversions happening around the world.",
     "label": "Muslim Births Map",
-    "url": "portfolio/stories/islamic-birth-map.html"
+    "url": "stories/islamic-birth-map.html"
   },
   {
     "image": "https://assets.codepen.io/2585/Roboto.svg",
     "description": "A logic-based UI puzzle focused on state, constraints, and interaction.",
     "label": "The Diskussion Toggle",
-    "url": "portfolio/stories/diskussion-toggle-puzzle.html"
+    "url": "stories/diskussion-toggle-puzzle.html"
   },
   {
     "image": "https://assets.codepen.io/2585/Roboto.svg",
