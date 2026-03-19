@@ -1,18 +1,18 @@
 [
   {
-    "image": "../assets/images/stories/hijra_story.png",
+    "image": "https://samehbilal.github.io/portfolio/assets/images/stories/hijra_story.png",
     "description": "An interactive map tracing the Prophet's Hijra journey from Makkah to Madinah with rich historical storytelling.",
     "label": "Hijra Map",
     "url": "stories/hijra.html"
   },
   {
-    "image": "../assets/images/projects/66.jpg",
+    "image": "https://samehbilal.github.io/portfolio/assets/images/projects/66.jpg",
     "description": "Real-time tracker visualizing the Palestine crisis with live statistics and an interactive data layer.",
     "label": "Crisis Tracker",
     "url": "https://samehbilal.github.io/palestine-crises/live.html"
   },
   {
-    "image": "../assets/images/stories/deed-balance-story.png",
+    "image": "https://samehbilal.github.io/portfolio/assets/images/stories/deed-balance-story.png",
     "description": "A daily reflection tool that weighs good and bad actions into a simple visual result.",
     "label": "The Deeds Balance",
     "url": "stories/deed-balance.html"
