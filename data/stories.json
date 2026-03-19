@@ -38,6 +38,12 @@
   {
     "image": "https://assets.codepen.io/2585/Roboto.svg",
     "description": "Portfolio site for DigitXa featuring a snake-menu component and firefly particle effects.",
+    "label": "Islamic Checklist",
+    "url": "stories/islamic-checklist.html"
+  },
+  {
+    "image": "https://assets.codepen.io/2585/Roboto.svg",
+    "description": "Portfolio site for DigitXa featuring a snake-menu component and firefly particle effects.",
     "label": "DigitXa Portfolio",
     "url": "#"
   },
