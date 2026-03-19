@@ -145,9 +145,6 @@ a:hover{color:var(--primary)}
   height:1px;background:var(--border-color);
 }
 
-/* slide nav — invisible, snap logic only */
-.slide-nav{ display:none; }
-
 /* icon display */
 .icon-wrap{
   display:flex;align-items:center;justify-content:center;
@@ -348,9 +345,6 @@ footer a{color:var(--primary)}
 <!-- ═══ STATS SCREEN ═══ -->
 <div id="statsScreen">
 
-  <!-- slide nav dots -->
-  <div class="slide-nav" id="slideNav"></div>
-
   <!-- top fixed half — icon -->
   <div class="top-half">
     <div class="icon-wrap" id="iconWrap">
@@ -360,9 +354,9 @@ footer a{color:var(--primary)}
 
   <!-- bottom scrollable half -->
   <div class="bottom-half" id="bottomHalf">
-    <div id="slideTrack" style="will-change:transform">
-      <div id="factsContainer"></div>
-    </div>
+    <div class="fact-spacer"></div>
+    <div id="factsContainer"></div>
+    <div class="fact-spacer"></div>
   </div>
 
 </div>
@@ -951,66 +945,27 @@ function updateStats() {
 }
 
 /* ═══════════════════════════════════════
-   SLIDE NAVIGATION — transform driven, no free scroll
+   SCROLL HANDLER
 ═══════════════════════════════════════ */
-let currentSlide = 0;
-let isAnimating  = false;
-let touchStartY  = 0;
+function onScroll() {
+  const bh       = document.getElementById('bottomHalf');
+  const sections = document.querySelectorAll('.fact-section');
+  const mid      = bh.getBoundingClientRect().top + bh.clientHeight / 2;
 
-function getSlides() { return document.querySelectorAll('.fact-section'); }
-
-function goToSlide(idx, animate) {
-  const slides = getSlides();
-  if (idx < 0 || idx >= slides.length || isAnimating) return;
-  isAnimating  = true;
-  currentSlide = idx;
-
-  // move the track
-  const track = document.getElementById('slideTrack');
-  track.style.transition = animate ? 'transform .5s cubic-bezier(.77,0,.18,1)' : 'none';
-  track.style.transform  = `translateY(${-idx * 50}vh)`;
-
-  // active class
-  slides.forEach((s, i) => s.classList.toggle('active', i === idx));
-  setIcon(slides[idx].dataset.icon);
-  updateDots(idx, slides.length);
-
-  setTimeout(() => { isAnimating = false; }, animate ? 520 : 0);
+  let active = null;
+  sections.forEach(s => {
+    const r   = s.getBoundingClientRect();
+    const top = r.top + r.height / 2;
+    s.classList.remove('active');
+    if (!active || Math.abs(top - mid) < Math.abs(active.dist)) {
+      active = { el: s, dist: top - mid };
+    }
+  });
+  if (active) {
+    active.el.classList.add('active');
+    setIcon(active.el.dataset.icon);
+  }
 }
-
-function updateDots() {}   // invisible — kept for compat
-function buildDots()   {}  // invisible — kept for compat
-
-/* wheel */
-function onWheel(e) {
-  e.preventDefault();
-  if (isAnimating) return;
-  const slides = getSlides();
-  if (e.deltaY > 0) goToSlide(Math.min(currentSlide + 1, slides.length - 1), true);
-  else              goToSlide(Math.max(currentSlide - 1, 0), true);
-}
-
-/* touch */
-function onTouchStart(e) { touchStartY = e.touches[0].clientY; }
-function onTouchEnd(e) {
-  if (isAnimating) return;
-  const diff   = touchStartY - e.changedTouches[0].clientY;
-  const slides = getSlides();
-  if (Math.abs(diff) < 30) return;
-  if (diff > 0) goToSlide(Math.min(currentSlide + 1, slides.length - 1), true);
-  else          goToSlide(Math.max(currentSlide - 1, 0), true);
-}
-
-/* keyboard */
-function onKey(e) {
-  if (document.getElementById('statsScreen').style.display === 'none') return;
-  const slides = getSlides();
-  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') goToSlide(Math.min(currentSlide+1, slides.length-1), true);
-  if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  goToSlide(Math.max(currentSlide-1, 0), true);
-}
-
-/* dummy — no longer used */
-function onScroll() {}
 
 /* ═══════════════════════════════════════
    START / RESET
@@ -1019,23 +974,11 @@ function startJourney() {
   const val = document.getElementById('birthdayInput').value;
   if (!val) { alert(T[lang].label); return; }
 
-  birthday     = val;
-  currentSlide = 0;
-  isAnimating  = false;
-
+  birthday = val;
   document.getElementById('inputScreen').style.display = 'none';
   document.getElementById('statsScreen').style.display = 'block';
 
   generateFacts();
-
-  // reset track position
-  const track = document.getElementById('slideTrack');
-  track.style.transition = 'none';
-  track.style.transform  = 'translateY(0)';
-
-  const slides = getSlides();
-  slides.forEach((s, i) => s.classList.toggle('active', i === 0));
-
   setIcon('calendar');
   setTimeout(fillCalendar, 250);
 
@@ -1044,30 +987,19 @@ function startJourney() {
   ticker = setInterval(updateStats, 250);
 
   const bh = document.getElementById('bottomHalf');
-  bh.addEventListener('wheel',      onWheel,      { passive: false });
-  bh.addEventListener('touchstart', onTouchStart, { passive: true  });
-  bh.addEventListener('touchend',   onTouchEnd,   { passive: true  });
-  document.addEventListener('keydown', onKey);
+  bh.addEventListener('scroll', onScroll, { passive: true });
+  bh.scrollTop = 0;
 }
 
 function resetJourney() {
   clearInterval(ticker);
-  birthday     = null;
-  curIcon      = '';
-  currentSlide = 0;
-  isAnimating  = false;
-
-  const bh = document.getElementById('bottomHalf');
-  bh.removeEventListener('wheel',      onWheel);
-  bh.removeEventListener('touchstart', onTouchStart);
-  bh.removeEventListener('touchend',   onTouchEnd);
-  document.removeEventListener('keydown', onKey);
-
+  birthday = null;
+  curIcon  = '';
+  document.getElementById('bottomHalf').removeEventListener('scroll', onScroll);
   document.getElementById('statsScreen').style.display = 'none';
   document.getElementById('inputScreen').style.display = 'flex';
   document.getElementById('birthdayInput').value = '';
   document.getElementById('factsContainer').innerHTML = '';
-  document.getElementById('slideNav').innerHTML = '';
 }
 
 /* ═══════════════════════════════════════
