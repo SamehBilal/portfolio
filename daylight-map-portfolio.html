@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>World Daylight Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --primary:#F9812E;
+  --bg:light-dark(#ffffff,#0e0e0e);
+  --bg2:light-dark(#f5f5f5,#141414);
+  --card-bg:light-dark(#fff,#111);
+  --text:light-dark(#0e0e0e,#f0f0f0);
+  --text-muted:light-dark(#666,#888);
+  --border:light-dark(rgba(0,0,0,0.12),rgba(255,255,255,0.1));
+  --grid-color:light-dark(rgba(0,0,0,0.04),rgba(255,255,255,0.03));
+}
+
+[data-theme="dark"]{color-scheme:dark}
+[data-theme="light"]{color-scheme:light}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  position:relative;
+}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(var(--grid-color) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);
+  background-size:40px 40px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);
+  pointer-events:none;
+  z-index:0;
+}
+
+.page{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 24px}
+
+/* NAV */
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 0;
+}
+
+.logo{
+  display:flex;
+  gap:2px;
+}
+.logo span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:30px;height:30px;
+  font-weight:900;
+  font-size:13px;
+  border:1.5px solid var(--border);
+  background:var(--card-bg);
+  color:var(--text);
+  letter-spacing:0;
+}
+.logo span.accent{
+  background:var(--primary);
+  border-color:var(--primary);
+  color:#fff;
+}
+
+.theme-btn{
+  background:none;
+  border:1.5px solid var(--border);
+  border-radius:100px;
+  padding:6px 16px;
+  font-family:'Poppins',sans-serif;
+  font-size:12px;
+  font-weight:600;
+  color:var(--text);
+  cursor:pointer;
+  transition:all .2s;
+}
+.theme-btn:hover{background:var(--primary);border-color:var(--primary);color:#fff}
+
+/* HERO */
+.hero{padding:48px 0 32px}
+.hero-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--primary);margin-bottom:12px}
+.hero h1{font-size:clamp(36px,6vw,72px);font-weight:900;line-height:1.05;letter-spacing:-2px}
+.hero h1 span{color:var(--primary)}
+.hero p{margin-top:14px;font-size:15px;color:var(--text-muted);max-width:500px;font-weight:300;line-height:1.6}
+
+/* MAP CARD */
+.map-card{
+  border:1.5px solid var(--border);
+  border-radius:4px;
+  background:var(--card-bg);
+  box-shadow:4px 4px 0 var(--primary);
+  overflow:hidden;
+  position:relative;
+  margin-bottom:32px;
+}
+
+.map-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 20px;
+  border-bottom:1.5px solid var(--border);
+}
+.map-header-left{display:flex;align-items:center;gap:10px}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot.red{background:#ff5f57}
+.dot.yellow{background:#febc2e}
+.dot.green{background:#28c840}
+.map-title{font-size:12px;font-weight:600;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase}
+
+.datetime-bar{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.datetime-bar .dt-val{
+  font-size:13px;font-weight:600;
+  color:var(--text);
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:4px 10px;
+  min-width:64px;
+  text-align:center;
+}
+.skip-btn{
+  background:none;border:none;
+  color:var(--text-muted);
+  font-size:18px;cursor:pointer;
+  line-height:1;padding:2px 4px;
+  transition:color .2s;
+}
+.skip-btn:hover{color:var(--primary)}
+
+.map-container{
+  position:relative;
+  width:100%;
+  background:#1a233b;
+}
+.map-container::before{
+  content:'';display:block;padding-top:50%;
+}
+.map-container svg{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+}
+
+/* CONTROLS ROW */
+.controls-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 20px;
+  border-top:1.5px solid var(--border);
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.anim-btn{
+  background:none;
+  border:1.5px solid var(--border);
+  border-radius:4px;
+  padding:6px 16px;
+  font-family:'Poppins',sans-serif;
+  font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:1px;
+  color:var(--text-muted);cursor:pointer;
+  transition:all .2s;
+  display:flex;align-items:center;gap:6px;
+}
+.anim-btn:hover{border-color:var(--primary);color:var(--primary)}
+.anim-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.anim-btn .anim-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:currentColor;
+  transition:background .2s;
+}
+.anim-btn.active .anim-dot{animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.skip-group{
+  display:flex;align-items:center;gap:4px;
+}
+.skip-group label{font-size:11px;color:var(--text-muted);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-right:4px}
+.skip-pill{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:4px 10px;
+  font-family:'Poppins',sans-serif;
+  font-size:11px;font-weight:600;
+  color:var(--text-muted);cursor:pointer;
+  transition:all .2s;
+}
+.skip-pill:hover{border-color:var(--primary);color:var(--primary)}
+
+/* CREDIT */
+.credit{
+  padding:24px 0 48px;
+  font-size:11px;
+  color:var(--text-muted);
+  font-weight:300;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.credit a{color:var(--primary);text-decoration:none}
+.credit a:hover{text-decoration:underline}
+.credit-sep{color:var(--border)}
+
+/* SCROLL UP */
+.scroll-up{
+  position:fixed;bottom:32px;right:32px;
+  width:40px;height:40px;
+  background:var(--primary);
+  color:#fff;font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:4px;
+  cursor:pointer;
+  opacity:0;transition:opacity .3s;
+  border:none;font-family:'Poppins',sans-serif;
+  box-shadow:2px 2px 0 rgba(0,0,0,0.3);
+  z-index:999;
+}
+.scroll-up.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <nav>
+    <div class="logo">
+      <span>S</span><span>A</span><span>M</span><span class="accent">E</span><span>H</span>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()">Toggle Theme</button>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-label">Interactive Globe</div>
+    <h1>World <span>Daylight</span><br>Map</h1>
+    <p>Equirectangular projection rendered with D3 + SunCalc. Watch the terminator line move as the Earth rotates in real time.</p>
+  </div>
+
+  <div class="map-card">
+    <div class="map-header">
+      <div class="map-header-left">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <span class="map-title">Daylight Projection</span>
+      </div>
+      <div class="datetime-bar">
+        <button class="skip-btn" id="btn-minus-60" title="-1h">‹</button>
+        <div class="dt-val" id="curr-time">--:--</div>
+        <button class="skip-btn" id="btn-plus-60" title="+1h">›</button>
+        <button class="skip-btn" id="btn-minus-day" title="-1d">«</button>
+        <div class="dt-val" id="curr-date">-- ---</div>
+        <button class="skip-btn" id="btn-plus-day" title="+1d">»</button>
+      </div>
+    </div>
+
+    <div class="map-container">
+      <svg id="daylight-map"></svg>
+    </div>
+
+    <div class="controls-row">
+      <button class="anim-btn" id="anim-toggle">
+        <span class="anim-dot"></span> Animate
+      </button>
+      <div class="skip-group">
+        <label>Jump</label>
+        <button class="skip-pill" data-skip="-720">−12h</button>
+        <button class="skip-pill" data-skip="-360">−6h</button>
+        <button class="skip-pill" data-skip="360">+6h</button>
+        <button class="skip-pill" data-skip="720">+12h</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="credit">
+    <span>Powered by</span>
+    <a href="https://d3js.org/">D3.js</a><span class="credit-sep">·</span>
+    <a href="https://github.com/mourner/suncalc">SunCalc</a><span class="credit-sep">·</span>
+    <a href="https://github.com/mbostock/topojson">Topojson</a><span class="credit-sep">·</span>
+    <a href="https://momentjs.com/">Moment.js</a><span class="credit-sep">·</span>
+    <a href="https://samehbilal.github.io/earthScribe/">samehbilal.github.io</a>
+  </div>
+</div>
+
+<button class="scroll-up" id="scrollUp" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.20/topojson.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/215059/suncalc.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-geo-projection/0.2.16/d3.geo.projection.min.js"></script>
+
+<script>
+(function(){
+  var DaylightMap,updateDateTime;
+
+  DaylightMap=(function(){
+    class DaylightMap{
+      constructor(svg,date,options={}){
+        this.options={
+          tickDur:options.tickDur||400,
+          shadowOpacity:options.shadowOpacity||0.22,
+          bgColorLeft:options.bgColorLeft||'#1a233b',
+          bgColorRight:options.bgColorRight||'#1f2e4a',
+          lightsColor:options.lightsColor||'#F9812E',
+          lightsOpacity:options.lightsOpacity||0.7,
+          sunOpacity:options.sunOpacity||0.13
+        };
+        this.PRECISION_LAT=1;
+        this.PRECISION_LNG=10;
+        this.MAP_WIDTH=options.width||1100;
+        this.MAP_HEIGHT=this.MAP_WIDTH/2;
+        this.SCALAR_X=this.MAP_WIDTH/360;
+        this.SCALAR_Y=this.MAP_HEIGHT/180;
+        this.PROJECTION_SCALE=this.MAP_WIDTH/6.25;
+        this.WORLD_PATHS_URL='https://s3-us-west-2.amazonaws.com/s.cdpn.io/215059/world-110m.json';
+        this.CITIES_DATA_URL='https://s3-us-west-2.amazonaws.com/s.cdpn.io/215059/cities-200000.json';
+        this.svg=svg;
+        this.isAnimating=false;
+        this.cities=[];
+        this.animInterval=null;
+        this.currDate=date||new Date();
+      }
+
+      colorLuminance(hex,lum=0){
+        var c,i,rgb;c=null;i=0;rgb='#';
+        hex=String(hex).replace(/[^0-9a-f]/gi,'');
+        if(hex.length<6)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+        while(i<3){
+          c=parseInt(hex.substr(i*2,2),16);
+          c=Math.round(Math.min(Math.max(0,c+c*lum),255)).toString(16);
+          rgb+=('00'+c).substr(c.length);i++;
+        }
+        return rgb;
+      }
+
+      isDaylight(obj){return obj.altitude>0}
+      isNorthSun(){return this.isDaylight(SunCalc.getPosition(this.currDate,90,0))}
+
+      getSunriseSunsetLatitude(lng,northSun){
+        var delta,endLat,lat,startLat;
+        if(northSun){startLat=-90;endLat=90;delta=this.PRECISION_LAT;}
+        else{startLat=90;endLat=-90;delta=-this.PRECISION_LAT;}
+        lat=startLat;
+        while(lat!==endLat){
+          if(this.isDaylight(SunCalc.getPosition(this.currDate,lat,lng)))return lat;
+          lat+=delta;
+        }
+        return lat;
+      }
+
+      getAllSunPositionsAtLng(lng){
+        var alt,lat,peak,result;lat=-90;peak=0;result=[];
+        while(lat<90){
+          alt=SunCalc.getPosition(this.currDate,lat,lng).altitude;
+          if(alt>peak){peak=alt;result=[peak,lat];}
+          lat+=this.PRECISION_LNG;
+        }
+        return result;
+      }
+
+      getSunPosition(){
+        var alt,coords,lng,peak,result;lng=-180;coords=[];peak=0;
+        while(lng<180){
+          alt=this.getAllSunPositionsAtLng(lng);
+          if(alt[0]>peak){peak=alt[0];result=[alt[1],lng];}
+          lng+=this.PRECISION_LAT;
+        }
+        return this.coordToXY(result);
+      }
+
+      getAllSunriseSunsetCoords(northSun){
+        var coords,lng;lng=-180;coords=[];
+        while(lng<180){coords.push([this.getSunriseSunsetLatitude(lng,northSun),lng]);lng+=this.PRECISION_LNG;}
+        coords.push([this.getSunriseSunsetLatitude(180,northSun),180]);
+        return coords;
+      }
+
+      coordToXY(coord){
+        var x,y;
+        x=(coord[1]+180)*this.SCALAR_X;
+        y=this.MAP_HEIGHT-(coord[0]+90)*this.SCALAR_Y;
+        return{x:x,y:y};
+      }
+
+      getCityOpacity(coord){
+        if(SunCalc.getPosition(this.currDate,coord[0],coord[1]).altitude>0)return 0;
+        return 1;
+      }
+
+      getCityRadius(population){
+        if(population<200000)return 0.4;
+        else if(population<500000)return 0.55;
+        else if(population<1000000)return 0.65;
+        else if(population<2000000)return 0.8;
+        else if(population<4000000)return 1.0;
+        else return 1.3;
+      }
+
+      getPath(northSun){
+        var coords,path;path=[];
+        coords=this.getAllSunriseSunsetCoords(northSun);
+        coords.forEach((val)=>{path.push(this.coordToXY(val));});
+        return path;
+      }
+
+      getPathString(northSun){
+        var path,pathStr,yStart;
+        yStart=northSun?this.MAP_HEIGHT:0;
+        pathStr=`M 0 ${yStart}`;
+        path=this.getPath(northSun);
+        pathStr+=this.lineFunction(path);
+        pathStr+=` L ${this.MAP_WIDTH}, ${yStart} `;
+        pathStr+=` L 0, ${yStart} `;
+        return pathStr;
+      }
+
+      createDefs(){
+        d3.select(this.svg).append('defs').append('linearGradient').attr('id','gradient').attr('x1','0%').attr('y1','0%').attr('x2','100%').attr('y2','0%');
+        d3.select('#gradient').append('stop').attr('offset','0%').attr('stop-color',this.options.bgColorLeft);
+        d3.select('#gradient').append('stop').attr('offset','100%').attr('stop-color',this.options.bgColorRight);
+        d3.select(this.svg).select('defs').append('linearGradient').attr('id','landGradient').attr('x1','0%').attr('y1','0%').attr('x2','100%').attr('y2','0%');
+        d3.select('#landGradient').append('stop').attr('offset','0%').attr('stop-color',this.colorLuminance(this.options.bgColorLeft,0.4));
+        d3.select('#landGradient').append('stop').attr('offset','100%').attr('stop-color',this.colorLuminance(this.options.bgColorRight,0.4));
+        d3.select(this.svg).select('defs').append('radialGradient').attr('id','radialGradient');
+        d3.select('#radialGradient').append('stop').attr('offset','0%').attr('stop-opacity',this.options.sunOpacity).attr('stop-color','#F9812E');
+        d3.select('#radialGradient').append('stop').attr('offset','60%').attr('stop-opacity',this.options.sunOpacity*0.3).attr('stop-color','#F9812E');
+        d3.select('#radialGradient').append('stop').attr('offset','100%').attr('stop-opacity',0).attr('stop-color','#F9812E');
+      }
+
+      drawSVG(){
+        return d3.select(this.svg).attr('width',this.MAP_WIDTH).attr('height',this.MAP_HEIGHT).attr('viewBox',`0 0 ${this.MAP_WIDTH} ${this.MAP_HEIGHT}`).append('rect').attr('width',this.MAP_WIDTH).attr('height',this.MAP_HEIGHT).attr('fill','url(#gradient)');
+      }
+
+      drawSun(){
+        var xy=this.getSunPosition();
+        return d3.select(this.svg).append('circle').attr('cx',xy.x).attr('cy',xy.y).attr('id','sun').attr('r',180).attr('opacity',1).attr('fill','url(#radialGradient)');
+      }
+
+      drawPath(){
+        var path=this.getPathString(this.isNorthSun());
+        return d3.select(this.svg).append('path').attr('id','nightPath').attr('fill','rgb(0,0,0)').attr('fill-opacity',this.options.shadowOpacity).attr('d',path);
+      }
+
+      drawLand(){
+        return $.get(this.WORLD_PATHS_URL,(data)=>{
+          var projection=d3.geo.equirectangular().scale(this.PROJECTION_SCALE).translate([this.MAP_WIDTH/2,this.MAP_HEIGHT/2]).precision(0.1);
+          var worldPath=d3.geo.path().projection(projection);
+          d3.select(this.svg).append('path').attr('id','land').attr('fill','url(#landGradient)').datum(topojson.feature(data,data.objects.land)).attr('d',worldPath);
+          this.shuffleElements();
+        });
+      }
+
+      drawCities(){
+        return $.get(this.CITIES_DATA_URL,(data)=>{
+          data.forEach((val,i)=>{
+            var coords=[parseFloat(val[2]),parseFloat(val[3])];
+            var xy=this.coordToXY(coords);
+            var id=`city${i}`;
+            var opacity=this.getCityOpacity(coords);
+            var radius=this.getCityRadius(val[0]);
+            d3.select(this.svg).append('circle').attr('cx',xy.x).attr('cy',xy.y).attr('id',id).attr('r',radius).attr('opacity',opacity*this.options.lightsOpacity).attr('fill',this.options.lightsColor);
+            this.cities.push({latlng:coords,xy:xy,population:parseInt(val[0]),id:id,opacity:opacity});
+          });
+        });
+      }
+
+      redrawSun(animate){
+        var xy=this.getSunPosition();
+        var curX=parseInt(d3.select('#sun').attr('cx'));
+        if(animate&&(Math.abs(xy.x-curX)<this.MAP_WIDTH*0.8)){
+          return d3.select('#sun').transition().duration(this.options.tickDur).ease('linear').attr('cx',xy.x).attr('cy',xy.y);
+        }
+        return d3.select('#sun').attr('cx',xy.x).attr('cy',xy.y);
+      }
+
+      redrawCities(){
+        this.cities.forEach((val,i)=>{
+          var opacity=this.getCityOpacity(val.latlng);
+          if(val.opacity!==opacity){
+            this.cities[i].opacity=opacity;
+            d3.select(`#${val.id}`).transition().duration(this.options.tickDur*2).attr('opacity',this.options.lightsOpacity*opacity);
+          }
+        });
+      }
+
+      redrawPath(animate){
+        var path=this.getPathString(this.isNorthSun());
+        var nightPath=d3.select('#nightPath');
+        if(animate)return nightPath.transition().duration(this.options.tickDur).ease('linear').attr('d',path);
+        return nightPath.attr('d',path);
+      }
+
+      redrawAll(increment=15,animate=true){
+        this.currDate.setMinutes(this.currDate.getMinutes()+increment);
+        this.redrawPath(animate);
+        this.redrawSun(animate);
+        this.redrawCities();
+      }
+
+      drawAll(){
+        this.drawSVG();this.createDefs();this.drawLand();this.drawPath();this.drawSun();this.drawCities();
+      }
+
+      shuffleElements(){
+        $('#land').insertBefore('#nightPath');
+        $('#sun').insertBefore('#land');
+      }
+
+      animate(increment=0){
+        if(!this.isAnimating){
+          this.isAnimating=true;
+          this.animInterval=setInterval(()=>{
+            this.redrawAll(increment);
+            $(document).trigger('update-date-time',this.currDate);
+          },this.options.tickDur);
+        }
+      }
+
+      stop(){this.isAnimating=false;clearInterval(this.animInterval);}
+
+      init(){
+        this.drawAll();
+        setInterval(()=>{
+          if(this.isAnimating)return;
+          this.redrawAll(1,false);
+          $(document).trigger('update-date-time',this.currDate);
+        },60000);
+      }
+    }
+
+    DaylightMap.prototype.lineFunction=d3.svg.line().x(d=>d.x).y(d=>d.y).interpolate('basis');
+    return DaylightMap;
+  }).call(this);
+
+  updateDateTime=function(date){
+    document.getElementById('curr-time').textContent=moment(date).format('HH:mm');
+    document.getElementById('curr-date').textContent=moment(date).format('DD MMM');
+  };
+
+  $(document).ready(function(){
+    var svg=document.getElementById('daylight-map');
+    var map=new DaylightMap(svg,new Date());
+    map.init();
+    updateDateTime(map.currDate);
+
+    $(document).on('update-date-time',()=>updateDateTime(map.currDate));
+
+    // Skip buttons header
+    document.getElementById('btn-minus-60').onclick=()=>{map.stop();$('#anim-toggle').removeClass('active');map.redrawAll(-60,false);updateDateTime(map.currDate);};
+    document.getElementById('btn-plus-60').onclick=()=>{map.stop();$('#anim-toggle').removeClass('active');map.redrawAll(60,false);updateDateTime(map.currDate);};
+    document.getElementById('btn-minus-day').onclick=()=>{map.stop();$('#anim-toggle').removeClass('active');map.redrawAll(-1440,false);updateDateTime(map.currDate);};
+    document.getElementById('btn-plus-day').onclick=()=>{map.stop();$('#anim-toggle').removeClass('active');map.redrawAll(1440,false);updateDateTime(map.currDate);};
+
+    // Skip pills
+    document.querySelectorAll('.skip-pill').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        map.stop();
+        document.getElementById('anim-toggle').classList.remove('active');
+        map.redrawAll(parseInt(btn.dataset.skip),false);
+        updateDateTime(map.currDate);
+      });
+    });
+
+    // Animate toggle
+    document.getElementById('anim-toggle').addEventListener('click',function(){
+      if(this.classList.contains('active')){
+        this.classList.remove('active');
+        map.stop();
+      } else {
+        this.classList.add('active');
+        map.animate(10);
+      }
+    });
+  });
+
+  // Theme toggle
+  window.toggleTheme=function(){
+    var html=document.documentElement;
+    html.dataset.theme=html.dataset.theme==='dark'?'light':'dark';
+  };
+
+  // Scroll up
+  window.addEventListener('scroll',()=>{
+    document.getElementById('scrollUp').classList.toggle('show',window.scrollY>200);
+  });
+})();
+</script>
+</body>
+</html>
