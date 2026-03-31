@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Qibla — Sameh Bilal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/fonts/remixicon.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="apple-touch-icon" href="assets/images/favicon.png">
+<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
+<style>
+/* ── page-level overrides / qibla-specific ── */
+.qibla-hero {
+    padding: 80px 0 40px;
+    text-align: center;
+}
+.qibla-hero h1 {
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    margin-bottom: .6rem;
+}
+.qibla-hero h1 span { color: #F9812E; }
+.qibla-hero p {
+    font-size: .95rem;
+    opacity: .55;
+    font-weight: 300;
+    letter-spacing: .02em;
+}
+
+/* state cards */
+.qibla-card {
+    border: 1px solid var(--border-color, #2a2a2a);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.qibla-card .q-icon { font-size: 2.6rem; margin-bottom: 1rem; line-height: 1; }
+.qibla-card h3     { font-size: 1.15rem; font-weight: 600; margin-bottom: .5rem; }
+.qibla-card p      { font-size: .875rem; opacity: .6; line-height: 1.7; margin-bottom: 0; }
+
+/* scene card */
+.scene-card {
+    border: 1px solid var(--border-color, #2a2a2a);
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+/* direction label */
+.direction-label {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    min-height: 2.2rem;
+    margin-bottom: 1rem;
+    transition: color .3s;
+}
+.direction-label.on-target { color: #F9812E; }
+
+/* scene SVG */
+.scene-svg-wrap { max-width: 360px; margin: 0 auto 1.5rem; }
+#scene-svg { width: 100%; height: auto; display: block; }
+
+/* compass */
+.compass-outer {
+    position: relative;
+    width: 200px; height: 200px;
+    margin: 0 auto 1.5rem;
+}
+#compass-ring {
+    width: 200px; height: 200px;
+    border: 1px solid var(--border-color, #2a2a2a);
+    border-radius: 50%;
+    position: relative;
+    transition: transform .18s ease-out;
+}
+.compass-label {
+    position: absolute;
+    font-size: .65rem; font-weight: 600;
+    opacity: .5;
+    font-family: 'Poppins', sans-serif;
+}
+.compass-label.cn { top: 6px;    left: 50%; transform: translateX(-50%); }
+.compass-label.cs { bottom: 6px; left: 50%; transform: translateX(-50%); }
+.compass-label.ce { right: 8px;  top: 50%;  transform: translateY(-50%); }
+.compass-label.cw { left: 8px;   top: 50%;  transform: translateY(-50%); }
+.compass-needle {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px; height: 80px;
+    display: flex; flex-direction: column; align-items: center;
+    transform-origin: 50% 100%;
+}
+.needle-n { flex: 1; background: #F9812E; width: 3px; border-radius: 2px 2px 0 0; }
+.needle-s { flex: 1; background: rgba(128,128,128,.4); width: 3px; border-radius: 0 0 2px 2px; }
+.compass-center {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #F9812E; z-index: 2;
+}
+.qibla-ptr {
+    position: absolute; top: 50%; left: 50%;
+    width: 0; height: 94px;
+    transform-origin: 0 0;
+}
+.qibla-ptr::after {
+    content: '🕋';
+    position: absolute; top: -20px; left: -11px;
+    font-size: 1.2rem; line-height: 1;
+}
+
+/* readouts */
+.readout-row {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+.readout-box {
+    border: 1px solid var(--border-color, #2a2a2a);
+    padding: .5rem 1rem; min-width: 80px;
+}
+.readout-box label {
+    display: block; font-size: .62rem; opacity: .5;
+    text-transform: uppercase; letter-spacing: .08em; margin-bottom: .1rem;
+}
+.readout-box span { font-size: 1.15rem; font-weight: 700; }
+
+/* arrow hint */
+.arrow-hint {
+    font-size: 1.6rem; min-height: 2rem;
+    color: #F9812E; margin-bottom: .8rem;
+}
+
+/* accuracy */
+.accuracy-note { font-size: .75rem; opacity: .45; line-height: 1.5; }
+
+/* manual input */
+.manual-row {
+    display: flex; gap: .5rem; margin-top: 1rem;
+    justify-content: center; flex-wrap: wrap;
+}
+.manual-row input {
+    flex: 1; min-width: 130px; max-width: 220px;
+    padding: .5rem .9rem;
+    font-family: 'Poppins', sans-serif; font-size: .85rem;
+    background: transparent;
+    border: 1px solid var(--border-color, #2a2a2a);
+    color: inherit; outline: none;
+}
+.manual-row input:focus { border-color: #F9812E; }
+#fallback-result { font-size: .9rem; margin-top: .8rem; min-height: 1.4rem; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER (exact portfolio structure) ── -->
+<header class="main-header">
+    <div class="header-upper">
+        <div class="container">
+            <div class="header-inner d-flex align-items-center">
+
+                <div class="logo-outer" onclick="location.href='index.html'" style="cursor:pointer">
+                    <div class="logo">
+                        <span class="logo-letter is-active">S</span>
+                        <span class="logo-letter is-active">A</span>
+                        <span class="logo-letter is-active">M</span>
+                        <span class="logo-letter is-active">E</span>
+                        <span class="logo-letter is-active">H</span>
+                    </div>
+                </div>
+
+                <div class="nav-outer clearfix mx-auto">
+                    <nav class="main-menu navbar-expand-lg">
+                        <div class="navbar-header">
+                            <div class="mobile-logo">
+                                <div class="logo">
+                                    <span class="logo-letter is-active">S</span>
+                                    <span class="logo-letter is-active">A</span>
+                                    <span class="logo-letter is-active">M</span>
+                                    <span class="logo-letter is-active">E</span>
+                                    <span class="logo-letter is-active">H</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="o-page"></div>
+                    </nav>
+                </div>
+
+                <div class="menu-btns align-items-center">
+                    <a href="index.html#contact" class="theme-btn">
+                        Hire Me <i class="ri-shake-hands-line"></i>
+                    </a>
+                    <form class="form">
+                        <div class="arrow">
+                            <label>drag me.</label>
+                            <svg aria-hidden="true" viewBox="0 0 144 141" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M129.189 0.0490494C128.744 0.119441 126.422 0.377545 124.03 0.635648C114.719 1.6446 109.23 2.4893 108.058 3.09936C107.119 3.56864 106.674 4.34295 106.674 5.44576C106.674 6.71281 107.424 7.51058 109.043 7.97986C110.403 8.37875 110.825 8.42567 118.87 9.52847C121.778 9.92736 124.288 10.3028 124.475 10.3732C124.663 10.4436 122.951 11.1006 120.676 11.8749C110.028 15.4414 100.412 20.7677 91.7339 27.9242C88.38 30.7164 81.6957 37.4271 79.2096 40.5009C73.8387 47.2116 69.6874 54.8139 66.5681 63.7302C65.9348 65.4665 65.3484 66.8978 65.2546 66.8978C65.1374 66.8978 63.7771 66.7336 62.2291 66.5693C52.9649 65.5134 43.1847 68.1649 34.1316 74.2186C24.7735 80.46 18.5349 87.7338 10.5371 101.742C2.53943 115.726 -1.0959 127.482 0.287874 135.014C0.89767 138.463 2.0469 140.035 3.97011 140.082C5.28352 140.105 5.37733 139.659 4.20465 139.049C3.05541 138.463 2.6567 137.9 2.32835 136.281C0.616228 128.021 6.24512 113.028 17.4325 96.1104C23.2725 87.241 28.362 81.9147 35.5622 77.1046C43.8649 71.5437 52.7069 69.033 61.1737 69.8308C64.9967 70.1828 64.6917 69.9247 64.1992 72.4822C62.2525 82.5013 63.8005 92.6378 67.9753 97.354C73.1116 103.079 81.9771 102 85.0027 95.2657C86.3395 92.2858 86.3864 87.7103 85.1434 83.9796C83.1498 78.0901 80.007 73.8197 75.4335 70.8163C73.8152 69.7604 70.4848 68.1883 69.875 68.1883C69.359 68.1883 69.4294 67.6487 70.2268 65.3257C72.3377 59.2486 75.457 52.7021 78.4122 48.244C83.2436 40.9232 91.4524 32.5701 99.1687 27.103C105.806 22.4102 113.241 18.5386 120.512 16.0045C123.772 14.8548 129.87 13.1889 130.081 13.3766C130.128 13.447 129.541 14.362 128.791 15.4414C124.78 21.0258 122.716 26.0706 122.388 30.998C122.224 33.7198 122.341 34.588 122.88 34.2595C122.998 34.1891 123.678 32.969 124.405 31.5611C126.281 27.8069 131.722 20.6738 139.579 11.6402C141.127 9.85697 142.652 7.86254 143.027 7.08823C144.552 4.03792 143.52 1.48035 140.377 0.471397C139.439 0.166366 138.102 0.0490408 134.584 0.0255769C132.074 -0.021351 129.635 0.00212153 129.189 0.0490494Z" fill="currentColor"/></svg>
+                        </div>
+                        <button aria-pressed="false">
+                            <span class="sr-only">Toggle theme</span>
+                            <svg aria-hidden="true" class="toggle-scene" xmlns="http://www.w3.org/2000/svg" viewBox="32 32 134 134">
+                                <defs>
+                                    <marker id="e" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                    <marker id="d" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                    <marker id="c" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                    <marker id="b" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                    <marker id="a" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                    <clippath id="g" clippathunits="userSpaceOnUse"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path></clippath>
+                                    <clippath id="f" clippathunits="userSpaceOnUse"><path d="M-868.418 945.051c-4.188 73.011 78.255 53.244 150.216 52.941 82.387-.346 98.921-19.444 98.921-47.058 0-27.615-4.788-42.55-73.823-42.55-69.036 0-171.436-30.937-175.314 36.667z"></path></clippath>
+                                </defs>
+                                <g class="toggle-scene__cords">
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623" transform="translate(-24.503 256.106)"></path>
+                                    <g class="line toggle-scene__dummy-cord"><line marker-end="url(#a)" x1="98" x2="98" y1="240" y2="380"></line></g>
+                                    <circle class="toggle-scene__hit-spot" cx="98.7255" cy="380.5405" r="60" fill="transparent"></circle>
+                                </g>
+                                <g class="toggle-scene__bulb bulb" transform="translate(844.069 -645.213)">
+                                    <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+                                    <path class="bulb__cap-shine" d="M-778.379 802.873h25.512v118.409h-25.512z" clip-path="url(#g)" transform="matrix(.52452 0 0 .90177 -368.282 82.976)"></path>
+                                    <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z"></path>
+                                    <path class="bulb__cap-outline" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+                                    <g class="bulb__filament" fill="none" stroke-linecap="round" stroke-width="5">
+                                        <path d="M-752.914 823.875l-8.858-33.06"></path>
+                                        <path d="M-737.772 823.875l8.858-33.06"></path>
+                                    </g>
+                                    <path class="bulb__bulb" stroke-linecap="round" stroke-width="5" d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z"></path>
+                                    <circle class="bulb__flash" cx="-745.343" cy="743.939" r="83.725" fill="none" stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></circle>
+                                    <path class="bulb__shine" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957"></path>
+                                </g>
+                            </svg>
+                            <div class="grab-handle"></div>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+<!-- /HEADER -->
+
+
+<!-- ── HERO ── -->
+<section class="qibla-hero">
+    <div class="container">
+        <h1>find your <span>qibla</span></h1>
+        <p>stand still &nbsp;·&nbsp; hold your phone upright &nbsp;·&nbsp; face the kaaba</p>
+    </div>
+</section>
+
+
+<!-- ── MAIN ── -->
+<section class="pt-0 pb-80">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+
+                <!-- PERMISSION STATE -->
+                <div id="state-permission">
+                    <div class="qibla-card wow fadeInUp delay-0-2s">
+                        <div class="q-icon">🧭</div>
+                        <h3>Location &amp; Compass Access</h3>
+                        <p>To find your Qibla direction we need your GPS position and device orientation sensor.</p>
+                        <a class="theme-btn mt-20 d-inline-block" onclick="startApp()" style="cursor:pointer">
+                            Grant Access <i class="ri-compass-discover-line"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ERROR STATE -->
+                <div id="state-error" class="hidden">
+                    <div class="qibla-card wow fadeInUp delay-0-2s">
+                        <div class="q-icon">⚠️</div>
+                        <h3 id="err-title">Something went wrong</h3>
+                        <p id="err-msg">Could not get your location.</p>
+                        <a class="theme-btn mt-20 d-inline-block" onclick="startApp()" style="cursor:pointer">
+                            Try Again <i class="ri-refresh-line"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- FALLBACK: no compass sensor -->
+                <div id="state-fallback" class="hidden">
+                    <div class="qibla-card wow fadeInUp delay-0-2s">
+                        <div class="q-icon">📍</div>
+                        <h3>Compass Not Available</h3>
+                        <p>Your device or browser doesn't expose orientation data. Enter your city to get the bearing, then use any physical compass.</p>
+                        <div class="manual-row">
+                            <input id="manual-city" type="text" placeholder="e.g. Cairo">
+                            <a class="theme-btn" onclick="manualCity()" style="cursor:pointer">
+                                Get Bearing <i class="ri-arrow-right-up-line"></i>
+                            </a>
+                        </div>
+                        <p id="fallback-result"></p>
+                    </div>
+                </div>
+
+                <!-- LIVE SCENE -->
+                <div id="state-scene" class="hidden">
+                    <div class="scene-card wow fadeInUp delay-0-2s">
+
+                        <div class="direction-label" id="direction-label">Calculating…</div>
+
+                        <!-- Person + Kaaba scene -->
+                        <div class="scene-svg-wrap">
+                            <svg id="scene-svg" viewBox="0 0 360 165" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <marker id="qarr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                                        <path d="M2 1L8 5L2 9" fill="none" stroke="#F9812E" stroke-width="2" stroke-linecap="round"/>
+                                    </marker>
+                                </defs>
+                                <!-- ground -->
+                                <line x1="20" y1="150" x2="340" y2="150" stroke="currentColor" stroke-width=".8" opacity=".2"/>
+
+                                <!-- Person -->
+                                <g id="person" transform="translate(180,150)">
+                                    <line x1="0" y1="-22" x2="0" y2="-72" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                    <circle cx="0" cy="-84" r="12" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                                    <line x1="-22" y1="-58" x2="22" y2="-58" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                    <line x1="0" y1="-22" x2="-15" y2="0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                    <line x1="0" y1="-22" x2="15" y2="0"  stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                    <!-- eyes -->
+                                    <circle cx="-4" cy="-86" r="1.8" fill="currentColor"/>
+                                    <circle cx="4"  cy="-86" r="1.8" fill="currentColor"/>
+                                </g>
+
+                                <!-- Kaaba group -->
+                                <g id="kaaba-group">
+                                    <rect id="kaaba-rect" x="282" y="92" width="40" height="44" rx="2"
+                                          fill="none" stroke="#F9812E" stroke-width="2"/>
+                                    <rect id="kaaba-band" x="282" y="108" width="40" height="8"
+                                          fill="none" stroke="#F9812E" stroke-width="1.2" stroke-dasharray="3,2.5"/>
+                                    <rect id="kaaba-door" x="295" y="120" width="14" height="16" rx="1"
+                                          fill="#F9812E" opacity=".35"/>
+                                    <text id="kaaba-lbl" x="302" y="148"
+                                          text-anchor="middle" font-family="Poppins,sans-serif"
+                                          font-size="10" fill="#F9812E" font-weight="600">الكعبة</text>
+                                    <line id="qibla-arrow"
+                                          x1="180" y1="78" x2="278" y2="110"
+                                          stroke="#F9812E" stroke-width="1.8" stroke-dasharray="6,4"
+                                          marker-end="url(#qarr)"/>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- Compass ring -->
+                        <div class="compass-outer">
+                            <div id="compass-ring">
+                                <div class="compass-label cn">N</div>
+                                <div class="compass-label cs">S</div>
+                                <div class="compass-label ce">E</div>
+                                <div class="compass-label cw">W</div>
+                                <div class="qibla-ptr" id="qibla-ptr"></div>
+                                <div class="compass-needle" id="compass-needle">
+                                    <div class="needle-n"></div>
+                                    <div class="needle-s"></div>
+                                </div>
+                                <div class="compass-center"></div>
+                            </div>
+                        </div>
+
+                        <!-- Readouts -->
+                        <div class="readout-row">
+                            <div class="readout-box">
+                                <label>You're facing</label>
+                                <span id="heading-val">–°</span>
+                            </div>
+                            <div class="readout-box">
+                                <label>Qibla bearing</label>
+                                <span id="qibla-val">–°</span>
+                            </div>
+                            <div class="readout-box">
+                                <label>Difference</label>
+                                <span id="diff-val">–°</span>
+                            </div>
+                        </div>
+
+                        <div class="arrow-hint" id="arrow-hint"></div>
+                        <p class="accuracy-note" id="accuracy-note">Getting GPS…</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ── TAGLINE ── -->
+<div class="c-author">
+    <h6>
+        <span class="fluid">Less noise.</span><br>
+        <span class="fluid" aria-hidden="true" data-splitting=''>More <span style="color:#F9812E">impact.</span></span>
+        <span class="sr-only">More <span style="color:#F9812E">impact.</span></span>
+    </h6>
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer class="main-footer">
+    <div class="footer-bottom pt-50 pb-40">
+        <div class="container footer-poistion">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="copyright-text">
+                        <p>
+                            Copyright &copy;<span id="currentYear"></span>,
+                            <span id="owl" class="ascii owl" aria-hidden="true">,___,
+[o,o]
+/)__)
+-"--"-</span>
+                            <span class="sr-only">Decorative owl animation indicating site activity</span>
+                            All Rights Reserved.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="copyright-text extra-copyright">
+                        <p>
+                            Crafted with <span style="color:#F9812E">🧡</span>
+                            <a target="_blank" class="c-author__link" href="https://samehbilal.github.io/portfolio">Sameh Bilal</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- SCRIPTS — same order as portfolio -->
+<script src="assets/js/jquery-3.7.1.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/appear.min.js"></script>
+<script src="assets/js/smooth-scroll.js"></script>
+<script src="assets/js/gsap.min.js"></script>
+<script src="assets/js/wow.min.js"></script>
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/lodash.min.js"></script>
+<script type="module" src="assets/js/splitting.js" defer></script>
+<script type="module" src="assets/js/owl.js" defer></script>
+<script type="module" src="assets/js/lights.js" defer></script>
+
+<script>
+// ── Qibla math ──
+const KAABA = { lat: 21.4225, lng: 39.8262 };
+const toRad = d => d * Math.PI / 180;
+const toDeg = r => r * 180 / Math.PI;
+
+function qiblaBearing(lat, lng) {
+    const φ1 = toRad(lat), φ2 = toRad(KAABA.lat);
+    const Δλ = toRad(KAABA.lng - lng);
+    const y = Math.sin(Δλ) * Math.cos(φ2);
+    const x = Math.cos(φ1)*Math.sin(φ2) - Math.sin(φ1)*Math.cos(φ2)*Math.cos(Δλ);
+    return (toDeg(Math.atan2(y, x)) + 360) % 360;
+}
+
+// ── State manager ──
+const STATES = ['state-permission','state-error','state-fallback','state-scene'];
+function show(id) {
+    STATES.forEach(s => document.getElementById(s).classList.toggle('hidden', s !== id));
+}
+function showError(title, msg) {
+    document.getElementById('err-title').textContent = title;
+    document.getElementById('err-msg').textContent   = msg;
+    show('state-error');
+}
+
+// ── App vars ──
+let qiblaAngle = null, currentHeading = null, orientFired = false;
+
+// ── Start ──
+function startApp() {
+    if (!navigator.geolocation) {
+        showError('Geolocation Not Supported', 'Try a modern mobile browser.');
+        return;
+    }
+    show('state-scene');
+    document.getElementById('accuracy-note').textContent = 'Getting GPS…';
+
+    navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude: lat, longitude: lng, accuracy } }) => {
+            qiblaAngle = qiblaBearing(lat, lng);
+            document.getElementById('qibla-val').textContent = Math.round(qiblaAngle) + '°';
+            document.getElementById('accuracy-note').textContent =
+                `GPS ±${Math.round(accuracy)} m · Qibla from your position`;
+            initOrientation();
+        },
+        err => showError('Location Error', err.message || 'Could not get GPS position.'),
+        { enableHighAccuracy: true, timeout: 15000 }
+    );
+}
+
+// ── Orientation ──
+function initOrientation() {
+    if (typeof DeviceOrientationEvent !== 'undefined' &&
+        typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+            .then(s => s === 'granted' ? listenOrientation() : show('state-fallback'))
+            .catch(() => show('state-fallback'));
+    } else if (window.DeviceOrientationEvent) {
+        listenOrientation();
+    } else {
+        show('state-fallback');
+    }
+}
+
+function listenOrientation() {
+    const handler = e => {
+        let h = null;
+        if (e.webkitCompassHeading != null)      h = e.webkitCompassHeading;
+        else if (e.absolute && e.alpha != null)  h = (360 - e.alpha) % 360;
+        else if (e.alpha != null)                h = (360 - e.alpha) % 360;
+        if (h == null) return;
+        orientFired = true;
+        currentHeading = h;
+        updateScene(h);
+    };
+    window.addEventListener('deviceorientationabsolute', handler, true);
+    window.addEventListener('deviceorientation',         handler, true);
+    setTimeout(() => { if (!orientFired) show('state-fallback'); }, 3000);
+}
+
+// ── Scene update ──
+function updateScene(heading) {
+    if (qiblaAngle == null) return;
+
+    let diff = ((qiblaAngle - heading) + 360) % 360;
+    if (diff > 180) diff -= 360;
+    const abs = Math.abs(diff);
+
+    // Compass ring rotates so its N aligns with device heading
+    document.getElementById('compass-ring').style.transform = `rotate(${-heading}deg)`;
+
+    // Qibla pointer stays fixed at Qibla bearing
+    document.getElementById('qibla-ptr').style.transform =
+        `rotate(${qiblaAngle - heading}deg)`;
+
+    document.getElementById('heading-val').textContent = Math.round(heading) + '°';
+    document.getElementById('diff-val').textContent = (diff >= 0 ? '+' : '') + Math.round(diff) + '°';
+
+    updateLabel(diff, abs);
+    updateKaaba(diff, abs);
+}
+
+function updateLabel(diff, abs) {
+    const lbl   = document.getElementById('direction-label');
+    const arrow = document.getElementById('arrow-hint');
+    const dir   = diff > 0 ? 'right' : 'left';
+    const ch    = diff > 0 ? '→' : '←';
+    let text, hint;
+
+    if (abs <= 3) {
+        text = '🕋 You\'re facing the Qibla';
+        hint = '▲ straight ahead';
+        lbl.classList.add('on-target');
+    } else {
+        lbl.classList.remove('on-target');
+        if      (abs <= 15)  { text = `Just a tiny bit to the ${dir}`;   hint = ch; }
+        else if (abs <= 45)  { text = `A little to the ${dir}`;          hint = ch + ' ' + ch; }
+        else if (abs <= 90)  { text = `Turn to the ${dir}`;              hint = ch.repeat(3); }
+        else if (abs <= 135) { text = `Turn sharply to the ${dir}`;      hint = ch.repeat(4); }
+        else                 { text = 'Turn around';                     hint = '↩ turn around'; }
+    }
+    lbl.textContent   = text;
+    arrow.textContent = hint;
+}
+
+function updateKaaba(diff, abs) {
+    const clamped = Math.max(-155, Math.min(155, diff));
+    // Person centre x=180. Range ±115px for kaaba centre.
+    const cx = 180 + (clamped / 155) * 115;
+    const rx = cx - 20;
+
+    document.getElementById('kaaba-rect').setAttribute('x', rx);
+    document.getElementById('kaaba-band').setAttribute('x', rx);
+    document.getElementById('kaaba-door').setAttribute('x', rx + 13);
+    document.getElementById('kaaba-lbl').setAttribute('x', cx);
+
+    // dashed arrow person → kaaba
+    const arr = document.getElementById('qibla-arrow');
+    arr.setAttribute('x1', 180);
+    arr.setAttribute('y1', 78);
+    arr.setAttribute('x2', diff > 0 ? rx - 2 : rx + 42);
+    arr.setAttribute('y2', 110);
+
+    // subtle tilt of kaaba group for perspective
+    const tilt = Math.max(-10, Math.min(10, -diff * 0.055));
+    document.getElementById('kaaba-group').setAttribute('transform', `rotate(${tilt},${cx},130)`);
+}
+
+// ── Manual city fallback ──
+async function manualCity() {
+    const city = document.getElementById('manual-city').value.trim();
+    const res  = document.getElementById('fallback-result');
+    if (!city) return;
+    res.textContent = 'Looking up…';
+    try {
+        const r = await fetch(
+            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)}&format=json&limit=1`
+        );
+        const d = await r.json();
+        if (!d.length) { res.textContent = 'City not found.'; return; }
+        const bearing = qiblaBearing(parseFloat(d[0].lat), parseFloat(d[0].lon));
+        const name    = d[0].display_name.split(',')[0];
+        res.innerHTML = `<strong style="color:#F9812E">${Math.round(bearing)}°</strong> from North — face this direction from ${name}.`;
+    } catch {
+        res.textContent = 'Could not fetch. Check your connection.';
+    }
+}
+</script>
+
+<script data-name="BMC-Widget" data-cfasync="false"
+    src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+    data-id="samehbilal" data-description="Support my work"
+    data-message="Support my work" data-color="#F9812E"
+    data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+</body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Salah Tracker — Sameh Bilal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/fonts/remixicon.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="apple-touch-icon" href="assets/images/favicon.png">
+<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
+<style>
+/* ── vars ── */
+:root {
+  --orange: #F9812E;
+  --border: #2a2a2a;
+  --radius: 0;
+}
+html[data-theme="light"] {
+  --border: #d8d0c4;
+}
+
+/* ── hero ── */
+.salah-hero { padding: 80px 0 48px; text-align: center; }
+.salah-hero h1 {
+  font-size: clamp(2.2rem,6vw,4.2rem);
+  font-weight: 700; letter-spacing: -.03em; line-height: 1.1; margin-bottom: .5rem;
+}
+.salah-hero h1 span { color: var(--orange); }
+.salah-hero p { font-size:.9rem; opacity:.5; font-weight:300; letter-spacing:.03em; }
+
+/* ── stats bar ── */
+.stats-bar {
+  display: flex; justify-content: center; gap: 0;
+  border: 1px solid var(--border);
+  margin-bottom: 2.5rem;
+}
+.stat-item {
+  flex: 1; text-align: center;
+  padding: 1.2rem .5rem;
+  border-right: 1px solid var(--border);
+  max-width: 160px;
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  display: block; font-size: 2rem; font-weight: 700; line-height: 1;
+  color: var(--orange);
+}
+.stat-unit { font-size: .7rem; opacity: .5; text-transform: uppercase; letter-spacing: .06em; }
+.stat-label { font-size: .75rem; font-weight: 500; margin-top: .25rem; opacity: .7; }
+
+/* ── section title ── */
+.tracker-section { margin-bottom: 3rem; }
+.tracker-section h2 {
+  font-size: 1.05rem; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; opacity: .45; margin-bottom: 1.2rem;
+  padding-bottom: .6rem; border-bottom: 1px solid var(--border);
+}
+
+/* ── day header ── */
+.prayer-grid { width: 100%; border-collapse: collapse; }
+.prayer-grid th {
+  font-size: .68rem; font-weight: 500; opacity: .4;
+  text-align: center; padding: .5rem .2rem .9rem;
+  letter-spacing: .03em; white-space: nowrap;
+}
+.prayer-grid th.today-col { opacity: 1; color: var(--orange); }
+
+/* ── prayer row ── */
+.prayer-grid tr { border-bottom: 1px solid var(--border); }
+.prayer-grid tr:last-child { border-bottom: none; }
+.prayer-grid td { padding: .55rem .2rem; vertical-align: middle; }
+.prayer-name-cell {
+  text-align: left; padding-left: 0 !important; min-width: 62px;
+}
+.prayer-name-cell .pname {
+  font-size: .82rem; font-weight: 600; display: block;
+}
+.prayer-name-cell .ptime {
+  font-size: .68rem; opacity: .4; white-space: nowrap;
+}
+
+/* ── mode buttons group per cell ── */
+.modes-cell { text-align: center; }
+.modes-group {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.mode-dots {
+  display: flex; gap: 2px; justify-content: center; height: 5px; margin-bottom: 1px;
+}
+.mode-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--orange); opacity: .5;
+}
+.mode-btn {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1.8px solid var(--border);
+  background: transparent; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s; position: relative; font-size: .7rem;
+  color: inherit;
+}
+.mode-btn:hover { border-color: var(--orange); }
+
+/* states */
+.mode-btn.s-group  { border-color: var(--orange); background: var(--orange); color: #fff; }
+.mode-btn.s-alone  { border-color: var(--orange); }
+.mode-btn.s-late   { border-color: #888; }
+.mode-btn.s-nafila { border-color: var(--orange); border-style: dashed; }
+.mode-btn.s-missed { border-color: #444; opacity: .3; }
+.mode-btn.s-future { opacity: .18; cursor: default; pointer-events: none; }
+.mode-btn.s-na     { opacity: .12; cursor: default; pointer-events: none; }
+
+/* icon inside btn */
+.mode-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+.mode-btn.s-group  svg { stroke: #fff; }
+
+/* nafila row subtle bg */
+tr.nafila-row td { opacity: .75; }
+
+/* ── mode legend ── */
+.legend-row {
+  display: flex; flex-wrap: wrap; gap: .6rem 1.2rem;
+  margin-bottom: 2rem; padding: 1rem;
+  border: 1px solid var(--border);
+}
+.legend-item { display: flex; align-items: center; gap: .45rem; font-size: .75rem; opacity: .7; }
+.legend-dot {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  border: 1.8px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.ld-group  { border-color: var(--orange); background: var(--orange); }
+.ld-alone  { border-color: var(--orange); }
+.ld-late   { border-color: #888; }
+.ld-nafila { border-color: var(--orange); border-style: dashed; }
+.ld-missed { border-color: #444; opacity: .3; }
+
+/* ── streak card ── */
+.streak-card {
+  border: 1px solid var(--border); padding: 1.2rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.streak-card .s-label { font-size: .8rem; opacity: .5; text-transform: uppercase; letter-spacing: .06em; }
+.streak-card .s-val   { font-size: 2rem; font-weight: 700; color: var(--orange); line-height: 1; }
+.streak-card .s-sub   { font-size: .72rem; opacity: .45; }
+.streak-icon { font-size: 2rem; opacity: .4; }
+
+/* ── weekly ring chart ── */
+.week-rings { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+.ring-wrap { display: flex; flex-direction: column; align-items: center; gap: .3rem; }
+.ring-wrap span { font-size: .65rem; opacity: .45; }
+.ring-svg { width: 38px; height: 38px; transform: rotate(-90deg); }
+.ring-bg   { fill: none; stroke: var(--border); stroke-width: 3.5; }
+.ring-fill { fill: none; stroke: var(--orange); stroke-width: 3.5; stroke-linecap: round; transition: stroke-dashoffset .4s; }
+
+/* ── tabs ── */
+.tracker-tabs {
+  display: flex; border-bottom: 1px solid var(--border); margin-bottom: 2rem;
+}
+.tracker-tab {
+  padding: .7rem 1.4rem; font-size: .82rem; font-weight: 500;
+  cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; opacity: .45; transition: all .2s;
+  background: none; border-top: none; border-left: none; border-right: none;
+  color: inherit; font-family: 'Poppins', sans-serif;
+}
+.tracker-tab.active { opacity: 1; border-bottom-color: var(--orange); }
+
+/* ── fajr highlight ── */
+tr.fajr-row td .pname { color: var(--orange); }
+
+/* ── responsive ── */
+@media (max-width: 480px) {
+  .mode-btn { width: 26px; height: 26px; }
+  .prayer-name-cell { min-width: 52px; }
+  .prayer-name-cell .pname { font-size: .75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="main-header">
+  <div class="header-upper">
+    <div class="container">
+      <div class="header-inner d-flex align-items-center">
+        <div class="logo-outer" onclick="location.href='index.html'" style="cursor:pointer">
+          <div class="logo">
+            <span class="logo-letter is-active">S</span>
+            <span class="logo-letter is-active">A</span>
+            <span class="logo-letter is-active">M</span>
+            <span class="logo-letter is-active">E</span>
+            <span class="logo-letter is-active">H</span>
+          </div>
+        </div>
+        <div class="nav-outer clearfix mx-auto">
+          <nav class="main-menu navbar-expand-lg">
+            <div class="navbar-header">
+              <div class="mobile-logo">
+                <div class="logo">
+                  <span class="logo-letter is-active">S</span><span class="logo-letter is-active">A</span>
+                  <span class="logo-letter is-active">M</span><span class="logo-letter is-active">E</span>
+                  <span class="logo-letter is-active">H</span>
+                </div>
+              </div>
+            </div>
+            <div class="o-page"></div>
+          </nav>
+        </div>
+        <div class="menu-btns align-items-center">
+          <a href="index.html#contact" class="theme-btn">Hire Me <i class="ri-shake-hands-line"></i></a>
+          <form class="form">
+            <div class="arrow"><label>drag me.</label>
+              <svg aria-hidden="true" viewBox="0 0 144 141" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M129.189 0.0490494C128.744 0.119441 126.422 0.377545 124.03 0.635648C114.719 1.6446 109.23 2.4893 108.058 3.09936C107.119 3.56864 106.674 4.34295 106.674 5.44576C106.674 6.71281 107.424 7.51058 109.043 7.97986C110.403 8.37875 110.825 8.42567 118.87 9.52847C121.778 9.92736 124.288 10.3028 124.475 10.3732C124.663 10.4436 122.951 11.1006 120.676 11.8749C110.028 15.4414 100.412 20.7677 91.7339 27.9242C88.38 30.7164 81.6957 37.4271 79.2096 40.5009C73.8387 47.2116 69.6874 54.8139 66.5681 63.7302C65.9348 65.4665 65.3484 66.8978 65.2546 66.8978C65.1374 66.8978 63.7771 66.7336 62.2291 66.5693C52.9649 65.5134 43.1847 68.1649 34.1316 74.2186C24.7735 80.46 18.5349 87.7338 10.5371 101.742C2.53943 115.726 -1.0959 127.482 0.287874 135.014C0.89767 138.463 2.0469 140.035 3.97011 140.082C5.28352 140.105 5.37733 139.659 4.20465 139.049C3.05541 138.463 2.6567 137.9 2.32835 136.281C0.616228 128.021 6.24512 113.028 17.4325 96.1104C23.2725 87.241 28.362 81.9147 35.5622 77.1046C43.8649 71.5437 52.7069 69.033 61.1737 69.8308C64.9967 70.1828 64.6917 69.9247 64.1992 72.4822C62.2525 82.5013 63.8005 92.6378 67.9753 97.354C73.1116 103.079 81.9771 102 85.0027 95.2657C86.3395 92.2858 86.3864 87.7103 85.1434 83.9796C83.1498 78.0901 80.007 73.8197 75.4335 70.8163C73.8152 69.7604 70.4848 68.1883 69.875 68.1883C69.359 68.1883 69.4294 67.6487 70.2268 65.3257C72.3377 59.2486 75.457 52.7021 78.4122 48.244C83.2436 40.9232 91.4524 32.5701 99.1687 27.103C105.806 22.4102 113.241 18.5386 120.512 16.0045C123.772 14.8548 129.87 13.1889 130.081 13.3766C130.128 13.447 129.541 14.362 128.791 15.4414C124.78 21.0258 122.716 26.0706 122.388 30.998C122.224 33.7198 122.341 34.588 122.88 34.2595C122.998 34.1891 123.678 32.969 124.405 31.5611C126.281 27.8069 131.722 20.6738 139.579 11.6402C141.127 9.85697 142.652 7.86254 143.027 7.08823C144.552 4.03792 143.52 1.48035 140.377 0.471397C139.439 0.166366 138.102 0.0490408 134.584 0.0255769C132.074 -0.021351 129.635 0.00212153 129.189 0.0490494Z" fill="currentColor"/></svg>
+            </div>
+            <button aria-pressed="false">
+              <span class="sr-only">Toggle theme</span>
+              <svg aria-hidden="true" class="toggle-scene" xmlns="http://www.w3.org/2000/svg" viewBox="32 32 134 134"><defs><marker id="e" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker><marker id="d" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker><marker id="c" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker><marker id="b" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker><marker id="a" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker><clippath id="g" clippathunits="userSpaceOnUse"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path></clippath><clippath id="f" clippathunits="userSpaceOnUse"><path d="M-868.418 945.051c-4.188 73.011 78.255 53.244 150.216 52.941 82.387-.346 98.921-19.444 98.921-47.058 0-27.615-4.788-42.55-73.823-42.55-69.036 0-171.436-30.937-175.314 36.667z"></path></clippath></defs><g class="toggle-scene__cords"><path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493" transform="translate(-24.503 256.106)"></path><path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507" transform="translate(-24.503 256.106)"></path><path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468" transform="translate(-24.503 256.106)"></path><path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782" transform="translate(-24.503 256.106)"></path><path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623" transform="translate(-24.503 256.106)"></path><g class="line toggle-scene__dummy-cord"><line marker-end="url(#a)" x1="98" x2="98" y1="240" y2="380"></line></g><circle class="toggle-scene__hit-spot" cx="98.7255" cy="380.5405" r="60" fill="transparent"></circle></g><g class="toggle-scene__bulb bulb" transform="translate(844.069 -645.213)"><path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path><path class="bulb__cap-shine" d="M-778.379 802.873h25.512v118.409h-25.512z" clip-path="url(#g)" transform="matrix(.52452 0 0 .90177 -368.282 82.976)"></path><path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z"></path><path class="bulb__cap-outline" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path><g class="bulb__filament" fill="none" stroke-linecap="round" stroke-width="5"><path d="M-752.914 823.875l-8.858-33.06"></path><path d="M-737.772 823.875l8.858-33.06"></path></g><path class="bulb__bulb" stroke-linecap="round" stroke-width="5" d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z"></path><circle class="bulb__flash" cx="-745.343" cy="743.939" r="83.725" fill="none" stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></circle><path class="bulb__shine" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957"></path></g></svg>
+              <div class="grab-handle"></div>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- ── HERO ── -->
+<section class="salah-hero">
+  <div class="container">
+    <h1>my <span>salah</span></h1>
+    <p>track · reflect · improve</p>
+  </div>
+</section>
+
+
+<!-- ── MAIN ── -->
+<section class="pb-80">
+  <div class="container">
+
+    <!-- Stats bar -->
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num" id="stat-pct">–</span>
+        <span class="stat-unit">%</span>
+        <div class="stat-label">My Prayers</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-streak">–</span>
+        <span class="stat-unit">days</span>
+        <div class="stat-label">Streak</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-perfect">–</span>
+        <span class="stat-unit">days</span>
+        <div class="stat-label">Perfect Days</div>
+      </div>
+    </div>
+
+    <!-- Streak card -->
+    <div class="streak-card" id="streak-card">
+      <div>
+        <div class="s-label">Current Streak</div>
+        <div class="s-val" id="streak-val">0</div>
+        <div class="s-sub">consecutive days with all fard prayers</div>
+      </div>
+      <div class="streak-icon">🔥</div>
+    </div>
+
+    <!-- Week rings -->
+    <div class="week-rings" id="week-rings"></div>
+
+    <!-- Legend -->
+    <div class="legend-row">
+      <div class="legend-item"><div class="legend-dot ld-group"></div> With Group (Jama'ah)</div>
+      <div class="legend-item"><div class="legend-dot ld-alone"></div> Alone</div>
+      <div class="legend-item"><div class="legend-dot ld-late"></div> Late (Qada')</div>
+      <div class="legend-item"><div class="legend-dot ld-nafila" style="border-style:dashed"></div> Nafila</div>
+      <div class="legend-item"><div class="legend-dot ld-missed"></div> Missed</div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tracker-tabs">
+      <button class="tracker-tab active" onclick="switchView('prayers',this)">Prayers</button>
+      <button class="tracker-tab" onclick="switchView('history',this)">History</button>
+    </div>
+
+    <!-- PRAYERS VIEW -->
+    <div id="view-prayers">
+      <div class="tracker-section">
+        <h2>This Week</h2>
+        <div style="overflow-x:auto">
+          <table class="prayer-grid" id="prayer-table"></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY VIEW -->
+    <div id="view-history" style="display:none">
+      <div class="tracker-section">
+        <h2>Last 30 Days Overview</h2>
+        <div id="history-grid" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── TAGLINE ── -->
+<div class="c-author">
+  <h6>
+    <span class="fluid">Less noise.</span><br>
+    <span class="fluid" aria-hidden="true" data-splitting=''>More <span style="color:#F9812E">impact.</span></span>
+    <span class="sr-only">More <span style="color:#F9812E">impact.</span></span>
+  </h6>
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer class="main-footer">
+  <div class="footer-bottom pt-50 pb-40">
+    <div class="container footer-poistion">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="copyright-text">
+            <p>Copyright &copy;<span id="currentYear"></span>,
+              <span id="owl" class="ascii owl" aria-hidden="true">,___,
+[o,o]
+/)__)
+-"--"-</span>
+              <span class="sr-only">Decorative owl animation</span> All Rights Reserved.</p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="copyright-text extra-copyright">
+            <p>Crafted with <span style="color:#F9812E">🧡</span>
+              <a target="_blank" class="c-author__link" href="https://samehbilal.github.io/portfolio">Sameh Bilal</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- SCRIPTS -->
+<script src="assets/js/jquery-3.7.1.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/appear.min.js"></script>
+<script src="assets/js/gsap.min.js"></script>
+<script src="assets/js/wow.min.js"></script>
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/lodash.min.js"></script>
+<script type="module" src="assets/js/splitting.js" defer></script>
+<script type="module" src="assets/js/owl.js" defer></script>
+<script type="module" src="assets/js/lights.js" defer></script>
+
+<script>
+// ─────────────────────────────────────────────
+// DATA MODEL
+// ─────────────────────────────────────────────
+// Prayers config
+const FARD   = ['Fajr','Dhuhr','Asr','Maghrib','Isha'];
+const NAFILA = ['Duha','Witr','Tahajjud'];
+const ALL_PRAYERS = [...FARD, ...NAFILA];
+
+// Prayer times (static, could be fetched)
+const TIMES = {
+  Fajr:'4:19 AM', Dhuhr:'12:00 PM', Asr:'3:30 PM',
+  Maghrib:'6:12 PM', Isha:'7:30 PM',
+  Duha:'6:07 AM', Witr:'8:00 PM', Tahajjud:'3:00 AM'
+};
+
+// Modes cycle per prayer type
+// fard: null → group → alone → late → missed → null
+// nafila: null → done → missed → null
+const FARD_CYCLE   = [null, 'group', 'alone', 'late', 'missed'];
+const NAFILA_CYCLE = [null, 'nafila', 'missed'];
+
+// Storage key
+const STORE_KEY = 'salah_tracker_v2';
+
+// ─────────────────────────────────────────────
+// STORAGE
+// ─────────────────────────────────────────────
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+function saveData(d) {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(d)); } catch {}
+}
+
+let DATA = loadData();
+
+function dayKey(offset = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() - offset);
+  return d.toISOString().slice(0, 10); // YYYY-MM-DD
+}
+
+function getState(dateKey, prayer) {
+  return (DATA[dateKey] && DATA[dateKey][prayer]) || null;
+}
+function setState(dateKey, prayer, state) {
+  if (!DATA[dateKey]) DATA[dateKey] = {};
+  DATA[dateKey][prayer] = state;
+  saveData(DATA);
+}
+function cycleState(dateKey, prayer) {
+  const isNafila = NAFILA.includes(prayer);
+  const cycle = isNafila ? NAFILA_CYCLE : FARD_CYCLE;
+  const cur = getState(dateKey, prayer);
+  const idx = cycle.indexOf(cur);
+  const next = cycle[(idx + 1) % cycle.length];
+  setState(dateKey, prayer, next);
+}
+
+// ─────────────────────────────────────────────
+// ICONS
+// ─────────────────────────────────────────────
+const ICONS = {
+  group:  `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>`,
+  alone:  `<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+  late:   `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  nafila: `<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  missed: `<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+};
+
+function btnClass(state, isFuture, isNafila) {
+  if (isFuture) return 'mode-btn s-future';
+  if (!state)   return 'mode-btn';
+  return `mode-btn s-${state}`;
+}
+
+// ─────────────────────────────────────────────
+// RENDER TABLE
+// ─────────────────────────────────────────────
+function buildTable() {
+  const table = document.getElementById('prayer-table');
+  const now   = new Date();
+  const todayStr = dayKey(0);
+
+  // header row
+  let html = '<thead><tr><th></th>';
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const label = i === 0 ? 'Today'
+                : i === 1 ? 'Yesterday'
+                : `${i}d ago`;
+    const isToday = i === 0;
+    html += `<th class="${isToday ? 'today-col' : ''}">${label}</th>`;
+  }
+  html += '</tr></thead><tbody>';
+
+  // Dot indicator row (overall completeness per day)
+  html += '<tr style="border-bottom:1px solid var(--border)"><td></td>';
+  for (let i = 6; i >= 0; i--) {
+    const dk = dayKey(i);
+    const total = FARD.filter(p => getState(dk, p) && getState(dk, p) !== 'missed').length;
+    const pct   = Math.round((total / 5) * 100);
+    const color = pct === 100 ? '#F9812E' : pct >= 60 ? '#aaa' : '#444';
+    html += `<td style="text-align:center;padding-bottom:.7rem">
+      <svg width="28" height="28" viewBox="0 0 36 36" style="transform:rotate(-90deg)">
+        <circle cx="18" cy="18" r="14" fill="none" stroke="var(--border)" stroke-width="3"/>
+        <circle cx="18" cy="18" r="14" fill="none" stroke="${color}" stroke-width="3"
+          stroke-dasharray="${Math.round(2*Math.PI*14*pct/100)} ${Math.round(2*Math.PI*14)}"
+          stroke-linecap="round"/>
+      </svg>
+    </td>`;
+  }
+  html += '</tr>';
+
+  // prayer rows
+  ALL_PRAYERS.forEach(prayer => {
+    const isNafila = NAFILA.includes(prayer);
+    html += `<tr class="${prayer === 'Fajr' ? 'fajr-row' : ''} ${isNafila ? 'nafila-row' : ''}">`;
+    html += `<td class="prayer-name-cell">
+      <span class="pname">${prayer}</span>
+      <span class="ptime">${TIMES[prayer]}</span>
+    </td>`;
+
+    for (let i = 6; i >= 0; i--) {
+      const dk = dayKey(i);
+      const isFuture = false; // all shown days are past or today
+      const state = getState(dk, prayer);
+      const cls   = btnClass(state, isFuture, isNafila);
+      const icon  = state ? (ICONS[state] || '') : '';
+      const dots  = isNafila
+        ? `<div class="mode-dots">${[...Array(3)].map(() => '<div class="mode-dot" style="opacity:.3"></div>').join('')}</div>`
+        : `<div class="mode-dots">${[...Array(5)].map(() => '<div class="mode-dot"></div>').join('')}</div>`;
+
+      html += `<td class="modes-cell">
+        <div class="modes-group">
+          ${dots}
+          <button class="${cls}" data-date="${dk}" data-prayer="${prayer}" title="${state || 'not logged'}">${icon}</button>
+        </div>
+      </td>`;
+    }
+    html += '</tr>';
+  });
+
+  html += '</tbody>';
+  table.innerHTML = html;
+
+  // Attach click handlers
+  table.querySelectorAll('.mode-btn:not(.s-future)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const { date, prayer } = btn.dataset;
+      cycleState(date, prayer);
+      buildTable();
+      updateStats();
+      buildWeekRings();
+      buildHistory();
+    });
+  });
+}
+
+// ─────────────────────────────────────────────
+// STATS
+// ─────────────────────────────────────────────
+function updateStats() {
+  // last 30 days fard prayer percentage
+  let total = 0, done = 0, streakDays = 0, perfectDays = 0;
+  let inStreak = true;
+
+  for (let i = 0; i < 30; i++) {
+    const dk = dayKey(i);
+    let dayDone = 0;
+    FARD.forEach(p => {
+      total++;
+      const s = getState(dk, p);
+      if (s && s !== 'missed') { done++; dayDone++; }
+    });
+    if (dayDone === 5) perfectDays++;
+    if (inStreak && dayDone === 5) streakDays++;
+    else if (i > 0) inStreak = false; // only break after today
+  }
+
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('stat-pct').textContent     = pct;
+  document.getElementById('stat-streak').textContent  = streakDays;
+  document.getElementById('stat-perfect').textContent = perfectDays;
+  document.getElementById('streak-val').textContent   = streakDays;
+}
+
+// ─────────────────────────────────────────────
+// WEEK RINGS
+// ─────────────────────────────────────────────
+function buildWeekRings() {
+  const wrap = document.getElementById('week-rings');
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html = '';
+  for (let i = 6; i >= 0; i--) {
+    const dk  = dayKey(i);
+    const d   = new Date(); d.setDate(d.getDate() - i);
+    const day = days[d.getDay()];
+    const done = FARD.filter(p => { const s = getState(dk,p); return s && s !== 'missed'; }).length;
+    const pct  = done / 5;
+    const r    = 15;
+    const circ = 2 * Math.PI * r;
+    const dash = circ * pct;
+    html += `<div class="ring-wrap">
+      <svg class="ring-svg" viewBox="0 0 36 36">
+        <circle class="ring-bg"   cx="18" cy="18" r="${r}"/>
+        <circle class="ring-fill" cx="18" cy="18" r="${r}"
+          stroke-dasharray="${dash.toFixed(1)} ${circ.toFixed(1)}"
+          stroke-dashoffset="0"/>
+      </svg>
+      <span>${day}</span>
+    </div>`;
+  }
+  wrap.innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
+// HISTORY (30 day heatmap)
+// ─────────────────────────────────────────────
+function buildHistory() {
+  const grid = document.getElementById('history-grid');
+  let html = '';
+  for (let i = 29; i >= 0; i--) {
+    const dk   = dayKey(i);
+    const done = FARD.filter(p => { const s = getState(dk,p); return s && s !== 'missed'; }).length;
+    const d    = new Date(); d.setDate(d.getDate() - i);
+    const label = d.toLocaleDateString('en-GB', { day:'numeric', month:'short' });
+    const opacity = done === 5 ? 1 : done >= 3 ? 0.55 : done >= 1 ? 0.25 : 0.08;
+    html += `<div title="${label} — ${done}/5 prayers"
+      style="width:28px;height:28px;background:#F9812E;opacity:${opacity};
+             border:1px solid var(--border);cursor:default"
+      ></div>`;
+  }
+  grid.innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
+// TAB SWITCH
+// ─────────────────────────────────────────────
+function switchView(view, btn) {
+  document.querySelectorAll('.tracker-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('view-prayers').style.display = view === 'prayers' ? '' : 'none';
+  document.getElementById('view-history').style.display = view === 'history' ? '' : 'none';
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+buildTable();
+updateStats();
+buildWeekRings();
+buildHistory();
+</script>
+
+<script data-name="BMC-Widget" data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="samehbilal" data-description="Support my work"
+  data-message="Support my work" data-color="#F9812E"
+  data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+</body>
+</html>
