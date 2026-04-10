@@ -575,27 +575,27 @@
     if (sessionStorage.getItem('visited')) return;
     sessionStorage.setItem('visited', 'true');
 
-    $('.loadersss').fadeOut();
-    setTimeout(() => $('#preloader-areasss').fadeOut('slow'), 500);
+    if (typeof gsap === 'undefined') {
+      document.querySelector('.preloader').style.display = 'none';
+      return;
+    }
 
-    if (typeof gsap === 'undefined') return;
     const svg = document.getElementById('preloaderSvg');
     if (!svg) return;
 
     const curve = 'M0 502S175 272 500 272s500 230 500 230V0H0Z';
     const flat = 'M0 2S175 1 500 1s500 1 500 1V0H0Z';
 
-    // shorten delays: was 1.5s, now 0.6s
     gsap.timeline()
-      .to('.preloader-heading .load-text, .preloader-heading .cont', {
-        delay: 0.6,           // ← was 1.5
+      .to('.preloader-heading .load-text', {
+        delay: 0.5,
         y: -100,
         opacity: 0,
-        duration: 0.3         // ← add explicit short duration
+        duration: 0.3
       })
-      .to(svg, { duration: 0.35, attr: { d: curve }, ease: 'power2.easeIn' })
-      .to(svg, { duration: 0.35, attr: { d: flat }, ease: 'power2.easeOut' })
-      .to('.preloader', { y: -1500, duration: 0.4 })
+      .to(svg, { duration: 0.3, attr: { d: curve }, ease: 'power2.easeIn' })
+      .to(svg, { duration: 0.3, attr: { d: flat }, ease: 'power2.easeOut' })
+      .to('.preloader', { y: -1500, duration: 0.35 })
       .to('.preloader', { zIndex: -1, display: 'none' });
   }
 
@@ -624,6 +624,7 @@
      INIT
      ============================================================ */
   $(document).ready(function () {
+    initPreloader();
     initNavCollapse();
     initScrollTop();
     initSmoothScroll();
@@ -644,7 +645,6 @@
   });
 
   $(window).on('load', function () {
-    initPreloader();
     initIsotopeOnLoad();
   });
 

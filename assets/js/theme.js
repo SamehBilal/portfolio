@@ -12,12 +12,13 @@
     /* ── Apply saved theme immediately (no flash) ── */
     const saved = localStorage.getItem(KEY);
     if (saved) h.dataset.theme = saved;
+
     if (sessionStorage.getItem('visited')) {
-        // inject a style tag that instantly hides the preloader
         const s = document.createElement('style');
         s.textContent = '#preloader-areasss, .preloader { display: none !important; }';
         document.head.appendChild(s);
     }
+
 
     /* ── Re-apply after DOM ready in case any script overwrites it ── */
     document.addEventListener('DOMContentLoaded', function () {
