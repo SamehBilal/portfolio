@@ -249,6 +249,7 @@ let currentx = 0;
 
 if (!wrapper || !track || !allSlides.length) {
   function syncSlideWidths() {
+    if (!wrapper) return;
     const w = wrapper.clientWidth;
     allSlides.forEach(s => s.style.width = w + "px");
     // re-apply current translate so position stays correct
@@ -266,6 +267,7 @@ if (!wrapper || !track || !allSlides.length) {
 const stepsBar = document.getElementById("stepsBar");
 
 function buildSteps(labels) {
+  if (!stepsBar || !labels) return;
   stepsBar.innerHTML = "";
 
   labels.forEach((label, i) => {
@@ -334,6 +336,7 @@ const menuItems = document.querySelectorAll(".menu-item");
 
 menuItems.forEach((item, i) => {
   item.addEventListener("click", () => {
+    if (!wrapper || !track) return;
     if (i === currentx) return;
     const dir = i < currentx ? "right" : "left";
     const opp = dir === "right" ? "left" : "right";
