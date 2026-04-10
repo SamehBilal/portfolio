@@ -8,7 +8,8 @@
 
   // Theme cycles: system → light → dark
   const THEMES = ['system', 'light', 'dark'];
-  let themeIndex = 0;
+  const _savedTheme = localStorage.getItem('theme');
+  let themeIndex = _savedTheme ? Math.max(THEMES.indexOf(_savedTheme), 0) : 0;
 
   /* ============================================================
      2. THEME
@@ -17,15 +18,24 @@
     const h = document.documentElement;
     if (!document.startViewTransition) {
       h.dataset.theme = theme;
-      return;
+    } else {
+      document.startViewTransition(() => { h.dataset.theme = theme; });
     }
-    document.startViewTransition(() => { h.dataset.theme = theme; });
+    localStorage.setItem('theme', theme);   // ← only line added
   }
 
   function cycleTheme() {
     themeIndex = (themeIndex + 1) % THEMES.length;
     applyTheme(THEMES[themeIndex]);
   }
+
+  (function syncIndex() {
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      const idx = THEMES.indexOf(saved);
+      if (idx !== -1) themeIndex = idx;
+    }
+  })();
 
   // Popover theme-toggler button (bottom nav)
   const themeToggler = document.querySelector('.theme-toggler');
@@ -53,14 +63,14 @@
 
     const len = progressPath.getTotalLength();
     progressPath.style.transition = 'none';
-    progressPath.style.strokeDasharray  = `${len} ${len}`;
+    progressPath.style.strokeDasharray = `${len} ${len}`;
     progressPath.style.strokeDashoffset = len;
     progressPath.getBoundingClientRect(); // force reflow
     progressPath.style.transition = 'stroke-dashoffset 10ms linear';
 
     function updateProgress() {
-      const scroll  = $(window).scrollTop();
-      const height  = $(document).height() - $(window).height();
+      const scroll = $(window).scrollTop();
+      const height = $(document).height() - $(window).height();
       progressPath.style.strokeDashoffset = len - (scroll * len / height);
     }
 
@@ -141,9 +151,9 @@
   function initCounters() {
     if (!$.fn.appear || !$('.counter-text-wrap').length) return;
     $('.counter-text-wrap').appear(function () {
-      const $t   = $(this);
+      const $t = $(this);
       const stop = $t.find('.count-text').attr('data-stop');
-      const spd  = parseInt($t.find('.count-text').attr('data-speed'), 10);
+      const spd = parseInt($t.find('.count-text').attr('data-speed'), 10);
       if ($t.hasClass('counted')) return;
       $t.addClass('counted');
       $({ countNum: $t.find('.count-text').text() }).animate(
@@ -296,10 +306,10 @@
      15. SNAKE MENU + CARDS (services section)
      ============================================================ */
   function initSnakeMenu() {
-    const wrapper  = document.querySelector('.cards-wrapper');
-    const track    = document.getElementById('cardsTrack');
-    const slides   = document.querySelectorAll('.cards-slide');
-    const menuCon  = document.querySelector('.snake-menu-container');
+    const wrapper = document.querySelector('.cards-wrapper');
+    const track = document.getElementById('cardsTrack');
+    const slides = document.querySelectorAll('.cards-slide');
+    const menuCon = document.querySelector('.snake-menu-container');
     const menuItems = document.querySelectorAll('.menu-item');
     const stepsBar = document.getElementById('stepsBar');
 
@@ -307,9 +317,9 @@
 
     const DATA = [
       ['Requirements', 'System Design', 'DB Modeling', 'Core Impl.', 'Code Review'],
-      ['API Design',   'Auth Layer',    'Endpoints',   'Rate Limit', 'API Docs'],
-      ['Profiling',    'Bottlenecks',   'Caching',     'Queues',     'Monitoring'],
-      ['DB Schema',    'Backend Core',  'API Layer',   'Frontend',   'Deploy'],
+      ['API Design', 'Auth Layer', 'Endpoints', 'Rate Limit', 'API Docs'],
+      ['Profiling', 'Bottlenecks', 'Caching', 'Queues', 'Monitoring'],
+      ['DB Schema', 'Backend Core', 'API Layer', 'Frontend', 'Deploy'],
     ];
 
     let current = 0;
@@ -340,7 +350,7 @@
       });
 
       requestAnimationFrame(() => {
-        const btns   = stepsBar.querySelectorAll('.step-btn');
+        const btns = stepsBar.querySelectorAll('.step-btn');
         const barRect = stepsBar.getBoundingClientRect();
         for (let i = 0; i < btns.length - 1; i++) {
           const fR = btns[i].querySelector('.start-dot').getBoundingClientRect();
@@ -348,8 +358,8 @@
           if (fR.right >= tR.left) continue;
           const arrow = document.createElement('div');
           arrow.className = `step-arrow arrow-${i + 1}-${i + 2}`;
-          const top   = Math.min(fR.top, tR.top) - barRect.top - 36;
-          const left  = fR.left + fR.width / 2 - barRect.left;
+          const top = Math.min(fR.top, tR.top) - barRect.top - 36;
+          const left = fR.left + fR.width / 2 - barRect.left;
           const right = barRect.right - (tR.left + tR.width / 2);
           arrow.style.cssText = `top:${top}px;left:${left}px;right:${right}px;height:36px;`;
           stepsBar.appendChild(arrow);
@@ -392,9 +402,9 @@
       const r = el.getBoundingClientRect();
       return { left: r.left, top: r.top + window.scrollY, width: el.clientWidth, height: el.clientHeight };
     }
-    function setTween(link, area)  { const d = getAreaDetails(link); gsap.set(area, d); }
-    function tweenTo(link, area)   { const d = getAreaDetails(link); gsap.to(area, 0.5, { ...d, ease: Power3.easeInOut }); }
-    function getActive(links)      { return links.find(l => l.classList.contains('is-magic-active') || l.getAttribute('aria-current') === 'page'); }
+    function setTween(link, area) { const d = getAreaDetails(link); gsap.set(area, d); }
+    function tweenTo(link, area) { const d = getAreaDetails(link); gsap.to(area, 0.5, { ...d, ease: Power3.easeInOut }); }
+    function getActive(links) { return links.find(l => l.classList.contains('is-magic-active') || l.getAttribute('aria-current') === 'page'); }
 
     function mount({ isResize } = {}) {
       magicAreas.forEach(area => {
@@ -407,10 +417,10 @@
           const tweenBack = area.getAttribute('data-tween-back') === 'true';
           links.forEach(link => {
             link.addEventListener('mouseenter', e => tweenTo(e.target, area));
-            link.addEventListener('focus',      e => tweenTo(e.target, area));
+            link.addEventListener('focus', e => tweenTo(e.target, area));
             if (tweenBack && active) {
               link.addEventListener('mouseleave', () => tweenTo(active, area));
-              link.addEventListener('focusout',   () => tweenTo(active, area));
+              link.addEventListener('focusout', () => tweenTo(active, area));
             }
           });
         }
@@ -435,13 +445,13 @@
      17. SCROLL SPY (nav active link)
      ============================================================ */
   function initScrollSpy() {
-    const SECTIONS  = ['about', 'service', 'works', 'stories', 'contact'];
-    const navLinks  = document.querySelectorAll('.c-main-menu__link');
+    const SECTIONS = ['about', 'service', 'works', 'stories', 'contact'];
+    const navLinks = document.querySelectorAll('.c-main-menu__link');
     if (!navLinks.length) return;
 
     function update() {
       const offset = window.innerHeight * 0.35;
-      let current  = '';
+      let current = '';
       SECTIONS.forEach(id => {
         const s = document.getElementById(id);
         if (s && s.getBoundingClientRect().top <= offset) current = id;
@@ -475,7 +485,7 @@
     const OWL = {
       light: {
         idle: [`,___,\n[-,-]\n/)__)\n-"--"-`],
-        nod:  [`,___,\n[-,-]\n/)__)\n-"--"-`, `,___,\n[-,-]\n/)__>\n-"--"-`]
+        nod: [`,___,\n[-,-]\n/)__)\n-"--"-`, `,___,\n[-,-]\n/)__>\n-"--"-`]
       },
       dark: {
         idle: [
@@ -486,11 +496,11 @@
         nod: [`,___,\n[o,o]\n/)__)\n~"--"~`, `,___,\n[o,o]\n/)__>\n~"--"~`]
       },
       scroll: [`,___,\n[o,o]\n<(__)\n/)__)\n~"--"~`, `,___,\n[o,o]\n/)__>\n~"--"~`],
-      fly:    [`,___,\n[o,o]\n/)__>\n~"--"~`, `,___,\n[o,o]\n<(__)\n~"--"~`, `,___,\n[o,o]\n/)__>\n~"--"~`]
+      fly: [`,___,\n[o,o]\n/)__>\n~"--"~`, `,___,\n[o,o]\n<(__)\n~"--"~`, `,___,\n[o,o]\n/)__>\n~"--"~`]
     };
 
-    let interval   = null;
-    let idleTimer  = null;
+    let interval = null;
+    let idleTimer = null;
 
     const theme = () => document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
 
@@ -507,7 +517,7 @@
     }
 
     function startIdle() { play(OWL[theme()].idle, 1400); }
-    function nod()       { play(OWL[theme()].nod,  180, true); }
+    function nod() { play(OWL[theme()].nod, 180, true); }
 
     function flyAway() {
       clearInterval(interval);
@@ -569,15 +579,23 @@
     setTimeout(() => $('#preloader-areasss').fadeOut('slow'), 500);
 
     if (typeof gsap === 'undefined') return;
-    const svg   = document.getElementById('preloaderSvg');
+    const svg = document.getElementById('preloaderSvg');
     if (!svg) return;
+
     const curve = 'M0 502S175 272 500 272s500 230 500 230V0H0Z';
-    const flat  = 'M0 2S175 1 500 1s500 1 500 1V0H0Z';
+    const flat = 'M0 2S175 1 500 1s500 1 500 1V0H0Z';
+
+    // shorten delays: was 1.5s, now 0.6s
     gsap.timeline()
-      .to('.preloader-heading .load-text, .preloader-heading .cont', { delay: 1.5, y: -100, opacity: 0 })
-      .to(svg, { duration: .5, attr: { d: curve }, ease: 'power2.easeIn' })
-      .to(svg, { duration: .5, attr: { d: flat  }, ease: 'power2.easeOut' })
-      .to('.preloader', { y: -1500 })
+      .to('.preloader-heading .load-text, .preloader-heading .cont', {
+        delay: 0.6,           // ← was 1.5
+        y: -100,
+        opacity: 0,
+        duration: 0.3         // ← add explicit short duration
+      })
+      .to(svg, { duration: 0.35, attr: { d: curve }, ease: 'power2.easeIn' })
+      .to(svg, { duration: 0.35, attr: { d: flat }, ease: 'power2.easeOut' })
+      .to('.preloader', { y: -1500, duration: 0.4 })
       .to('.preloader', { zIndex: -1, display: 'none' });
   }
 

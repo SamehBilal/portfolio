@@ -1,5 +1,6 @@
-import gsap from 'https://cdn.skypack.dev/gsap@3.12.0';
-import Draggable from 'https://cdn.skypack.dev/gsap@3.12.0/Draggable';
+
+import gsap from 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js';
+import Draggable from 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/Draggable.js';
 
 document.documentElement.dataset.theme = 'dark';
 
@@ -24,6 +25,8 @@ const DUMMY = document.querySelector('.toggle-scene__dummy-cord');
 const DUMMY_CORD = document.querySelector('.toggle-scene__dummy-cord line');
 const FORM = document.querySelector('.form');
 const TOGGLE = FORM.querySelector('button');
+const _initTheme = localStorage.getItem('theme');
+if (_initTheme) TOGGLE.setAttribute('aria-pressed', _initTheme === 'light' ? 'true' : 'false');
 const PROXY = document.createElement('div');
 // set init position
 const ENDX = DUMMY_CORD.getAttribute('x2');
@@ -41,7 +44,9 @@ const toggle = () => {
   AUDIO.CLICK.play();
   const theme = TOGGLE.matches('[aria-pressed=false]');
   TOGGLE.setAttribute('aria-pressed', theme);
-  document.documentElement.dataset.theme = theme ? 'light' : 'dark';
+  const next = theme ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('theme', next);           // ← added
   /* heading.innerText = `lights ${theme ? 'on' : 'off'}.`; */
 };
 

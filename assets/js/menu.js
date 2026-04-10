@@ -1,13 +1,14 @@
 const config = {
   speed: 0.35,
   backdrop: false,
-  theme: 'light'
+  theme: localStorage.getItem('theme') || 'light'
 };
 
 const update = () => {
   document.documentElement.dataset.theme = config.theme;
   document.documentElement.dataset.backdrop = config.backdrop;
   document.documentElement.style.setProperty('--speed', config.speed);
+  localStorage.setItem('theme', config.theme);  
 };
 
 const sync = event => {
@@ -38,6 +39,7 @@ if (themeToggler) {
     const index = options.indexOf(config.theme);
     const newTheme = options.at(index + 1 > options.length - 1 ? 0 : index + 1);
     config.theme = newTheme;
+    localStorage.setItem('theme', newTheme);  
 
     sync({
       target: {
