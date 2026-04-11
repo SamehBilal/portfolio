@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../assets/js/theme.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diskussion Toggle Puzzle — Sameh Bilal</title>
+
+    <link rel="apple-touch-icon" href="../assets/images/favicon.png">
+    <link rel="shortcut icon"    type="image/png" href="../assets/images/favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/fonts/remixicon.css">
+    <link rel="stylesheet" href="../assets/css/spacing.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+
+    <style>
+    /* ══════════════════════════════════════════════
+       PAGE WRAP
+    ══════════════════════════════════════════════ */
+    .page-wrap {
+        position: relative; z-index: 1;
+        max-width: 1280px; margin: 0 auto;
+        padding: 120px 24px 80px;
+    }
+
+    /* ── Section title ── */
+    .section-title { margin-bottom: 40px; text-align: center; }
+    .section-title p  { font-size: 14px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: light-dark(#888,#a0aec0); margin-bottom: 6px; }
+    .section-title h2 { font-size: clamp(28px,4vw,50px); font-weight: 700; line-height: 1.2; color: var(--heading-color); }
+    .section-title h2 span { color: var(--primary-color); }
+
+    /* ── Container card ── */
+    .container-inner {
+        padding: 40px;
+        border: 1px solid rgba(0,0,0,.05); border-radius: 20px;
+        box-shadow: rgba(255,255,255,.025) 0 .36px .65px -1px inset,
+                    rgba(255,255,255,.036) 0 3px 5.4px -2px inset;
+        background: light-dark(#fff,#1D1D1D);
+        margin-bottom: 24px; position: relative; z-index: 1;
+    }
+
+    /* ── Puzzle box — self-contained iframe-like area ── */
+    .puzzle-box {
+        position: relative;
+        width: 100%;
+        /* tall enough at all sizes to show circles + arrows */
+        aspect-ratio: 16 / 10;
+        min-height: 460px;
+        border-radius: 14px;
+        border: 1px solid var(--border-color);
+        background: light-dark(#fafafa, #141414);
+        overflow: hidden;
+        font-family: monospace;
+
+        /* puzzle sizing token — relative to box width */
+        --size: min(130px, 14vw);
+        --subsz: calc(0.2 * var(--size));
+        --clr1: #479ce7;
+        --clr2: #ef476f;
+        --clr3: #ffd166;
+        --clr4: #06d6a0;
+    }
+
+    /* ── Circles ── */
+    .puzzle-circles {
+        position: absolute;
+        /* centred in the box */
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0; height: 0;   /* anchor point only — children use absolute offset */
+    }
+
+    .circle {
+        position: absolute;
+        width: var(--size); height: var(--size);
+        border-radius: 100%;
+        box-shadow: inset 0 0 0 calc(0.3 * var(--size)) #0002;
+        transform: translate(-50%, -50%);   /* centre on their own anchor */
+        transition: rotate 1s ease-in-out;
+    }
+    #A { background: var(--clr1); left:  calc(var(--size) * 1.74); top: 0; }
+    #B { background: var(--clr2); left:  0; top:  calc(var(--size) * 1); }
+    #C { background: var(--clr3); left:  calc(var(--size) * -1.74); top: 0; }
+    #D { background: var(--clr4); left:  0; top:  calc(var(--size) * -1); }
+
+    .circle > div {
+        position: absolute;
+        left: calc(50% - var(--subsz)/2); top: 0;
+        width: var(--subsz); height: 50%;
+        transform-origin: 50% 100%;
+    }
+    .circle > div::before {
+        content: ''; display: block; position: relative; top: -1px;
+        width: var(--subsz); height: var(--subsz);
+        background: light-dark(#fafafa, #141414);
+        border-bottom-left-radius: var(--subsz);
+        border-bottom-right-radius: var(--subsz);
+    }
+    .circle > div:nth-child(1) { rotate: 60deg; }
+    .circle > div:nth-child(2) { rotate: 120deg; }
+    .circle > div:nth-child(3) { rotate: 180deg; }
+    .circle > div:nth-child(4) { rotate: 240deg; }
+    .circle > div:nth-child(5) { rotate: 300deg; }
+
+    .circle > div::after {
+        position: absolute; display: block;
+        content: ''; color: #fff;
+        width: calc(0.8 * var(--subsz)); height: calc(0.8 * var(--subsz));
+        left: calc(0.1 * var(--subsz));
+        border-radius: 100%;
+        top: calc(-0.9 * var(--subsz));
+        transition: top 0.4s ease-in-out, background 1.2s ease-in;
+    }
+    .circle > div[data-cur="a"]::after { top: calc(0.06 * var(--subsz)); background: var(--clr1); transition: top 0.4s ease-in-out, background 0s linear; }
+    .circle > div[data-cur="b"]::after { top: calc(0.06 * var(--subsz)); background: var(--clr2); transition: top 0.4s ease-in-out, background 0s linear; }
+    .circle > div[data-cur="c"]::after { top: calc(0.06 * var(--subsz)); background: var(--clr3); transition: top 0.4s ease-in-out, background 0s linear; }
+    .circle > div[data-cur="d"]::after { top: calc(0.06 * var(--subsz)); background: var(--clr4); transition: top 0.4s ease-in-out, background 0s linear; }
+
+    /* ── Arrow controls — positioned relative to .puzzle-circles ── */
+    .arrow {
+        position: absolute;
+        transform: translate(-50%, -50%);
+    }
+    /* same geometry as original */
+    .arrow.a { left: calc(var(--size) * 1.74); top: calc(var(--size) * -0.7); rotate: 90deg; }
+    .arrow.b { left: 0;                        top: calc(var(--size) * 1.7);  rotate: 180deg; }
+    .arrow.c { left: calc(var(--size) * -1.74);top: calc(var(--size) * -0.7); rotate: 270deg; }
+    .arrow.d { left: 0;                        top: calc(var(--size) * -1.7); }
+
+    .arrow .left, .arrow .right {
+        position: relative;
+        background-size: contain; background-repeat: no-repeat;
+        width: calc(0.42 * var(--size)); height: calc(0.22 * var(--size));
+        rotate: -180deg; cursor: pointer; display: inline-block;
+    }
+    .arrow .left:hover, .arrow .right:hover { filter: brightness(3); }
+    .arrow .left  { left: calc(-0.42 * var(--size)); }
+    .arrow .right {
+        position: absolute;
+        top: calc(-0.22 * var(--size)); left: calc(0.42 * var(--size));
+        transform: rotateY(180deg);
+    }
+
+    /* ── Puzzle UI overlays (inside .puzzle-box) ── */
+    .puzzle-badge {
+        position: absolute; top: 16px; left: 16px;
+        font-size: 13px; font-weight: 600; font-family: monospace;
+        color: light-dark(#444,#aaa); pointer-events: none; user-select: none;
+        line-height: 1.6;
+    }
+    .puzzle-badge span { display: block; font-size: 11px; font-weight: 400; color: light-dark(#888,#666); }
+
+    .shuffle-btn {
+        position: absolute; top: 16px; right: 16px;
+        padding: 6px 18px; font-size: 13px;
+        color: #1e1e1e; background: var(--clr3);
+        border-radius: 6px; cursor: pointer;
+        border: 2px solid #0003; font-family: monospace;
+        transition: background .2s; z-index: 5;
+    }
+    .shuffle-btn:hover { background: #fffc; }
+
+    .solved-badge {
+        position: absolute; bottom: 16px; right: 16px;
+        font-size: 14px; font-weight: 700; font-family: monospace;
+        color: var(--clr2); pointer-events: none; z-index: 5;
+        padding: 5px 14px; border-radius: 20px;
+        background: light-dark(rgba(0,0,0,.06),rgba(255,255,255,.06));
+        border: 1px solid currentColor;
+        transition: color .3s;
+    }
+    .solved-badge.true { color: var(--clr4); }
+
+    /* ── Info strip ── */
+    .puzzle-info { text-align: center; padding: 8px 0 16px; }
+    .puzzle-info p {
+        font-size: 14px; color: light-dark(#666,#a0aec0);
+        line-height: 1.8; margin-bottom: 20px;
+    }
+    .pill-btn {
+        display: inline-block; background: var(--primary-color); color: #fff;
+        border: 1px solid var(--border-color); font-size: 14px; font-weight: 500;
+        font-family: "Poppins",sans-serif; border-radius: 15px; padding: 12px 28px;
+        transition: .3s; cursor: pointer; text-decoration: none;
+    }
+    .pill-btn:hover { background: #000; color: #fff; }
+    </style>
+</head>
+
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="main-header">
+    <div class="header-upper">
+        <div class="container">
+            <div class="header-inner d-flex align-items-center">
+
+                <div class="logo-outer" onclick="location.href='../index.html'">
+                    <div class="logo">
+                        <span class="logo-letter is-active">S</span>
+                        <span class="logo-letter is-active">A</span>
+                        <span class="logo-letter is-active">M</span>
+                        <span class="logo-letter is-active">E</span>
+                        <span class="logo-letter is-active">H</span>
+                    </div>
+                </div>
+
+                <div class="nav-outer clearfix mx-auto">
+                    <nav class="main-menu navbar-expand-lg">
+                        <div class="navbar-header">
+                            <div class="mobile-logo">
+                                <div class="logo">
+                                    <span class="logo-letter is-active">S</span>
+                                    <span class="logo-letter is-active">A</span>
+                                    <span class="logo-letter is-active">M</span>
+                                    <span class="logo-letter is-active">E</span>
+                                    <span class="logo-letter is-active">H</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="o-page"></div>
+                    </nav>
+                </div>
+
+                <div class="menu-btns align-items-center">
+                    <a href="../index.html#contact" class="theme-btn">Hire Me <i class="ri-shake-hands-line"></i></a>
+                    <form class="form">
+                        <div class="arrow" style="position:relative">
+                            <label>drag me.</label>
+                            <svg aria-hidden="true" viewBox="0 0 144 141" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M129.189 0.0490494C128.744 0.119441 126.422 0.377545 124.03 0.635648C114.719 1.6446 109.23 2.4893 108.058 3.09936C107.119 3.56864 106.674 4.34295 106.674 5.44576C106.674 6.71281 107.424 7.51058 109.043 7.97986C110.403 8.37875 110.825 8.42567 118.87 9.52847C121.778 9.92736 124.288 10.3028 124.475 10.3732C124.663 10.4436 122.951 11.1006 120.676 11.8749C110.028 15.4414 100.412 20.7677 91.7339 27.9242C88.38 30.7164 81.6957 37.4271 79.2096 40.5009C73.8387 47.2116 69.6874 54.8139 66.5681 63.7302C65.9348 65.4665 65.3484 66.8978 65.2546 66.8978C65.1374 66.8978 63.7771 66.7336 62.2291 66.5693C52.9649 65.5134 43.1847 68.1649 34.1316 74.2186C24.7735 80.46 18.5349 87.7338 10.5371 101.742C2.53943 115.726 -1.0959 127.482 0.287874 135.014C0.89767 138.463 2.0469 140.035 3.97011 140.082C5.28352 140.105 5.37733 139.659 4.20465 139.049C3.05541 138.463 2.6567 137.9 2.32835 136.281C0.616228 128.021 6.24512 113.028 17.4325 96.1104C23.2725 87.241 28.362 81.9147 35.5622 77.1046C43.8649 71.5437 52.7069 69.033 61.1737 69.8308C64.9967 70.1828 64.6917 69.9247 64.1992 72.4822C62.2525 82.5013 63.8005 92.6378 67.9753 97.354C73.1116 103.079 81.9771 102 85.0027 95.2657C86.3395 92.2858 86.3864 87.7103 85.1434 83.9796C83.1498 78.0901 80.007 73.8197 75.4335 70.8163C73.8152 69.7604 70.4848 68.1883 69.875 68.1883C69.359 68.1883 69.4294 67.6487 70.2268 65.3257C72.3377 59.2486 75.457 52.7021 78.4122 48.244C83.2436 40.9232 91.4524 32.5701 99.1687 27.103C105.806 22.4102 113.241 18.5386 120.512 16.0045C123.772 14.8548 129.87 13.1889 130.081 13.3766C130.128 13.447 129.541 14.362 128.791 15.4414C124.78 21.0258 122.716 26.0706 122.388 30.998C122.224 33.7198 122.341 34.588 122.88 34.2595C122.998 34.1891 123.678 32.969 124.405 31.5611C126.281 27.8069 131.722 20.6738 139.579 11.6402C141.127 9.85697 142.652 7.86254 143.027 7.08823C144.552 4.03792 143.52 1.48035 140.377 0.471397C139.439 0.166366 138.102 0.0490408 134.584 0.0255769C132.074 -0.021351 129.635 0.00212153 129.189 0.0490494ZM137.117 4.92955C137.187 5.0234 136.718 5.63346 136.061 6.29045L134.865 7.48712L131.042 6.73627C128.931 6.33739 126.727 5.9385 126.14 5.8681C124.827 5.68039 124.123 5.32843 124.968 5.28151C125.296 5.28151 126.868 5.11725 128.486 4.953C131.3 4.64797 136.812 4.62451 137.117 4.92955ZM71.5168 72.5292C76.2075 74.899 79.4441 78.8175 81.3204 84.355C83.6189 91.1361 81.2266 96.8378 76.0433 96.8847C73.3227 96.9082 70.9773 95.2188 69.5936 92.2389C68.2802 89.4232 67.6938 86.5606 67.5765 82.1259C67.4593 78.3248 67.6 76.4242 68.2333 72.7403L68.4912 71.2856L69.359 71.5906C69.8515 71.7548 70.8132 72.1772 71.5168 72.5292Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <button aria-pressed="false">
+                            <span class="sr-only">Toggle theme</span>
+                            <svg aria-hidden="true" class="toggle-scene" xmlns="http://www.w3.org/2000/svg" viewBox="32 32 134 134">
+                                <defs>
+                                    <marker id="a" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                    <clippath id="g" clippathunits="userSpaceOnUse"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path></clippath>
+                                </defs>
+                                <g class="toggle-scene__cords">
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623" transform="translate(-24.503 256.106)"></path>
+                                    <g class="line toggle-scene__dummy-cord"><line marker-end="url(#a)" x1="98" x2="98" y1="240" y2="380"></line></g>
+                                    <circle class="toggle-scene__hit-spot" cx="98.7255" cy="380.5405" r="60" fill="transparent"></circle>
+                                </g>
+                                <g class="toggle-scene__bulb bulb" transform="translate(844.069 -645.213)">
+                                    <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+                                    <path class="bulb__cap-shine" d="M-778.379 802.873h25.512v118.409h-25.512z" clip-path="url(#g)" transform="matrix(.52452 0 0 .90177 -368.282 82.976)"></path>
+                                    <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z"></path>
+                                    <path class="bulb__cap-outline" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+                                    <g class="bulb__filament" fill="none" stroke-linecap="round" stroke-width="5">
+                                        <path d="M-752.914 823.875l-8.858-33.06"></path>
+                                        <path d="M-737.772 823.875l8.858-33.06"></path>
+                                    </g>
+                                    <path class="bulb__bulb" stroke-linecap="round" stroke-width="5" d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z"></path>
+                                    <circle class="bulb__flash" cx="-745.343" cy="743.939" r="83.725" fill="none" stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></circle>
+                                    <path class="bulb__shine" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957"></path>
+                                </g>
+                            </svg>
+                            <div class="grab-handle"></div>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+<!-- /HEADER -->
+
+
+<!-- ══ PAGE ══ -->
+<div class="page-wrap">
+
+    <div class="section-title">
+        <p>Logic Puzzle</p>
+        <h2>The <span>Diskussion</span> Toggle</h2>
+    </div>
+
+    <div class="container-inner">
+
+        <!-- card header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:22px">
+            <div>
+                <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">Diskussion</h3>
+                <p style="font-size:13px;color:light-dark(#888,#a0aec0)">
+                    Rotate each ring until every ball returns to its matching colour circle.
+                    Original puzzle by <strong>OskarPuzzle</strong>.
+                </p>
+            </div>
+            <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;background:light-dark(rgba(249,129,46,.08),rgba(249,129,46,.1));border:1px solid rgba(249,129,46,.3);font-size:12px;font-weight:600;color:var(--primary-color)">
+                🧩 Interactive Puzzle
+            </div>
+        </div>
+
+        <!-- THE PUZZLE BOX -->
+        <div class="puzzle-box" id="puzzleBox">
+
+            <!-- title + attribution overlay -->
+            <div class="puzzle-badge">
+                Diskussion
+                <span>by OskarPuzzle</span>
+            </div>
+
+            <!-- shuffle -->
+            <button class="shuffle-btn" id="shuffleBtn">Shuffle</button>
+
+            <!-- solved badge -->
+            <div class="solved-badge true" id="solvedBadge">SOLVED</div>
+
+            <!-- circles anchor -->
+            <div class="puzzle-circles" id="puzzleCircles">
+
+                <!-- Circles -->
+                <div class="circle" id="A" data-pos="0">
+                    <div data-cur="a" data-static="2"></div>
+                    <div data-cur="a" data-static="3"></div>
+                    <div data-cur="a" data-static="4"></div>
+                    <div data-cur=""  data-static="5"></div>
+                    <div data-cur="a" data-static="0"></div>
+                    <div data-cur="a" data-static="1"></div>
+                </div>
+                <div class="circle" id="B" data-pos="0">
+                    <div data-cur="b" data-static="0"></div>
+                    <div data-cur="b" data-static="1"></div>
+                    <div data-cur="b" data-static="2"></div>
+                    <div data-cur="b" data-static="3"></div>
+                    <div data-cur=""  data-static="4"></div>
+                    <div data-cur="b" data-static="5"></div>
+                </div>
+                <div class="circle" id="C" data-pos="0">
+                    <div data-cur=""  data-static="5"></div>
+                    <div data-cur="c" data-static="0"></div>
+                    <div data-cur="c" data-static="1"></div>
+                    <div data-cur="c" data-static="2"></div>
+                    <div data-cur="c" data-static="3"></div>
+                    <div data-cur="c" data-static="4"></div>
+                </div>
+                <div class="circle" id="D" data-pos="0">
+                    <div data-cur="d" data-static="3"></div>
+                    <div data-cur=""  data-static="4"></div>
+                    <div data-cur="d" data-static="5"></div>
+                    <div data-cur="d" data-static="0"></div>
+                    <div data-cur="d" data-static="1"></div>
+                    <div data-cur="d" data-static="2"></div>
+                </div>
+
+                <!-- Arrow controls — colour SVGs via data-URI in style attr -->
+                <div class="arrow a">
+                    <div class="left"  style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23479ce7%22 viewBox=%220 0 303 303%22%3E%3Cpath d=%22M298 129L236 66a18 18 0 00-25 0l-62 62a15 15 0 0021 21l39-39c-4 47-39 88-88 98a115 115 0 01-65-16 115 115 0 01-33-22 15 15 0 00-21 21 144 144 0 0027 21c21 13 46 19 71 19a145 145 0 00139-126l35 35a15 15 0 0021-21z%22/%3E%3C/svg%3E')"></div>
+                    <div class="right" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23479ce7%22 viewBox=%220 0 303 303%22%3E%3Cpath d=%22M298 129L236 66a18 18 0 00-25 0l-62 62a15 15 0 0021 21l39-39c-4 47-39 88-88 98a115 115 0 01-65-16 115 115 0 01-33-22 15 15 0 00-21 21 144 144 0 0027 21c21 13 46 19 71 19a145 145 0 00139-126l35 35a15 15 0 0021-21z%22/%3E%3C/svg%3E')"></div>
+                </div>
+                <div class="arrow b">
+                    <div class="left"  style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23ef476f%22 viewBox=%220 0 303 303%22%3E%3Cpath d=%22M298 129L236 66a18 18 0 00-25 0l-62 62a15 15 0 0021 21l39-39c-4 47-39 88-88 98a115 115 0 01-65-16 115 115 0 01-33-22 15 15 0 00-21 21 144 144 0 0027 21c21 13 46 19 71 19a145 145 0 00139-126l35 35a15 15 0 0021-21z%22/%3E%3C/svg%3E')"></div>
+                    <div class="right" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23ef476f%22 viewBox=%220 0 303 303%22%3E%3Cpath d=%22M298 129L236 66a18 18 0 00-25 0l-62 62a15 15 0 0021 21l39-39c-4 47-39 88-88 98a115 115 0 01-65-16 115 115 0 01-33-22 15 15 0 00-21 21 144 144 0 0027 21c21 13 46 19 71 19a145 145 0 00139-126l35 35a15 15 0 0021-21z%22/%3E%3C/svg%3E')"></div>
+                </div>
+                <div class="arrow c">
+                    <div class="left"  style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23ffd166%22 viewBox=%220 0 303 303%22%3E%3Cpath d=%22M298 129L236 66a18 18 0 00-25 0l-62 62a15 15 0 0021 21l39-39c-4 47-39 88-88 98a115 115 0 01-65-16 115 115 0 01-33-22 15 15 0 00-21 21 144 144 0 0027 21c21 13 46 19 71 19a145 145 0 00139-126l35 35a15 15 0 0021-21z%22/%3E%3C/svg%3E')"></div>
+                    <div class="right" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23ffd166%22 viewBox=%220 0 303 303%22%3E%3Cpath d=%22M298 129L236 66a18 18 0 00-25 0l-62 62a15 15 0 0021 21l39-39c-4 47-39 88-88 98a115 115 0 01-65-16 115 115 0 01-33-22 15 15 0 00-21 21 144 144 0 0027 21c21 13 46 19 71 19a145 145 0 00139-126l35 35a15 15 0 0021-21z%22/%3E%3C/svg%3E')"></div>
+                </div>
+                <div class="arrow d">
+                    <div class="left"  style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%2306d6a0%22 viewBox=%220 0 303 303%22%3E%3Cpath d=%22M298 129L236 66a18 18 0 00-25 0l-62 62a15 15 0 0021 21l39-39c-4 47-39 88-88 98a115 115 0 01-65-16 115 115 0 01-33-22 15 15 0 00-21 21 144 144 0 0027 21c21 13 46 19 71 19a145 145 0 00139-126l35 35a15 15 0 0021-21z%22/%3E%3C/svg%3E')"></div>
+                    <div class="right" style="background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%2306d6a0%22 viewBox=%220 0 303 303%22%3E%3Cpath d=%22M298 129L236 66a18 18 0 00-25 0l-62 62a15 15 0 0021 21l39-39c-4 47-39 88-88 98a115 115 0 01-65-16 115 115 0 01-33-22 15 15 0 00-21 21 144 144 0 0027 21c21 13 46 19 71 19a145 145 0 00139-126l35 35a15 15 0 0021-21z%22/%3E%3C/svg%3E')"></div>
+                </div>
+
+            </div><!-- /puzzle-circles -->
+        </div><!-- /puzzle-box -->
+
+        <!-- info below the box -->
+        <div class="puzzle-info" style="margin-top:20px">
+            <p>
+                Rotate each coloured ring using the curved arrows on either side.<br>
+                Balls transfer between rings at contact points — get every ball back into its home circle to solve it.
+            </p>
+            <a href="../stories.html" class="pill-btn">← Back to Stories</a>
+        </div>
+
+    </div><!-- /container-inner -->
+</div>
+<!-- /PAGE -->
+
+
+<!-- ══ TAGLINE ══ -->
+<div class="c-author">
+    <h6>
+        <span class="fluid">Less noise.</span><br>
+        <span class="fluid" aria-hidden="true" data-splitting="">More <span style="color:#F9812E">impact.</span></span>
+        <span class="sr-only">More impact.</span>
+    </h6>
+</div>
+
+
+<!-- ══ FOOTER ══ -->
+<footer class="main-footer">
+    <div class="footer-bottom pt-50 pb-40">
+        <div class="container footer-poistion">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="copyright-text">
+                        <p>
+                            Copyright &copy;<span id="currentYear"></span>,
+                            <span id="owl" class="ascii owl" aria-hidden="true">,___,
+[o,o]
+/)__)
+-"--"-</span>
+                            <span class="sr-only">Decorative owl animation</span>
+                            All Rights Reserved.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="copyright-text extra-copyright">
+                        <p>
+                            Crafted with <span style="color:#F9812E">🧡</span>
+                            <a class="c-author__link" href="https://samehbilal.github.io/portfolio">Sameh Bilal</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ══ BOTTOM NAV ══ -->
+<nav class="nav">
+    <ul>
+        <li><a href="../index.html#about">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z"/></svg>
+        </a></li>
+        <li><a href="mailto:sameh.bilal@outlook.com">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z"/></svg>
+        </a></li>
+        <li><a href="../stories.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/></svg>
+        </a></li>
+        <li>
+            <button class="theme-toggler">
+                <span class="sr-only">Toggle Theme</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="theme-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/>
+                </svg>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+
+<!-- ══ SCROLL-TO-TOP ══ -->
+<div class="progress-wrap cursor-pointer">
+    <i class="ri-arrow-up-double-line"></i>
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+    </svg>
+</div>
+
+
+<!-- ══ SCRIPTS ══ -->
+<script src="../assets/js/jquery-3.7.1.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/gsap.min.js"></script>
+<script src="../assets/js/lodash.min.js"></script>
+<script src="../assets/js/MorphSVGPlugin3.min.js"></script>
+<script type="module" src="../assets/js/lights.js" defer></script>
+<script type="module" src="../assets/js/splitting.js" defer></script>
+<script src="../assets/js/main.js" defer></script>
+
+<script>
+/* ══════════════════════════════════════
+   PUZZLE LOGIC — unchanged from original
+══════════════════════════════════════ */
+const circles    = document.querySelectorAll('.circle');
+const arrowEls   = document.querySelectorAll('.puzzle-circles .arrow');
+const solvedEl   = document.getElementById('solvedBadge');
+const shuffleBtn = document.getElementById('shuffleBtn');
+let clickAllowed = true;
+
+function handleClick(index, direction, force = false) {
+    if (!clickAllowed && !force) return;
+    if (!force) {
+        clickAllowed = false;
+        setTimeout(() => clickAllowed = true, 1000);
+    }
+    if (direction === 'left') {
+        circles[index].dataset.pos++;
+        circles[index].querySelectorAll('div').forEach(n => {
+            n.dataset.static = (Number(n.dataset.static) - 1 + 6) % 6;
+        });
+    } else {
+        circles[index].dataset.pos--;
+        circles[index].querySelectorAll('div').forEach(n => {
+            n.dataset.static = (Number(n.dataset.static) + 1) % 6;
+        });
+    }
+    circles[index].style.rotate = `${-60 * circles[index].dataset.pos}deg`;
+    clockwiseUpCheck();
+}
+
+arrowEls.forEach((arrow, i) => {
+    arrow.querySelector('.left') .addEventListener('click', () => handleClick(i, 'left'));
+    arrow.querySelector('.right').addEventListener('click', () => handleClick(i, 'right'));
+});
+
+function checkTransfer(fro, tow) {
+    const froEle = document.querySelector(`.circle#${fro[0]} [data-static="${fro[1]}"]`);
+    const towEle = document.querySelector(`.circle#${tow[0]} [data-static="${tow[1]}"]`);
+    if (froEle.dataset.cur !== '' && towEle.dataset.cur === '') {
+        towEle.dataset.cur = froEle.dataset.cur;
+        froEle.dataset.cur = '';
+    }
+}
+
+function clockwiseUpCheck() {
+    setTimeout(() => {
+        checkTransfer('A5', 'B0');
+        checkTransfer('B4', 'C0');
+        checkTransfer('C5', 'D0');
+        checkTransfer('D4', 'A0');
+        checkTransfer('B5', 'D5');
+        checkSolution();
+    }, 1000);
+}
+
+function shuffle(times = 10, delay = 10) {
+    let count = 0;
+    const iv = setInterval(() => {
+        handleClick(Math.floor(Math.random() * arrowEls.length),
+                    Math.random() > 0.5 ? 'left' : 'right', true);
+        if (++count >= times) clearInterval(iv);
+    }, delay);
+}
+
+shuffleBtn.addEventListener('click', () => shuffle(800));
+
+function checkSolution() {
+    let solved = true;
+    circles.forEach(circle => {
+        circle.querySelectorAll('div[data-cur]').forEach(c => {
+            if (c.dataset.cur !== '' && circle.id.toLowerCase() !== c.dataset.cur) solved = false;
+        });
+    });
+    solvedEl.textContent = solved ? 'SOLVED' : 'UNSOLVED';
+    solvedEl.classList.toggle('true', solved);
+}
+</script>
+
+</body>
+</html>

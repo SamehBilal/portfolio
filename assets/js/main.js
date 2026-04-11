@@ -334,40 +334,111 @@
 
     function buildSteps(labels) {
       stepsBar.innerHTML = '';
+
+      // inject SVG overlay
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.classList.add('steps-svg');
+      svg.setAttribute('id', 'steps-svg');
+      stepsBar.appendChild(svg);
+
       labels.forEach((label, i) => {
         const btn = document.createElement('div');
         btn.className = `step-btn step-${i + 1}`;
         btn.innerHTML = `
-          <div class="step-header">
-            <span class="step-num">0${i + 1}</span>
-            <div class="step-indicators">
-              <span class="end-dot"></span>
-              <span class="start-dot"></span>
+            <div class="step-header">
+                <span class="step-num">0${i + 1}</span>
+                <div class="step-indicators">
+                    <span class="end-dot"></span>
+                    <span class="start-dot"></span>
+                </div>
             </div>
-          </div>
-          <span class="step-label">${label}</span>`;
+            <span class="step-label">${label}</span>`;
         stepsBar.appendChild(btn);
       });
 
+      // wire arrows after layout
       requestAnimationFrame(() => {
-        const btns = stepsBar.querySelectorAll('.step-btn');
+        const btns = [...stepsBar.querySelectorAll('.step-btn')];
         const barRect = stepsBar.getBoundingClientRect();
-        for (let i = 0; i < btns.length - 1; i++) {
-          const fR = btns[i].querySelector('.start-dot').getBoundingClientRect();
-          const tR = btns[i + 1].querySelector('.end-dot').getBoundingClientRect();
-          if (fR.right >= tR.left) continue;
-          const arrow = document.createElement('div');
-          arrow.className = `step-arrow arrow-${i + 1}-${i + 2}`;
-          const top = Math.min(fR.top, tR.top) - barRect.top - 36;
-          const left = fR.left + fR.width / 2 - barRect.left;
-          const right = barRect.right - (tR.left + tR.width / 2);
-          arrow.style.cssText = `top:${top}px;left:${left}px;right:${right}px;height:36px;`;
-          stepsBar.appendChild(arrow);
-          [btns[i], btns[i + 1]].forEach(btn => {
-            btn.addEventListener('mouseenter', () => { arrow.style.opacity = '1'; arrow.style.transition = 'none'; });
-            btn.addEventListener('mouseleave', () => { arrow.style.opacity = '0'; arrow.style.transition = 'opacity 0.15s'; });
-          });
+
+        // sync SVG size
+        function syncSvg() {
+          const r = stepsBar.getBoundingClientRect();
+          svg.style.width = r.width + 'px';
+          svg.style.height = r.height + 'px';
         }
+        syncSvg();
+        window.addEventListener('resize', syncSvg);
+
+        function makePath(key) {
+          let p = svg.querySelector('#' + key);
+          if (!p) {
+            p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            p.setAttribute('id', key);
+            p.classList.add('step-arr-path');
+            svg.appendChild(p);
+          }
+          return p;
+        }
+
+        function bez(p, x1, y1, x2, y2) {
+          const mx = (x1 + x2) / 2;
+          const lift = Math.abs(x2 - x1) * 0.45; // how high the arc goes above the cards
+          p.setAttribute('d',
+            `M${x1},${y1} C${mx},${y1 - lift} ${mx},${y2 - lift} ${x2},${y2}`);
+        }
+
+        btns.forEach((btn, i) => {
+          // find neighbours
+          const prev = btns[i - 1];
+          const next = btns[i + 1];
+
+          btn.addEventListener('mouseenter', () => {
+            btn.classList.add('hi');
+            const br = stepsBar.getBoundingClientRect();
+
+            // draw arrow to next
+            if (next) {
+              next.classList.add('hi');
+              const bRect = btn.getBoundingClientRect();
+              const nRect = next.getBoundingClientRect();
+              const src = btn.querySelector('.start-dot').getBoundingClientRect();
+              const dst = next.querySelector('.end-dot').getBoundingClientRect();
+              if (src.right < dst.left) {
+                const p = makePath(`arr-${i}-${i + 1}`);
+                bez(p,
+                  src.left + src.width / 2 - br.left,
+                  src.top + src.height / 2 - br.top,
+                  dst.left + dst.width / 2 - br.left,
+                  dst.top + dst.height / 2 - br.top
+                );
+                p.classList.add('on');
+              }
+            }
+
+            // draw arrow from prev
+            if (prev) {
+              prev.classList.add('hi');
+              const pSrc = prev.querySelector('.start-dot').getBoundingClientRect();
+              const bDst = btn.querySelector('.end-dot').getBoundingClientRect();
+              if (pSrc.right < bDst.left) {
+                const p = makePath(`arr-${i - 1}-${i}`);
+                bez(p,
+                  pSrc.left + pSrc.width / 2 - br.left,
+                  pSrc.top + pSrc.height / 2 - br.top,
+                  bDst.left + bDst.width / 2 - br.left,
+                  bDst.top + bDst.height / 2 - br.top
+                );
+                p.classList.add('on');
+              }
+            }
+          });
+
+          btn.addEventListener('mouseleave', () => {
+            stepsBar.querySelectorAll('.step-btn').forEach(b => b.classList.remove('hi'));
+            svg.querySelectorAll('.step-arr-path').forEach(p => p.classList.remove('on'));
+          });
+        });
       });
     }
 
