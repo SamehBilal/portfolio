@@ -1,6 +1,6 @@
-import { Pane } from 'https://cdn.skypack.dev/tweakpane@4.0.4';
+/* import { Pane } from 'https://cdn.skypack.dev/tweakpane@4.0.4';
 import gsap from 'https://cdn.skypack.dev/gsap@3.12.0';
-import Matter from 'https://cdn.skypack.dev/matter-js';
+import Matter from 'https://cdn.skypack.dev/matter-js'; */
 const config = {
     debug: false,
     theme: 'system',
