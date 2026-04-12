@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="assets/js/theme.js"></script>
+
+    <!-- Primary Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="Sameh Bilal | Senior Backend & Full-Stack Developer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="personal, portfolio, html, design, creative, ancient, codes, apps">
+    <meta name="author" content="Sameh Bilal">
+    <meta name="robots" content="index, follow">
+
+    <title>Support My Work — Sameh Bilal</title>
+    <meta name="description" content="Senior Backend-Focused Full-Stack Developer with 7+ years of experience building scalable Laravel systems, APIs, and high-traffic platforms." />
+
+    <!-- FAV ICON -->
+    <link rel="apple-touch-icon" href="assets/images/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+
+    <!-- PORTFOLIO CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/fonts/remixicon.css" />
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/nice-select.min.css" />
+    <link rel="stylesheet" href="assets/css/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/slick.min.css" />
+    <link rel="stylesheet" href="assets/css/spacing.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <!-- ORIGINAL SUPPORT PAGE STYLES (unchanged) -->
+    <style>
+        @import url('https://unpkg.com/normalize.css') layer(normalize);
+
+        @font-face {
+            font-family: 'Humane Bold';
+            src: url('https://assets.codepen.io/605876/Humane-VF.ttf');
+        }
+
+        @layer normalize, base, demo;
+
+        @layer demo {
+            body {
+                align-content: start;
+            }
+
+            @media (pointer: coarse) {
+                [data-interactive='false'] header {
+                    pointer-events: none;
+                }
+            }
+
+            main {
+                height: 100vh;
+                display: grid;
+                place-items: center;
+            }
+
+            footer {
+                padding: 1rem;
+            }
+
+            h1,
+            h2 {
+                --font-level: 8;
+                text-wrap: balance;
+                margin: 0;
+                line-height: 0.8;
+                letter-spacing: 0.1ch;
+                font-family: 'Humane Bold', sans-serif;
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+
+            ::selection {
+                background: hsl(280 80% 60% / 0);
+            }
+
+            canvas {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                animation: fade-away both linear;
+                animation-timeline: view();
+                animation-range: exit 0% exit 50%;
+            }
+
+            @keyframes fade-away {
+                to { opacity: 0; }
+            }
+
+            main {
+                view-timeline: --main;
+            }
+
+            @property --flip {
+                inherits: true;
+                syntax: '<integer>';
+                initial-value: 0;
+            }
+
+            h2 {
+                animation: show both linear;
+                animation-timeline: view();
+                animation-range: cover;
+                clip-path: inset(0 0 0 0);
+            }
+
+            h2>span:first-of-type {
+                --font-level: 7.41;
+                opacity: calc(1 - (var(--flip) * 0.8));
+                transition: opacity 0.5s linear(0 0%, 0.0036 9.62%, 0.0185 16.66%, 0.0489 23.03%, 0.0962 28.86%, 0.1705 34.93%, 0.269 40.66%, 0.3867 45.89%, 0.5833 52.95%, 0.683 57.05%, 0.7829 62.14%, 0.8621 67.46%, 0.8991 70.68%, 0.9299 74.03%, 0.9545 77.52%, 0.9735 81.21%, 0.9865 85%, 0.9949 89.15%, 1 100%);
+            }
+
+            h2 .char {
+                translate: 0 calc((1 - var(--flip)) * 1.2lh);
+                transition: translate 0.5s calc(sin(var(--char-index) / var(--char-total) * 45deg) * 0.5s) linear(0 0%, 0.0036 9.62%, 0.0185 16.66%, 0.0489 23.03%, 0.0962 28.86%, 0.1705 34.93%, 0.269 40.66%, 0.3867 45.89%, 0.5833 52.95%, 0.683 57.05%, 0.7829 62.14%, 0.8621 67.46%, 0.8991 70.68%, 0.9299 74.03%, 0.9545 77.52%, 0.9735 81.21%, 0.9865 85%, 0.9949 89.15%, 1 100%);
+            }
+
+            @keyframes show {
+                to { --flip: 1; }
+            }
+
+            [data-theme='dark'] canvas {
+                filter: brightness(0.8);
+            }
+
+            @media (prefers-color-scheme: dark) {
+                [data-theme='system'] canvas {
+                    filter: brightness(0.8);
+                }
+            }
+
+            .icons {
+                display: none;
+            }
+
+            header.support-header {
+                width: 100svw;
+                height: 100svh;
+                display: grid;
+                place-items: center;
+                align-content: end;
+                padding-bottom: 15svmin;
+                position: relative;
+            }
+
+            .word,
+            .char {
+                display: inline-block;
+                line-height: 0.75;
+            }
+
+            .content {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                width: 800px;
+                max-width: calc(100vw - 2rem);
+            }
+
+            .content p {
+                --font-level: 0.75;
+                text-wrap: balance;
+            }
+        }
+
+        @layer base {
+            :root {
+                --font-size-min: 16;
+                --font-size-max: 20;
+                --font-ratio-min: 1.2;
+                --font-ratio-max: 1.33;
+                --font-width-min: 375;
+                --font-width-max: 1500;
+            }
+
+            html {
+                color-scheme: light dark;
+            }
+
+            [data-theme='light'] { color-scheme: light only; }
+            [data-theme='dark']  { color-scheme: dark only; }
+
+            :where(.fluid) {
+                --fluid-min: calc(var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0)));
+                --fluid-max: calc(var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0)));
+                --fluid-preferred: calc((var(--fluid-max) - var(--fluid-min)) / (var(--font-width-max) - var(--font-width-min)));
+                --fluid-type: clamp(
+                    (var(--fluid-min) / 16) * 1rem,
+                    ((var(--fluid-min) / 16) * 1rem) - (((var(--fluid-preferred) * var(--font-width-min)) / 16) * 1rem) + (var(--fluid-preferred) * var(--variable-unit, 100vi)),
+                    (var(--fluid-max) / 16) * 1rem
+                );
+                font-size: var(--fluid-type);
+            }
+
+            *,
+            *:after,
+            *:before {
+                box-sizing: border-box;
+            }
+
+            body {
+                display: grid;
+                place-items: center;
+                min-height: 100vh;
+                font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif, system-ui;
+            }
+
+            /* Utilities */
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+        }
+
+        .unlock {
+            position: fixed;
+            z-index: 99999;
+            left: 1rem;
+            bottom: 1rem;
+            width: 44px;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            color: canvas;
+            background: canvasText;
+            cursor: pointer;
+            scale: 0;
+            transition: scale 0.25s;
+            svg { width: 75%; }
+        }
+
+        @media (pointer: coarse) {
+            [data-interactive='true'] .unlock {
+                scale: 1;
+            }
+        }
+
+        /* ── animal ASCII ── */
+        .animal {
+            font-family: monospace;
+            font-size: 14px;
+            color: #F9812E;
+            line-height: 1.3;
+            margin: 0;
+            white-space: pre;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ══ PORTFOLIO HEADER ══ -->
+    <header class="main-header">
+        <div class="header-upper">
+            <div class="container">
+                <div class="header-inner d-flex align-items-center">
+
+                    <!-- LOGO -->
+                    <div class="logo-outer">
+                        <div class='logo' onclick="location.href='index.html'">
+                            <span class="logo-letter is-active">S</span>
+                            <span class="logo-letter is-active">A</span>
+                            <span class="logo-letter is-active">M</span>
+                            <span class="logo-letter is-active">E</span>
+                            <span class="logo-letter is-active">H</span>
+                        </div>
+                    </div>
+
+                    <!-- NAV -->
+                    <div class="nav-outer clearfix mx-auto">
+                        <nav class="main-menu navbar-expand-lg">
+                            <div class="navbar-header">
+                                <div class="mobile-logo">
+                                    <div class='logo' onclick="location.href='index.html'">
+                                        <span class="logo-letter is-active">S</span>
+                                        <span class="logo-letter is-active">A</span>
+                                        <span class="logo-letter is-active">M</span>
+                                        <span class="logo-letter is-active">E</span>
+                                        <span class="logo-letter is-active">H</span>
+                                    </div>
+                                </div>
+                                <button type="button" class="navbar-toggle" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                            <div class="o-page">
+                                <div class="o-header">
+                                    <nav class="c-main-menu navbar-collapse collapse" aria-labelledby="mainmenulabel">
+                                        <h2 id="mainmenulabel" class="u-visually-hidden">Main Menu</h2>
+                                        <ul class="c-main-menu__list navigation onepage clearfix">
+                                            <li><a class="c-main-menu__link nav-link-click" href="index.html#about">About</a></li>
+                                            <li><a class="c-main-menu__link nav-link-click" href="index.html#service">Services</a></li>
+                                            <li><a class="c-main-menu__link nav-link-click" href="index.html#works">Works</a></li>
+                                            <li><a class="c-main-menu__link nav-link-click" href="index.html#stories">Stories</a></li>
+                                            <li><a class="c-main-menu__link nav-link-click" href="index.html#contact">Contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+
+                    <!-- ACTIONS -->
+                    <div class="menu-btns align-items-center">
+                        <a href="index.html#contact" class="theme-btn">Hire Me <i class="ri-shake-hands-line"></i></a>
+                        <form class="form">
+                            <div class="arrow">
+                                <label>drag me.</label>
+                                <svg aria-hidden="true" viewBox="0 0 144 141" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M129.189 0.0490494C128.744 0.119441 126.422 0.377545 124.03 0.635648C114.719 1.6446 109.23 2.4893 108.058 3.09936C107.119 3.56864 106.674 4.34295 106.674 5.44576C106.674 6.71281 107.424 7.51058 109.043 7.97986C110.403 8.37875 110.825 8.42567 118.87 9.52847C121.778 9.92736 124.288 10.3028 124.475 10.3732C124.663 10.4436 122.951 11.1006 120.676 11.8749C110.028 15.4414 100.412 20.7677 91.7339 27.9242C88.38 30.7164 81.6957 37.4271 79.2096 40.5009C73.8387 47.2116 69.6874 54.8139 66.5681 63.7302C65.9348 65.4665 65.3484 66.8978 65.2546 66.8978C65.1374 66.8978 63.7771 66.7336 62.2291 66.5693C52.9649 65.5134 43.1847 68.1649 34.1316 74.2186C24.7735 80.46 18.5349 87.7338 10.5371 101.742C2.53943 115.726 -1.0959 127.482 0.287874 135.014C0.89767 138.463 2.0469 140.035 3.97011 140.082C5.28352 140.105 5.37733 139.659 4.20465 139.049C3.05541 138.463 2.6567 137.9 2.32835 136.281C0.616228 128.021 6.24512 113.028 17.4325 96.1104C23.2725 87.241 28.362 81.9147 35.5622 77.1046C43.8649 71.5437 52.7069 69.033 61.1737 69.8308C64.9967 70.1828 64.6917 69.9247 64.1992 72.4822C62.2525 82.5013 63.8005 92.6378 67.9753 97.354C73.1116 103.079 81.9771 102 85.0027 95.2657C86.3395 92.2858 86.3864 87.7103 85.1434 83.9796C83.1498 78.0901 80.007 73.8197 75.4335 70.8163C73.8152 69.7604 70.4848 68.1883 69.875 68.1883C69.359 68.1883 69.4294 67.6487 70.2268 65.3257C72.3377 59.2486 75.457 52.7021 78.4122 48.244C83.2436 40.9232 91.4524 32.5701 99.1687 27.103C105.806 22.4102 113.241 18.5386 120.512 16.0045C123.772 14.8548 129.87 13.1889 130.081 13.3766C130.128 13.447 129.541 14.362 128.791 15.4414C124.78 21.0258 122.716 26.0706 122.388 30.998C122.224 33.7198 122.341 34.588 122.88 34.2595C122.998 34.1891 123.678 32.969 124.405 31.5611C126.281 27.8069 131.722 20.6738 139.579 11.6402C141.127 9.85697 142.652 7.86254 143.027 7.08823C144.552 4.03792 143.52 1.48035 140.377 0.471397C139.439 0.166366 138.102 0.0490408 134.584 0.0255769C132.074 -0.021351 129.635 0.00212153 129.189 0.0490494ZM137.117 4.92955C137.187 5.0234 136.718 5.63346 136.061 6.29045L134.865 7.48712L131.042 6.73627C128.931 6.33739 126.727 5.9385 126.14 5.8681C124.827 5.68039 124.123 5.32843 124.968 5.28151C125.296 5.28151 126.868 5.11725 128.486 4.953C131.3 4.64797 136.812 4.62451 137.117 4.92955ZM71.5168 72.5292C76.2075 74.899 79.4441 78.8175 81.3204 84.355C83.6189 91.1361 81.2266 96.8378 76.0433 96.8847C73.3227 96.9082 70.9773 95.2188 69.5936 92.2389C68.2802 89.4232 67.6938 86.5606 67.5765 82.1259C67.4593 78.3248 67.6 76.4242 68.2333 72.7403L68.4912 71.2856L69.359 71.5906C69.8515 71.7548 70.8132 72.1772 71.5168 72.5292Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <button aria-pressed="false">
+                                <span class="sr-only">Toggle theme</span>
+                                <svg aria-hidden="true" class="toggle-scene" xmlns="http://www.w3.org/2000/svg" viewBox="32 32 134 134">
+                                    <defs>
+                                        <marker id="e" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                        <marker id="d" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                        <marker id="c" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                        <marker id="b" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                        <marker id="a" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                        <clippath id="g" clippathunits="userSpaceOnUse"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path></clippath>
+                                        <clippath id="f" clippathunits="userSpaceOnUse"><path d="M-868.418 945.051c-4.188 73.011 78.255 53.244 150.216 52.941 82.387-.346 98.921-19.444 98.921-47.058 0-27.615-4.788-42.55-73.823-42.55-69.036 0-171.436-30.937-175.314 36.667z"></path></clippath>
+                                    </defs>
+                                    <g class="toggle-scene__cords">
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493" transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507" transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468" transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782" transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623" transform="translate(-24.503 256.106)"></path>
+                                        <g class="line toggle-scene__dummy-cord"><line marker-end="url(#a)" x1="98" x2="98" y1="240" y2="380"></line></g>
+                                        <circle class="toggle-scene__hit-spot" cx="98.7255" cy="380.5405" r="60" fill="transparent"></circle>
+                                    </g>
+                                    <g class="toggle-scene__bulb bulb" transform="translate(844.069 -645.213)">
+                                        <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+                                        <path class="bulb__cap-shine" d="M-778.379 802.873h25.512v118.409h-25.512z" clip-path="url(#g)" transform="matrix(.52452 0 0 .90177 -368.282 82.976)"></path>
+                                        <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z"></path>
+                                        <path class="bulb__cap-outline" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+                                        <g class="bulb__filament" fill="none" stroke-linecap="round" stroke-width="5">
+                                            <path d="M-752.914 823.875l-8.858-33.06"></path>
+                                            <path d="M-737.772 823.875l8.858-33.06"></path>
+                                        </g>
+                                        <path class="bulb__bulb" stroke-linecap="round" stroke-width="5" d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z"></path>
+                                        <circle class="bulb__flash" cx="-745.343" cy="743.939" r="83.725" fill="none" stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></circle>
+                                        <path class="bulb__shine" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957"></path>
+                                    </g>
+                                </svg>
+                                <div class="grab-handle"></div>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- /PORTFOLIO HEADER -->
+
+
+    <!-- ══ ORIGINAL SUPPORT PAGE CONTENT (unchanged) ══ -->
+    <div class="icons">
+        <svg fill="#F9812E" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <title>Buy Me A Coffee</title>
+            <path d="M20.216 6.415l-.132-.666c-.119-.598-.388-1.163-1.001-1.379-.197-.069-.42-.098-.57-.241-.152-.143-.196-.366-.231-.572-.065-.378-.125-.756-.192-1.133-.057-.325-.102-.69-.25-.987-.195-.4-.597-.634-.996-.788a5.723 5.723 0 00-.626-.194c-1-.263-2.05-.36-3.077-.416a25.834 25.834 0 00-3.7.062c-.915.083-1.88.184-2.75.5-.318.116-.646.256-.888.501-.297.302-.393.77-.177 1.146.154.267.415.456.692.58.36.162.737.284 1.123.366 1.075.238 2.189.331 3.287.37 1.218.05 2.437.01 3.65-.118.299-.033.598-.073.896-.119.352-.054.578-.513.474-.834-.124-.383-.457-.531-.834-.473-.466.074-.96.108-1.382.146-1.177.08-2.358.082-3.536.006a22.228 22.228 0 01-1.157-.107c-.086-.01-.18-.025-.258-.036-.243-.036-.484-.08-.724-.13-.111-.027-.111-.185 0-.212h.005c.277-.06.557-.108.838-.147h.002c.131-.009.263-.032.394-.048a25.076 25.076 0 013.426-.12c.674.019 1.347.067 2.017.144l.228.031c.267.04.533.088.798.145.392.085.895.113 1.07.542.055.137.08.288.111.431l.319 1.484a.237.237 0 01-.199.284h-.003c-.037.006-.075.01-.112.015a36.704 36.704 0 01-4.743.295 37.059 37.059 0 01-4.699-.304c-.14-.017-.293-.042-.417-.06-.326-.048-.649-.108-.973-.161-.393-.065-.768-.032-1.123.161-.29.16-.527.404-.675.701-.154.316-.199.66-.267 1-.069.34-.176.707-.135 1.056.087.753.613 1.365 1.37 1.502a39.69 39.69 0 0011.343.376.483.483 0 01.535.53l-.071.697-1.018 9.907c-.041.41-.047.832-.125 1.237-.122.637-.553 1.028-1.182 1.171-.577.131-1.165.2-1.756.205-.656.004-1.31-.025-1.966-.022-.699.004-1.556-.06-2.095-.58-.475-.458-.54-1.174-.605-1.793l-.731-7.013-.322-3.094c-.037-.351-.286-.695-.678-.678-.336.015-.718.3-.678.679l.228 2.185.949 9.112c.147 1.344 1.174 2.068 2.446 2.272.742.12 1.503.144 2.257.156.966.016 1.942.053 2.892-.122 1.408-.258 2.465-1.198 2.616-2.657.34-3.332.683-6.663 1.024-9.995l.215-2.087a.484.484 0 01.39-.426c.402-.078.787-.212 1.074-.518.455-.488.546-1.124.385-1.766zm-1.478.772c-.145.137-.363.201-.578.233-2.416.359-4.866.54-7.308.46-1.748-.06-3.477-.254-5.207-.498-.17-.024-.353-.055-.47-.18-.22-.236-.111-.71-.054-.995.052-.26.152-.609.463-.646.484-.057 1.046.148 1.526.22.577.088 1.156.159 1.737.212 2.48.226 5.002.19 7.472-.14.45-.06.899-.13 1.345-.21.399-.072.84-.206 1.08.206.166.281.188.657.162.974a.544.544 0 01-.169.364zm-6.159 3.9c-.862.37-1.84.788-3.109.788a5.884 5.884 0 01-1.569-.217l.877 9.004c.065.78.717 1.38 1.5 1.38 0 0 1.243.065 1.658.065.447 0 1.786-.065 1.786-.065.783 0 1.434-.6 1.499-1.38l.94-9.95a3.996 3.996 0 00-1.322-.238c-.826 0-1.491.284-2.26.613z"/>
+        </svg>
+    </div>
+
+    <header class="support-header">
+        <canvas></canvas>
+        <div class="content">
+            <h1 data-splitting="" class="fluid">
+                Support<br />
+                <span class="title-line" style="display:inline-flex;align-items:flex-end;gap:0;">
+                    My Journey
+                    <pre id="owl-support" class="ascii animal">
+,___,
+[o,o]
+/)__)
+-"--"-</pre>
+                </span>
+            </h1>
+            <p data-splitting="" class="fluid">
+                If my work helped you in any way or inspired you,<br />
+                your support truly means a lot and helps me keep building.
+            </p>
+        </div>
+    </header>
+    <!-- /ORIGINAL SUPPORT PAGE CONTENT -->
+
+
+    <!-- ══ PORTFOLIO FOOTER ══ -->
+    <footer class="main-footer">
+        <div class="footer-bottom pt-50 pb-40">
+            <div class="container footer-poistion">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="copyright-text">
+                            <p>
+                                Copyright &copy;<span id="currentYear"></span>,
+                                <span id="owl" class="ascii owl" aria-hidden="true">,___,
+[o,o]
+/)__)
+-"--"-</span>
+                                <span class="sr-only">Decorative owl animation indicating site activity</span>
+                                All Rights Reserved.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="copyright-text extra-copyright">
+                            <p>
+                                Crafted with <span style="color: #F9812E;">🧡</span>
+                                <a class="c-author__link" href="https://samehbilal.github.io/portfolio">Sameh Bilal</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ══ BOTTOM NAV ══ -->
+    <nav class="nav">
+        <ul>
+            <li>
+                <a href="index.html#about">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="mailto:sameh.bilal@outlook.com">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="stories.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <button class="theme-toggler">
+                    <span class="sr-only">Toggle Theme</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="theme-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button popovertarget="menu" popovertargetaction="toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                    <span class="sr-only">Open menu</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+
+    <!-- ══ SCROLL-TO-TOP ══ -->
+    <div class="progress-wrap cursor-pointer">
+        <i class="ri-arrow-up-double-line"></i>
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+
+
+    <!-- ══ SCRIPTS ══ -->
+    <!-- JQUERY -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <!-- BOOTSTRAP -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- GSAP -->
+    <script src="assets/js/gsap.min.js"></script>
+    <!-- MATTER.JS (required by gravity.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
+    <!-- LODASH -->
+    <script src="assets/js/lodash.min.js"></script>
+    <!-- MORPHSVG (required by lights.js) -->
+    <script src="assets/js/MorphSVGPlugin3.min.js"></script>
+    <!-- PORTFOLIO JS (theme toggle, owl, scroll-to-top, logo hover) -->
+    <script src="assets/js/main.js" defer></script>
+    <!-- LIGHTS (draggable bulb cord) -->
+    <script type="module" src="assets/js/lights.js" defer></script>
+    <!-- SPLITTING (text animations) -->
+    <script type="module" src="assets/js/splitting.js" defer></script>
+    <!-- GRAVITY (original support page physics — unchanged) -->
+    <script type="module" src="assets/js/gravity.js"></script>
+    <script type="module" src="assets/js/support.js"></script>
+
+    <!-- BMC WIDGET -->
+    <script data-name="BMC-Widget" data-cfasync="false"
+        src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+        data-id="samehbilal" data-description="Support my work"
+        data-message="Support my work" data-color="#F9812E"
+        data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+</body>
+</html>
