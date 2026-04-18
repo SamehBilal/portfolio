@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="assets/js/theme.js"></script>
+
+    <!-- Primary Meta Tags (populated by JS from project data) -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Sameh Bilal">
+    <meta name="robots" content="index, follow">
+
+    <title id="pageTitle">Project — Sameh Bilal</title>
+    <meta id="metaDescription" name="description" content="Project case study by Sameh Bilal.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta id="ogTitle" property="og:title" content="Project — Sameh Bilal">
+    <meta id="ogDescription" property="og:description" content="Project case study by Sameh Bilal.">
+    <meta id="ogImage" property="og:image" content="">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta id="twitterTitle" name="twitter:title" content="Project — Sameh Bilal">
+    <meta id="twitterDescription" name="twitter:description" content="Project case study by Sameh Bilal.">
+    <meta id="twitterImage" name="twitter:image" content="">
+
+    <!-- FAV ICON -->
+    <link rel="apple-touch-icon" href="assets/images/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- PORTFOLIO CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/fonts/remixicon.css" />
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/nice-select.min.css" />
+    <link rel="stylesheet" href="assets/css/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/slick.min.css" />
+    <link rel="stylesheet" href="assets/css/spacing.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <!-- PROJECT PAGE CSS -->
+    <style>
+        /* ============================================================
+           project.html — styles matching portfolio design system
+           ============================================================ */
+
+        :root {
+            --primary: #F9812E;
+            --border-color: rgba(119, 119, 125, .2);
+        }
+
+        /* ── Hero ── */
+        .project-hero {
+            padding-top: 160px;
+            padding-bottom: 40px;
+            position: relative;
+        }
+
+        .project-hero .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: light-dark(#666, #a1a1aa);
+            margin-bottom: 24px;
+        }
+
+        .project-hero .breadcrumb-nav a {
+            color: light-dark(#666, #a1a1aa);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .project-hero .breadcrumb-nav a:hover {
+            color: var(--primary);
+        }
+
+        .project-hero .breadcrumb-nav i {
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        .project-hero .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .project-hero .project-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--primary);
+            background: rgba(249, 129, 46, 0.1);
+            border: 1px solid rgba(249, 129, 46, 0.3);
+            border-radius: 30px;
+        }
+
+        .project-hero h1 {
+            font-size: clamp(2rem, 5vw + 1rem, 4.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            margin: 0 0 20px;
+            color: light-dark(#000, #fff);
+        }
+
+        .project-hero h1 span {
+            -webkit-text-stroke: 1px light-dark(#000, #fff);
+            color: transparent;
+        }
+
+        .project-hero .project-tagline {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 720px;
+            color: light-dark(#444, #c4c4c4);
+            margin-bottom: 32px;
+        }
+
+        .project-hero .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* ── Hero image ── */
+        .project-hero-image {
+            margin: 30px 0 60px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow:
+                rgba(255, 255, 255, .025) 0px 0.362px 0.651px -1px inset,
+                rgba(255, 255, 255, .036) 0px 3px 5.4px -2px inset;
+            background: light-dark(#fff, #1D1D1D);
+            position: relative;
+        }
+
+        .project-hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+
+        /* ── Main layout: sidebar + content ── */
+        .project-body {
+            padding-bottom: 60px;
+        }
+
+        .project-sidebar,
+        .project-main {
+            padding: 40px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            box-shadow:
+                rgba(255, 255, 255, .025) 0px 0.362176px 0.651917px -1px inset,
+                rgba(255, 255, 255, .036) 0px 3px 5.4px -2px inset;
+            background-color: light-dark(#fff, #1D1D1D);
+        }
+
+        .project-sidebar {
+            position: sticky;
+            top: 120px;
+        }
+
+        .project-sidebar h3 {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin: 0 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .meta-grid {
+            display: grid;
+            gap: 22px;
+        }
+
+        .meta-item label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: light-dark(#888, #777);
+            margin-bottom: 6px;
+            cursor: default;
+        }
+
+        .meta-item .meta-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: light-dark(#111, #e2e2e2);
+            line-height: 1.4;
+        }
+
+        .meta-item .meta-value a {
+            color: light-dark(#111, #e2e2e2);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .meta-item .meta-value a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .meta-item .stack-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 2px;
+        }
+
+        .meta-item .stack-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 500;
+            color: light-dark(#444, #c4c4c4);
+            background: light-dark(#f5f5f5, #252525);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        /* ── Main content sections ── */
+        .project-main h2 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+            color: light-dark(#000, #fff);
+            margin: 0 0 16px;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .project-main h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .project-main h2:not(:first-child) {
+            margin-top: 48px;
+        }
+
+        .project-main p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: light-dark(#444, #b4b4b4);
+            margin-bottom: 16px;
+        }
+
+        .project-main ul.feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .project-main ul.feature-list li {
+            position: relative;
+            padding-left: 32px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: light-dark(#444, #b4b4b4);
+        }
+
+        .project-main ul.feature-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 18px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .project-main ul.feature-list li strong {
+            color: light-dark(#000, #fff);
+            font-weight: 600;
+        }
+
+        /* ── Stats row ── */
+        .project-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .stat-card {
+            padding: 24px 20px;
+            background: light-dark(#fafafa, #151515);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            text-align: center;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .stat-card .stat-number {
+            display: block;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: light-dark(#666, #999);
+            text-transform: uppercase;
+        }
+
+        /* ── Gallery ── */
+        .project-gallery {
+            margin-top: 32px;
+        }
+
+        .project-gallery .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .gallery-grid .gallery-item {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            background: light-dark(#f5f5f5, #151515);
+            cursor: pointer;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .gallery-grid .gallery-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .gallery-grid .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .gallery-grid .gallery-item:hover img {
+            transform: scale(1.04);
+        }
+
+        .gallery-grid .gallery-item::after {
+            content: '\f3eb';
+            font-family: "remixicon";
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 16px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .gallery-grid .gallery-item:hover::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ── Project navigation (prev/next) ── */
+        .project-nav {
+            margin-top: 60px;
+            padding: 40px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            background-color: light-dark(#fff, #1D1D1D);
+            box-shadow:
+                rgba(255, 255, 255, .025) 0px 0.362176px 0.651917px -1px inset,
+                rgba(255, 255, 255, .036) 0px 3px 5.4px -2px inset;
+        }
+
+        .project-nav .nav-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .project-nav .nav-link {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.2s, background-color 0.2s;
+            color: inherit;
+        }
+
+        .project-nav .nav-link:hover {
+            border-color: var(--primary);
+            background: rgba(249, 129, 46, 0.04);
+        }
+
+        .project-nav .nav-link.nav-prev {
+            text-align: left;
+        }
+
+        .project-nav .nav-link.nav-next {
+            text-align: right;
+        }
+
+        .project-nav .nav-link .nav-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .project-nav .nav-link .nav-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: light-dark(#111, #e2e2e2);
+            line-height: 1.3;
+        }
+
+        .project-nav .nav-all {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 12px 20px;
+            border: 1px solid var(--primary);
+            border-radius: 30px;
+            transition: background 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+
+        .project-nav .nav-all:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* ── Loading / error states ── */
+        .project-loading,
+        .project-error {
+            min-height: 60vh;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .project-loading p,
+        .project-error p {
+            font-size: 14px;
+            color: light-dark(#888, #777);
+            margin-top: 16px;
+        }
+
+        .project-error h2 {
+            font-size: 32px;
+            color: light-dark(#000, #fff);
+            margin: 0 0 8px;
+        }
+
+        .project-error a {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 991px) {
+            .project-sidebar {
+                position: static;
+                margin-bottom: 30px;
+            }
+
+            .project-nav .nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-nav .nav-link.nav-next {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .project-hero {
+                padding-top: 120px;
+            }
+
+            .project-hero h1 {
+                font-size: 36px;
+            }
+
+            .project-sidebar,
+            .project-main,
+            .project-nav {
+                padding: 24px;
+            }
+
+            .project-main h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ══ HEADER (same as portfolio) ══ -->
+    <header class="main-header">
+        <div class="header-upper">
+            <div class="container">
+                <div class="header-inner d-flex align-items-center">
+                    <div class="logo-outer">
+                        <div class='logo' onclick="location.href='index.html'">
+                            <span class="logo-letter is-active">S</span>
+                            <span class="logo-letter is-active">A</span>
+                            <span class="logo-letter is-active">M</span>
+                            <span class="logo-letter is-active">E</span>
+                            <span class="logo-letter is-active">H</span>
+                        </div>
+                    </div>
+                    <div class="nav-outer clearfix mx-auto">
+                        <nav class="main-menu navbar-expand-lg">
+                            <div class="navbar-header">
+                                <div class="mobile-logo">
+                                    <div class='logo' onclick="location.href='index.html'">
+                                        <span class="logo-letter is-active">S</span>
+                                        <span class="logo-letter is-active">A</span>
+                                        <span class="logo-letter is-active">M</span>
+                                        <span class="logo-letter is-active">E</span>
+                                        <span class="logo-letter is-active">H</span>
+                                    </div>
+                                </div>
+                                <button type="button" class="navbar-toggle" data-bs-toggle="collapse"
+                                    data-bs-target=".navbar-collapse">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                            <div class="o-page">
+                                <div class="o-header">
+                                    <nav class="c-main-menu navbar-collapse collapse" aria-labelledby="mainmenulabel">
+                                        <h2 id="mainmenulabel" class="u-visually-hidden">Main Menu</h2>
+                                        <ul class="c-main-menu__list navigation onepage clearfix">
+                                            <li><a class="c-main-menu__link nav-link-click"
+                                                    href="index.html#about">About</a></li>
+                                            <li><a class="c-main-menu__link nav-link-click"
+                                                    href="index.html#service">Services</a></li>
+                                            <li><a class="is-magic-active c-main-menu__link nav-link-click"
+                                                    href="index.html#works" aria-current="page">Works</a></li>
+                                            <li><a class="c-main-menu__link nav-link-click"
+                                                    href="index.html#stories">Stories</a></li>
+                                            <li><a class="c-main-menu__link nav-link-click"
+                                                    href="index.html#contact">Contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+
+                    <div class="menu-btns align-items-center">
+                        <a href="index.html#contact" class="theme-btn">Hire Me
+                            <i class="ri-shake-hands-line"></i></a>
+                        <form class="form">
+                            <div class="arrow">
+                                <label>drag me.</label>
+                                <svg aria-hidden="true" viewBox="0 0 144 141" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M129.189 0.0490494C128.744 0.119441 126.422 0.377545 124.03 0.635648C114.719 1.6446 109.23 2.4893 108.058 3.09936C107.119 3.56864 106.674 4.34295 106.674 5.44576C106.674 6.71281 107.424 7.51058 109.043 7.97986C110.403 8.37875 110.825 8.42567 118.87 9.52847C121.778 9.92736 124.288 10.3028 124.475 10.3732C124.663 10.4436 122.951 11.1006 120.676 11.8749C110.028 15.4414 100.412 20.7677 91.7339 27.9242C88.38 30.7164 81.6957 37.4271 79.2096 40.5009C73.8387 47.2116 69.6874 54.8139 66.5681 63.7302C65.9348 65.4665 65.3484 66.8978 65.2546 66.8978C65.1374 66.8978 63.7771 66.7336 62.2291 66.5693C52.9649 65.5134 43.1847 68.1649 34.1316 74.2186C24.7735 80.46 18.5349 87.7338 10.5371 101.742C2.53943 115.726 -1.0959 127.482 0.287874 135.014C0.89767 138.463 2.0469 140.035 3.97011 140.082C5.28352 140.105 5.37733 139.659 4.20465 139.049C3.05541 138.463 2.6567 137.9 2.32835 136.281C0.616228 128.021 6.24512 113.028 17.4325 96.1104C23.2725 87.241 28.362 81.9147 35.5622 77.1046C43.8649 71.5437 52.7069 69.033 61.1737 69.8308C64.9967 70.1828 64.6917 69.9247 64.1992 72.4822C62.2525 82.5013 63.8005 92.6378 67.9753 97.354C73.1116 103.079 81.9771 102 85.0027 95.2657C86.3395 92.2858 86.3864 87.7103 85.1434 83.9796C83.1498 78.0901 80.007 73.8197 75.4335 70.8163C73.8152 69.7604 70.4848 68.1883 69.875 68.1883C69.359 68.1883 69.4294 67.6487 70.2268 65.3257C72.3377 59.2486 75.457 52.7021 78.4122 48.244C83.2436 40.9232 91.4524 32.5701 99.1687 27.103C105.806 22.4102 113.241 18.5386 120.512 16.0045C123.772 14.8548 129.87 13.1889 130.081 13.3766C130.128 13.447 129.541 14.362 128.791 15.4414C124.78 21.0258 122.716 26.0706 122.388 30.998C122.224 33.7198 122.341 34.588 122.88 34.2595C122.998 34.1891 123.678 32.969 124.405 31.5611C126.281 27.8069 131.722 20.6738 139.579 11.6402C141.127 9.85697 142.652 7.86254 143.027 7.08823C144.552 4.03792 143.52 1.48035 140.377 0.471397C139.439 0.166366 138.102 0.0490408 134.584 0.0255769C132.074 -0.021351 129.635 0.00212153 129.189 0.0490494ZM137.117 4.92955C137.187 5.0234 136.718 5.63346 136.061 6.29045L134.865 7.48712L131.042 6.73627C128.931 6.33739 126.727 5.9385 126.14 5.8681C124.827 5.68039 124.123 5.32843 124.968 5.28151C125.296 5.28151 126.868 5.11725 128.486 4.953C131.3 4.64797 136.812 4.62451 137.117 4.92955ZM71.5168 72.5292C76.2075 74.899 79.4441 78.8175 81.3204 84.355C83.6189 91.1361 81.2266 96.8378 76.0433 96.8847C73.3227 96.9082 70.9773 95.2188 69.5936 92.2389C68.2802 89.4232 67.6938 86.5606 67.5765 82.1259C67.4593 78.3248 67.6 76.4242 68.2333 72.7403L68.4912 71.2856L69.359 71.5906C69.8515 71.7548 70.8132 72.1772 71.5168 72.5292Z"
+                                        fill="currentColor" />
+                                </svg>
+                            </div>
+                            <button aria-pressed="false">
+                                <span class="sr-only">Toggle theme</span>
+                                <svg aria-hidden="true" class="toggle-scene" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="32 32 134 134">
+                                    <defs>
+                                        <marker id="a" orient="auto" overflow="visible" refx="0" refy="0">
+                                            <path class="toggle-scene__cord-end" fill-rule="evenodd"
+                                                stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                        </marker>
+                                        <clippath id="g" clippathunits="userSpaceOnUse">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677"
+                                                d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z">
+                                            </path>
+                                        </clippath>
+                                    </defs>
+                                    <g class="toggle-scene__cords">
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none"
+                                            stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493"
+                                            transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none"
+                                            stroke-linecap="square" stroke-width="6"
+                                            d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507"
+                                            transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none"
+                                            stroke-linecap="square" stroke-width="6"
+                                            d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468"
+                                            transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none"
+                                            stroke-linecap="square" stroke-width="6"
+                                            d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782"
+                                            transform="translate(-24.503 256.106)"></path>
+                                        <path class="toggle-scene__cord" marker-end="url(#a)" fill="none"
+                                            stroke-linecap="square" stroke-width="6"
+                                            d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623"
+                                            transform="translate(-24.503 256.106)"></path>
+                                        <g class="line toggle-scene__dummy-cord">
+                                            <line marker-end="url(#a)" x1="98" x2="98" y1="240" y2="380"></line>
+                                        </g>
+                                        <circle class="toggle-scene__hit-spot" cx="98.7255" cy="380.5405" r="60"
+                                            fill="transparent">
+                                        </circle>
+                                    </g>
+                                    <g class="toggle-scene__bulb bulb" transform="translate(844.069 -645.213)">
+                                        <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="4.677"
+                                            d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z">
+                                        </path>
+                                        <path class="bulb__cap-shine" d="M-778.379 802.873h25.512v118.409h-25.512z"
+                                            clip-path="url(#g)"
+                                            transform="matrix(.52452 0 0 .90177 -368.282 82.976)"></path>
+                                        <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="4"
+                                            d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z">
+                                        </path>
+                                        <path class="bulb__cap-outline" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-width="4.677"
+                                            d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z">
+                                        </path>
+                                        <g class="bulb__filament" fill="none" stroke-linecap="round" stroke-width="5">
+                                            <path d="M-752.914 823.875l-8.858-33.06"></path>
+                                            <path d="M-737.772 823.875l8.858-33.06"></path>
+                                        </g>
+                                        <path class="bulb__bulb" stroke-linecap="round" stroke-width="5"
+                                            d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z">
+                                        </path>
+                                        <circle class="bulb__flash" cx="-745.343" cy="743.939" r="83.725" fill="none"
+                                            stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="10"></circle>
+                                        <path class="bulb__shine" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-width="12"
+                                            d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957">
+                                        </path>
+                                    </g>
+                                </svg>
+                                <div class="grab-handle"></div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ══ PROJECT CONTENT (populated by JS) ══ -->
+    <main id="projectRoot">
+        <div class="project-loading">
+            <div>
+                <p>Loading project…</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- ══ CTA ══ -->
+    <section class="call-to-action-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="call-to-action-part wow fadeInUp delay-0-2s text-center">
+                        <h2>Got a project with a <span>similar</span> challenge?</h2>
+                        <p>I'm open to freelance and full-time opportunities where clean architecture,
+                            reliable systems, and thoughtful engineering matter.</p>
+                        <div class="hero-btns">
+                            <a href="index.html#contact" class="theme-btn">Let's Talk <i
+                                    class="ri-upload-line"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ TAGLINE ══ -->
+    <div class="c-author">
+        <h6>
+            <span class="fluid">Less noise.</span><br />
+            <span class="fluid" aria-hidden="true" data-splitting=''>More <span
+                    style="color: #F9812E;">impact.</span></span>
+            <span class="sr-only">More <span style="color: #F9812E;">impact.</span></span>
+        </h6>
+    </div>
+
+    <!-- ══ BOTTOM NAV ══ -->
+    <nav class="nav">
+        <ul>
+            <li>
+                <a href="index.html#about">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="mailto:sameh.bilal@outlook.com">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="index.html#works">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <button class="theme-toggler">
+                    <span class="sr-only">Toggle Theme</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="theme-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                    </svg>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="main-footer">
+        <div class="footer-bottom pt-50 pb-40">
+            <div class="container footer-poistion">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="copyright-text">
+                            <p>
+                                Copyright @<span id="currentYear"></span>,
+                                <span id="owl" class="ascii owl" aria-hidden="true">,___,
+[o,o]
+/)__)
+-"--"-</span>
+                                <span class="sr-only">Decorative owl animation indicating site activity</span>
+                                All Rights Reserved.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="copyright-text extra-copyright">
+                            <p>Crafted with <span style="color: #F9812E;">🧡</span>
+                                <a class="c-author__link" href="index.html">Sameh Bilal</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ══ SCROLL TO TOP ══ -->
+    <div class="progress-wrap cursor-pointer">
+        <i class="ri-arrow-up-double-line"></i>
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+
+    <!-- ══ SCRIPTS ══ -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/gsap.min.js"></script>
+    <script src="assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/lodash.min.js"></script>
+    <script src="assets/js/MorphSVGPlugin3.min.js"></script>
+    <script type="module" src="assets/js/lights.js" defer></script>
+    <script type="module" src="assets/js/splitting.js" defer></script>
+
+    <!-- ══ PROJECT LOADER ══ -->
+    <script>
+        (async () => {
+            const root = document.getElementById('projectRoot');
+
+            // Read slug from URL
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+
+            if (!slug) {
+                root.innerHTML = `
+                    <div class="project-error">
+                        <div>
+                            <h2>No project specified</h2>
+                            <p>Please provide a project slug in the URL (e.g. ?slug=nvidia-studio-space).</p>
+                            <a href="index.html#works">← Back to all works</a>
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            // Load projects data
+            let projects;
+            try {
+                const res = await fetch('data/projects.json');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                projects = await res.json();
+            } catch (err) {
+                root.innerHTML = `
+                    <div class="project-error">
+                        <div>
+                            <h2>Could not load projects</h2>
+                            <p>${err.message}</p>
+                            <a href="index.html#works">← Back to all works</a>
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            // Find project
+            const project = projects.find(p => p.slug === slug);
+            const index = projects.findIndex(p => p.slug === slug);
+
+            if (!project) {
+                root.innerHTML = `
+                    <div class="project-error">
+                        <div>
+                            <h2>Project not found</h2>
+                            <p>No project exists with slug "${slug}".</p>
+                            <a href="index.html#works">← Back to all works</a>
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            // Get prev / next
+            const prev = index > 0 ? projects[index - 1] : null;
+            const next = index < projects.length - 1 ? projects[index + 1] : null;
+
+            // Update meta tags
+            const title = `${project.title} — Sameh Bilal`;
+            document.getElementById('pageTitle').textContent = title;
+            document.getElementById('metaDescription').content = project.tagline || project.description || '';
+            document.getElementById('ogTitle').content = title;
+            document.getElementById('ogDescription').content = project.tagline || project.description || '';
+            if (project.heroImage) {
+                document.getElementById('ogImage').content = project.heroImage;
+                document.getElementById('twitterImage').content = project.heroImage;
+            }
+            document.getElementById('twitterTitle').content = title;
+            document.getElementById('twitterDescription').content = project.tagline || project.description || '';
+
+            // Render sections
+            const tagsHtml = (project.tags || [])
+                .map(t => `<span class="project-tag">${t}</span>`).join('');
+
+            const stackHtml = (project.stack || [])
+                .map(s => `<span class="stack-pill">${s}</span>`).join('');
+
+            const overviewHtml = project.overview
+                ? `<h2>Overview</h2>${project.overview.split('\n\n').map(p => `<p>${p}</p>`).join('')}`
+                : '';
+
+            const challengeHtml = project.challenge
+                ? `<h2>The Challenge</h2>${project.challenge.split('\n\n').map(p => `<p>${p}</p>`).join('')}`
+                : '';
+
+            const solutionHtml = project.solution
+                ? `<h2>The Solution</h2>${project.solution.split('\n\n').map(p => `<p>${p}</p>`).join('')}`
+                : '';
+
+            const featuresHtml = (project.features && project.features.length)
+                ? `<h2>Key Features</h2>
+                   <ul class="feature-list">
+                     ${project.features.map(f =>
+                        typeof f === 'string'
+                            ? `<li>${f}</li>`
+                            : `<li><strong>${f.title}.</strong> ${f.description}</li>`
+                    ).join('')}
+                   </ul>`
+                : '';
+
+            const statsHtml = (project.stats && project.stats.length)
+                ? `<div class="project-stats">
+                     ${project.stats.map(s => `
+                       <div class="stat-card">
+                         <span class="stat-number">${s.value}</span>
+                         <span class="stat-label">${s.label}</span>
+                       </div>`).join('')}
+                   </div>`
+                : '';
+
+            const resultsHtml = project.results
+                ? `<h2>Results & Impact</h2>${project.results.split('\n\n').map(p => `<p>${p}</p>`).join('')}${statsHtml}`
+                : statsHtml ? `<h2>By the Numbers</h2>${statsHtml}` : '';
+
+            const galleryHtml = (project.gallery && project.gallery.length)
+                ? `<div class="project-gallery">
+                     <h2>Gallery</h2>
+                     <div class="gallery-grid">
+                       ${project.gallery.map(g => `
+                         <a class="gallery-item work-popup" href="${g}">
+                           <img src="${g}" alt="${project.title} screenshot" loading="lazy">
+                         </a>`).join('')}
+                     </div>
+                   </div>`
+                : '';
+
+            const liveHtml = project.liveUrl
+                ? `<a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="theme-btn">
+                     Visit Live <i class="ri-arrow-right-up-line"></i>
+                   </a>`
+                : '';
+
+            const metaItems = [
+                project.client && `
+                  <div class="meta-item">
+                    <label>Client</label>
+                    <div class="meta-value">${project.client}</div>
+                  </div>`,
+                project.year && `
+                  <div class="meta-item">
+                    <label>Year</label>
+                    <div class="meta-value">${project.year}</div>
+                  </div>`,
+                project.role && `
+                  <div class="meta-item">
+                    <label>Role</label>
+                    <div class="meta-value">${project.role}</div>
+                  </div>`,
+                project.duration && `
+                  <div class="meta-item">
+                    <label>Duration</label>
+                    <div class="meta-value">${project.duration}</div>
+                  </div>`,
+                project.category && `
+                  <div class="meta-item">
+                    <label>Category</label>
+                    <div class="meta-value">${project.category}</div>
+                  </div>`,
+                stackHtml && `
+                  <div class="meta-item">
+                    <label>Tech Stack</label>
+                    <div class="stack-list">${stackHtml}</div>
+                  </div>`,
+                project.liveUrl && `
+                  <div class="meta-item">
+                    <label>Website</label>
+                    <div class="meta-value">
+                      <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer">
+                        ${new URL(project.liveUrl).hostname.replace('www.', '')}
+                      </a>
+                    </div>
+                  </div>`,
+            ].filter(Boolean).join('');
+
+            const prevHtml = prev
+                ? `<a href="project.html?slug=${prev.slug}" class="nav-link nav-prev">
+                     <span class="nav-label">← Previous</span>
+                     <span class="nav-title">${prev.title}</span>
+                   </a>`
+                : `<div></div>`;
+
+            const nextHtml = next
+                ? `<a href="project.html?slug=${next.slug}" class="nav-link nav-next">
+                     <span class="nav-label">Next →</span>
+                     <span class="nav-title">${next.title}</span>
+                   </a>`
+                : `<div></div>`;
+
+            // Final render
+            root.innerHTML = `
+                <section class="project-hero">
+                    <div class="container">
+                        <div class="breadcrumb-nav">
+                            <a href="index.html">Home</a>
+                            <i class="ri-arrow-right-s-line"></i>
+                            <a href="index.html#works">Works</a>
+                            <i class="ri-arrow-right-s-line"></i>
+                            <span>${project.title}</span>
+                        </div>
+                        <div class="project-tags">${tagsHtml}</div>
+                        <h1>${project.title}</h1>
+                        ${project.tagline ? `<p class="project-tagline">${project.tagline}</p>` : ''}
+                        <div class="hero-actions">
+                            ${liveHtml}
+                            <a href="index.html#contact" class="theme-btn" style="background:transparent;color:light-dark(#000,#fff);border:1px solid light-dark(#000,#fff);">
+                                Discuss a similar project <i class="ri-chat-4-line"></i>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                ${project.heroImage ? `
+                <div class="container">
+                    <div class="project-hero-image wow fadeInUp delay-0-2s">
+                        <img src="${project.heroImage}" alt="${project.title}">
+                    </div>
+                </div>` : ''}
+
+                <section class="project-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <aside class="project-sidebar wow fadeInUp delay-0-2s">
+                                    <h3>Project Details</h3>
+                                    <div class="meta-grid">${metaItems}</div>
+                                </aside>
+                            </div>
+                            <div class="col-lg-8">
+                                <article class="project-main wow fadeInUp delay-0-3s">
+                                    ${overviewHtml}
+                                    ${challengeHtml}
+                                    ${solutionHtml}
+                                    ${featuresHtml}
+                                    ${resultsHtml}
+                                    ${galleryHtml}
+                                </article>
+
+                                <nav class="project-nav">
+                                    <div class="nav-grid">
+                                        ${prevHtml}
+                                        <a href="index.html#works" class="nav-all">
+                                            <i class="ri-apps-2-line"></i> All Works
+                                        </a>
+                                        ${nextHtml}
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </section>`;
+
+            // Init magnific popup on gallery
+            if (window.jQuery && jQuery.fn.magnificPopup) {
+                jQuery('.project-gallery .gallery-grid').magnificPopup({
+                    delegate: '.work-popup',
+                    type: 'image',
+                    removalDelay: 300,
+                    mainClass: 'mfp-with-zoom',
+                    gallery: { enabled: true },
+                    zoom: { enabled: false }
+                });
+            }
+
+            // Current year in footer
+            const y = document.getElementById('currentYear');
+            if (y) y.textContent = new Date().getFullYear();
+
+            // Fixed header on scroll
+            window.addEventListener('scroll', () => {
+                document.querySelector('.main-header')
+                    .classList.toggle('fixed-header', window.scrollY >= 150);
+            });
+        })();
+    </script>
+
+    <!-- BMC WIDGET -->
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+        data-id="samehbilal" data-description="Support my work" data-message="Support my work" data-color="#F9812E"
+        data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+</body>
+
+</html>

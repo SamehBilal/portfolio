@@ -74,6 +74,86 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <![endif]-->
 
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   Clickable project cards — Option A wiring
+   ═══════════════════════════════════════════════════════════════════
+   Structure per card:
+       .item  (col, Isotope item — NOT wrapped in an anchor)
+         └─ .project-item.style-two
+              ├─ .project-image      (position: relative, fixed aspect-ratio)
+              │    ├─ <img>          (fills the image box)
+              │    ├─ .project-card-link   ← invisible full-image click layer
+              │    └─ .details-btn.badge-link  ← logo badge, sits ABOVE the link
+              └─ .project-content
+                   └─ .project-title-link   ← text area is also clickable
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Image box has a stable height even before <img> loads ──
+   This is what stops the grid from collapsing on first paint. */
+.project-item.style-two .project-image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: light-dark(#f2f2f2, #151515);
+}
+
+.project-item.style-two .project-image > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ── 2. Invisible click overlay covering the whole image ── */
+.project-image .project-card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    text-indent: -9999px;
+    overflow: hidden;
+    background: transparent;
+    border-radius: inherit;
+}
+
+/* ── 3. Logo badge stays clickable above the overlay ── */
+.project-item.style-two .project-image .details-btn.badge-link {
+    position: absolute;
+    z-index: 3;
+    cursor: pointer;
+}
+
+/* ── 4. Title area is also clickable, looks unchanged ── */
+.project-title-link,
+.project-title-link:hover,
+.project-title-link:focus,
+.project-title-link:visited {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+.project-title-link h3 {
+    transition: color 0.3s;
+}
+.project-item.style-two:hover .project-title-link h3 {
+    color: var(--primary-color);
+}
+
+/* ── 5. Isotope needs its items to be block-level and not fight flexbox ── */
+.project-masonry-active {
+    display: block;
+}
+.project-masonry-active .item {
+    margin-bottom: 30px;
+}
+</style>
+
+
+
+
+
     <script>
         if (sessionStorage.getItem("visited")) {
             document.documentElement.classList.add("no-preloader");
@@ -1050,663 +1130,48 @@
     </section>
     <!-- / END SKILL DESIGN AREA -->
 
-    <!-- START PORTFOLIO DESIGN AREA -->
-    <section id="works" class="projects-area">
-        <div class="container">
-            <div class="container-inner">
+<!-- START PORTFOLIO DESIGN AREA -->
+<section id="works" class="projects-area">
+    <div class="container">
+        <div class="container-inner">
 
-                <!-- Section Header -->
-                <div class="row">
-                    <div class="col-xl-12 col-lg-12">
-                        <div class="section-title text-center wow fadeInUp delay-0-2s">
-                            <h2>Selected Work</h2>
-                            <p>
-                                Real-world projects focused on backend systems, integrations, and scalable application
-                                architecture.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Filters -->
-                <ul class="project-filter filter-btns-one pb-15 wow fadeInUp delay-0-2s">
-                    <li data-filter="*" class="current">All</li>
-                    <li data-filter=".backend">Backend</li>
-                    <li data-filter=".fullstack">Full Stack</li>
-                    <li data-filter=".integration">Integrations</li>
-                    <li data-filter=".architecture">Architecture</li>
-                </ul>
-
-                <!-- Projects -->
-                <div class="row project-masonry-active">
-
-                    <!-- Nvidia Studio Space -->
-                    <div class="col-lg-3 col-md-6 item backend fullstack architecture">
-                        <div class="project-item style-two wow fadeInUp delay-0-2s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/63.jpg" alt="Nvidia Studio Space" loading="lazy">
-                                <a href="https://www.nvidiastudiospace.com/en/hubs/cairo" target="_blank"
-                                    rel="noopener noreferrer" class="details-btn nvidia-studio-btn">
-                                    <img src="assets/images/client-logos/nvidia-studio-works.png"
-                                        alt="Nvidia Studio Space" loading="lazy">
-                                    <!-- <i class="ri-arrow-right-up-line"></i> -->
-                                </a>
-                                <!-- <a href="https://www.youtube.com/watch?v=qZEPs3vmYB4"
-                                    class="details-btn popup-youtube"><i class="ri-arrow-right-up-line"></i></a> -->
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Backend · Architecture</span>
-                                <h3>Nvidia Studio Space</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Nvidia Office -->
-                    <div class="col-lg-3 col-md-6 item backend architecture integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-3s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/49.jpg" alt="Nvidia Office" loading="lazy">
-                                <a href="https://nvidia.arabhardware.net/" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn nvidia-btn">
-                                    <img src="assets/images/client-logos/nvidia_works.png" alt="Nvidia Office"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Backend Systems</span>
-                                <h3>Nvidia Office</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ArabHardware Platform -->
-                    <div class="col-lg-3 col-md-6 item fullstack architecture integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-4s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/63.png" alt="ArabHardware" loading="lazy">
-                                <a href="https://arabhardware.net/" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn arabhardware-btn">
-                                    <img src="assets/images/client-logos/arabhardware-works.png"
-                                        alt="ArabHardware Platform" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>ArabHardware Platform</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ArabHardware Store -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-5s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/64.png" alt="ArabHardware Store" loading="lazy">
-                                <a href="https://ahw.store/" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn ahw-btn">
-                                    <img src="assets/images/client-logos/ahw-store-works.png" alt="ArabHardware Store"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Integrations · Full Stack</span>
-                                <h3>ArabHardware Store</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Arabiatalents Platform -->
-                    <div class="col-lg-3 col-md-6 item fullstack architecture integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-6s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/65.png" alt="Arabiatalents" loading="lazy">
-                                <a href="https://arabiatalents.com/" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn arabiatalents-btn">
-                                    <img src="assets/images/client-logos/arabia-works1.png" alt="Arabiatalents Platform"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Arabiatalents Platform</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Palestine Crisis Tracker -->
-                    <div class="col-lg-3 col-md-6 item backend integration integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/66.jpg" alt="Palestine Crisis Tracker" loading="lazy">
-                                <a href="https://samehbilal.github.io/palestine-crises/live.html" target="_blank"
-                                    rel="noopener noreferrer" class="details-btn palestine-btn">
-                                    <img src="assets/images/client-logos/palestine.png" alt="Palestine Crisis Tracker"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Backend · Real-time</span>
-                                <h3>Palestine Crisis Tracker</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Learning Management System -->
-                    <div class="col-lg-3 col-md-6 item backend architecture integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-8s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/67.jpg" alt="Learning Management System"
-                                    loading="lazy">
-                                <div>
-                                    <a href="assets/images/projects/53.jpg" class="details-btn lms-btn work-popup">
-                                        <img src="assets/images/client-logos/cardiff.jpg"
-                                            alt="Learning Management System" loading="lazy">
-                                    </a>
-                                    <a href="assets/images/projects/52.jpg" class="details-btn lms-btn work-popup">
-                                        <img src="assets/images/client-logos/cardiff.jpg"
-                                            alt="Learning Management System" loading="lazy">
-                                    </a>
-                                    <a href="assets/images/projects/51.jpg" class="details-btn lms-btn work-popup">
-                                        <img src="assets/images/client-logos/cardiff.jpg"
-                                            alt="Learning Management System" loading="lazy">
-                                    </a>
-                                    <a href="assets/images/projects/50.jpg" class="details-btn lms-btn work-popup">
-                                        <img src="assets/images/client-logos/cardiff.jpg"
-                                            alt="Learning Management System" loading="lazy">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Architecture · Backend</span>
-                                <h3>Learning Management System</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Lenovo Legion -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/68.jpg" alt="Lenovo Legion" loading="lazy">
-                                <a href="https://arabhardware.com/events/lenovo-legion" target="_blank"
-                                    rel="noopener noreferrer" class="details-btn lenovo-btn">
-                                    <img src="assets/images/client-logos/lenovo-red.svg" alt="Lenovo Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Lenovo Legion</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ALM accounting -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/69.jpg" alt="ALM accounting" loading="lazy">
-                                <a href="https://alm-accounting.com/" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn alm-btn">
-                                    <img src="assets/images/client-logos/alm.webp" alt="ALM accounting Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>ALM accounting</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Assasin's Creed Mirage -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/70.jpg" alt="Assasin's Creed Mirage" loading="lazy">
-                                <a href="https://arabhardware.com/events/ac-mirage" target="_blank"
-                                    rel="noopener noreferrer" class="details-btn ubisoft-btn">
-                                    <img src="assets/images/client-logos/asc.png" alt="Assasin's Creed Mirage Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Ubisoft's Assasin's Creed</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Valorant -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/71.jpg" alt="Valorant" loading="lazy">
-                                <a href="https://arabhardware.com/events/valorant-reflex-tournament-ep02"
-                                    target="_blank" rel="noopener noreferrer" class="details-btn riot-btn">
-                                    <img src="assets/images/client-logos/Valorant_logo_-_pink_color_version.svg"
-                                        alt="Valorant Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Riot Games' Valorant</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Point Of Sale -->
-                    <div class="col-lg-3 col-md-6 item backend architecture integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-8s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/72.jpg" alt="Point Of Sale" loading="lazy">
-                                <div>
-                                    <a href="assets/images/projects/74.jpg" class="details-btn pos-btn work-popup">
-                                        <img src="assets/images/client-logos/pos.png" alt="Point Of Sale"
-                                            loading="lazy">
-                                    </a>
-                                    <a href="assets/images/projects/73.jpg" class="details-btn pos-btn work-popup">
-                                        <img src="assets/images/client-logos/pos.png" alt="Point Of Sale"
-                                            loading="lazy">
-                                    </a>
-                                    <a href="assets/images/projects/72.jpg" class="details-btn pos-btn work-popup">
-                                        <img src="assets/images/client-logos/pos.png" alt="Point Of Sale"
-                                            loading="lazy">
-                                    </a>
-                                    <a href="assets/images/projects/48.jpg" class="details-btn pos-btn work-popup">
-                                        <img src="assets/images/client-logos/pos.png" alt="Point Of Sale"
-                                            loading="lazy">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Architecture · Backend</span>
-                                <h3>Point Of Sale</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- League of Legends -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/75.jpg" alt="League of Legends" loading="lazy">
-                                <a href="https://arabhardware.com/events/iac-grand-finals-2022" target="_blank"
-                                    rel="noopener noreferrer" class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/lol.png" alt="League of Legends Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Riot Games' League of Legends</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PUBG -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/76.jpg" alt="PUBG" loading="lazy">
-                                <a href="https://arabhardware.com/events/pubg-mobile" target="_blank"
-                                    rel="noopener noreferrer" class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/logo.png" alt="PUBG Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Tencent's PUBG</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ramadan Raid -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/77.jpg" alt="Ramadan Raid" loading="lazy">
-                                <a href="https://ramadanraid25.arabhardware.com/" target="_blank"
-                                    rel="noopener noreferrer" class="details-btn raid-btn">
-                                    <img src="assets/images/client-logos/raid-white.svg" alt="Ramadan Raid Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Ramadan Raid</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Grand Hospital -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/78.jpg" alt="Grand Hospital" loading="lazy">
-                                <a href="https://grand-hospital.com/ar/home-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9/"
-                                    target="_blank" rel="noopener noreferrer" class="details-btn grand-btn">
-                                    <img src="assets/images/client-logos/grand.webp" alt="Grand Hospital Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Grand Hospital</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Honor Of Kings -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/79.jpg" alt="Honor Of Kings" loading="lazy">
-                                <a href="https://arabhardware.com/events/2022-honor-of-kings-mena-qualifiers"
-                                    target="_blank" rel="noopener noreferrer" class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/Honor_of_Kings.png" alt="Honor Of Kings Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Honor Of Kings</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- B-Tech -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/81.jpg" alt="B-Tech" loading="lazy">
-                                <a href="https://arabhardware.com/events/spider-man-build?lang=en" target="_blank"
-                                    rel="noopener noreferrer" class="details-btn ahw-btn">
-                                    <img src="assets/images/client-logos/b-tech.svg" alt="B-Tech Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>B-Tech</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Mobile Legends -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/80.jpg" alt="Mobile Legends" loading="lazy">
-                                <a href="https://arabhardware.com/events/mobile-legends-watch-parties" target="_blank"
-                                    rel="noopener noreferrer" class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/mobile_legends.png" alt="Mobile Legends Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Mobile Legends</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Oncreation -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/82.jpg" alt="Oncreation" loading="lazy">
-                                <a href="https://oncreation.net/" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/oncreation.png" alt="Oncreation Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Oncreation</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Nvidia Nights Cairo -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/83.jpg" alt="Nvidia Nights Cairo" loading="lazy">
-                                <a href="https://www.nvidiasn5.com/en" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn nvidia-btn">
-                                    <img src="assets/images/client-logos/nvidia_works.png" alt="Nvidia Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Nvidia Nights Cairo</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Nvidia Nights Dubai -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/84.jpg" alt="Nvidia Nights Dubai" loading="lazy">
-                                <a href="https://ns6.nvidiastudiospace.com/en" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn nvidia-btn">
-                                    <img src="assets/images/client-logos/nvidia_works.png" alt="Nvidia Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Nvidia Nights Dubai</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Zilika -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/85.jpg" alt="Zilika" loading="lazy">
-                                <a href="https://zilika.shop/" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn zilika-btn">
-                                    <img src="assets/images/client-logos/zilika.png" alt="Zilika Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Zilika</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ultimate Twist -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/86.jpg" alt="Ultimate Twist" loading="lazy">
-                                <a href="https://ultimatetwistagency.com/" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/ultimate_twist.svg" alt="Ultimate Twist Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Ultimate Twist</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bistro -->
-                    <div class="col-lg-3 col-md-6 item fullstack backend integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/87.jpg" alt="Bistro" loading="lazy">
-                                <a href="https://www.bistro.com.eg/" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn zilika-btn">
-                                    <img src="assets/images/client-logos/bistro.png" alt="Bistro Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack . Backend</span>
-                                <h3>Bistro Restaurant</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Al-Taiseer -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/88.jpg" alt="Al-Taiseer" loading="lazy">
-                                <a href="https://al-taiseer.com/" target="_blank" rel="noopener noreferrer"
-                                    class="details-btn zilika-btn">
-                                    <img src="assets/images/client-logos/taiseer.png" alt="Al-Taiseer Logo"
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Al-Taiseer</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Playground Valorant Case -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/90.jpg" alt="Playground Valorant Case" loading="lazy">
-                                <a href="https://arabhardware.com/events/playground-valorant" target="_blank"
-                                    rel="noopener noreferrer" class="details-btn ahw-btn">
-                                    <img src="assets/images/client-logos/ahw-store-works.png"
-                                        alt="Playground Valorant Case Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>Playground Valorant Case</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PUBG Mobile Champions -->
-                    <div class="col-lg-3 col-md-6 item fullstack integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/89.jpg" alt="PUBG Mobile Champions" loading="lazy">
-                                <a href="https://arabhardware.com/events/pubg-mobile-champions-challenge-egypt"
-                                    target="_blank" rel="noopener noreferrer" class="details-btn lol-btn">
-                                    <img src="assets/images/client-logos/logo.png" alt="PUBG Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack</span>
-                                <h3>PUBG Mobile Champions</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- WEDS -->
-                    <div class="col-lg-3 col-md-6 item fullstack backend architecture integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/91.jpg" alt="WEDS" loading="lazy">
-                                <a href="assets/images/projects/60.jpg" class="details-btn lol-btn work-popup">
-                                    <img src="assets/images/client-logos/weds.png" alt="WEDS Logo" loading="lazy">
-                                </a>
-                                <a href="assets/images/projects/59.jpg" class="details-btn lol-btn work-popup">
-                                    <img src="assets/images/client-logos/weds.png" alt="WEDS Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Full Stack . Architecture · Backend</span>
-                                <h3>WEDS</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ISI System -->
-                    <div class="col-lg-3 col-md-6 item backend architecture integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/62.jpg" alt="ISI System" loading="lazy">
-                                <a href="assets/images/projects/55.jpg" class="details-btn zilika-btn work-popup">
-                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo" loading="lazy">
-                                </a>
-                                <a href="assets/images/projects/56.jpg" class="details-btn zilika-btn work-popup">
-                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo" loading="lazy">
-                                </a>
-                                <a href="assets/images/projects/57.jpg" class="details-btn zilika-btn work-popup">
-                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo" loading="lazy">
-                                </a>
-                                <a href="assets/images/projects/58.jpg" class="details-btn zilika-btn work-popup">
-                                    <img src="assets/images/client-logos/isi.png" alt="ISI System Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Architecture · Backend</span>
-                                <h3>ISI System</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Travio -->
-                    <div class="col-lg-3 col-md-6 item backend architecture integration">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/61.jpg" alt="Travio" loading="lazy">
-                                <a href="assets/images/projects/54.jpg" class="details-btn travio-btn work-popup">
-                                    <img src="assets/images/client-logos/travio.jpg" alt="Travio Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Architecture · Backend</span>
-                                <h3>Travio</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- FBC -->
-                    <div class="col-lg-3 col-md-6 item fullstack">
-                        <div class="project-item style-two wow fadeInUp delay-0-7s">
-                            <div class="project-image">
-                                <img src="assets/images/projects/40.jpg" alt="FBC" loading="lazy">
-                                <a href="assets/images/projects/42.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
-                                </a>
-                                <a href="assets/images/projects/47.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
-                                </a>
-                                <a href="assets/images/projects/46.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
-                                </a>
-                                <a href="assets/images/projects/45.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
-                                </a>
-                                <a href="assets/images/projects/44.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
-                                </a>
-                                <a href="assets/images/projects/43.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
-                                </a>
-                                <a href="assets/images/projects/41.jpg" class="details-btn fbc-btn work-popup">
-                                    <img src="assets/images/client-logos/fbc.jpg" alt="FBC Logo" loading="lazy">
-                                </a>
-                            </div>
-                            <div class="project-content">
-                                <span class="sub-title">Fullstack</span>
-                                <h3>FBC UI</h3>
-                            </div>
-                        </div>
+            <!-- Section Header -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="section-title text-center wow fadeInUp delay-0-2s">
+                        <h2>Selected Work</h2>
+                        <p>
+                            Real-world projects focused on backend systems, integrations, and scalable application
+                            architecture.
+                        </p>
                     </div>
                 </div>
             </div>
+
+            <!-- Filters -->
+            <ul class="project-filter filter-btns-one pb-15 wow fadeInUp delay-0-2s">
+                <li data-filter="*" class="current">All</li>
+                <li data-filter=".backend">Backend</li>
+                <li data-filter=".fullstack">Full Stack</li>
+                <li data-filter=".integration">Integrations</li>
+                <li data-filter=".architecture">Architecture</li>
+            </ul>
+
+            <!-- Projects — rendered from data/projects.json -->
+            <div class="row project-masonry-active" id="projectsGrid">
+                <div class="col-12 projects-loading">
+                    <p style="text-align:center; padding:3rem 0; color:light-dark(#888, #777);">
+                        Loading projects…
+                    </p>
+                </div>
+            </div>
+
         </div>
-    </section>
-    <!-- // END PORTFOLIO DESIGN AREA -->
+    </div>
+</section>
+<!-- // END PORTFOLIO DESIGN AREA -->
+
+
 
     <!-- START BRAND DESIGN AREA -->
     <div class="client-logo-area">
@@ -2318,6 +1783,172 @@
     <script type="module" src="assets/js/lights.js" defer></script>
     <script type="module" src="assets/js/splitting.js" defer></script>
 
+
+   
+<script>
+(function ($) {
+    'use strict';
+
+    /* ── Escape helper for safe text injection ── */
+    const esc = s => String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+
+    /* ── Build one card's HTML ── */
+    /*
+     * Key structural decision:
+     *   The <a class="project-card-link"> MUST remain inside the .item/.col
+     *   (Isotope uses .item as its item and absolutely-positions it). The
+     *   anchor wraps the visible card contents but NOT the column, so
+     *   Isotope can still measure each item correctly.
+     */
+    function buildCard(p, i) {
+        const filterClasses = (p.filters || []).join(' ');
+        const delayIndex = (i % 5) + 2;
+        const delayClass = `delay-0-${delayIndex}s`;
+        const caseHref   = `project.html?slug=${encodeURIComponent(p.slug)}`;
+
+        // Logo badge — either a live-link or a gallery popup set
+        let logoBadgeHtml = '';
+        const logoImg = p.cardLogoImage
+            ? `<img src="${esc(p.cardLogoImage)}" alt="${esc(p.cardTitle || p.title)} logo" loading="lazy">`
+            : '';
+
+        if (Array.isArray(p.cardGalleryPopup) && p.cardGalleryPopup.length) {
+            // Gallery-style popup (for LMS, POS, WEDS, ISI, Travio, FBC)
+            logoBadgeHtml = p.cardGalleryPopup.map(src => `
+                <a href="${esc(src)}"
+                   class="details-btn ${esc(p.cardLogoClass || '')} work-popup badge-link">
+                    ${logoImg}
+                </a>`).join('');
+        } else if (p.liveUrl) {
+            // External live-site link
+            logoBadgeHtml = `
+                <a href="${esc(p.liveUrl)}"
+                   target="_blank" rel="noopener noreferrer"
+                   class="details-btn ${esc(p.cardLogoClass || '')} badge-link"
+                   aria-label="Visit ${esc(p.cardTitle || p.title)} live site">
+                    ${logoImg}
+                </a>`;
+        } else if (p.cardLogoImage) {
+            // No live URL: badge just links to the case study (same as card)
+            logoBadgeHtml = `
+                <a href="${esc(caseHref)}" class="details-btn ${esc(p.cardLogoClass || '')} badge-link">
+                    ${logoImg}
+                </a>`;
+        }
+
+        return `
+            <div class="col-lg-3 col-md-6 item ${filterClasses}">
+                <div class="project-item style-two wow fadeInUp ${delayClass}">
+                    <div class="project-image">
+                        <img src="${esc(p.cardImage)}" alt="${esc(p.cardTitle || p.title)}" loading="lazy">
+                        <a href="${esc(caseHref)}"
+                           class="project-card-link"
+                           aria-label="${esc(p.cardTitle || p.title)} case study"></a>
+                        ${logoBadgeHtml}
+                    </div>
+                    <div class="project-content">
+                        <a href="${esc(caseHref)}" class="project-title-link"
+                           aria-label="${esc(p.cardTitle || p.title)} case study">
+                            <span class="sub-title">${esc(p.cardSubtitle || '')}</span>
+                            <h3>${esc(p.cardTitle || p.title)}</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>`;
+    }
+
+    /* ── Load & render ── */
+    async function renderProjects() {
+        const $grid = $('#projectsGrid');
+        if (!$grid.length) return;
+
+        let projects;
+        try {
+            const res = await fetch('data/projects.json');
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            projects = await res.json();
+        } catch (err) {
+            $grid.html(`
+                <div class="col-12" style="text-align:center;padding:3rem 0;">
+                    <p style="color:#e05;">Could not load projects. ${esc(err.message)}</p>
+                </div>`);
+            return;
+        }
+
+        const html = projects.map((p, i) => buildCard(p, i)).join('');
+        $grid.html(html);
+
+        /* ── WOW animations for newly-added cards ── */
+        if (typeof WOW !== 'undefined') {
+            new WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: false, live: true }).init();
+        }
+
+        /* ── Magnific Popup for gallery-style badges ── */
+        if ($.fn.magnificPopup) {
+            $grid.find('.project-image').each(function () {
+                $(this).magnificPopup({
+                    delegate: '.work-popup',
+                    type: 'image',
+                    removalDelay: 300,
+                    mainClass: 'mfp-with-zoom',
+                    gallery: { enabled: true },
+                    zoom: { enabled: false }
+                });
+            });
+        }
+
+        /* ── Isotope: init + filter wiring ── */
+        if ($.fn.isotope && $.fn.imagesLoaded) {
+            // Destroy any prior instance (from main.js initial load) so we
+            // start fresh on the real cards
+            if ($grid.data('isotope')) {
+                $grid.isotope('destroy');
+            }
+
+            // Initialize immediately — the fixed aspect-ratio on .project-image
+            // means items have correct height before images load, so the grid
+            // doesn't collapse under the next section.
+            $grid.isotope({
+                itemSelector: '.item',
+                layoutMode: 'fitRows',
+                percentPosition: true,
+                transitionDuration: '0.4s'
+            });
+
+            // Re-layout as each image loads (fine-tunes any tiny height diffs)
+            $grid.imagesLoaded()
+                .progress(function () { $grid.isotope('layout'); })
+                .always(function () { $grid.isotope('layout'); });
+
+            // Filter button clicks — unbind any previous handler (from main.js)
+            // and rebind to the new grid
+            $('.project-filter li').off('click').on('click', function () {
+                const $btn = $(this);
+                const filterValue = $btn.attr('data-filter');
+                $('.project-filter li').removeClass('current');
+                $btn.addClass('current');
+                $grid.isotope({ filter: filterValue });
+                // Layout once more after the filter animation settles
+                setTimeout(() => $grid.isotope('layout'), 450);
+            });
+        }
+
+        /* ── Final safety re-layout after WOW animations finish ── */
+        setTimeout(function () {
+            if ($grid.data('isotope')) $grid.isotope('layout');
+        }, 800);
+    }
+
+    $(function () { renderProjects(); });
+
+})(jQuery);
+
+</script>
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
         data-id="samehbilal" data-description="Support my work" data-message="Support my work" data-color="#F9812E"
         data-position="Right" data-x_margin="18" data-y_margin="18"></script>
