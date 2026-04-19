@@ -3,6 +3,7 @@
     "slug": "nvidia-studio-space",
     "title": "Nvidia Studio Space",
     "cardTitle": "Nvidia Studio Space",
+    "featured": true,
     "cardSubtitle": "Backend · Architecture",
     "cardImage": "assets/images/projects/63.jpg",
     "cardLogoImage": "assets/images/client-logos/nvidia-studio-works.png",
@@ -45,6 +46,7 @@
     "slug": "nvidia-office",
     "title": "Nvidia Office",
     "cardTitle": "Nvidia Office",
+    "featured": true,
     "cardSubtitle": "Backend Systems",
     "cardImage": "assets/images/projects/49.jpg",
     "cardLogoImage": "assets/images/client-logos/nvidia_works.png",
@@ -74,6 +76,7 @@
     "slug": "arabhardware-platform",
     "title": "ArabHardware Platform",
     "cardTitle": "ArabHardware Platform",
+    "featured": true,
     "cardSubtitle": "Full Stack",
     "cardImage": "assets/images/projects/63.png",
     "cardLogoImage": "assets/images/client-logos/arabhardware-works.png",
@@ -109,6 +112,7 @@
   {
     "slug": "ahw-store",
     "title": "ArabHardware Store (AHW Hub)",
+    "featured": true,
     "cardTitle": "ArabHardware Store",
     "cardSubtitle": "Integrations · Full Stack",
     "cardImage": "assets/images/projects/64.png",
@@ -146,6 +150,7 @@
   {
     "slug": "arabiatalents",
     "title": "Arabiatalents Platform",
+    "featured": true,
     "cardTitle": "Arabiatalents Platform",
     "cardSubtitle": "Full Stack",
     "cardImage": "assets/images/projects/65.png",
@@ -167,6 +172,7 @@
   {
     "slug": "palestine-crisis-tracker",
     "title": "Palestine Crisis Tracker",
+    "featured": true,
     "cardTitle": "Palestine Crisis Tracker",
     "cardSubtitle": "Backend · Real-time",
     "cardImage": "assets/images/projects/66.jpg",
@@ -190,6 +196,7 @@
   {
     "slug": "lms",
     "title": "Learning Management System",
+    "featured": true,
     "cardTitle": "Learning Management System",
     "cardSubtitle": "Architecture · Backend",
     "cardImage": "assets/images/projects/67.jpg",
@@ -222,6 +229,7 @@
   {
     "slug": "lenovo-legion",
     "title": "Lenovo Legion Campaign",
+    "featured": true,
     "cardTitle": "Lenovo Legion",
     "cardSubtitle": "Full Stack",
     "cardImage": "assets/images/projects/68.jpg",
@@ -243,6 +251,7 @@
   {
     "slug": "alm-accounting",
     "title": "ALM Accounting",
+    "featured": false,
     "cardTitle": "ALM accounting",
     "cardSubtitle": "Full Stack",
     "cardImage": "assets/images/projects/69.jpg",

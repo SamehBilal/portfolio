@@ -1913,8 +1913,6 @@ html[data-theme="light"] .themed-logo-solid img   { content: url("../images/skil
 .br-30 { border-radius: 30px; }
 
 
-
-
 /* ============================================================
    28. PROJECT CARDS GRID (data-driven from projects.json)
    ============================================================ */
@@ -2005,18 +2003,20 @@ html[data-theme="light"] .themed-logo-solid img   { content: url("../images/skil
    ============================================================
    Override the earlier @layer demo rules that left the popover
    off-center on mobile. We anchor to the nav's center and
-   translate the popover by -50% of its own width.
+   translate the popover by -50% of its own width, keeping the
+   popover's bottom edge aligned with the nav's bottom edge
+   (so it opens in place of the nav, not floating above it).
    ============================================================ */
 
 [popover]#menu {
-    /* Anchor to the nav's horizontal center */
-    bottom: anchor(top);
+    /* Anchor bottom edge to nav's bottom edge (same vertical level) */
+    bottom: anchor(bottom);
     left: anchor(center);
     right: auto;
     top: auto;
 
     /* Shift by half its own width so its center aligns with the nav's center */
-    translate: -50% -8px;
+    translate: -50% 0;
 
     /* Keep width/height from the earlier rules */
     width: min(var(--width), 100vw - 2rem);
@@ -2029,7 +2029,7 @@ html[data-theme="light"] .themed-logo-solid img   { content: url("../images/skil
 
 /* Opened state keeps the same centering */
 [popover]#menu:popover-open {
-    translate: -50% -8px;
+    translate: -50% 0;
     width: min(var(--width), 100vw - 2rem);
     height: min(var(--height), 80vh);
     border-radius: 21px;
@@ -2051,7 +2051,7 @@ html[data-theme="light"] .themed-logo-solid img   { content: url("../images/skil
         position: fixed;
         left: 50%;
         right: auto;
-        bottom: 6rem;    /* sits above the bottom nav */
+        bottom: 2rem;        /* matches .nav { bottom: 2rem } */
         top: auto;
         translate: -50% 0;
     }
@@ -2064,5 +2064,13 @@ html[data-theme="light"] .themed-logo-solid img   { content: url("../images/skil
         width: calc(100vw - 1rem);
         max-width: calc(100vw - 1rem);
         height: min(var(--height), 70vh);
+    }
+
+    /* On mobile, .nav uses bottom: 1rem — match that in the fallback */
+    @supports not (anchor-name: --nav) {
+        [popover]#menu,
+        [popover]#menu:popover-open {
+            bottom: 1rem;
+        }
     }
 }

@@ -761,6 +761,8 @@
     const $grid = $('#projectsGrid');
     if (!$grid.length) return;
 
+    const featuredOnly = $grid.attr('data-featured-only') === 'true';
+
     let projects;
     try {
       const res = await fetch('data/projects.json');
@@ -772,6 +774,9 @@
           <p style="color:#e05;">Could not load projects. ${escHtml(err.message)}</p>
         </div>`);
       return;
+    }
+    if (featuredOnly) {
+      projects = projects.filter(p => p.featured);
     }
 
     $grid.html(projects.map(buildProjectCard).join(''));
