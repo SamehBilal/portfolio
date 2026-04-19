@@ -1911,3 +1911,158 @@ html[data-theme="light"] .themed-logo-solid img   { content: url("../images/skil
 .br-20 { border-radius: 20px; }
 .br-25 { border-radius: 25px; }
 .br-30 { border-radius: 30px; }
+
+
+
+
+/* ============================================================
+   28. PROJECT CARDS GRID (data-driven from projects.json)
+   ============================================================ */
+
+/* Image box has a stable height even before <img> loads */
+.project-item.style-two .project-image {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: light-dark(#f2f2f2, #151515);
+}
+
+.project-item.style-two .project-image > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Invisible click overlay covering the whole image */
+.project-image .project-card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    text-indent: -9999px;
+    overflow: hidden;
+    background: transparent;
+    border-radius: inherit;
+}
+
+/* Logo badge stays clickable above the overlay */
+.project-item.style-two .project-image .details-btn.badge-link {
+    position: absolute;
+    z-index: 3;
+    cursor: pointer;
+}
+
+/* Title area is clickable, looks unchanged */
+.project-title-link,
+.project-title-link:hover,
+.project-title-link:focus,
+.project-title-link:visited {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.project-title-link h3 {
+    transition: color 0.3s;
+}
+
+.project-item.style-two:hover .project-title-link h3 {
+    color: var(--primary-color);
+}
+
+/* Isotope grid — explicit widths (flex columns don't work with Isotope) */
+.project-masonry-active {
+    display: block;
+    position: relative;
+}
+
+.project-masonry-active .item {
+    margin-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;        /* mobile: 1 column */
+}
+
+@media (min-width: 576px) {
+    .project-masonry-active .item { width: 50%; }  /* 2 columns */
+}
+
+@media (min-width: 992px) {
+    .project-masonry-active .item { width: 25%; }  /* 4 columns */
+}
+
+/* Defeat WOW hiding the cards (they come from JS after page load) */
+.project-masonry-active .item .project-item.style-two.wow {
+    visibility: visible !important;
+    opacity: 1 !important;
+    animation: none !important;
+}
+
+
+/* ============================================================
+   29. POPOVER CENTERING FIX (bottom-nav menu)
+   ============================================================
+   Override the earlier @layer demo rules that left the popover
+   off-center on mobile. We anchor to the nav's center and
+   translate the popover by -50% of its own width.
+   ============================================================ */
+
+[popover]#menu {
+    /* Anchor to the nav's horizontal center */
+    bottom: anchor(top);
+    left: anchor(center);
+    right: auto;
+    top: auto;
+
+    /* Shift by half its own width so its center aligns with the nav's center */
+    translate: -50% -8px;
+
+    /* Keep width/height from the earlier rules */
+    width: min(var(--width), 100vw - 2rem);
+    height: min(var(--height), 80vh);
+    border-radius: 21px;
+
+    /* Clamp to viewport on tiny screens */
+    max-width: calc(100vw - 1rem);
+}
+
+/* Opened state keeps the same centering */
+[popover]#menu:popover-open {
+    translate: -50% -8px;
+    width: min(var(--width), 100vw - 2rem);
+    height: min(var(--height), 80vh);
+    border-radius: 21px;
+
+    @starting-style {
+        width: anchor-size(width);
+        height: anchor-size(height);
+        border-radius: 21px;
+    }
+}
+
+/* Fallback for browsers without CSS anchor positioning
+   (currently Firefox, Safari < 26 at the time of writing).
+   Without this, left: anchor(center) does nothing and the
+   popover falls back to its default inset: unset. */
+@supports not (anchor-name: --nav) {
+    [popover]#menu,
+    [popover]#menu:popover-open {
+        position: fixed;
+        left: 50%;
+        right: auto;
+        bottom: 6rem;    /* sits above the bottom nav */
+        top: auto;
+        translate: -50% 0;
+    }
+}
+
+/* Mobile tightening: smaller popover and hugged to bottom */
+@media (max-width: 575px) {
+    [popover]#menu,
+    [popover]#menu:popover-open {
+        width: calc(100vw - 1rem);
+        max-width: calc(100vw - 1rem);
+        height: min(var(--height), 70vh);
+    }
+}

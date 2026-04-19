@@ -74,109 +74,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <![endif]-->
 
-<style>
-/* ═══════════════════════════════════════════════════════════════════
-   Clickable project cards — Option A wiring
-   ═══════════════════════════════════════════════════════════════════
-   Structure per card:
-       .item  (col, Isotope item — NOT wrapped in an anchor)
-         └─ .project-item.style-two
-              ├─ .project-image      (position: relative, fixed aspect-ratio)
-              │    ├─ <img>          (fills the image box)
-              │    ├─ .project-card-link   ← invisible full-image click layer
-              │    └─ .details-btn.badge-link  ← logo badge, sits ABOVE the link
-              └─ .project-content
-                   └─ .project-title-link   ← text area is also clickable
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* ── 1. Image box has a stable height even before <img> loads ──
-   This is what stops the grid from collapsing on first paint. */
-.project-item.style-two .project-image {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: light-dark(#f2f2f2, #151515);
-}
-
-.project-item.style-two .project-image > img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* ── 2. Invisible click overlay covering the whole image ── */
-.project-image .project-card-link {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    display: block;
-    text-indent: -9999px;
-    overflow: hidden;
-    background: transparent;
-    border-radius: inherit;
-}
-
-/* ── 3. Logo badge stays clickable above the overlay ── */
-.project-item.style-two .project-image .details-btn.badge-link {
-    position: absolute;
-    z-index: 3;
-    cursor: pointer;
-}
-
-/* ── 4. Title area is also clickable, looks unchanged ── */
-.project-title-link,
-.project-title-link:hover,
-.project-title-link:focus,
-.project-title-link:visited {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
-.project-title-link h3 {
-    transition: color 0.3s;
-}
-.project-item.style-two:hover .project-title-link h3 {
-    color: var(--primary-color);
-}
-
-/* ── 5. Isotope grid — explicit widths (flex columns don't work with Isotope absolute positioning) ── */
-.project-masonry-active {
-    display: block;
-    position: relative;
-}
-
-.project-masonry-active .item {
-    margin-bottom: 30px;
-    padding-left: 15px;
-    padding-right: 15px;
-    width: 100%;        /* mobile default: 1 column */
-    /* NO float — Isotope sets position:absolute and uses left/top */
-}
-
-@media (min-width: 576px) {
-    .project-masonry-active .item {
-        width: 50%;     /* small tablets: 2 columns */
-    }
-}
-
-@media (min-width: 992px) {
-    .project-masonry-active .item {
-        width: 25%;     /* desktop: 4 columns */
-    }
-}
-
-/* ── 6. Defeat WOW hiding the cards: we animate them ourselves ── */
-/* Our cards come from JS after page load, so WOW would otherwise leave them
-   at opacity:0 waiting for a scroll that already happened. Force them visible. */
-.project-masonry-active .item .project-item.style-two.wow {
-    visibility: visible !important;
-    opacity: 1 !important;
-    animation: none !important;
-}
-</style>
-
-
     <script>
         if (sessionStorage.getItem("visited")) {
             document.documentElement.classList.add("no-preloader");
@@ -1153,47 +1050,46 @@
     </section>
     <!-- / END SKILL DESIGN AREA -->
 
-<!-- START PORTFOLIO DESIGN AREA -->
-<section id="works" class="projects-area">
-    <div class="container">
-        <div class="container-inner">
+    <!-- START PORTFOLIO DESIGN AREA -->
+    <section id="works" class="projects-area">
+        <div class="container">
+            <div class="container-inner">
 
-            <!-- Section Header -->
-            <div class="row">
-                <div class="col-xl-12 col-lg-12">
-                    <div class="section-title text-center wow fadeInUp delay-0-2s">
-                        <h2>Selected Work</h2>
-                        <p>
-                            Real-world projects focused on backend systems, integrations, and scalable application
-                            architecture.
+                <!-- Section Header -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="section-title text-center wow fadeInUp delay-0-2s">
+                            <h2>Selected Work</h2>
+                            <p>
+                                Real-world projects focused on backend systems, integrations,
+                                and scalable application architecture.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <ul class="project-filter filter-btns-one pb-15 wow fadeInUp delay-0-2s">
+                    <li data-filter="*" class="current">All</li>
+                    <li data-filter=".backend">Backend</li>
+                    <li data-filter=".fullstack">Full Stack</li>
+                    <li data-filter=".integration">Integrations</li>
+                    <li data-filter=".architecture">Architecture</li>
+                </ul>
+
+                <!-- Projects — rendered from data/projects.json by main.js -->
+                <div class="row project-masonry-active" id="projectsGrid">
+                    <div class="col-12 projects-loading">
+                        <p style="text-align:center; padding:3rem 0; color:light-dark(#888, #777);">
+                            Loading projects…
                         </p>
                     </div>
                 </div>
+
             </div>
-
-            <!-- Filters -->
-            <ul class="project-filter filter-btns-one pb-15 wow fadeInUp delay-0-2s">
-                <li data-filter="*" class="current">All</li>
-                <li data-filter=".backend">Backend</li>
-                <li data-filter=".fullstack">Full Stack</li>
-                <li data-filter=".integration">Integrations</li>
-                <li data-filter=".architecture">Architecture</li>
-            </ul>
-
-            <!-- Projects — rendered from data/projects.json -->
-            <div class="row project-masonry-active" id="projectsGrid">
-                <div class="col-12 projects-loading">
-                    <p style="text-align:center; padding:3rem 0; color:light-dark(#888, #777);">
-                        Loading projects…
-                    </p>
-                </div>
-            </div>
-
         </div>
-    </div>
-</section>
-<!-- // END PORTFOLIO DESIGN AREA -->
-
+    </section>
+    <!-- // END PORTFOLIO DESIGN AREA -->
 
     <!-- START BRAND DESIGN AREA -->
     <div class="client-logo-area">
@@ -1805,164 +1701,6 @@
     <script type="module" src="assets/js/lights.js" defer></script>
     <script type="module" src="assets/js/splitting.js" defer></script>
 
-
-   
-<script>
-(function ($) {
-    'use strict';
-
-    /* ── Escape helper for safe text injection ── */
-    const esc = s => String(s == null ? '' : s)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-
-    /* ── Build one card's HTML ── */
-    /*
-     * Key structural decision:
-     *   The <a class="project-card-link"> MUST remain inside the .item/.col
-     *   (Isotope uses .item as its item and absolutely-positions it). The
-     *   anchor wraps the visible card contents but NOT the column, so
-     *   Isotope can still measure each item correctly.
-     */
-    function buildCard(p, i) {
-        const filterClasses = (p.filters || []).join(' ');
-        const caseHref      = `project.html?slug=${encodeURIComponent(p.slug)}`;
-
-        // Logo badge — either a live-link or a gallery popup set
-        let logoBadgeHtml = '';
-        const logoImg = p.cardLogoImage
-            ? `<img src="${esc(p.cardLogoImage)}" alt="${esc(p.cardTitle || p.title)} logo" loading="lazy">`
-            : '';
-
-        if (Array.isArray(p.cardGalleryPopup) && p.cardGalleryPopup.length) {
-            // Gallery-style popup (for LMS, POS, WEDS, ISI, Travio, FBC)
-            logoBadgeHtml = p.cardGalleryPopup.map(src => `
-                <a href="${esc(src)}"
-                   class="details-btn ${esc(p.cardLogoClass || '')} work-popup badge-link">
-                    ${logoImg}
-                </a>`).join('');
-        } else if (p.liveUrl) {
-            // External live-site link
-            logoBadgeHtml = `
-                <a href="${esc(p.liveUrl)}"
-                   target="_blank" rel="noopener noreferrer"
-                   class="details-btn ${esc(p.cardLogoClass || '')} badge-link"
-                   aria-label="Visit ${esc(p.cardTitle || p.title)} live site">
-                    ${logoImg}
-                </a>`;
-        } else if (p.cardLogoImage) {
-            // No live URL: badge just links to the case study (same as card)
-            logoBadgeHtml = `
-                <a href="${esc(caseHref)}" class="details-btn ${esc(p.cardLogoClass || '')} badge-link">
-                    ${logoImg}
-                </a>`;
-        }
-
-        return `
-            <div class="col-lg-3 col-md-6 item ${filterClasses}">
-                <div class="project-item style-two">
-                    <div class="project-image">
-                        <img src="${esc(p.cardImage)}" alt="${esc(p.cardTitle || p.title)}" loading="lazy">
-                        <a href="${esc(caseHref)}"
-                           class="project-card-link"
-                           aria-label="${esc(p.cardTitle || p.title)} case study"></a>
-                        ${logoBadgeHtml}
-                    </div>
-                    <div class="project-content">
-                        <a href="${esc(caseHref)}" class="project-title-link"
-                           aria-label="${esc(p.cardTitle || p.title)} case study">
-                            <span class="sub-title">${esc(p.cardSubtitle || '')}</span>
-                            <h3>${esc(p.cardTitle || p.title)}</h3>
-                        </a>
-                    </div>
-                </div>
-            </div>`;
-    }
-
-    /* ── Load & render ── */
-    async function renderProjects() {
-        const $grid = $('#projectsGrid');
-        if (!$grid.length) return;
-
-        let projects;
-        try {
-            const res = await fetch('data/projects.json');
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            projects = await res.json();
-        } catch (err) {
-            $grid.html(`
-                <div class="col-12" style="text-align:center;padding:3rem 0;">
-                    <p style="color:#e05;">Could not load projects. ${esc(err.message)}</p>
-                </div>`);
-            return;
-        }
-
-        const html = projects.map((p, i) => buildCard(p, i)).join('');
-        $grid.html(html);
-
-        /* ── Magnific Popup for gallery-style badges ── */
-        if ($.fn.magnificPopup) {
-            $grid.find('.project-image').each(function () {
-                $(this).magnificPopup({
-                    delegate: '.work-popup',
-                    type: 'image',
-                    removalDelay: 300,
-                    mainClass: 'mfp-with-zoom',
-                    gallery: { enabled: true },
-                    zoom: { enabled: false }
-                });
-            });
-        }
-
-        /* ── Isotope: init + filter wiring ── */
-        if ($.fn.isotope && $.fn.imagesLoaded) {
-            // Destroy any prior instance (from main.js initial load) so we
-            // start fresh on the real cards
-            if ($grid.data('isotope')) {
-                $grid.isotope('destroy');
-            }
-
-            // Initialize immediately — the fixed aspect-ratio on .project-image
-            // means items have correct height before images load, so the grid
-            // doesn't collapse under the next section.
-            $grid.isotope({
-                itemSelector: '.item',
-                layoutMode: 'fitRows',
-                percentPosition: true,
-                transitionDuration: '0.4s'
-            });
-
-            // Re-layout as each image loads (fine-tunes any tiny height diffs)
-            $grid.imagesLoaded()
-                .progress(function () { $grid.isotope('layout'); })
-                .always(function () { $grid.isotope('layout'); });
-
-            // Filter button clicks — unbind any previous handler (from main.js)
-            // and rebind to the new grid
-            $('.project-filter li').off('click').on('click', function () {
-                const $btn = $(this);
-                const filterValue = $btn.attr('data-filter');
-                $('.project-filter li').removeClass('current');
-                $btn.addClass('current');
-                $grid.isotope({ filter: filterValue });
-                // Layout once more after the filter animation settles
-                setTimeout(() => $grid.isotope('layout'), 450);
-            });
-        }
-
-        /* ── Final safety re-layout after WOW animations finish ── */
-        setTimeout(function () {
-            if ($grid.data('isotope')) $grid.isotope('layout');
-        }, 800);
-    }
-
-    $(function () { renderProjects(); });
-
-})(jQuery);
-</script>
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
         data-id="samehbilal" data-description="Support my work" data-message="Support my work" data-color="#F9812E"
         data-position="Right" data-x_margin="18" data-y_margin="18"></script>

@@ -692,6 +692,135 @@
   });
 
   /* ============================================================
+     23. PROJECTS GRID — data-driven from data/projects.json
+     ============================================================ */
+
+  // HTML-escape helper
+  function escHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // Build one project card's HTML
+  function buildProjectCard(p) {
+    const filterClasses = (p.filters || []).join(' ');
+    const caseHref = `project.html?slug=${encodeURIComponent(p.slug)}`;
+
+    const logoImg = p.cardLogoImage
+      ? `<img src="${escHtml(p.cardLogoImage)}" alt="${escHtml(p.cardTitle || p.title)} logo" loading="lazy">`
+      : '';
+
+    let logoBadgeHtml = '';
+    if (Array.isArray(p.cardGalleryPopup) && p.cardGalleryPopup.length) {
+      logoBadgeHtml = p.cardGalleryPopup.map(src => `
+        <a href="${escHtml(src)}"
+           class="details-btn ${escHtml(p.cardLogoClass || '')} work-popup badge-link">
+          ${logoImg}
+        </a>`).join('');
+    } else if (p.liveUrl) {
+      logoBadgeHtml = `
+        <a href="${escHtml(p.liveUrl)}"
+           target="_blank" rel="noopener noreferrer"
+           class="details-btn ${escHtml(p.cardLogoClass || '')} badge-link"
+           aria-label="Visit ${escHtml(p.cardTitle || p.title)} live site">
+          ${logoImg}
+        </a>`;
+    } else if (p.cardLogoImage) {
+      logoBadgeHtml = `
+        <a href="${escHtml(caseHref)}" class="details-btn ${escHtml(p.cardLogoClass || '')} badge-link">
+          ${logoImg}
+        </a>`;
+    }
+
+    return `
+      <div class="col-lg-3 col-md-6 item ${filterClasses}">
+        <div class="project-item style-two">
+          <div class="project-image">
+            <img src="${escHtml(p.cardImage)}" alt="${escHtml(p.cardTitle || p.title)}" loading="lazy">
+            <a href="${escHtml(caseHref)}" class="project-card-link"
+               aria-label="${escHtml(p.cardTitle || p.title)} case study"></a>
+            ${logoBadgeHtml}
+          </div>
+          <div class="project-content">
+            <a href="${escHtml(caseHref)}" class="project-title-link"
+               aria-label="${escHtml(p.cardTitle || p.title)} case study">
+              <span class="sub-title">${escHtml(p.cardSubtitle || '')}</span>
+              <h3>${escHtml(p.cardTitle || p.title)}</h3>
+            </a>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // Fetch projects.json and render the #projectsGrid
+  async function initProjectsGrid() {
+    const $grid = $('#projectsGrid');
+    if (!$grid.length) return;
+
+    let projects;
+    try {
+      const res = await fetch('data/projects.json');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      projects = await res.json();
+    } catch (err) {
+      $grid.html(`
+        <div class="col-12" style="text-align:center;padding:3rem 0;">
+          <p style="color:#e05;">Could not load projects. ${escHtml(err.message)}</p>
+        </div>`);
+      return;
+    }
+
+    $grid.html(projects.map(buildProjectCard).join(''));
+
+    // Magnific popup for gallery-style badges
+    if ($.fn.magnificPopup) {
+      $grid.find('.project-image').each(function () {
+        $(this).magnificPopup({
+          delegate: '.work-popup',
+          type: 'image',
+          removalDelay: 300,
+          mainClass: 'mfp-with-zoom',
+          gallery: { enabled: true },
+          zoom: { enabled: false }
+        });
+      });
+    }
+
+    // Isotope: fresh init on the rendered cards
+    if ($.fn.isotope && $.fn.imagesLoaded) {
+      if ($grid.data('isotope')) $grid.isotope('destroy');
+
+      $grid.isotope({
+        itemSelector: '.item',
+        layoutMode: 'fitRows',
+        percentPosition: true,
+        transitionDuration: '0.4s'
+      });
+
+      $grid.imagesLoaded()
+        .progress(() => $grid.isotope('layout'))
+        .always(() => $grid.isotope('layout'));
+
+      $('.project-filter li').off('click').on('click', function () {
+        const $btn = $(this);
+        $('.project-filter li').removeClass('current');
+        $btn.addClass('current');
+        $grid.isotope({ filter: $btn.attr('data-filter') });
+        setTimeout(() => $grid.isotope('layout'), 450);
+      });
+    }
+
+    // Safety re-layout after any late shifts
+    setTimeout(() => {
+      if ($grid.data('isotope')) $grid.isotope('layout');
+    }, 800);
+  }
+
+  /* ============================================================
      INIT
      ============================================================ */
   $(document).ready(function () {
@@ -712,6 +841,7 @@
     initMagicArea();
     initScrollSpy();
     initOwl();
+    initProjectsGrid(); 
     updateHeader();
   });
 
