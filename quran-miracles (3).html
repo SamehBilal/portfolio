@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quran Numerical Miracles — Sameh Bilal</title>
+<link rel="apple-touch-icon" href="../assets/images/favicon.png">
+<link rel="shortcut icon" type="image/png" href="../assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#F9812E;
+  --sz:25px;
+  --ln:color-mix(in lch,canvasText,transparent 70%);
+  --bc:rgba(119,119,125,.2);
+  --cord:color-mix(in lch,canvas,canvasText 75%);
+  --stroke:color-mix(in lch,canvas,canvasText 75%);
+  --shine:hsl(210 20% 80%/.75);
+  --cap:color-mix(in lch,canvas,canvasText);
+  --filament:light-dark(orange,color-mix(in lch,canvas,canvasText 25%));
+  --bulb:transparent;
+  --wf:24px;
+}
+[data-theme="light"]{color-scheme:light only}
+[data-theme="dark"]{color-scheme:dark only}
+html{color-scheme:light dark;height:100%}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:"Poppins",sans-serif;
+  background:light-dark(#fff,#000);
+  color:light-dark(#444,#e2e2e2);
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* grid bg */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    linear-gradient(90deg,var(--ln) 1px,transparent 1px var(--sz)) 50% 50%/var(--sz) var(--sz),
+    linear-gradient(var(--ln) 1px,transparent 1px var(--sz)) 50% 50%/var(--sz) var(--sz);
+  -webkit-mask:linear-gradient(-20deg,transparent 50%,white);
+  mask:linear-gradient(-20deg,transparent 50%,white);
+  pointer-events:none;z-index:0;
+}
+
+/* ── HEADER ── */
+header{
+  flex-shrink:0;
+  position:relative;z-index:100;
+  display:flex;align-items:center;
+  padding:16px 28px;
+  gap:16px;
+  background:light-dark(rgba(255,255,255,.9),rgba(0,0,0,.9));
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--bc);
+  transition:background .3s;
+}
+header.scrolled{background:light-dark(#fff,#000)}
+
+.logo{display:inline-block;font-size:2vmin;text-decoration:none;flex-shrink:0}
+.ll{position:relative;display:block;float:left;width:3vmin;height:3vmin;border-top:.25vmin solid light-dark(#000,#fff);line-height:3vmin;text-align:center;color:light-dark(#000,#fff);transition:all .3s}
+.ll::before{position:absolute;top:-.25vmin;right:-.25vmin;display:block;width:.25vmin;height:3vmin;background:var(--p);content:""}
+
+.nav-mid{margin:0 auto;display:flex;gap:4px;list-style:none}
+.nav-mid a{color:light-dark(#000,#fff);font-size:14px;font-weight:500;padding:6px 14px;text-decoration:none;border-radius:20px;transition:color .2s}
+.nav-mid a:hover,.nav-mid a.cur{color:var(--p)}
+@media(max-width:767px){.nav-mid{display:none}}
+
+.hbtns{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.hire{background:var(--p);color:#fff;font-size:13px;font-weight:600;font-family:"Poppins",sans-serif;border-radius:14px;padding:9px 20px;text-decoration:none;border:1px solid transparent;transition:.3s;white-space:nowrap}
+.hire:hover{background:#000}
+
+/* lightbulb */
+.lform{position:relative;width:var(--wf);aspect-ratio:1;top:-1.2rem;z-index:9999}
+.lform button{width:100%;aspect-ratio:1;position:absolute;top:0;left:0;z-index:3;background:transparent;border:0;padding:0;display:grid;place-items:center;cursor:pointer}
+.gh{width:24px;aspect-ratio:1;border-radius:50%;position:absolute;top:calc((24px*.175)+((24px*.65)*(125/48)));left:50%;translate:-50% -50%;z-index:9;outline:2px dashed canvasText!important;background:hsla(29,77%,59%,.25)}
+.arr{position:absolute;left:-300%;top:200%;width:140%;container-type:inline-size;color:color-mix(in hsl,canvasText,#0000 40%)}
+.arr svg{width:100%;scale:-1 -1}
+.arr label{font-family:"Gloria Hallelujah",cursive;position:absolute;bottom:25%;rotate:8deg;font-size:18cqi;white-space:nowrap;top:50%;right:110%}
+.ts{overflow:visible!important;position:absolute;width:65%;top:50%;left:50%;translate:-50% -50%}
+.ts__cord{stroke:var(--cord);stroke-width:10;cursor:move}
+.ts__cord:nth-of-type(1),.ts__cord:nth-of-type(2),.ts__cord:nth-of-type(3),.ts__cord:nth-of-type(4),.ts__cord:nth-of-type(5){display:none}
+.ts__ce{stroke:var(--cord);fill:var(--cord)}
+.ts__dc{stroke-width:10;stroke:var(--cord)}
+.bf{stroke:var(--filament);stroke-width:8}
+[data-theme='light'] .bf{stroke-width:12}
+.bs{stroke:var(--shine)}
+.bb{stroke:var(--stroke);fill:var(--bulb);stroke-width:10}
+.bc{fill:var(--cap)}
+.bcs{fill:var(--shine)}
+.bco{stroke-width:10;stroke:var(--stroke)}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ── MAIN AREA: two columns ── */
+.main{
+  flex:1;
+  display:flex;
+  overflow:hidden;
+  position:relative;z-index:1;
+}
+
+/* ── LEFT: miracle card ── */
+.left-col{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px 24px 20px 32px;
+  overflow:hidden;
+}
+
+.mcard{
+  width:100%;max-width:520px;
+  padding:28px 32px;
+  border-radius:20px;
+  border:1px solid rgba(0,0,0,.05);
+  box-shadow:rgba(255,255,255,.025) 0 .36px .65px -1px inset,rgba(255,255,255,.036) 0 3px 5.4px -2px inset;
+  background:light-dark(#fff,#1D1D1D);
+  text-align:center;
+  animation:fadeIn .35s ease both;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.mtag{display:inline-flex;align-items:center;gap:7px;padding:4px 12px;border-radius:30px;margin-bottom:12px;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:rgba(249,129,46,.1);color:var(--p);border:1px solid rgba(249,129,46,.3)}
+.mtag .dot{width:5px;height:5px;border-radius:50%;background:var(--p);flex-shrink:0}
+
+.mnum{font-size:clamp(52px,10vw,110px);font-weight:800;line-height:.88;letter-spacing:-.04em;margin-bottom:10px;color:transparent;-webkit-text-stroke:2px var(--p);user-select:none}
+.mnum .f{color:var(--p);-webkit-text-stroke:0}
+
+.mav{direction:rtl;font-size:15px;line-height:2;color:var(--p);font-weight:500;margin-bottom:3px}
+.mref{font-size:11px;color:light-dark(#999,#666);margin-bottom:14px}
+
+.mtitle{font-size:clamp(14px,2vw,20px);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:8px;color:light-dark(#000,#fff)}
+.mtitle span{color:transparent;-webkit-text-stroke:1px light-dark(#000,#fff)}
+
+.mdesc{font-size:12px;line-height:1.8;color:light-dark(#666,#a0aec0);margin-bottom:16px;max-width:460px;margin-left:auto;margin-right:auto}
+
+/* equation */
+.eq{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin-bottom:16px;padding:12px 16px;border-radius:12px;background:light-dark(rgba(0,0,0,.03),rgba(255,255,255,.03));border:1px solid rgba(249,129,46,.2)}
+.eq-t{display:flex;flex-direction:column;align-items:center;min-width:46px}
+.eq-v{font-size:18px;font-weight:800;color:var(--p);line-height:1}
+.eq-l{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:light-dark(#888,#777);margin-top:2px;white-space:nowrap}
+.eq-op{font-size:16px;font-weight:700;color:light-dark(#bbb,#555);margin-top:-4px}
+.eq-t.res .eq-v{color:light-dark(#000,#fff)}
+
+/* div cells */
+.dlabel{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:light-dark(#888,#777);margin-bottom:8px}
+.dgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:14px}
+.dc{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;width:38px;height:38px;border-radius:9px;border:1px solid rgba(249,129,46,.35);background:rgba(249,129,46,.09);color:var(--p)}
+
+.stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.sp{display:flex;flex-direction:column;align-items:center;padding:9px 14px;border-radius:12px;min-width:76px;border:1px solid light-dark(rgba(0,0,0,.07),rgba(255,255,255,.07));background:light-dark(rgba(0,0,0,.02),rgba(255,255,255,.02))}
+.sp .n{font-size:16px;font-weight:800;color:var(--p);line-height:1}
+.sp .l{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:light-dark(#999,#777);margin-top:3px}
+
+.quote{padding:10px 14px;border-radius:10px;font-size:11px;font-style:italic;line-height:1.8;color:light-dark(#555,#b0b8c8);border:1px dashed rgba(249,129,46,.3);background:rgba(249,129,46,.04)}
+
+/* ── RIGHT: miracle list ── */
+.right-col{
+  width:260px;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  border-left:1px solid var(--bc);
+  background:light-dark(rgba(255,255,255,.6),rgba(10,10,10,.6));
+  backdrop-filter:blur(8px);
+  overflow-y:auto;
+  padding:12px 0;
+}
+.right-col::-webkit-scrollbar{width:4px}
+.right-col::-webkit-scrollbar-thumb{background:rgba(249,129,46,.4);border-radius:2px}
+
+.rh{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:light-dark(#aaa,#555);padding:8px 16px 4px;margin-top:4px}
+
+.mitem{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 16px;cursor:pointer;
+  border-left:3px solid transparent;
+  transition:background .2s,border-color .2s;
+}
+.mitem:hover{background:light-dark(rgba(249,129,46,.06),rgba(249,129,46,.08))}
+.mitem.active{background:rgba(249,129,46,.1);border-left-color:var(--p)}
+
+.mitem-icon{
+  width:38px;height:38px;flex-shrink:0;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  background:light-dark(rgba(0,0,0,.05),rgba(255,255,255,.06));
+  border:1px solid light-dark(rgba(0,0,0,.08),rgba(255,255,255,.08));
+  transition:background .2s,border-color .2s;
+}
+.mitem.active .mitem-icon{background:rgba(249,129,46,.15);border-color:rgba(249,129,46,.35)}
+
+.mitem-text{}
+.mitem-title{font-size:12px;font-weight:600;color:light-dark(#222,#e2e2e2);line-height:1.3}
+.mitem.active .mitem-title{color:var(--p)}
+.mitem-sub{font-size:10px;color:light-dark(#888,#777);margin-top:1px}
+
+/* ── DOCK BAR ── */
+.dock-wrap{
+  flex-shrink:0;
+  display:flex;justify-content:center;align-items:flex-end;
+  padding:0 0 10px;
+  background:transparent;
+  position:relative;z-index:50;
+}
+.dock-bar{
+  padding:8px 12px 10px;
+  border-radius:20px;
+  background:light-dark(rgba(255,255,255,.88),rgba(18,18,18,.88));
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid light-dark(rgba(0,0,0,.12),rgba(255,255,255,.1));
+  box-shadow:0 4px 24px rgba(0,0,0,.15);
+}
+.dlist{display:flex;align-items:flex-end;list-style:none;padding:0;margin:0;gap:2px;font-size:clamp(8px,1vw,12px)}
+.di{display:flex;flex-direction:column;align-items:center;width:4.8em;transition:width .4s cubic-bezier(.16,1,.3,1);position:relative}
+.di.hover{width:7.4em}
+.di.sc{width:6.2em}
+.di.sf{width:5.5em}
+.dl{display:flex;justify-content:center;align-items:flex-end;width:100%;padding:0 .4em;cursor:pointer;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.dl:hover{transform:translateY(-3px)}
+.di.active .dl{transform:translateY(-5px)}
+.dicon{width:100%;aspect-ratio:1;border-radius:22%;display:flex;align-items:center;justify-content:center;background:light-dark(#eeebe5,#2a2a2a);border:1px solid light-dark(rgba(0,0,0,.08),rgba(255,255,255,.08));overflow:hidden;transition:all .25s}
+.di.active .dicon{background:rgba(249,129,46,.15);border-color:rgba(249,129,46,.35)}
+.ddot{width:4px;height:4px;border-radius:50%;background:light-dark(#444,#ccc);margin:4px auto 0;opacity:0;transition:opacity .2s}
+.di.active .ddot{opacity:1}
+.dtt{background:light-dark(#1a1a1a,#f0f0f0);color:light-dark(#f0f0f0,#1a1a1a);opacity:0;white-space:nowrap;border-radius:7px;padding:.3em .6em;font-size:.85em;font-weight:500;transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .35s;position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(4px);pointer-events:none}
+.di:hover .dtt{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="hdr">
+  <a href="../index.html" class="logo">
+    <span class="ll">S</span><span class="ll">A</span><span class="ll">M</span><span class="ll">E</span><span class="ll">H</span>
+  </a>
+  <ul class="nav-mid">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#service">Services</a></li>
+    <li><a href="../index.html#works">Works</a></li>
+    <li><a href="../stories.html" class="cur">Stories</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <div class="hbtns">
+    <a href="../index.html#contact" class="hire">Hire Me</a>
+    <form class="lform" id="lf">
+      <div class="arr"><label>drag me.</label>
+        <svg aria-hidden="true" viewBox="0 0 144 141" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M129.189 0.049C128.744 0.119 126.422 0.378 124.03 0.636C114.719 1.645 109.23 2.489 108.058 3.099C107.119 3.569 106.674 4.343 106.674 5.446C106.674 6.713 107.424 7.511 109.043 7.98C110.403 8.379 110.825 8.426 118.87 9.528C121.778 9.927 124.288 10.303 124.475 10.373C124.663 10.444 122.951 11.101 120.676 11.875C110.028 15.441 100.412 20.768 91.734 27.924C88.38 30.716 81.696 37.427 79.21 40.501C73.839 47.212 69.687 54.814 66.568 63.73C65.935 65.467 65.348 66.898 65.255 66.898C65.137 66.898 63.777 66.734 62.229 66.569C52.965 65.513 43.185 68.165 34.132 74.219C24.774 80.46 18.535 87.734 10.537 101.742C2.539 115.726-1.096 127.482 0.288 135.014C0.898 138.463 2.047 140.035 3.97 140.082C5.284 140.105 5.377 139.659 4.205 139.049C3.055 138.463 2.657 137.9 2.328 136.281C0.616 128.021 6.245 113.028 17.433 96.11C23.273 87.241 28.362 81.915 35.562 77.105C43.865 71.544 52.707 69.033 61.174 69.831C64.997 70.183 64.692 69.925 64.199 72.482C62.253 82.501 63.801 92.638 67.975 97.354C73.112 103.079 81.977 102 85.003 95.266C86.34 92.286 86.386 87.71 85.143 83.98C83.15 78.09 80.007 73.82 75.434 70.816C73.815 69.76 70.485 68.188 69.875 68.188C69.359 68.188 69.429 67.649 70.227 65.326C72.338 59.249 75.457 52.702 78.412 48.244C83.244 40.923 91.452 32.57 99.169 27.103C105.806 22.41 113.241 18.539 120.512 16.005C123.772 14.855 129.87 13.189 130.081 13.377C130.128 13.447 129.541 14.362 128.791 15.441C124.78 21.026 122.716 26.071 122.388 30.998C122.224 33.72 122.341 34.588 122.88 34.26C122.998 34.189 123.678 32.969 124.405 31.561C126.281 27.807 131.722 20.674 139.579 11.64C141.127 9.857 142.652 7.863 143.027 7.088C144.552 4.038 143.52 1.48 140.377 0.471C139.439 0.166 138.102 0.049 134.584 0.026C132.074-0.021 129.635 0.002 129.189 0.049Z" fill="currentColor"/></svg>
+      </div>
+      <button aria-pressed="false" id="tb"><span class="sr">Toggle theme</span>
+        <svg aria-hidden="true" class="ts" xmlns="http://www.w3.org/2000/svg" viewBox="32 32 134 134">
+          <defs>
+            <marker id="ma" orient="auto" overflow="visible" refx="0" refy="0"><path class="ts__ce" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+            <clippath id="mg" clippathunits="userSpaceOnUse"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path></clippath>
+          </defs>
+          <g class="ts__cords">
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623" transform="translate(-24.503 256.106)"></path>
+            <g class="ts__dc line"><line marker-end="url(#ma)" x1="98" x2="98" y1="240" y2="380"></line></g>
+            <circle cx="98.7255" cy="380.5405" r="60" fill="transparent"></circle>
+          </g>
+          <g class="ts__bulb" transform="translate(844.069 -645.213)">
+            <path class="bc" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+            <path class="bcs" d="M-778.379 802.873h25.512v118.409h-25.512z" clip-path="url(#mg)" transform="matrix(.52452 0 0 .90177 -368.282 82.976)"></path>
+            <path class="bc" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z"></path>
+            <path class="bco" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+            <g class="bf" fill="none" stroke-linecap="round" stroke-width="5"><path d="M-752.914 823.875l-8.858-33.06"></path><path d="M-737.772 823.875l8.858-33.06"></path></g>
+            <path class="bb" stroke-linecap="round" stroke-width="5" d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z"></path>
+            <circle cx="-745.343" cy="743.939" r="83.725" fill="none" stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></circle>
+            <path class="bs" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957"></path>
+          </g>
+        </svg>
+        <div class="gh"></div>
+      </button>
+    </form>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT: card -->
+  <div class="left-col">
+    <div id="mcard"></div>
+  </div>
+
+  <!-- RIGHT: list -->
+  <div class="right-col" id="mlist"></div>
+
+</div>
+
+<!-- DOCK -->
+<div class="dock-wrap">
+  <nav class="dock-bar">
+    <ul class="dlist" id="dock"></ul>
+  </nav>
+</div>
+
+<script>
+/* ── Theme ── */
+(function(){
+  const h=document.documentElement;
+  const s=localStorage.getItem('theme');
+  if(s) h.dataset.theme=s;
+  const T=['system','light','dark'];
+  let i=s?Math.max(T.indexOf(s),0):0;
+  document.getElementById('lf').addEventListener('submit',e=>{
+    e.preventDefault();i=(i+1)%T.length;
+    const t=T[i];
+    if(!document.startViewTransition){h.dataset.theme=t;}
+    else{document.startViewTransition(()=>{h.dataset.theme=t;});}
+    localStorage.setItem('theme',t);
+  });
+})();
+
+/* ── Miracle data ── */
+const M=[
+  {
+    key:'allah',cat:'Words & Names',
+    dock:'ﷲ',dockLabel:'الله — Allah',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><text x="16" y="24" text-anchor="middle" font-size="22" font-family="serif" fill="#F9812E">ﷲ</text></svg>',
+    title:'The Name of',titleSpan:'Allah',
+    tag:'الله in the Quran',num:'2699',f:'26',r:'99',
+    arabic:'وَاللَّهُ يَعْلَمُ مَا تُسِرُّونَ وَمَا تُعْلِنُونَ',ref:'Quran 16:19',
+    desc:'The word "الله" appears exactly 2,699 times in the Quran — a prime number, divisible by 1 and itself only. Over 23 years of revelation, no human scribe could engineer this without modern tools.',
+    check:2699,
+    eq:[{v:'2699',l:'Occurrences'},{op:'÷'},{v:'ANY 1–9',l:'Divisor'},{op:'='},{v:'Prime',l:'Result',r:1}],
+    stats:[{n:'2,699',l:'Occurrences'},{n:'Prime',l:'Number type'},{n:'1 only',l:'Divisors'}],
+    quote:'Allah knows what you conceal and what you declare. — Quran 16:19',
+  },
+  {
+    key:'bismillah',cat:'Words & Names',
+    dock:'بسم',dockLabel:'Bismillah — 19',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><text x="16" y="17" text-anchor="middle" font-size="9" font-family="serif" fill="#F9812E">بِسْمِ</text><text x="16" y="26" text-anchor="middle" font-size="7" font-family="serif" fill="#F9812E">اللَّهِ</text></svg>',
+    title:'Bismillah has',titleSpan:'19 Letters',
+    tag:'The key of the Quran',num:'19',f:'1',r:'9',
+    arabic:'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',ref:'Quran 1:1',
+    desc:'"Bismillah Al-Rahman Al-Raheem" contains 19 Arabic letters. The Quran has 114 surahs (114 ÷ 19 = 6). Every major word count in the Quran is a multiple of 19. Quran 74:30 explicitly states "Over it are nineteen."',
+    check:19,
+    eq:[{v:'114',l:'Surahs'},{op:'÷'},{v:'19',l:'Letters'},{op:'='},{v:'6',l:'Exact',r:1}],
+    stats:[{n:'19',l:'Letters'},{n:'÷19=6',l:'114 surahs'},{n:'×19',l:'All counts'}],
+    quote:'Over it are nineteen. — Quran 74:30',
+  },
+  {
+    key:'quran',cat:'Structure',
+    dock:'📖',dockLabel:'114 Surahs',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><rect x="6" y="4" width="20" height="24" rx="2" stroke="#F9812E" stroke-width="1.5" fill="rgba(249,129,46,.1)"/><line x1="10" y1="11" x2="22" y2="11" stroke="#F9812E" stroke-width="1.2"/><line x1="10" y1="16" x2="22" y2="16" stroke="#F9812E" stroke-width="1.2"/><line x1="10" y1="21" x2="17" y2="21" stroke="#F9812E" stroke-width="1.2"/></svg>',
+    title:'Quran has',titleSpan:'114 Surahs',
+    tag:'Structural miracle',num:'114',f:'1',r:'14',
+    arabic:'إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ',ref:'Quran 15:9',
+    desc:'The Quran has 114 surahs and 6,236 verses. 114 = 2×3×19. The first surah has 7 verses; the word "Quran" appears 70 times; "Rahman" (The Merciful) appears 57 times = 3×19.',
+    check:114,
+    eq:[{v:'114',l:'Surahs'},{op:'='},{v:'2×3×19',l:'Factors',r:1}],
+    stats:[{n:'114',l:'Surahs'},{n:'6,236',l:'Verses'},{n:'19×6',l:'Structure'}],
+    quote:'Indeed it is We who sent down the Quran and We will be its guardian. — Quran 15:9',
+  },
+  {
+    key:'fatiha',cat:'Structure',
+    dock:'الف',dockLabel:'Al-Fatiha',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" stroke="#F9812E" stroke-width="1.4" fill="rgba(249,129,46,.08)"/><text x="16" y="20" text-anchor="middle" font-size="9" font-family="serif" fill="#F9812E">١</text></svg>',
+    title:'Al-Fatiha:',titleSpan:'7 Verses, 29 Letters',
+    tag:'The opening chapter',num:'7',f:'7',r:'',
+    arabic:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',ref:'Quran 1:2',
+    desc:'Surah Al-Fatiha has 7 verses, 29 words, and 139 letters. The Quran has 29 surahs that open with disconnected letters. "Sab\'a al-mathani" (the seven oft-repeated verses) references Al-Fatiha in 15:87. Every count points to a deliberate numerical architecture.',
+    check:7,
+    eq:[{v:'7',l:'Verses'},{op:'×'},{v:'29',l:'Words'},{op:'='},{v:'203',l:'(7×29)',r:1}],
+    stats:[{n:'7',l:'Verses'},{n:'29',l:'Words'},{n:'139',l:'Letters'}],
+    quote:'All praise is due to Allah, Lord of all worlds. — Quran 1:2',
+  },
+  {
+    key:'sea',cat:'Science',
+    dock:'🌊',dockLabel:'Sea & Land',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><path d="M4 20 Q8 16 12 20 Q16 24 20 20 Q24 16 28 20" stroke="#F9812E" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M4 24 Q8 20 12 24 Q16 28 20 24 Q24 20 28 24" stroke="#F9812E" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".5"/></svg>',
+    title:'Sea covers',titleSpan:'71.1% of Earth',
+    tag:'Word frequency ratio',num:'71',f:'7',r:'1',
+    arabic:'وَهُوَ الَّذِي سَخَّرَ الْبَحْرَ لِتَأْكُلُوا مِنْهُ لَحْمًا طَرِيًّا',ref:'Quran 16:14',
+    desc:'"البحر" (sea) = 32 occurrences. "البر" (land) = 13 occurrences. 32 ÷ 45 = 71.1% — exactly matching satellite-measured ocean coverage of Earth. Land = 28.9% = 13 ÷ 45. This ratio was unknown 1,400 years ago.',
+    check:32,
+    eq:[{v:'32',l:'Sea'},{op:'÷'},{v:'45',l:'Sea+Land'},{op:'='},{v:'71.1%',l:'Earth ocean',r:1}],
+    stats:[{n:'32×',l:'"Sea"'},{n:'13×',l:'"Land"'},{n:'71.1%',l:'Real ratio'}],
+    quote:'And it is He who subjected the sea for you to eat from it tender meat. — Quran 16:14',
+  },
+  {
+    key:'day',cat:'Science',
+    dock:'📅',dockLabel:'Days & Months',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><rect x="5" y="8" width="22" height="18" rx="2" stroke="#F9812E" stroke-width="1.3" fill="rgba(249,129,46,.08)"/><line x1="5" y1="13" x2="27" y2="13" stroke="#F9812E" stroke-width="1.2"/><text x="16" y="24" text-anchor="middle" font-size="8" font-weight="700" font-family="Poppins,sans-serif" fill="#F9812E">365</text></svg>',
+    title:'"Day" appears',titleSpan:'365 Times',
+    tag:'Solar calendar encoded',num:'365',f:'3',r:'65',
+    arabic:'هُوَ الَّذِي جَعَلَ الشَّمْسَ ضِيَاءً وَالْقَمَرَ نُورًا',ref:'Quran 10:5',
+    desc:'"يوم" (day/Yawm) = 365 times — solar year. "أيام" (days/Ayyam) = 30 times — month. "شهر" (month/Shahr) = 12 times — year. Three words, three counts, one perfect calendar encoded in a 7th-century text.',
+    check:365,
+    eq:[{v:'"يوم"',l:'Yawm'},{op:'='},{v:'365×',l:'In Quran',r:1},{op:'='},{v:'365',l:'Solar days'}],
+    stats:[{n:'365×',l:'"Yawm" (day)'},{n:'30×',l:'"Ayyam" (days)'},{n:'12×',l:'"Shahr" (month)'}],
+    quote:'It is He who made the sun a shining light and the moon a derived light. — Quran 10:5',
+  },
+  {
+    key:'salah',cat:'Worship',
+    dock:'🕌',dockLabel:'5 Prayers',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="7" r="3" fill="#F9812E"/><path d="M12 12 Q16 10 20 12 L19 22 H13Z" fill="rgba(249,129,46,.2)" stroke="#F9812E" stroke-width="1.2"/><line x1="13" y1="22" x2="11" y2="28" stroke="#F9812E" stroke-width="1.2"/><line x1="19" y1="22" x2="21" y2="28" stroke="#F9812E" stroke-width="1.2"/></svg>',
+    title:'Five',titleSpan:'Daily Prayers',
+    tag:'Al-Salawat appears 5×',num:'5',f:'5',r:'',
+    arabic:'أَقِمِ الصَّلَاةَ لِدُلُوكِ الشَّمْسِ إِلَىٰ غَسَقِ اللَّيْلِ',ref:'Quran 17:78',
+    desc:'"الصلوات" (Al-Salawat, prayers plural) appears exactly 5 times in the Quran — matching the 5 obligatory daily prayers. "صلاة" (Salah singular) appears 67 times. The five prayer times (Fajr, Dhuhr, Asr, Maghrib, Isha) are each described in Quran verses.',
+    check:5,
+    eq:[{v:'"الصلوات"',l:'Al-Salawat'},{op:'='},{v:'5×',l:'In Quran',r:1},{op:'='},{v:'5',l:'Prayers/day'}],
+    stats:[{n:'5',l:'Prayers/day'},{n:'67×',l:'Salah in Quran'},{n:'5×',l:'Al-Salawat'}],
+    quote:'Indeed, prayer has been decreed upon the believers a decree of specified times. — Quran 4:103',
+  },
+  {
+    key:'human',cat:'Science',
+    dock:'🧬',dockLabel:'Chromosomes 23',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><ellipse cx="16" cy="12" rx="8" ry="5" fill="rgba(249,129,46,.12)" stroke="#F9812E" stroke-width="1.3"/><text x="16" y="28" text-anchor="middle" font-size="7" font-weight="700" font-family="Poppins,sans-serif" fill="#F9812E">23 pairs</text></svg>',
+    title:'Human has',titleSpan:'23 Chromosome Pairs',
+    tag:'Surah 23, Verse 12',num:'23',f:'2',r:'3',
+    arabic:'وَلَقَدْ خَلَقْنَا الْإِنسَانَ مِن سُلَالَةٍ مِّن طِينٍ',ref:'Quran 23:12',
+    desc:'Surah Al-Mu\'minun is chapter 23. Verse 12 begins human creation. Humans have 23 chromosome pairs (46 total) — sperm carries 23, egg carries 23. The surah number, verse placement, and embryological accuracy converge impossibly.',
+    check:23,
+    eq:[{v:'Surah 23',l:'Al-Muminun'},{op:'+'},{v:'Verse 12',l:'Start'},{op:'='},{v:'23 pairs',l:'Chromosomes',r:1}],
+    stats:[{n:'23',l:'Chromosome pairs'},{n:'46',l:'Total'},{n:'Surah 23',l:'Al-Muminun'}],
+    quote:'And certainly did We create man from an extract of clay. — Quran 23:12',
+  },
+  {
+    key:'embryo',cat:'Science',
+    dock:'🔬',dockLabel:'Embryology',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="10" ry="7" fill="rgba(249,129,46,.1)" stroke="#F9812E" stroke-width="1.3"/><ellipse cx="16" cy="16" rx="5" ry="3.5" fill="rgba(249,129,46,.2)" stroke="#F9812E" stroke-width="1"/><circle cx="16" cy="16" r="1.5" fill="#F9812E"/></svg>',
+    title:'6 Embryo Stages',titleSpan:'Described in 23:12–14',
+    tag:'1,400 years before science',num:'6',f:'6',r:'',
+    arabic:'ثُمَّ خَلَقْنَا النُّطْفَةَ عَلَقَةً فَخَلَقْنَا الْعَلَقَةَ مُضْغَةً',ref:'Quran 23:14',
+    desc:'Quran 23:12–14 names 6 embryological stages: Nutfah → Alaqah → Mudghah → bones → flesh → new creation. These match modern embryology precisely. "Alaqah" means both leech and clinging clot — the embryo at day 24 resembles a leech exactly.',
+    check:6,
+    eq:[{v:'6',l:'Quran stages'},{op:'='},{v:'6',l:'Modern stages',r:1},{op:'—'},{v:'1,400y',l:'Before science'}],
+    stats:[{n:'6',l:'Stages'},{n:'23:14',l:'Verse'},{n:'1400y',l:'Ahead'}],
+    quote:'Then We developed the sperm-drop into a clinging clot, and the clot into a lump of flesh. — Quran 23:14',
+  },
+  {
+    key:'iron',cat:'Science',
+    dock:'⚙️',dockLabel:'Al-Hadid — Iron',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><polygon points="16,4 28,12 28,22 16,28 4,22 4,12" fill="rgba(249,129,46,.1)" stroke="#F9812E" stroke-width="1.3"/><text x="16" y="18" text-anchor="middle" font-size="8" font-weight="700" font-family="Poppins,sans-serif" fill="#F9812E">Fe 26</text></svg>',
+    title:'Surah',titleSpan:'Al-Hadid 57',
+    tag:'Iron sent from space',num:'57',f:'5',r:'7',
+    arabic:'وَأَنزَلْنَا الْحَدِيدَ فِيهِ بَأْسٌ شَدِيدٌ وَمَنَافِعُ لِلنَّاسِ',ref:'Quran 57:25',
+    desc:'Surah Al-Hadid = chapter 57. Iron\'s atomic number = 26, most stable isotope mass = 56. The verse mentioning iron is 57:25. The Quran says "We sent down iron" — confirmed by science: iron is not native to Earth, it arrived via meteorite impacts.',
+    check:57,
+    eq:[{v:'26',l:'Atomic no.'},{op:'+'},{v:'56',l:'Atomic mass'},{op:'='},{v:'57+25',l:'Surah:Verse',r:1}],
+    stats:[{n:'26',l:'Atomic no.'},{n:'Surah 57',l:'Al-Hadid'},{n:'56',l:'Fe mass'}],
+    quote:'And We sent down iron, in which there is great might and benefits for people. — Quran 57:25',
+  },
+  {
+    key:'bee',cat:'Biology',
+    dock:'🐝',dockLabel:'An-Nahl',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><ellipse cx="16" cy="19" rx="7" ry="9" fill="rgba(249,129,46,.1)" stroke="#F9812E" stroke-width="1.3"/><line x1="9" y1="16" x2="23" y2="16" stroke="#F9812E" stroke-width="1"/><line x1="9" y1="20" x2="23" y2="20" stroke="#F9812E" stroke-width="1"/><path d="M11 10 Q16 5 21 10" stroke="#F9812E" stroke-width="1.2" fill="rgba(249,129,46,.15)"/></svg>',
+    title:'Female Bee',titleSpan:'Commands the Hive',
+    tag:'Surah An-Nahl 16:68',num:'16',f:'1',r:'6',
+    arabic:'وَأَوْحَىٰ رَبُّكَ إِلَى النَّحْلِ أَنِ اتَّخِذِي مِنَ الْجِبَالِ بُيُوتًا',ref:'Quran 16:68',
+    desc:'Quran 16:68 uses the feminine Arabic verb "اتَّخِذِي" addressing the bee. Modern science confirmed in the 20th century that all worker bees — builders, foragers, honey-makers — are female. Male drones do not work. The Quran knew 1,400 years before science.',
+    check:16,
+    eq:[{v:'"اتَّخِذِي"',l:'Feminine verb'},{op:'→'},{v:'Worker bee',l:'Is female',r:1},{op:'—'},{v:'1400y',l:'Ahead'}],
+    stats:[{n:'Surah 16',l:'An-Nahl'},{n:'Feminine',l:'Verb'},{n:'100%',l:'Workers female'}],
+    quote:'And your Lord inspired the bee: take for yourself houses among the mountains. — Quran 16:68',
+  },
+  {
+    key:'light',cat:'Science',
+    dock:'☀️',dockLabel:'Speed of Light',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="5" fill="rgba(249,129,46,.2)" stroke="#F9812E" stroke-width="1.3"/><line x1="16" y1="4" x2="16" y2="8" stroke="#F9812E" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="24" x2="16" y2="28" stroke="#F9812E" stroke-width="1.5" stroke-linecap="round"/><line x1="4" y1="16" x2="8" y2="16" stroke="#F9812E" stroke-width="1.5" stroke-linecap="round"/><line x1="24" y1="16" x2="28" y2="16" stroke="#F9812E" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    title:'Moon Orbits Match',titleSpan:'Speed of Light',
+    tag:'Quran 32:5 calculation',num:'300',f:'3',r:'00',
+    arabic:'يُدَبِّرُ الْأَمْرَ مِنَ السَّمَاءِ إِلَى الْأَرْضِ ثُمَّ يَعْرُجُ إِلَيْهِ',ref:'Quran 32:5',
+    desc:'Quran 32:5 says divine command covers a distance in a day = 1,000 years. Moon speed = 3,682 km/h. 12,000 lunar months × 27.3 days × 24h × 3,682 km = 29,979,245,800 cm/s ≈ c (speed of light = 29,979,245,800 cm/s). Identical to 12 significant figures.',
+    check:299792458,
+    eq:[{v:'12,000',l:'Moon orbits'},{op:'×'},{v:'27.3d',l:'Period'},{op:'='},{v:'c',l:'Speed of light',r:1}],
+    stats:[{n:'299,792',l:'km/s — light'},{n:'12,000',l:'Orbits'},{n:'32:5',l:'Verse'}],
+    quote:'He directs the matter from heaven to earth, then it ascends in a Day equalling 1,000 years. — Quran 32:5',
+  },
+  {
+    key:'mountains',cat:'Science',
+    dock:'⛰️',dockLabel:'Mountains & Pegs',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><polygon points="16,4 28,26 4,26" fill="rgba(249,129,46,.1)" stroke="#F9812E" stroke-width="1.3"/><polygon points="8,16 14,26 2,26" fill="rgba(249,129,46,.05)" stroke="#F9812E" stroke-width="1"/></svg>',
+    title:'Mountains as',titleSpan:'Pegs (Awtad)',
+    tag:'Geology confirmed',num:'78',f:'7',r:'8',
+    arabic:'أَلَمْ نَجْعَلِ الْأَرْضَ مِهَادًا وَالْجِبَالَ أَوْتَادًا',ref:'Quran 78:6–7',
+    desc:'The Quran calls mountains "Awtad" (pegs/stakes) in 78:7. Modern geology confirms that mountains have deep roots beneath the surface, like pegs, stabilizing tectonic plates. The Himalayas extend ~250 km deep — discovered by geologists only in the 20th century.',
+    check:78,
+    eq:[{v:'"أوتاد"',l:'Pegs (Awtad)'},{op:'→'},{v:'Deep roots',l:'Modern geology',r:1},{op:'—'},{v:'1400y',l:'Before proof'}],
+    stats:[{n:'Surah 78',l:'An-Naba'},{n:'Pegs',l:'Confirmed'},{n:'250km',l:'Mountain root'}],
+    quote:'Have We not made the earth a resting place and the mountains as pegs? — Quran 78:6–7',
+  },
+  {
+    key:'expanding',cat:'Science',
+    dock:'🌌',dockLabel:'Expanding Universe',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3" fill="#F9812E"/><circle cx="16" cy="16" r="7" stroke="#F9812E" stroke-width="1" fill="none" stroke-dasharray="2 2"/><circle cx="16" cy="16" r="12" stroke="#F9812E" stroke-width="1" fill="none" stroke-dasharray="2 2" opacity=".5"/></svg>',
+    title:'Universe is',titleSpan:'Expanding',
+    tag:'Quran 51:47',num:'51',f:'5',r:'1',
+    arabic:'وَالسَّمَاءَ بَنَيْنَاهَا بِأَيْدٍ وَإِنَّا لَمُوسِعُونَ',ref:'Quran 51:47',
+    desc:'"وإنا لموسعون" means "and We are expanding it." Edwin Hubble discovered the expanding universe in 1929. The Quran stated this 1,300 years earlier. The Arabic root "موسع" means to expand, widen, extend — no interpretation needed.',
+    check:51,
+    eq:[{v:'"موسعون"',l:'We expand it'},{op:'='},{v:'1929',l:'Hubble confirms',r:1},{op:'—'},{v:'1400y',l:'Before proof'}],
+    stats:[{n:'Surah 51',l:'Al-Dhariyat'},{n:'1929',l:'Hubble'},{n:'1400y',l:'Ahead'}],
+    quote:'And the heaven We constructed with strength, and indeed We are its expander. — Quran 51:47',
+  },
+  {
+    key:'water',cat:'Science',
+    dock:'💧',dockLabel:'Water of Life',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><path d="M16 4 Q22 12 22 19 A6 6 0 0 1 10 19 Q10 12 16 4Z" fill="rgba(249,129,46,.15)" stroke="#F9812E" stroke-width="1.3"/></svg>',
+    title:'Every living thing',titleSpan:'Made of Water',
+    tag:'Quran 21:30',num:'21',f:'2',r:'1',
+    arabic:'وَجَعَلْنَا مِنَ الْمَاءِ كُلَّ شَيْءٍ حَيٍّ',ref:'Quran 21:30',
+    desc:'"We made every living thing from water." Modern biology confirms all life on Earth requires water, all cells are water-based, and the human body is ~60–70% water. This was unknown in the 7th century when deserts surrounded the Arabian Peninsula.',
+    check:21,
+    eq:[{v:'"من الماء"',l:'From water'},{op:'='},{v:'All life',l:'Modern biology',r:1},{op:'—'},{v:'1400y',l:'Before proof'}],
+    stats:[{n:'Surah 21',l:'Al-Anbiya'},{n:'60–70%',l:'Body water'},{n:'100%',l:'Life needs water'}],
+    quote:'And We made every living thing from water. — Quran 21:30',
+  },
+  {
+    key:'fingertip',cat:'Biology',
+    dock:'👆',dockLabel:'Fingerprints',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><path d="M16 8 Q22 8 24 16 Q24 24 16 26 Q8 24 8 16 Q10 8 16 8Z" stroke="#F9812E" stroke-width="1.3" fill="rgba(249,129,46,.08)"/><path d="M13 13 Q16 11 19 13" stroke="#F9812E" stroke-width="1" fill="none"/><path d="M12 17 Q16 14 20 17" stroke="#F9812E" stroke-width="1" fill="none"/><path d="M13 21 Q16 18 19 21" stroke="#F9812E" stroke-width="1" fill="none"/></svg>',
+    title:'Fingerprints',titleSpan:'Unique to Each Person',
+    tag:'Quran 75:3–4',num:'75',f:'7',r:'5',
+    arabic:'أَيَحْسَبُ الْإِنسَانُ أَلَّن نَّجْمَعَ عِظَامَهُ بَلَىٰ قَادِرِينَ عَلَىٰ أَن نُّسَوِّيَ بَنَانَهُ',ref:'Quran 75:3–4',
+    desc:'"Does man think We cannot reassemble his bones? Yes — We are able to restore even his fingertips." Allah specifically mentions fingertips in a verse about resurrection. Fingerprint uniqueness was only discovered in 1880 by Francis Galton. The Quran highlighted fingertips 1,400 years before their uniqueness was known.',
+    check:75,
+    eq:[{v:'"بنانه"',l:'Fingertips'},{op:'→'},{v:'Unique prints',l:'Confirmed 1880',r:1},{op:'—'},{v:'1400y',l:'Before'}],
+    stats:[{n:'Surah 75',l:'Al-Qiyamah'},{n:'1880',l:'Galton discovers'},{n:'Unique',l:'Every person'}],
+    quote:'We are able to restore even his fingertips. — Quran 75:4',
+  },
+  {
+    key:'darkness',cat:'Science',
+    dock:'🌊',dockLabel:'Deep Sea Dark',
+    icon:'<svg width="22" height="22" viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="8" rx="2" fill="rgba(249,129,46,.08)" stroke="#F9812E" stroke-width="1"/><rect x="4" y="14" width="24" height="8" rx="2" fill="rgba(249,129,46,.15)" stroke="#F9812E" stroke-width="1"/><rect x="4" y="24" width="24" height="5" rx="2" fill="rgba(249,129,46,.25)" stroke="#F9812E" stroke-width="1"/></svg>',
+    title:'Deep Sea',titleSpan:'Multiple Darknesses',
+    tag:'Quran 24:40',num:'24',f:'2',r:'4',
+    arabic:'أَوْ كَظُلُمَاتٍ فِي بَحْرٍ لُّجِّيٍّ يَغْشَاهُ مَوْجٌ مِّن فَوْقِهِ مَوْج',ref:'Quran 24:40',
+    desc:'Quran 24:40 describes layers of darkness in a deep sea — wave above wave above darkness. Modern oceanography confirmed deep oceans have internal waves below the surface, and total darkness exists below 200m. Ancient Arabs could not dive to verify this.',
+    check:24,
+    eq:[{v:'200m',l:'Light gone'},{op:'+'},{v:'Waves',l:'Below surface'},{op:'='},{v:'Quran 24:40',l:'Described this',r:1}],
+    stats:[{n:'Surah 24',l:'An-Nur'},{n:'200m',l:'No light below'},{n:'Layers',l:'Confirmed'}],
+    quote:'Darknesses in a vast deep sea, covered by waves upon waves. — Quran 24:40',
+  },
+];
+
+/* ── Categories for sidebar grouping ── */
+const CATS=['Words & Names','Structure','Worship','Science','Biology'];
+
+/* ── Build sidebar ── */
+function buildList(activeKey){
+  const el=document.getElementById('mlist');
+  el.innerHTML='';
+  CATS.forEach(cat=>{
+    const items=M.filter(m=>m.cat===cat);
+    if(!items.length) return;
+    const hdr=document.createElement('div');
+    hdr.className='rh';hdr.textContent=cat;
+    el.appendChild(hdr);
+    items.forEach(m=>{
+      const li=document.createElement('div');
+      li.className='mitem'+(m.key===activeKey?' active':'');
+      li.dataset.key=m.key;
+      li.innerHTML=`<div class="mitem-icon">${m.icon}</div><div class="mitem-text"><div class="mitem-title">${m.title} ${m.titleSpan}</div><div class="mitem-sub">${m.tag}</div></div>`;
+      li.addEventListener('click',()=>render(m.key));
+      el.appendChild(li);
+    });
+  });
+}
+
+/* ── Build dock ── */
+function buildDock(activeKey){
+  const el=document.getElementById('dock');
+  el.innerHTML='';
+  M.forEach((m,i)=>{
+    const li=document.createElement('li');
+    li.className='di'+(m.key===activeKey?' active':'');
+    li.dataset.key=m.key;
+    li.innerHTML=`<div class="dl"><div class="dicon"><svg width="52%" height="52%" viewBox="0 0 32 32"><text x="16" y="24" text-anchor="middle" font-size="14" font-family="serif,Poppins,sans-serif" fill="#F9812E">${m.dock}</text></svg></div></div><div class="ddot"></div><div class="dtt">${m.dockLabel}</div>`;
+    li.querySelector('.dl').addEventListener('click',()=>render(m.key));
+    li.addEventListener('mouseenter',()=>{
+      li.classList.add('hover');
+      const ls=el.querySelectorAll('.di');
+      const idx=[...ls].indexOf(li);
+      [[1,'sc'],[2,'sf'],[-1,'sc'],[-2,'sf']].forEach(([off,cls])=>{const s=ls[idx+off];if(s)s.classList.add(cls);});
+    });
+    li.addEventListener('mouseleave',()=>{
+      li.classList.remove('hover');
+      el.querySelectorAll('.di').forEach(d=>d.classList.remove('sc','sf'));
+    });
+    el.appendChild(li);
+  });
+}
+
+/* ── Render card ── */
+function getDivs(n){const r=[];for(let i=1;i<=9;i++)if(n%i===0)r.push(i);return r;}
+function buildEq(eq){
+  if(!eq||!eq.length)return '';
+  return '<div class="eq">'+eq.map(t=>{
+    if(t.op)return`<span class="eq-op">${t.op}</span>`;
+    return`<div class="eq-t${t.r?' res':''}"><span class="eq-v">${t.v}</span><span class="eq-l">${t.l}</span></div>`;
+  }).join('')+'</div>';
+}
+
+function render(key){
+  const m=M.find(x=>x.key===key);
+  if(!m)return;
+  const divs=getDivs(m.check);
+  const divHtml=divs.length
+    ?`<p class="dlabel">Divisible by:</p><div class="dgrid">${divs.map(n=>`<div class="dc">${n}</div>`).join('')}</div>`
+    :`<p class="dlabel" style="color:var(--p);margin-bottom:12px">Prime — divisible by 1 and ${m.check} only</p>`;
+  const stats=m.stats.map(s=>`<div class="sp"><span class="n">${s.n}</span><span class="l">${s.l}</span></div>`).join('');
+
+  document.getElementById('mcard').innerHTML=`
+    <div class="mcard">
+      <div class="mtag"><span class="dot"></span>${m.tag}</div>
+      <div class="mnum"><span class="f">${m.f}</span>${m.r}</div>
+      <p class="mav">${m.arabic}</p>
+      <p class="mref">${m.ref}</p>
+      <h1 class="mtitle">${m.title} <span>${m.titleSpan}</span></h1>
+      <p class="mdesc">${m.desc}</p>
+      ${buildEq(m.eq)}
+      ${divHtml}
+      <div class="stats">${stats}</div>
+      <div class="quote">${m.quote}</div>
+    </div>`;
+
+  buildList(key);
+  buildDock(key);
+}
+
+render('allah');
+</script>
+</body>
+</html>
