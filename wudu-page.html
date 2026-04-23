@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Make Wudu — Sameh Bilal</title>
+<link rel="apple-touch-icon" href="../assets/images/favicon.png">
+<link rel="shortcut icon" type="image/png" href="../assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#F9812E;
+  --sz:25px;
+  --ln:color-mix(in lch,canvasText,transparent 70%);
+  --bc:rgba(119,119,125,.2);
+  --cord:color-mix(in lch,canvas,canvasText 75%);
+  --stroke:color-mix(in lch,canvas,canvasText 75%);
+  --shine:hsl(210 20% 80%/.75);
+  --cap:color-mix(in lch,canvas,canvasText);
+  --filament:light-dark(orange,color-mix(in lch,canvas,canvasText 25%));
+  --bulb:transparent;
+  --wf:24px;
+  --step-dur:600ms;
+}
+[data-theme="light"]{color-scheme:light only}
+[data-theme="dark"]{color-scheme:dark only}
+html{color-scheme:light dark;height:100%}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:"Poppins",sans-serif;
+  background:light-dark(#fff,#000);
+  color:light-dark(#444,#e2e2e2);
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* grid bg */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    linear-gradient(90deg,var(--ln) 1px,transparent 1px var(--sz)) 50% 50%/var(--sz) var(--sz),
+    linear-gradient(var(--ln) 1px,transparent 1px var(--sz)) 50% 50%/var(--sz) var(--sz);
+  -webkit-mask:linear-gradient(-20deg,transparent 50%,white);
+  mask:linear-gradient(-20deg,transparent 50%,white);
+  pointer-events:none;z-index:0;
+}
+
+/* ═══════════════ HEADER ═══════════════ */
+header{
+  flex-shrink:0;position:relative;z-index:100;
+  display:flex;align-items:center;padding:16px 28px;gap:16px;
+  background:light-dark(rgba(255,255,255,.9),rgba(0,0,0,.9));
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--bc);
+}
+.logo{display:inline-block;font-size:2vmin;text-decoration:none;flex-shrink:0}
+.ll{position:relative;display:block;float:left;width:3vmin;height:3vmin;border-top:.25vmin solid light-dark(#000,#fff);line-height:3vmin;text-align:center;color:light-dark(#000,#fff);transition:all .3s}
+.ll::before{position:absolute;top:-.25vmin;right:-.25vmin;display:block;width:.25vmin;height:3vmin;background:var(--p);content:""}
+.nav-mid{margin:0 auto;display:flex;gap:4px;list-style:none}
+.nav-mid a{color:light-dark(#000,#fff);font-size:14px;font-weight:500;padding:6px 14px;text-decoration:none;border-radius:20px;transition:color .2s}
+.nav-mid a:hover,.nav-mid a.cur{color:var(--p)}
+@media(max-width:767px){.nav-mid{display:none}}
+.hbtns{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.hire{background:var(--p);color:#fff;font-size:13px;font-weight:600;font-family:"Poppins",sans-serif;border-radius:14px;padding:9px 20px;text-decoration:none;border:1px solid transparent;transition:.3s;white-space:nowrap}
+.hire:hover{background:#000}
+/* lightbulb */
+.lform{position:relative;width:var(--wf);aspect-ratio:1;top:-1.2rem;z-index:9999}
+.lform button{width:100%;aspect-ratio:1;position:absolute;top:0;left:0;z-index:3;background:transparent;border:0;padding:0;display:grid;place-items:center;cursor:pointer}
+.gh{width:24px;aspect-ratio:1;border-radius:50%;position:absolute;top:calc((24px*.175)+((24px*.65)*(125/48)));left:50%;translate:-50% -50%;z-index:9;outline:2px dashed canvasText!important;background:hsla(29,77%,59%,.25)}
+.arr{position:absolute;left:-300%;top:200%;width:140%;container-type:inline-size;color:color-mix(in hsl,canvasText,#0000 40%)}
+.arr svg{width:100%;scale:-1 -1}
+.arr label{font-family:"Gloria Hallelujah",cursive;position:absolute;bottom:25%;rotate:8deg;font-size:18cqi;white-space:nowrap;top:50%;right:110%}
+.ts{overflow:visible!important;position:absolute;width:65%;top:50%;left:50%;translate:-50% -50%}
+.ts__cord{stroke:var(--cord);stroke-width:10;cursor:move}
+.ts__cord:nth-of-type(1),.ts__cord:nth-of-type(2),.ts__cord:nth-of-type(3),.ts__cord:nth-of-type(4),.ts__cord:nth-of-type(5){display:none}
+.ts__ce{stroke:var(--cord);fill:var(--cord)}
+.ts__dc{stroke-width:10;stroke:var(--cord)}
+.bf{stroke:var(--filament);stroke-width:8}
+[data-theme='light'] .bf{stroke-width:12}
+.bs{stroke:var(--shine)}.bb{stroke:var(--stroke);fill:var(--bulb);stroke-width:10}
+.bc2{fill:var(--cap)}.bcs{fill:var(--shine)}.bco{stroke-width:10;stroke:var(--stroke)}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ═══════════════ MAIN SPLIT ═══════════════ */
+.main{
+  flex:1;display:flex;overflow:hidden;position:relative;z-index:1;
+}
+
+/* ─── LEFT: steps ─── */
+.left-col{
+  flex:1;display:flex;flex-direction:column;
+  padding:0;overflow:hidden;position:relative;
+}
+
+/* progress bar */
+.progress-bar{
+  height:3px;background:var(--bc);flex-shrink:0;
+}
+.progress-fill{
+  height:100%;background:var(--p);
+  transition:width var(--step-dur) cubic-bezier(.4,0,.2,1);
+  width:0%;
+}
+
+/* step header strip */
+.step-strip{
+  padding:18px 40px 14px;flex-shrink:0;
+  border-bottom:1px solid var(--bc);
+  display:flex;align-items:center;gap:16px;
+}
+.step-counter{
+  font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:light-dark(#aaa,#555);
+}
+.step-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:4px 12px;border-radius:30px;
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  background:rgba(249,129,46,.1);color:var(--p);border:1px solid rgba(249,129,46,.3);
+}
+.step-badge .dot{width:5px;height:5px;border-radius:50%;background:var(--p)}
+
+/* step viewport */
+.step-viewport{flex:1;overflow:hidden;position:relative;}
+
+/* individual step panel */
+.step-panel{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  padding:32px 40px;
+  opacity:0;pointer-events:none;
+  transform:translateY(40px);
+  transition:opacity var(--step-dur) cubic-bezier(.4,0,.2,1),
+              transform var(--step-dur) cubic-bezier(.4,0,.2,1);
+}
+.step-panel.active{
+  opacity:1;pointer-events:auto;transform:translateY(0);
+}
+.step-panel.leaving{
+  opacity:0;transform:translateY(-40px);
+  transition:opacity calc(var(--step-dur)*.6) ease,
+              transform calc(var(--step-dur)*.6) ease;
+}
+
+.step-num{
+  font-size:clamp(60px,10vw,110px);font-weight:800;line-height:.85;
+  color:transparent;-webkit-text-stroke:1.5px var(--p);
+  letter-spacing:-.04em;margin-bottom:12px;user-select:none;
+}
+.step-num .fill{color:var(--p);-webkit-text-stroke:0}
+
+.step-arabic{
+  direction:rtl;font-size:18px;line-height:2;
+  color:var(--p);font-weight:500;margin-bottom:4px;
+}
+.step-ref{font-size:11px;color:light-dark(#aaa,#666);margin-bottom:16px}
+
+.step-title{
+  font-size:clamp(20px,3vw,32px);font-weight:700;
+  text-transform:uppercase;letter-spacing:-.01em;
+  color:light-dark(#000,#fff);margin-bottom:10px;line-height:1.15;
+}
+.step-title span{color:transparent;-webkit-text-stroke:1px light-dark(#000,#fff)}
+
+.step-desc{
+  font-size:14px;line-height:1.9;
+  color:light-dark(#555,#a0aec0);
+  max-width:480px;margin-bottom:22px;
+}
+
+/* hadith quote */
+.step-quote{
+  padding:12px 16px;border-radius:12px;font-size:12px;
+  font-style:italic;line-height:1.85;
+  color:light-dark(#666,#b0b8c8);
+  border:1px dashed rgba(249,129,46,.3);
+  background:rgba(249,129,46,.04);
+  max-width:480px;
+}
+
+/* tip chip */
+.step-tip{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:14px;padding:6px 14px;border-radius:20px;
+  font-size:11px;font-weight:600;
+  background:light-dark(rgba(0,0,0,.04),rgba(255,255,255,.05));
+  border:1px solid var(--bc);color:light-dark(#555,#aaa);
+}
+.step-tip svg{width:13px;height:13px;flex-shrink:0;color:var(--p)}
+
+/* nav buttons */
+.step-nav{
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 40px 18px;
+  border-top:1px solid var(--bc);
+  gap:12px;
+}
+.nav-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 22px;border-radius:14px;font-size:13px;font-weight:600;
+  font-family:"Poppins",sans-serif;cursor:pointer;transition:.25s;border:1px solid var(--bc);
+  background:light-dark(rgba(0,0,0,.03),rgba(255,255,255,.04));
+  color:light-dark(#444,#ccc);
+}
+.nav-btn:hover{border-color:var(--p);color:var(--p)}
+.nav-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
+.nav-btn.primary{background:var(--p);color:#fff;border-color:transparent}
+.nav-btn.primary:hover{background:#000}
+.nav-btn svg{width:14px;height:14px}
+
+/* dot stepper */
+.dot-stepper{display:flex;gap:6px;align-items:center}
+.step-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:light-dark(rgba(0,0,0,.15),rgba(255,255,255,.15));
+  cursor:pointer;transition:all .3s;
+}
+.step-dot.active{
+  background:var(--p);
+  width:22px;border-radius:4px;
+}
+.step-dot:hover:not(.active){background:rgba(249,129,46,.4)}
+
+/* ─── RIGHT: illustration ─── */
+.right-col{
+  width:42%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border-left:1px solid var(--bc);
+  background:light-dark(rgba(249,129,46,.03),rgba(249,129,46,.04));
+  overflow:hidden;position:relative;
+}
+
+/* subtle orange circle behind illustration */
+.right-col::before{
+  content:'';position:absolute;
+  width:70%;aspect-ratio:1;border-radius:50%;
+  background:rgba(249,129,46,.06);
+  pointer-events:none;
+}
+
+/* illustration wrapper — animates on step change */
+.illo-wrap{
+  position:relative;z-index:1;
+  width:min(380px,80%);
+  display:flex;flex-direction:column;align-items:center;
+  gap:16px;
+  transition:opacity var(--step-dur) ease,transform var(--step-dur) cubic-bezier(.4,0,.2,1);
+}
+.illo-wrap.fade-out{opacity:0;transform:scale(.88) translateY(16px)}
+.illo-wrap.fade-in{opacity:0;transform:scale(.88) translateY(-16px)}
+
+.illo-wrap svg.main-illo{width:100%;height:auto}
+
+/* label under illustration */
+.illo-label{
+  font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:light-dark(#888,#777);text-align:center;
+}
+.illo-arabic{
+  font-size:20px;direction:rtl;color:var(--p);font-weight:600;
+  text-align:center;line-height:1.6;
+}
+
+/* completion screen */
+.complete-screen{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  padding:32px 40px;text-align:center;gap:14px;
+}
+.complete-screen.show{display:flex;animation:fadeIn .5s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.complete-icon{
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(249,129,46,.12);border:2px solid rgba(249,129,46,.3);
+  display:flex;align-items:center;justify-content:center;
+}
+.complete-icon svg{width:36px;height:36px;color:var(--p)}
+.complete-title{font-size:clamp(22px,3vw,32px);font-weight:800;text-transform:uppercase;letter-spacing:-.01em;color:light-dark(#000,#fff)}
+.complete-title span{color:transparent;-webkit-text-stroke:1px var(--p)}
+.complete-desc{font-size:14px;line-height:1.9;color:light-dark(#666,#a0aec0);max-width:440px}
+.complete-arabic{font-size:22px;direction:rtl;color:var(--p);font-weight:600;line-height:1.8}
+.complete-ref{font-size:11px;color:light-dark(#aaa,#666)}
+
+/* ═══════════════ MOBILE ═══════════════ */
+@media(max-width:767px){
+  body{overflow:hidden}
+  header{padding:10px 16px}
+  .ll{width:5vmin;height:5vmin;line-height:5vmin;border-top-width:.4vmin}
+  .ll::before{width:.4vmin;height:5vmin;top:-.4vmin;right:-.4vmin}
+  .logo{font-size:3vmin}
+  .lform{display:none}
+
+  .main{flex-direction:column}
+
+  /* illustration on top, compact */
+  .right-col{
+    width:100%;height:180px;flex-shrink:0;
+    border-left:none;border-bottom:1px solid var(--bc);
+  }
+  .right-col::before{width:140px}
+  .illo-wrap{width:min(160px,70%);gap:8px}
+  .illo-arabic{font-size:15px}
+  .illo-label{font-size:10px}
+
+  /* steps take remaining space */
+  .left-col{flex:1;overflow:hidden}
+  .step-strip{padding:10px 16px 8px}
+  .step-panel{padding:14px 16px}
+  .step-num{font-size:clamp(42px,14vw,70px)}
+  .step-arabic{font-size:14px}
+  .step-title{font-size:clamp(16px,5vw,22px)}
+  .step-desc{font-size:12px;margin-bottom:12px}
+  .step-quote{font-size:11px;padding:9px 12px}
+  .step-tip{font-size:10px;padding:5px 10px}
+  .step-nav{padding:10px 16px 12px}
+  .nav-btn{padding:8px 16px;font-size:12px}
+  .dot-stepper{gap:5px}
+  .step-dot{width:6px;height:6px}
+  .step-dot.active{width:18px}
+
+  .complete-screen{padding:20px 16px;gap:10px}
+  .complete-title{font-size:clamp(18px,6vw,26px)}
+  .complete-desc{font-size:12px}
+  .complete-arabic{font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header>
+  <a href="../index.html" class="logo">
+    <span class="ll">S</span><span class="ll">A</span><span class="ll">M</span><span class="ll">E</span><span class="ll">H</span>
+  </a>
+  <ul class="nav-mid">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#service">Services</a></li>
+    <li><a href="../index.html#works">Works</a></li>
+    <li><a href="../stories.html" class="cur">Stories</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <div class="hbtns">
+    <a href="../index.html#contact" class="hire">Hire Me</a>
+    <form class="lform" id="lf">
+      <div class="arr"><label>drag me.</label>
+        <svg aria-hidden="true" viewBox="0 0 144 141" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M129.189 0.049C128.744 0.119 126.422 0.378 124.03 0.636C114.719 1.645 109.23 2.489 108.058 3.099C107.119 3.569 106.674 4.343 106.674 5.446C106.674 6.713 107.424 7.511 109.043 7.98C110.403 8.379 110.825 8.426 118.87 9.528C121.778 9.927 124.288 10.303 124.475 10.373C124.663 10.444 122.951 11.101 120.676 11.875C110.028 15.441 100.412 20.768 91.734 27.924C88.38 30.716 81.696 37.427 79.21 40.501C73.839 47.212 69.687 54.814 66.568 63.73C65.935 65.467 65.348 66.898 65.255 66.898C65.137 66.898 63.777 66.734 62.229 66.569C52.965 65.513 43.185 68.165 34.132 74.219C24.774 80.46 18.535 87.734 10.537 101.742C2.539 115.726-1.096 127.482 0.288 135.014C0.898 138.463 2.047 140.035 3.97 140.082C5.284 140.105 5.377 139.659 4.205 139.049C3.055 138.463 2.657 137.9 2.328 136.281C0.616 128.021 6.245 113.028 17.433 96.11C23.273 87.241 28.362 81.915 35.562 77.105C43.865 71.544 52.707 69.033 61.174 69.831C64.997 70.183 64.692 69.925 64.199 72.482C62.253 82.501 63.801 92.638 67.975 97.354C73.112 103.079 81.977 102 85.003 95.266C86.34 92.286 86.386 87.71 85.143 83.98C83.15 78.09 80.007 73.82 75.434 70.816C73.815 69.76 70.485 68.188 69.875 68.188C69.359 68.188 69.429 67.649 70.227 65.326C72.338 59.249 75.457 52.702 78.412 48.244C83.244 40.923 91.452 32.57 99.169 27.103C105.806 22.41 113.241 18.539 120.512 16.005C123.772 14.855 129.87 13.189 130.081 13.377C130.128 13.447 129.541 14.362 128.791 15.441C124.78 21.026 122.716 26.071 122.388 30.998C122.224 33.72 122.341 34.588 122.88 34.26C122.998 34.189 123.678 32.969 124.405 31.561C126.281 27.807 131.722 20.674 139.579 11.64C141.127 9.857 142.652 7.863 143.027 7.088C144.552 4.038 143.52 1.48 140.377 0.471C139.439 0.166 138.102 0.049 134.584 0.026C132.074-0.021 129.635 0.002 129.189 0.049Z" fill="currentColor"/></svg>
+      </div>
+      <button aria-pressed="false"><span class="sr">Toggle theme</span>
+        <svg aria-hidden="true" class="ts" xmlns="http://www.w3.org/2000/svg" viewBox="32 32 134 134">
+          <defs>
+            <marker id="ma" orient="auto" overflow="visible" refx="0" refy="0"><path class="ts__ce" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+            <clippath id="mg" clippathunits="userSpaceOnUse"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path></clippath>
+          </defs>
+          <g class="ts__cords">
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623" transform="translate(-24.503 256.106)"></path>
+            <g class="ts__dc line"><line marker-end="url(#ma)" x1="98" x2="98" y1="240" y2="380"></line></g>
+            <circle cx="98.7255" cy="380.5405" r="60" fill="transparent"></circle>
+          </g>
+          <g transform="translate(844.069 -645.213)">
+            <path class="bc2" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+            <path class="bcs" d="M-778.379 802.873h25.512v118.409h-25.512z" clip-path="url(#mg)" transform="matrix(.52452 0 0 .90177 -368.282 82.976)"></path>
+            <path class="bc2" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z"></path>
+            <path class="bco" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+            <g class="bf" fill="none" stroke-linecap="round" stroke-width="5"><path d="M-752.914 823.875l-8.858-33.06"></path><path d="M-737.772 823.875l8.858-33.06"></path></g>
+            <path class="bb" stroke-linecap="round" stroke-width="5" d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z"></path>
+            <circle cx="-745.343" cy="743.939" r="83.725" fill="none" stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></circle>
+            <path class="bs" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957"></path>
+          </g>
+        </svg>
+        <div class="gh"></div>
+      </button>
+    </form>
+  </div>
+</header>
+
+<!-- ═══════════ MAIN ═══════════ -->
+<div class="main">
+
+  <!-- LEFT: step content -->
+  <div class="left-col">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="step-strip">
+      <span class="step-counter" id="stepCounter">Step 1 of 8</span>
+      <span class="step-badge"><span class="dot"></span><span id="stepCategory">Intention</span></span>
+    </div>
+
+    <div class="step-viewport" id="stepViewport">
+      <!-- panels injected by JS -->
+    </div>
+
+    <!-- completion panel -->
+    <div class="complete-screen" id="completeScreen">
+      <div class="complete-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <p class="complete-arabic">طَهُورٌ شَطْرُ الْإِيمَانِ</p>
+      <p class="complete-ref">Hadith — Sahih Muslim 223</p>
+      <h1 class="complete-title">Wudu <span>Complete</span></h1>
+      <p class="complete-desc">Your Wudu is now complete. You are in a state of purity (Taharah) and may perform Salah. Wudu remains valid until broken by specific acts.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:4px">
+        <button class="nav-btn primary" onclick="goTo(0)" style="gap:8px">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.35"/></svg>
+          Start Again
+        </button>
+        <a href="../stories.html" class="nav-btn">Back to Stories</a>
+      </div>
+    </div>
+
+    <div class="step-nav" id="stepNav">
+      <button class="nav-btn" id="prevBtn" onclick="prev()" disabled>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Previous
+      </button>
+      <div class="dot-stepper" id="dotStepper"></div>
+      <button class="nav-btn primary" id="nextBtn" onclick="next()">
+        Next
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- RIGHT: illustration -->
+  <div class="right-col">
+    <div class="illo-wrap" id="illoWrap">
+      <svg class="main-illo" id="mainIllo" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+      <p class="illo-arabic" id="illoArabic"></p>
+      <p class="illo-label" id="illoLabel"></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ── Theme ── */
+(function(){
+  const h=document.documentElement;
+  const s=localStorage.getItem('theme');
+  if(s)h.dataset.theme=s;
+  const T=['system','light','dark'];
+  let i=s?Math.max(T.indexOf(s),0):0;
+  document.getElementById('lf').addEventListener('submit',e=>{
+    e.preventDefault();i=(i+1)%T.length;
+    const t=T[i];
+    if(!document.startViewTransition){h.dataset.theme=t;}
+    else{document.startViewTransition(()=>{h.dataset.theme=t;});}
+    localStorage.setItem('theme',t);
+  });
+})();
+
+/* ── Step data ── */
+const STEPS=[
+  {
+    cat:'Intention',
+    arabic:'نَوَيْتُ الوُضُوءَ',
+    ref:'Hadith — Bukhari & Muslim',
+    title:'Make the',titleSpan:'Intention (Niyyah)',
+    desc:'Before beginning Wudu, make the intention (Niyyah) in your heart. You do not need to say it aloud. The intention is simply to purify yourself for the sake of Allah and to perform Salah.',
+    quote:'"Actions are by intentions, and every person will have only what they intended." — Hadith, Bukhari 1',
+    tip:'No need to say the Niyyah aloud — it lives in the heart.',
+    illoArabic:'نِيَّة',
+    illoLabel:'Intention in the heart',
+    draw:(svg,p)=>{
+      svg.innerHTML=`
+        <circle cx="160" cy="140" r="70" fill="${p}22" stroke="${p}" stroke-width="2"/>
+        <path d="M130 140 Q160 110 190 140 Q160 175 130 140Z" fill="${p}" opacity=".6"/>
+        <path d="M140 125 Q160 108 180 125" stroke="${p}" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M135 155 Q160 170 185 155" stroke="${p}" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <circle cx="160" cy="140" r="12" fill="${p}"/>
+        <circle cx="160" cy="50" r="6" fill="${p}" opacity=".4"/>
+        <circle cx="160" cy="62" r="4" fill="${p}" opacity=".6"/>
+        <line x1="160" y1="68" x2="160" y2="70" stroke="${p}" stroke-width="2" stroke-linecap="round"/>
+        <text x="160" y="245" text-anchor="middle" font-family="Poppins,sans-serif" font-size="13" font-weight="600" fill="${p}" opacity=".7">The heart holds the intention</text>
+      `;
+    }
+  },
+  {
+    cat:'Hands',
+    arabic:'غَسْلُ الْيَدَيْنِ',
+    ref:'Quran 5:6 & Hadith',
+    title:'Wash the',titleSpan:'Hands Three Times',
+    desc:'Wash both hands up to and including the wrists three times, making sure water reaches between the fingers. Start with the right hand, then the left.',
+    quote:'"When you perform Wudu, wash your hands before inserting them into the vessel." — Hadith, Abu Dawud 105',
+    tip:'Right hand first — always begin with the right side.',
+    illoArabic:'غسل اليدين',
+    illoLabel:'Wash hands — 3 times each',
+    draw:(svg,p)=>{
+      svg.innerHTML=`
+        <g transform="translate(60,40)">
+          <path d="M60 180 Q40 160 38 130 Q36 100 50 80 Q58 68 70 65 L80 62 Q90 60 95 68 L98 90 Q100 102 92 108 Q86 112 80 108 L78 98" stroke="${p}" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M80 62 L82 30 Q83 18 90 18 Q98 18 98 30 L97 90" stroke="${p}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M90 60 L90 22 Q91 12 98 12 Q106 12 106 22 L105 88" stroke="${p}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M100 62 L100 28 Q101 18 108 18 Q116 18 116 28 L115 88" stroke="${p}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M110 68 L112 38 Q114 28 120 30 Q126 32 124 44 L118 90" stroke="${p}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="90" cy="185" rx="50" ry="10" fill="${p}" opacity=".08"/>
+        </g>
+        <path d="M30 200 Q90 190 160 195 Q200 198 240 190" stroke="${p}" stroke-width="2" fill="none" stroke-dasharray="5 4" opacity=".4"/>
+        <circle cx="50" cy="195" r="4" fill="${p}" opacity=".5"/>
+        <circle cx="100" cy="192" r="3" fill="${p}" opacity=".4"/>
+        <circle cx="150" cy="193" r="5" fill="${p}" opacity=".6"/>
+        <circle cx="200" cy="191" r="3" fill="${p}" opacity=".3"/>
+        <text x="160" y="255" text-anchor="middle" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="${p}" opacity=".7">Right hand first, then left</text>
+        <text x="160" y="272" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" fill="${p}" opacity=".5">× 3 each</text>
+      `;
+    }
+  },
+  {
+    cat:'Mouth & Nose',
+    arabic:'الْمَضْمَضَةُ وَالِاسْتِنْشَاق',
+    ref:'Hadith — Bukhari 162',
+    title:'Rinse Mouth',titleSpan:'& Sniff Water',
+    desc:'Take water in your right hand. Rinse your mouth three times, swirling the water thoroughly. Then sniff water into your nostrils three times and blow it out with your left hand.',
+    quote:'"When performing Wudu, rinse your mouth and sniff water into the nose." — Hadith, Bukhari 162',
+    tip:'Use the right hand to bring water, left hand to blow out.',
+    illoArabic:'المضمضة والاستنشاق',
+    illoLabel:'Mouth & nose — 3 times each',
+    draw:(svg,p)=>{
+      svg.innerHTML=`
+        <ellipse cx="160" cy="130" rx="55" ry="65" fill="${p}0d" stroke="${p}" stroke-width="1.5"/>
+        <circle cx="160" cy="90" r="28" fill="${p}15" stroke="${p}" stroke-width="1.5"/>
+        <circle cx="152" cy="85" r="5" fill="${p}" opacity=".7"/>
+        <circle cx="168" cy="85" r="5" fill="${p}" opacity=".7"/>
+        <path d="M148 100 Q160 110 172 100" stroke="${p}" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="150" cy="108" rx="6" ry="4" fill="${p}" opacity=".3"/>
+        <ellipse cx="170" cy="108" rx="6" ry="4" fill="${p}" opacity=".3"/>
+        <path d="M120 145 Q140 135 160 140 Q180 145 200 138" stroke="${p}" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <circle cx="115" cy="148" r="4" fill="${p}" opacity=".5"/>
+        <circle cx="125" cy="143" r="3" fill="${p}" opacity=".4"/>
+        <circle cx="205" cy="137" r="4" fill="${p}" opacity=".5"/>
+        <circle cx="215" cy="133" r="3" fill="${p}" opacity=".3"/>
+        <path d="M100 170 Q130 165 160 168 Q190 171 220 165" stroke="${p}" stroke-width="1.5" fill="none" stroke-dasharray="4 3" opacity=".3"/>
+        <text x="160" y="255" text-anchor="middle" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="${p}" opacity=".7">Mouth then nose</text>
+        <text x="160" y="272" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" fill="${p}" opacity=".5">× 3 each</text>
+      `;
+    }
+  },
+  {
+    cat:'Face',
+    arabic:'غَسْلُ الْوَجْهِ',
+    ref:'Quran 5:6',
+    title:'Wash the',titleSpan:'Face Three Times',
+    desc:'Wash the entire face three times — from the hairline to the chin, and from ear to ear. Ensure the beard area is covered. Men with thick beards should run wet fingers through the beard.',
+    quote:'"O believers, when you rise to perform Salah, wash your faces." — Quran 5:6',
+    tip:'Hairline to chin, ear to ear — the full face every time.',
+    illoArabic:'غسل الوجه',
+    illoLabel:'Full face — 3 times',
+    draw:(svg,p)=>{
+      svg.innerHTML=`
+        <ellipse cx="160" cy="140" rx="60" ry="75" fill="${p}0d" stroke="${p}" stroke-width="2"/>
+        <ellipse cx="160" cy="110" rx="42" ry="50" fill="${p}12"/>
+        <circle cx="142" cy="105" r="7" fill="${p}" opacity=".6"/>
+        <circle cx="178" cy="105" r="7" fill="${p}" opacity=".6"/>
+        <path d="M145 128 Q160 138 175 128" stroke="${p}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="150" cy="118" rx="7" ry="5" fill="${p}" opacity=".25"/>
+        <ellipse cx="170" cy="118" rx="7" ry="5" fill="${p}" opacity=".25"/>
+        <path d="M130 155 Q145 165 160 162 Q175 159 190 167" stroke="${p}" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".5"/>
+        <line x1="100" y1="65" x2="160" y2="65" stroke="${p}" stroke-width="1.5" stroke-dasharray="4 3" opacity=".5"/>
+        <line x1="160" y1="65" x2="220" y2="65" stroke="${p}" stroke-width="1.5" stroke-dasharray="4 3" opacity=".5"/>
+        <line x1="100" y1="215" x2="220" y2="215" stroke="${p}" stroke-width="1.5" stroke-dasharray="4 3" opacity=".5"/>
+        <line x1="100" y1="65" x2="100" y2="215" stroke="${p}" stroke-width="1.5" stroke-dasharray="4 3" opacity=".4"/>
+        <line x1="220" y1="65" x2="220" y2="215" stroke="${p}" stroke-width="1.5" stroke-dasharray="4 3" opacity=".4"/>
+        <circle cx="100" cy="65" r="4" fill="${p}" opacity=".6"/>
+        <circle cx="220" cy="65" r="4" fill="${p}" opacity=".6"/>
+        <circle cx="100" cy="215" r="4" fill="${p}" opacity=".6"/>
+        <circle cx="220" cy="215" r="4" fill="${p}" opacity=".6"/>
+        <text x="160" y="265" text-anchor="middle" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="${p}" opacity=".7">Hairline to chin, ear to ear</text>
+        <text x="160" y="281" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" fill="${p}" opacity=".5">× 3</text>
+      `;
+    }
+  },
+  {
+    cat:'Arms',
+    arabic:'غَسْلُ الذِّرَاعَيْنِ',
+    ref:'Quran 5:6',
+    title:'Wash the',titleSpan:'Arms Three Times',
+    desc:'Wash both arms three times from the fingertips up to and including the elbow. Start with the right arm, then the left. Ensure water reaches the entire surface.',
+    quote:'"Wash your faces and your forearms to the elbows." — Quran 5:6',
+    tip:'Include the elbow — water must reach beyond the wrist.',
+    illoArabic:'غسل الذراعين',
+    illoLabel:'Fingertips to elbow — 3 times',
+    draw:(svg,p)=>{
+      svg.innerHTML=`
+        <path d="M120 230 Q100 200 95 160 Q90 120 100 90 Q108 65 125 60 Q140 58 148 75 L152 100" stroke="${p}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M148 75 L150 40 Q151 28 160 28 Q169 28 169 40 L168 95" stroke="${p}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M160 68 L161 30 Q162 20 170 20 Q178 20 178 32 L176 95" stroke="${p}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M172 70 L172 38 Q173 28 181 28 Q189 28 188 40 L186 95" stroke="${p}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M183 75 L185 48 Q187 38 194 40 Q201 43 199 56 L193 96" stroke="${p}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="150" cy="90" rx="48" ry="12" fill="${p}22"/>
+        <path d="M100 150 L95 148" stroke="${p}" stroke-width="1.5" stroke-dasharray="3 3" opacity=".5"/>
+        <path d="M96 152 Q70 150 65 148" stroke="${p}" stroke-width="2" fill="none" stroke-linecap="round" opacity=".4"/>
+        <text x="55" y="146" font-family="Poppins,sans-serif" font-size="10" fill="${p}" opacity=".6">elbow</text>
+        <circle cx="45" cy="148" r="3" fill="${p}" opacity=".5"/>
+        <path d="M85 205 Q60 200 55 198" stroke="${p}" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity=".4"/>
+        <text x="30" y="200" font-family="Poppins,sans-serif" font-size="10" fill="${p}" opacity=".5">wrist</text>
+        <circle cx="28" cy="202" r="3" fill="${p}" opacity=".4"/>
+        <text x="160" y="268" text-anchor="middle" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="${p}" opacity=".7">Right arm, then left arm</text>
+        <text x="160" y="284" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" fill="${p}" opacity=".5">× 3 each — include the elbow</text>
+      `;
+    }
+  },
+  {
+    cat:'Head',
+    arabic:'مَسْحُ الرَّأْسِ',
+    ref:'Quran 5:6',
+    title:'Wipe the',titleSpan:'Head Once',
+    desc:'Wet your hands and wipe over the head once — from the front of the head to the back, then bring both hands back to the front. This is done only once, unlike the other steps.',
+    quote:'"Wipe your heads." — Quran 5:6',
+    tip:'Done only ONCE — not three times like the other steps.',
+    illoArabic:'مسح الرأس',
+    illoLabel:'Wipe head — once only',
+    draw:(svg,p)=>{
+      svg.innerHTML=`
+        <ellipse cx="160" cy="130" rx="65" ry="70" fill="${p}0d" stroke="${p}" stroke-width="2"/>
+        <ellipse cx="160" cy="110" rx="48" ry="52" fill="${p}10"/>
+        <path d="M112 90 Q160 70 208 90" stroke="${p}" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="108" cy="92" r="5" fill="${p}" opacity=".7"/>
+        <circle cx="212" cy="92" r="5" fill="${p}" opacity=".7"/>
+        <path d="M115 95 Q120 88 128 88 L132 88" stroke="${p}" stroke-width="2" fill="none" stroke-linecap="round" marker-end="url(#arr)"/>
+        <path d="M205 95 Q200 88 192 88 L188 88" stroke="${p}" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <defs><marker id="arr" orient="auto" refX="4" refY="2" markerWidth="8" markerHeight="8"><path d="M0 0 L4 2 L0 4" stroke="${p}" stroke-width="1" fill="none"/></marker></defs>
+        <path d="M120 80 Q160 65 200 80" stroke="${p}" stroke-width="1.5" stroke-dasharray="5 4" fill="none" opacity=".4"/>
+        <text x="56" y="92" font-family="Poppins,sans-serif" font-size="11" fill="${p}" opacity=".7">front</text>
+        <text x="214" y="92" font-family="Poppins,sans-serif" font-size="11" fill="${p}" opacity=".7">back</text>
+        <rect x="125" y="240" width="70" height="22" rx="11" fill="${p}20" stroke="${p}" stroke-width="1"/>
+        <text x="160" y="255" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" font-weight="700" fill="${p}">× 1 only</text>
+        <text x="160" y="278" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" fill="${p}" opacity=".6">Front to back, back to front</text>
+      `;
+    }
+  },
+  {
+    cat:'Ears',
+    arabic:'مَسْحُ الأُذُنَيْنِ',
+    ref:'Hadith — Abu Dawud',
+    title:'Wipe the',titleSpan:'Ears Once',
+    desc:'Using the same water from the head, wipe both ears once. Use the index fingers inside the ears and thumbs behind the ears. This is done with the same water, without renewing it.',
+    quote:'"The two ears are part of the head." — Hadith, Ibn Majah 444',
+    tip:'Same water as head — no need to wet hands again.',
+    illoArabic:'مسح الأذنين',
+    illoLabel:'Both ears — once',
+    draw:(svg,p)=>{
+      svg.innerHTML=`
+        <ellipse cx="160" cy="120" rx="52" ry="58" fill="${p}0d" stroke="${p}" stroke-width="1.5" opacity=".5"/>
+        <path d="M108 110 Q100 108 92 115 Q80 126 82 140 Q84 154 96 158 Q104 160 110 152 Q112 145 108 140 Q104 136 108 130 Q112 124 108 110Z" fill="${p}15" stroke="${p}" stroke-width="2"/>
+        <path d="M100 120 Q96 128 98 138 Q100 145 105 145" stroke="${p}" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".6"/>
+        <path d="M212 110 Q220 108 228 115 Q240 126 238 140 Q236 154 224 158 Q216 160 210 152 Q208 145 212 140 Q216 136 212 130 Q208 124 212 110Z" fill="${p}15" stroke="${p}" stroke-width="2"/>
+        <path d="M220 120 Q224 128 222 138 Q220 145 215 145" stroke="${p}" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".6"/>
+        <ellipse cx="160" cy="120" rx="42" ry="46" fill="${p}08"/>
+        <circle cx="142" cy="112" r="6" fill="${p}" opacity=".5"/>
+        <circle cx="178" cy="112" r="6" fill="${p}" opacity=".5"/>
+        <path d="M148 130 Q160 138 172 130" stroke="${p}" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="160" y="258" text-anchor="middle" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="${p}" opacity=".7">Index finger inside, thumb outside</text>
+        <text x="160" y="274" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" fill="${p}" opacity=".5">× 1 — same water as head</text>
+      `;
+    }
+  },
+  {
+    cat:'Feet',
+    arabic:'غَسْلُ الْقَدَمَيْنِ',
+    ref:'Quran 5:6',
+    title:'Wash the',titleSpan:'Feet Three Times',
+    desc:'Wash both feet three times, up to and including the ankles. Use the little finger of the left hand to pass between the toes. Start with the right foot, then the left.',
+    quote:'"Wash your feet up to the ankles." — Quran 5:6',
+    tip:'Pass the little finger between every toe — water must reach there.',
+    illoArabic:'غسل القدمين',
+    illoLabel:'Up to ankle — 3 times each',
+    draw:(svg,p)=>{
+      svg.innerHTML=`
+        <path d="M80 200 Q70 185 68 165 Q66 142 75 125 Q82 112 95 110 Q108 108 115 118 L118 130 Q120 142 112 150 L108 148" stroke="${p}" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M108 148 L230 148 Q250 148 255 158 Q260 168 250 175 L115 175 Q95 175 88 185 L80 200" fill="${p}12" stroke="${p}" stroke-width="2"/>
+        <rect x="107" y="122" width="16" height="24" rx="8" fill="${p}20" stroke="${p}" stroke-width="1.5"/>
+        <rect x="125" y="118" width="16" height="28" rx="8" fill="${p}20" stroke="${p}" stroke-width="1.5"/>
+        <rect x="143" y="122" width="16" height="24" rx="8" fill="${p}20" stroke="${p}" stroke-width="1.5"/>
+        <rect x="161" y="126" width="15" height="20" rx="7.5" fill="${p}20" stroke="${p}" stroke-width="1.5"/>
+        <rect x="177" y="130" width="13" height="16" rx="6.5" fill="${p}20" stroke="${p}" stroke-width="1.5"/>
+        <path d="M70 165 Q40 162 35 160" stroke="${p}" stroke-width="1.5" fill="none" stroke-dasharray="3 3" opacity=".5"/>
+        <text x="20" y="158" font-family="Poppins,sans-serif" font-size="10" fill="${p}" opacity=".6">ankle</text>
+        <circle cx="18" cy="162" r="3" fill="${p}" opacity=".5"/>
+        <circle cx="72" cy="196" r="5" fill="${p}" opacity=".5"/>
+        <circle cx="82" cy="202" r="3" fill="${p}" opacity=".3"/>
+        <circle cx="62" cy="198" r="3" fill="${p}" opacity=".4"/>
+        <text x="170" y="258" text-anchor="middle" font-family="Poppins,sans-serif" font-size="12" font-weight="600" fill="${p}" opacity=".7">Right foot first, then left</text>
+        <text x="170" y="274" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" fill="${p}" opacity=".5">× 3 — pass fingers between toes</text>
+      `;
+    }
+  },
+];
+
+const P='#F9812E';
+let cur=0;
+let animating=false;
+
+/* ── Build dot stepper ── */
+function buildDots(){
+  const el=document.getElementById('dotStepper');
+  el.innerHTML='';
+  STEPS.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='step-dot'+(i===cur?' active':'');
+    d.addEventListener('click',()=>{if(!animating)goTo(i);});
+    el.appendChild(d);
+  });
+}
+
+/* ── Build all panels ── */
+function buildPanels(){
+  const vp=document.getElementById('stepViewport');
+  vp.innerHTML='';
+  STEPS.forEach((s,i)=>{
+    const p=document.createElement('div');
+    p.className='step-panel'+(i===0?' active':'');
+    p.id='panel-'+i;
+    p.innerHTML=`
+      <div class="step-num"><span class="fill">${String(i+1).charAt(0)}</span>${String(i+1).length>1?String(i+1).charAt(1):''}</div>
+      <p class="step-arabic">${s.arabic}</p>
+      <p class="step-ref">${s.ref}</p>
+      <h1 class="step-title">${s.title} <span>${s.titleSpan}</span></h1>
+      <p class="step-desc">${s.desc}</p>
+      <div class="step-quote">${s.quote}</div>
+      <div class="step-tip">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        ${s.tip}
+      </div>`;
+    vp.appendChild(p);
+  });
+}
+
+/* ── Update UI state ── */
+function updateUI(){
+  const s=STEPS[cur];
+  document.getElementById('stepCounter').textContent=`Step ${cur+1} of ${STEPS.length}`;
+  document.getElementById('stepCategory').textContent=s.cat;
+  document.getElementById('progressFill').style.width=`${((cur+1)/STEPS.length)*100}%`;
+  document.getElementById('prevBtn').disabled=cur===0;
+  const nb=document.getElementById('nextBtn');
+  if(cur===STEPS.length-1){nb.textContent='Finish';nb.innerHTML='Finish <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';}
+  else{nb.innerHTML='Next <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';}
+  buildDots();
+  updateIllo();
+}
+
+/* ── Update illustration ── */
+function updateIllo(animate=false){
+  const s=STEPS[cur];
+  const wrap=document.getElementById('illoWrap');
+  const svg=document.getElementById('mainIllo');
+  const arabic=document.getElementById('illoArabic');
+  const label=document.getElementById('illoLabel');
+  if(animate){
+    wrap.classList.add('fade-out');
+    setTimeout(()=>{
+      s.draw(svg,P);
+      arabic.textContent=s.illoArabic;
+      label.textContent=s.illoLabel;
+      wrap.classList.remove('fade-out');
+      wrap.classList.add('fade-in');
+      requestAnimationFrame(()=>{ requestAnimationFrame(()=>{ wrap.classList.remove('fade-in'); }); });
+    },240);
+  } else {
+    s.draw(svg,P);
+    arabic.textContent=s.illoArabic;
+    label.textContent=s.illoLabel;
+  }
+}
+
+/* ── Navigate to step ── */
+function goTo(next, dir=1){
+  if(animating) return;
+
+  if(next===STEPS.length){
+    showComplete(); return;
+  }
+  if(next<0||next>=STEPS.length) return;
+
+  animating=true;
+
+  const oldPanel=document.getElementById('panel-'+cur);
+  const newPanel=document.getElementById('panel-'+next);
+
+  oldPanel.classList.add('leaving');
+  oldPanel.classList.remove('active');
+
+  updateIllo(true);
+
+  setTimeout(()=>{
+    oldPanel.classList.remove('leaving');
+    cur=next;
+    newPanel.style.transform=`translateY(${dir>0?'40px':'-40px'})`;
+    newPanel.style.opacity='0';
+    newPanel.classList.add('active');
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        newPanel.style.transform='';
+        newPanel.style.opacity='';
+      });
+    });
+    updateUI();
+    animating=false;
+  },320);
+}
+
+function next(){
+  if(cur===STEPS.length-1){showComplete();}
+  else{goTo(cur+1,1);}
+}
+function prev(){ goTo(cur-1,-1); }
+
+function showComplete(){
+  document.getElementById('stepViewport').style.display='none';
+  document.getElementById('stepNav').style.display='none';
+  document.getElementById('stepStrip') && (document.getElementById('stepStrip').style.display='none');
+  document.querySelector('.step-strip').style.display='none';
+  document.getElementById('progressFill').style.width='100%';
+  document.getElementById('completeScreen').classList.add('show');
+}
+
+/* ── Keyboard navigation ── */
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') next();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') prev();
+});
+
+/* ── Touch swipe ── */
+let tx=0,ty=0;
+document.querySelector('.left-col').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+document.querySelector('.left-col').addEventListener('touchend',e=>{
+  const dx=tx-e.changedTouches[0].clientX;
+  const dy=ty-e.changedTouches[0].clientY;
+  if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>40){
+    if(dy>0) next(); else prev();
+  }
+},{passive:true});
+
+/* ── Init ── */
+buildPanels();
+buildDots();
+updateUI();
+</script>
+</body>
+</html>
