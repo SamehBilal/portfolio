@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noor – Muslim Super App</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"/>
+<style>
+body {
+  background-color: var(--bgInverse);
+  margin: 0px;
+  overflow: hidden;
+
+  --bg0: #e5e5e5;
+  --bg1: #ddd;
+  --bg2: #d5d5d5;
+  --bgInverse: #444;
+  --bgBorder: #c5c5c5;
+
+  --bgStroke: var(--bg1) 5px 0px 0px, var(--bg1) 4.90033px 0.993347px 0px, var(--bg1) 4.60531px 1.94709px 0px, var(--bg1) 4.12668px 2.82321px 0px, var(--bg1) 3.48353px 3.58678px 0px, var(--bg1) 2.70151px 4.20736px 0px, var(--bg1) 1.81179px 4.6602px 0px, var(--bg1) 0.849836px 4.92725px 0px, var(--bg1) -0.145998px 4.99787px 0px, var(--bg1) -1.13601px 4.86924px 0px, var(--bg1) -2.08073px 4.54649px 0px, var(--bg1) -2.94251px 4.04248px 0px, var(--bg1) -3.68697px 3.37732px 0px, var(--bg1) -4.28444px 2.57751px 0px, var(--bg1) -4.71111px 1.67494px 0px, var(--bg1) -4.94996px 0.7056px 0px, var(--bg1) -4.99147px -0.291871px 0px, var(--bg1) -4.83399px -1.27771px 0px, var(--bg1) -4.48379px -2.2126px 0px, var(--bg1) -3.95484px -3.05929px 0px, var(--bg1) -3.26822px -3.78401px 0px, var(--bg1) -2.4513px -4.35788px 0px, var(--bg1) -1.53666px -4.75801px 0px, var(--bg1) -0.560763px -4.96846px 0px, var(--bg1) 0.437495px -4.98082px 0px, var(--bg1) 1.41831px -4.79462px 0px, var(--bg1) 2.34258px -4.41727px 0px, var(--bg1) 3.17346px -3.86382px 0px, var(--bg1) 3.87783px -3.15633px 0px, var(--bg1) 4.4276px -2.32301px 0px, var(--bg1) 4.80085px -1.39708px 0px, var(--bg1) 4.98271px -0.415447px 0px;
+
+  --bgStroke: var(--bg1) 2px 0px 0px, var(--bg1) 1.75517px 0.958851px 0px, var(--bg1) 1.0806px 1.68294px 0px, var(--bg1) 0.141474px 1.99499px 0px, var(--bg1) -0.832294px 1.81859px 0px, var(--bg1) -1.60229px 1.19694px 0px, var(--bg1) -1.97999px 0.28224px 0px, var(--bg1) -1.87291px -0.701566px 0px, var(--bg1) -1.30729px -1.51361px 0px, var(--bg1) -0.421592px -1.95506px 0px, var(--bg1) 0.567324px -1.91785px 0px, var(--bg1) 1.41734px -1.41108px 0px, var(--bg1) 1.92034px -0.558831px 0px;
+
+  --accent: #18778C;
+  --gold: #b8963e;
+
+  --icon: url(https://i.ibb.co/5kkFVK0/Carried-Forward.png);
+  --flower: url(https://i.ibb.co/PxMqGRh/Stult-Flower3.png);
+
+  --body: 'Inter', sans-serif;
+  --title: 'DM Sans', sans-serif;
+}
+
+a { text-decoration: none; color: var(--bgInverse); }
+
+/* ── EXACT SHELL ── */
+.dc-body {
+  padding: 20px;
+  filter: sepia(0%);
+  background-color: var(--bg1);
+  height: 100vh;
+  box-sizing: border-box;
+  mix-blend-mode: lighten;
+}
+.dc-body2 {
+  border: solid 1px var(--bgBorder);
+  height: calc(100vh - 40px);
+  border-radius: 15px;
+  background-color: var(--bg1);
+}
+.dc-char {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  height: calc(100vh - 40px);
+  position: relative;
+}
+.dc-char-color {
+  position: absolute; z-index: 10; pointer-events: none;
+  height: 75vh; width: 75vh; bottom: -1px; left: -1px;
+  background: radial-gradient(circle at bottom left, var(--accent), transparent 70%);
+  opacity: .25; border-radius: 14px;
+}
+
+/* ── LEFT PANEL – exact copy ── */
+.dc-char-left {
+  padding: clamp(35px,6vw,100px);
+  display: flex; flex-direction: column;
+  justify-content: flex-start; align-items: flex-end;
+  position: relative;
+  border-right: solid 1px var(--bgBorder);
+}
+.dc-char-return {
+  display: block; position: absolute; top: 65px; left: 65px; z-index: 50;
+  font: 500 12px/15px var(--body); white-space: nowrap;
+  text-transform: uppercase; letter-spacing: .35px;
+  text-shadow: var(--bgStroke);
+}
+.dc-char-return div {
+  background-color: var(--bgInverse); height: 50px; width: 50px;
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  color: var(--bg1); font: 200 28px/15px var(--title);
+  margin-bottom: 15px; padding: 0px 3px 4px 1px; text-shadow: none;
+}
+.dc-char-return div::before { content: '<'; display: block; }
+
+/* flower mask – exact from original */
+.dc-char-flower {
+  -webkit-mask-image: var(--flower); mask-image: var(--flower);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  position: absolute; top: 0; left: 0;
+  height: 535px; width: 410px; transform: scaleY(-1) scaleX(-1);
+}
+.dc-char-flower::before {
+  content: ''; display: block; height: 100%; width: 100%;
+  background-color: var(--bgBorder);
+}
+
+/* icon circle – exact */
+.dc-char-icon {
+  border: solid 1px var(--bgBorder); padding: 24px;
+  height: 250px; width: 250px; border-radius: 100%;
+  box-sizing: border-box; margin-left: -10px;
+  position: relative; background-color: var(--bg1);
+}
+.dc-char-icon::before {
+  display: block; content: ''; border-radius: 100%;
+  background-color: var(--accent); position: absolute; box-sizing: border-box;
+  height: 12px; width: 12px; bottom: 23px; left: 37px;
+  box-shadow: 0px 0px 0px 10px var(--bg1);
+}
+.dc-char-icon::after {
+  display: block; content: ''; border-radius: 100%;
+  background-color: var(--accent); position: absolute; box-sizing: border-box;
+  height: 20px; width: 20px; top: 25px; right: 27px;
+  box-shadow: 0px 0px 0px 10px var(--bg1);
+}
+.dc-char-icon2 {
+  height: 100%; width: 100%;
+  background-image: var(--icon);
+  background-size: cover; background-position: center;
+  border-radius: 100%; position: relative; z-index: 1;
+}
+
+/* h2 split – exact */
+.dc-char-left h2 {
+  margin: 35px 0px 30px 0px;
+  font: 900 65px/65px var(--title); letter-spacing: -1px;
+  text-align: right; text-transform: uppercase;
+  padding-left: clamp(20px,3vw,50px); position: relative; z-index: 1;
+}
+.dc-char-left h2 div {
+  font: 900 125px/125px var(--title); text-transform: none; letter-spacing: -4px;
+  background: linear-gradient(to bottom, var(--accent), var(--bgInverse) 75%);
+  background-clip: text; -webkit-background-clip: text; color: transparent;
+  padding-right: 10px; margin-right: -10px;
+}
+
+/* tags */
+.dc-char-start {
+  display: flex; justify-content: flex-end; flex-wrap: wrap;
+  gap: 10px; margin-bottom: 20px;
+}
+.dc-char-start div {
+  border: solid 1px var(--bgBorder); box-sizing: border-box; padding: 14px;
+  font: 500 12px/12px var(--body); text-transform: uppercase;
+  border-radius: 10px; background-color: var(--bg0);
+}
+
+/* quote p – exact */
+.dc-char-left p {
+  display: flex; align-items: center; justify-content: flex-end;
+  border-right: solid 1px var(--bgBorder); padding-right: 35px;
+  text-align: right; margin-bottom: 0px; box-sizing: border-box;
+  font: 14px/21px var(--body); max-width: 300px;
+  position: relative; z-index: 1; direction: rtl;
+}
+.dc-char-left p::before {
+  content: ''; display: block; position: absolute;
+  background-color: var(--accent); height: 10px; width: 10px;
+  box-shadow: 0px 0px 0px 15px var(--bg1); border-radius: 100%;
+  margin-right: -40px;
+}
+
+/* ── RIGHT PANEL ── */
+.dc-char-right { display: flex; flex-direction: column; position: relative; }
+
+/* banner – exact (hidden like original) */
+.dc-char-banner {
+  height: 250px; border-radius: 0px 15px 0px 0px;
+  margin: -1px -1px 0px 0px; position: relative; z-index: 2;
+  margin-bottom: -116px; pointer-events: none; overflow: hidden; display: none;
+}
+.dc-char-banner2 {
+  background-color: var(--accent);
+  background-image: var(--banner);
+  background-size: cover; background-position: center;
+  background-blend-mode: multiply;
+  height: 100%; width: 100%; border-radius: 0px 15px 0px 0px;
+}
+
+/* menu – exact */
+.dc-char-menu {
+  padding: 30px; display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: flex-start; position: relative; z-index: 3;
+  overflow: hidden; margin-bottom: -1px;
+}
+.dc-char-menu::before {
+  content: ''; display: block; position: absolute;
+  height: 600px; width: 600px; border: solid 1px var(--bgBorder);
+  border-radius: 100%; top: -430px; left: -125px;
+}
+.dc-char-menu::after {
+  content: ''; display: block; position: absolute;
+  height: 300px; width: 300px; border: solid 1px var(--bgBorder);
+  border-radius: 100%; bottom: -245px; right: -150px;
+}
+.dc-char-menu a {
+  display: block; font: 500 12px/12px var(--body);
+  text-transform: uppercase; letter-spacing: 1px;
+  position: relative; display: flex; align-items: center;
+  justify-content: center; flex-direction: column;
+  padding: 15px; border: solid 1px var(--bgBorder);
+  border-radius: 8px; white-space: nowrap; transition: .2s;
+  box-sizing: border-box; position: relative; z-index: 1;
+  background-color: var(--bg1); cursor: pointer;
+}
+.dc-char-menu a:hover { background-color: var(--bg2); }
+.dc-char-menu a.active {
+  background-color: var(--bgInverse);
+  border-color: transparent; color: var(--bg1);
+}
+.dc-char-menu a.active::after {
+  height: 15px; width: 15px; content: ''; display: block;
+  background-color: var(--bg1); transform: rotate(45deg);
+  position: absolute; bottom: -39px; border-radius: 5px 0px;
+  border-left: solid 1px var(--bgBorder);
+  border-top: solid 1px var(--bgBorder); transition: .2s;
+}
+
+/* sub-menu – exact */
+.dc-char-sub-menu {
+  padding: 35px; display: flex; gap: 15px;
+  justify-content: flex-start; border-bottom: solid 1px var(--bgBorder);
+  position: relative; display: none;
+}
+.dc-char-sub-menu::before {
+  content: ''; display: block; position: absolute;
+  border: solid 1px var(--bgBorder); border-radius: 100%;
+  width: 9px; height: 9px; background-color: var(--bg2);
+  bottom: -6px; left: -6px;
+}
+.dc-char-sub-menu a {
+  font: 900 12px/12px var(--body); text-transform: uppercase;
+  letter-spacing: 1px; display: flex; gap: 15px; align-items: center;
+}
+.dc-char-sub-menu a:last-of-type { flex-grow: 1; }
+.dc-char-sub-menu a::after {
+  content: ''; display: block; height: 1px;
+  background-color: var(--bgBorder); min-width: 20px; flex-grow: 1;
+}
+
+/* bulk – exact */
+.dc-char-bulk {
+  background-color: var(--bg1); flex-grow: 1;
+  border-left: solid 1px var(--bgBorder); margin-left: -15px;
+  border-radius: 15px 0px 14px 0px;
+  border-top: solid 1px var(--bgBorder);
+  overflow: hidden;
+}
+.dc-char-bulk2 {
+  padding: 50px;
+  height: 100%; box-sizing: border-box;
+  overflow-y: auto;
+}
+.dc-char-bulk2::-webkit-scrollbar { width: 5px; }
+.dc-char-bulk2::-webkit-scrollbar-track { background: transparent; }
+.dc-char-bulk2::-webkit-scrollbar-thumb { background: var(--bgBorder); border-radius: 10px; }
+
+/* ── TAB PANELS ── */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ════ HP-STYLE STAT BOX (reused from original dc-char-hp) ════ */
+.dc-char-hp {
+  flex-grow: 2; border: solid 0px var(--bgBorder); box-sizing: border-box;
+  aspect-ratio: 1/1 !important; border-radius: 10px;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  align-self: stretch; padding: 0px 50px; position: relative;
+  background: linear-gradient(to top, var(--accent), var(--bgInverse));
+}
+.dc-char-hp h1 {
+  margin: 0px; border: solid 0px var(--bgBorder); border-top: 0px;
+  border-radius: 0px 0px 28px 28px; background-color: var(--bg1);
+  font: 800 11px/10px var(--body); text-transform: uppercase;
+  padding: 8px 22px 15px 25px; letter-spacing: 3px; white-space: nowrap;
+  position: relative;
+}
+.dc-char-hp h1::before {
+  content: ''; display: block; height: 20px; width: 20px;
+  border-radius: 0px 10px 0px 0px; box-shadow: 10px -10px 0px var(--bg1);
+  position: absolute; top: 0; left: -20px;
+}
+.dc-char-hp h1::after {
+  content: ''; display: block; height: 20px; width: 20px;
+  border-radius: 10px 0px 0px 0px; box-shadow: -10px -10px 0px var(--bg1);
+  position: absolute; top: 0; right: -20px;
+}
+.dc-char-hp h2 {
+  margin: 0px 0px 25px 0px; flex-grow: 1; text-align: center;
+  display: flex; flex-direction: column; justify-content: center;
+  font: 800 16px/10px var(--body); text-transform: uppercase; letter-spacing: .5px;
+}
+.dc-char-hp input {
+  border: none; background: transparent; padding: 0; margin: 0;
+  width: 125px; font: 900 84px/85px var(--title);
+  color: var(--bg1); text-align: center;
+}
+
+/* ── scores grid ── */
+.dc-char-basics { display: grid; grid-template-columns: auto 1fr; gap: 30px; }
+.dc-char-basics1 { flex-grow: 1; display: flex; flex-direction: column; gap: 15px; }
+
+.dc-char-scores {
+  display: grid; grid-template-columns: repeat(6,1fr); gap: 15px;
+  box-sizing: border-box; border: solid 1px var(--bgBorder);
+  border-radius: 10px; padding: 29px; position: relative;
+  overflow: hidden; flex-grow: 1;
+}
+.dc-char-scores::before {
+  content: ''; display: block;
+  -webkit-mask-image: var(--flower); mask-image: var(--flower);
+  position: absolute; top: -100px; right: -70px;
+  height: 535px; width: 1080px; transform: scaleY(-1) scaleX(-1);
+  background-color: var(--bgBorder);
+}
+.dc-char-score {
+  border: solid 1px var(--bgBorder); border-radius: 10px;
+  background-color: var(--bg1); position: relative;
+  align-self: stretch; min-height: 0; aspect-ratio: 1/1.1;
+  display: flex; flex-direction: column; align-items: center;
+}
+.dc-char-score h1 {
+  margin: 0; border: solid 1px var(--bgBorder); border-top: 0;
+  border-radius: 0px 0px 10px 10px; background-color: var(--bg2);
+  font: 800 11px/10px var(--body); text-transform: uppercase;
+  padding: 10px 7px 10px 10px; letter-spacing: 3px;
+}
+.dc-char-score h2 {
+  font: 900 45px/45px var(--body); flex-grow: 1; margin: 0px 0px 25px 0px;
+  display: flex; align-items: center;
+}
+.dc-char-score h3 {
+  margin: 0; background: linear-gradient(to bottom, var(--accent), var(--bgInverse));
+  height: 40px; width: 40px; border-radius: 100%;
+  display: flex; align-items: center; justify-content: center;
+  position: absolute; bottom: -10px;
+  font: 800 15px/15px var(--body); color: var(--bg1);
+  box-shadow: 0px 0px 0px 5px var(--bg1);
+}
+.dc-char-score h3::before {
+  content: '+'; position: absolute; left: -8px;
+  text-shadow: var(--bgStroke); color: var(--bgInverse);
+  font: 900 17px/20px var(--body);
+}
+
+/* move row */
+.dc-char-move { display: flex; gap: 10px; font: 500 12px/12px var(--body); letter-spacing: .5px; align-items: flex-start; }
+.dc-char-init { display: flex; gap: 10px; background-color: var(--bgInverse); padding: 6px; border-radius: 10px; flex-grow: 10; height: 40px; }
+.dc-char-init input { display: none; }
+.dc-char-init input[type=button] { display: block; border: none; background-color: var(--bgInverse); color: var(--bg1); font: 500 12px/40px var(--body); letter-spacing: 1px; height: 40px; padding: 0px 15px !important; border-radius: 7px; text-transform: uppercase; cursor: pointer; }
+.dc-char-speeds, .dc-char-senses { display: flex; gap: 10px; flex-grow: 1; }
+.dc-char-speeds div, .dc-char-senses div { display: flex; gap: 5px; align-items: center; padding-right: 15px; border: solid 1px var(--bgBorder); border-radius: 10px; flex-grow: 1; height: 50px; }
+.dc-char-speeds div i, .dc-char-senses div i { display: block; background-color: var(--bgInverse); margin: 5px; border-radius: 7px; color: var(--bg1); padding: 10px; font-size: 20px; line-height: 20px; align-self: stretch; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; }
+.dc-char-move2 { display: flex; gap: 10px; flex-grow: 1; }
+
+/* ════ SHARED WIDGET PIECES ════ */
+.w-section-label {
+  font: 800 11px/10px var(--body); text-transform: uppercase;
+  letter-spacing: 3px; color: #999; margin-bottom: 18px;
+  display: flex; align-items: center; gap: 10px;
+}
+.w-section-label::after { content: ''; flex-grow: 1; height: 1px; background: var(--bgBorder); }
+
+/* ════ PRAYER ════ */
+.prayer-next-block {
+  background: linear-gradient(to top, var(--accent), var(--bgInverse));
+  border-radius: 10px; padding: 0;
+  display: flex; align-items: center; gap: 0;
+  margin-bottom: 20px; overflow: hidden; position: relative;
+}
+.prayer-next-block::before {
+  content: ''; display: block;
+  -webkit-mask-image: var(--flower); mask-image: var(--flower);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  position: absolute; top: -60px; right: -40px;
+  height: 400px; width: 800px; transform: scaleY(-1);
+  background-color: rgba(255,255,255,.08); pointer-events: none;
+}
+.pnb-label-wrap {
+  padding: 0;
+  display: flex; flex-direction: column; align-items: flex-start;
+  justify-content: center; flex: 1;
+}
+.pnb-inner { padding: 25px 30px; }
+.pnb-tag {
+  display: inline-block; background-color: var(--bg1);
+  font: 800 11px/10px var(--body); text-transform: uppercase;
+  padding: 8px 22px 15px; letter-spacing: 3px; white-space: nowrap;
+  border-radius: 0 0 28px 28px; position: relative; margin-bottom: 18px;
+}
+.pnb-tag::before { content: ''; display: block; height: 20px; width: 20px; border-radius: 0px 10px 0px 0px; box-shadow: 10px -10px 0px var(--bg1); position: absolute; top: 0; left: -20px; }
+.pnb-tag::after  { content: ''; display: block; height: 20px; width: 20px; border-radius: 10px 0px 0px 0px; box-shadow: -10px -10px 0px var(--bg1); position: absolute; top: 0; right: -20px; }
+.pnb-name { font: 900 52px/52px var(--title); color: var(--bg1); letter-spacing: -2px; }
+.pnb-cd   { font: 500 13px/13px var(--body); color: rgba(255,255,255,.6); margin-top: 8px; }
+.pnb-time { font: 900 42px/42px var(--title); color: var(--bg1); letter-spacing: -2px; padding: 25px 30px; border-left: solid 1px rgba(255,255,255,.15); }
+
+.prayer-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.prayer-card {
+  border: solid 1px var(--bgBorder); border-radius: 10px;
+  padding: 18px 20px; background-color: var(--bg0);
+  display: flex; justify-content: space-between; align-items: center;
+  transition: .15s;
+}
+.prayer-card:hover { background: var(--bg2); }
+.prayer-card.current { background: var(--bgInverse); border-color: transparent; color: var(--bg1); }
+.prayer-card.passed  { opacity: .4; }
+.pc-name { display: flex; align-items: center; gap: 10px; font: 600 12px/12px var(--body); text-transform: uppercase; letter-spacing: .5px; }
+.pc-dot  { height: 8px; width: 8px; border-radius: 100%; background: var(--bgBorder); }
+.prayer-card.current .pc-dot { background: #c9a84c; }
+.pc-time { font: 800 16px/16px var(--title); }
+.prayer-card.current .pc-time { color: #c9a84c; }
+
+/* ════ QURAN ════ */
+.quran-layout { display: grid; grid-template-columns: 200px 1fr; gap: 20px; }
+.surah-list { border: solid 1px var(--bgBorder); border-radius: 10px; overflow-y: auto; max-height: 380px; background: var(--bg0); }
+.surah-list::-webkit-scrollbar { width: 4px; }
+.surah-list::-webkit-scrollbar-thumb { background: var(--bgBorder); border-radius: 10px; }
+.qs-item { padding: 12px 15px; border-bottom: solid 1px var(--bgBorder); cursor: pointer; display: flex; align-items: center; gap: 10px; transition: .15s; font: 500 12px/12px var(--body); }
+.qs-item:last-child { border-bottom: none; }
+.qs-item:hover { background: var(--bg2); }
+.qs-item.active { background: var(--bgInverse); color: var(--bg1); }
+.qs-num { height: 28px; width: 28px; border-radius: 7px; background: var(--bgBorder); display: flex; align-items: center; justify-content: center; font: 700 10px/10px var(--body); flex-shrink: 0; }
+.qs-item.active .qs-num { background: var(--accent); color: white; }
+.qs-info strong { display: block; font: 600 11px/11px var(--body); text-transform: uppercase; letter-spacing: .3px; }
+.qs-info span { font: 400 10px/10px var(--body); color: #999; margin-top: 3px; display: block; }
+.qs-item.active .qs-info span { color: #aaa; }
+
+.quran-right {}
+.quran-verse-box {
+  border: solid 1px var(--bgBorder); border-radius: 10px;
+  background: var(--bg0); padding: 25px 28px; margin-bottom: 14px;
+  position: relative; overflow: hidden;
+}
+.quran-verse-box::before {
+  content: ''; display: block;
+  -webkit-mask-image: var(--flower); mask-image: var(--flower);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  position: absolute; top: -80px; right: -50px;
+  height: 400px; width: 800px; transform: scaleY(-1);
+  background-color: var(--bgBorder); opacity: .5; pointer-events: none;
+}
+.q-arabic { font: 700 26px/2 'DM Sans'; direction: rtl; text-align: right; color: var(--bgInverse); position: relative; z-index: 1; }
+.q-sep { height: 1px; background: var(--bgBorder); margin: 14px 0; }
+.q-trans { font: 400 14px/1.75 var(--body); color: #555; }
+.quran-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+.q-ref { font: 700 11px/11px var(--body); text-transform: uppercase; letter-spacing: .5px; color: var(--accent); }
+.q-btns { display: flex; gap: 8px; }
+.q-btn {
+  height: 34px; padding: 0 14px; border-radius: 8px;
+  border: solid 1px var(--bgBorder); background: var(--bg0);
+  font: 600 11px/11px var(--body); text-transform: uppercase;
+  letter-spacing: .3px; cursor: pointer; display: flex; align-items: center;
+  gap: 6px; transition: .15s; color: var(--bgInverse);
+}
+.q-btn:hover { background: var(--bgInverse); color: var(--bg1); border-color: transparent; }
+
+/* ════ HIJRI ════ */
+.hijri-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.hijri-hero {
+  background: linear-gradient(to top, var(--accent), var(--bgInverse));
+  border-radius: 10px; padding: 0; color: var(--bg1);
+  text-align: center; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center;
+}
+.hijri-hero::before {
+  content: ''; display: block;
+  -webkit-mask-image: var(--flower); mask-image: var(--flower);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  position: absolute; top: -60px; right: -60px;
+  height: 400px; width: 800px; transform: scaleY(-1);
+  background-color: rgba(255,255,255,.07); pointer-events: none;
+}
+.hijri-tag {
+  background-color: var(--bg1); color: var(--bgInverse);
+  font: 800 11px/10px var(--body); text-transform: uppercase;
+  padding: 8px 22px 15px; letter-spacing: 3px; white-space: nowrap;
+  border-radius: 0 0 28px 28px; position: relative; margin-bottom: 10px; z-index: 1;
+}
+.hijri-tag::before { content: ''; height: 20px; width: 20px; border-radius: 0px 10px 0px 0px; box-shadow: 10px -10px 0px var(--bg1); position: absolute; top: 0; left: -20px; }
+.hijri-tag::after  { content: ''; height: 20px; width: 20px; border-radius: 10px 0px 0px 0px; box-shadow: -10px -10px 0px var(--bg1); position: absolute; top: 0; right: -20px; }
+.hijri-day-big { font: 900 90px/90px var(--title); letter-spacing: -5px; z-index: 1; }
+.hijri-month-big { font: 700 22px/22px var(--title); margin: 6px 0 4px; z-index: 1; }
+.hijri-year-big  { font: 400 12px/12px var(--body); opacity: .65; letter-spacing: 1px; z-index: 1; }
+.hijri-greg-str  { margin: 16px 20px; padding-top: 16px; border-top: solid 1px rgba(255,255,255,.2); font: 400 12px/12px var(--body); opacity: .7; z-index: 1; }
+
+.hijri-cal-wrap { border: solid 1px var(--bgBorder); border-radius: 10px; background: var(--bg0); padding: 20px; }
+.hcal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.hcal-header h3 { font: 700 14px/14px var(--title); }
+.hcal-nav { display: flex; gap: 6px; }
+.hcal-nav button { height: 28px; width: 28px; border-radius: 7px; border: solid 1px var(--bgBorder); background: var(--bg1); cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; transition: .15s; }
+.hcal-nav button:hover { background: var(--bgInverse); color: var(--bg1); border-color: transparent; }
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+.cal-head { font: 700 9px/9px var(--body); text-transform: uppercase; color: #aaa; text-align: center; padding: 5px 0; }
+.cal-day { aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; font: 500 11px/11px var(--body); color: #555; border-radius: 7px; cursor: pointer; transition: .1s; }
+.cal-day:hover { background: var(--bg2); }
+.cal-day.today { background: var(--bgInverse); color: var(--bg1); font-weight: 700; }
+.cal-day.event { color: var(--accent); font-weight: 700; }
+
+/* ════ QIBLA ════ */
+.qibla-layout { display: flex; gap: 35px; align-items: flex-start; }
+.qibla-compass-outer {
+  flex-shrink: 0; width: 280px; height: 280px; border-radius: 100%;
+  border: solid 1px var(--bgBorder); background: var(--bg0);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.qibla-compass-outer::before { content: 'N'; position: absolute; top: 14px; left: 50%; transform: translateX(-50%); font: 700 11px/11px var(--body); color: #aaa; }
+.qibla-compass-outer::after  { content: 'S'; position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); font: 700 11px/11px var(--body); color: #aaa; }
+.qibla-e { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font: 700 11px/11px var(--body); color: #aaa; }
+.qibla-w { position: absolute; left:  14px; top: 50%; transform: translateY(-50%); font: 700 11px/11px var(--body); color: #aaa; }
+.qibla-inner-ring {
+  width: 230px; height: 230px; border-radius: 100%;
+  border: solid 1px var(--bgBorder); background: var(--bg1);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.qibla-needle {
+  width: 5px; height: 95px; border-radius: 5px;
+  background: linear-gradient(to bottom, var(--accent) 50%, var(--bg2) 50%);
+  transform-origin: bottom center;
+  position: absolute; bottom: 50%; left: 50%;
+  transform: translateX(-50%) rotate(28deg);
+  transition: transform 1.2s ease;
+}
+.qibla-center-icon {
+  height: 40px; width: 40px; border-radius: 10px;
+  background: var(--bgInverse);
+  display: flex; align-items: center; justify-content: center;
+  color: #c9a84c; font-size: 22px;
+}
+.qibla-info { flex-grow: 1; display: flex; flex-direction: column; gap: 12px; }
+.qi-stat {
+  border: solid 1px var(--bgBorder); border-radius: 10px;
+  background: var(--bg0); padding: 18px 20px;
+}
+.qi-stat label { font: 800 10px/10px var(--body); text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; display: block; margin-bottom: 8px; }
+.qi-stat strong { font: 800 22px/22px var(--title); color: var(--bgInverse); }
+.qi-stat span { font: 400 12px/12px var(--body); color: #888; margin-left: 5px; }
+.qi-deg-box {
+  border-radius: 10px; padding: 0;
+  background: linear-gradient(to top, var(--accent), var(--bgInverse));
+  overflow: hidden; display: flex; flex-direction: column; align-items: center;
+}
+.qi-deg-tag {
+  background: var(--bg1); font: 800 11px/10px var(--body); text-transform: uppercase;
+  padding: 8px 20px 14px; letter-spacing: 3px; border-radius: 0 0 24px 24px;
+  position: relative; margin-bottom: 12px;
+}
+.qi-deg-tag::before { content:'';height:20px;width:20px;border-radius:0px 10px 0px 0px;box-shadow:10px -10px 0px var(--bg1);position:absolute;top:0;left:-20px; }
+.qi-deg-tag::after  { content:'';height:20px;width:20px;border-radius:10px 0px 0px 0px;box-shadow:-10px -10px 0px var(--bg1);position:absolute;top:0;right:-20px; }
+.qi-deg-num { font: 900 52px/52px var(--title); color: var(--bg1); letter-spacing: -3px; padding-bottom: 20px; }
+.qi-deg-num sup { font-size: 22px; }
+
+/* ════ DHIKR ════ */
+.dhikr-layout { display: grid; grid-template-columns: 1fr 260px; gap: 25px; align-items: start; }
+.dhikr-left { display: flex; flex-direction: column; align-items: center; }
+.dhikr-circle {
+  width: 220px; height: 220px; border-radius: 100%;
+  border: solid 1px var(--bgBorder);
+  background: linear-gradient(to top, var(--bg0), var(--bg1));
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; user-select: none; transition: transform .1s, background .1s;
+  position: relative; margin-bottom: 20px;
+}
+.dhikr-circle:hover { background: var(--bg2); }
+.dhikr-circle:active { transform: scale(.95); }
+.dhikr-count { font: 900 72px/72px var(--title); color: var(--bgInverse); letter-spacing: -4px; }
+.dhikr-lbl   { font: 500 11px/11px var(--body); color: #999; margin-top: 7px; text-transform: uppercase; letter-spacing: .5px; }
+.dhikr-circle.done { background: linear-gradient(to top, var(--accent), var(--bgInverse)); }
+.dhikr-circle.done .dhikr-count,
+.dhikr-circle.done .dhikr-lbl { color: var(--bg1); }
+
+.dhikr-bar-wrap { width: 100%; background: var(--bgBorder); border-radius: 30px; height: 8px; margin-bottom: 10px; }
+.dhikr-bar-fill { height: 100%; border-radius: 30px; background: linear-gradient(to right, var(--accent), #c9a84c); transition: width .3s; }
+.dhikr-prog-txt { font: 400 12px/12px var(--body); color: #888; margin-bottom: 20px; }
+.dhikr-btns { display: flex; gap: 10px; }
+.dhikr-tap {
+  padding: 14px 36px; border-radius: 10px; border: none;
+  background: var(--bgInverse); color: var(--bg1);
+  font: 700 13px/13px var(--body); text-transform: uppercase;
+  letter-spacing: .5px; cursor: pointer; display: flex;
+  align-items: center; gap: 8px; font-size: 18px; transition: .15s;
+}
+.dhikr-tap:hover { background: var(--accent); }
+.dhikr-tap i { font-size: 18px; }
+.dhikr-reset {
+  padding: 14px 20px; border-radius: 10px;
+  border: solid 1px var(--bgBorder); background: var(--bg0);
+  font: 600 11px/11px var(--body); text-transform: uppercase;
+  letter-spacing: .3px; cursor: pointer; transition: .15s; color: var(--bgInverse);
+}
+.dhikr-reset:hover { background: var(--bg2); }
+
+.dhikr-presets { display: flex; flex-direction: column; gap: 10px; }
+.dhikr-preset {
+  border: solid 1px var(--bgBorder); border-radius: 10px;
+  padding: 15px 18px; background: var(--bg0); cursor: pointer; transition: .15s;
+}
+.dhikr-preset:hover { background: var(--bg2); }
+.dhikr-preset.active { background: var(--bgInverse); border-color: transparent; color: var(--bg1); }
+.dhikr-preset strong { display: block; font: 800 17px/17px var(--title); color: var(--accent); margin-bottom: 5px; }
+.dhikr-preset.active strong { color: #c9a84c; }
+.dhikr-preset em { display: block; font: 400 11px/11px var(--body); color: #999; font-style: normal; text-transform: uppercase; letter-spacing: .3px; }
+.dhikr-preset.active em { color: #aaa; }
+.dhikr-preset small { font: 500 13px/13px 'DM Sans'; direction: rtl; color: #bbb; display: block; margin-top: 4px; }
+
+/* ════ HADITH ════ */
+.hadith-card {
+  border: solid 1px var(--bgBorder); border-radius: 10px;
+  background: var(--bg0); padding: 35px; position: relative;
+  overflow: hidden; margin-bottom: 18px;
+}
+.hadith-card::before {
+  content: ''; display: block;
+  -webkit-mask-image: var(--flower); mask-image: var(--flower);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  position: absolute; top: -80px; right: -60px;
+  height: 500px; width: 900px; transform: scaleY(-1);
+  background-color: var(--bgBorder); opacity: .6; pointer-events: none;
+}
+.hadith-qmark { position: absolute; top: -15px; left: 18px; font: 800 150px/150px var(--title); color: var(--bgBorder); pointer-events: none; user-select: none; }
+.hadith-text  { font: 400 16px/1.85 var(--body); color: var(--bgInverse); position: relative; z-index: 1; }
+.hadith-arabic { font: 600 18px/2 'DM Sans'; direction: rtl; text-align: right; color: var(--accent); margin-top: 16px; padding-top: 16px; border-top: solid 1px var(--bgBorder); position: relative; z-index: 1; }
+.hadith-footer { display: flex; align-items: center; justify-content: space-between; }
+.hadith-source-row { display: flex; align-items: center; gap: 12px; }
+.hadith-badge { padding: 8px 18px; border-radius: 20px; background: var(--bgInverse); color: #c9a84c; font: 700 11px/11px var(--body); text-transform: uppercase; letter-spacing: .5px; }
+.hadith-ref   { font: 400 12px/12px var(--body); color: #888; }
+.hadith-acts  { display: flex; gap: 8px; }
+.hadith-btn {
+  padding: 11px 18px; border-radius: 8px;
+  border: solid 1px var(--bgBorder); background: var(--bg0);
+  font: 600 11px/11px var(--body); text-transform: uppercase;
+  letter-spacing: .3px; cursor: pointer; transition: .15s;
+  display: flex; align-items: center; gap: 7px; color: var(--bgInverse);
+}
+.hadith-btn:hover { background: var(--bg2); }
+.hadith-btn.primary { background: var(--bgInverse); color: var(--bg1); border-color: transparent; }
+.hadith-btn.primary:hover { background: var(--accent); }
+.hadith-btn i { font-size: 15px; }
+</style>
+</head>
+<body>
+<div class="dc-body"><div class="dc-body2">
+<div class="dc-char">
+  <div class="dc-char-color"></div>
+
+  <!-- ══════════ LEFT PANEL ══════════ -->
+  <div class="dc-char-left">
+    <a href="#" class="dc-char-return">
+      <div></div>
+      Muslim<br>Super App
+    </a>
+    <div class="dc-char-flower"></div>
+    <div class="dc-char-icon"><div class="dc-char-icon2"></div></div>
+    <h2>Noor App</h2>
+    <div class="dc-char-start">
+      <div>Cairo</div>
+      <div id="l-hijri">—</div>
+      <div id="l-greg">—</div>
+      <div id="l-next">—</div>
+    </div>
+    <p id="l-quote">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+  </div>
+
+  <!-- ══════════ RIGHT PANEL ══════════ -->
+  <div class="dc-char-right">
+    <div class="dc-char-banner"><div class="dc-char-banner2"></div></div>
+
+    <!-- MENU -->
+    <div class="dc-char-menu" id="app-menu">
+      <a href="#" class="active" data-tab="prayer"><i class="ph ph-clock-countdown"></i> Prayer Times</a>
+      <a href="#" data-tab="quran"><i class="ph ph-book-open"></i> Quran</a>
+      <a href="#" data-tab="hijri"><i class="ph ph-calendar-dots"></i> Hijri Calendar</a>
+      <a href="#" data-tab="qibla"><i class="ph ph-compass"></i> Qibla</a>
+      <a href="#" data-tab="dhikr"><i class="ph ph-hand-praying"></i> Dhikr</a>
+      <a href="#" data-tab="hadith"><i class="ph ph-chat-teardrop-text"></i> Hadith</a>
+      <a href="#" data-tab="apps"><i class="ph ph-grid-four"></i> Apps</a>
+    </div>
+
+    <div class="dc-char-bulk">
+      <div class="dc-char-bulk2">
+
+        <!-- ── PRAYER ── -->
+        <div class="tab-panel active" id="tab-prayer">
+          <div class="prayer-next-block">
+            <div class="pnb-label-wrap">
+              <div class="pnb-tag">Next Prayer</div>
+              <div class="pnb-inner">
+                <div class="pnb-name" id="pnb-name">Asr</div>
+                <div class="pnb-cd"   id="pnb-cd">calculating…</div>
+              </div>
+            </div>
+            <div class="pnb-time" id="pnb-time">15:30</div>
+          </div>
+          <div class="prayer-grid" id="prayer-grid"></div>
+        </div>
+
+        <!-- ── QURAN ── -->
+        <div class="tab-panel" id="tab-quran">
+          <div class="quran-layout">
+            <div class="surah-list" id="surah-list"></div>
+            <div class="quran-right">
+              <div class="quran-verse-box">
+                <div class="q-arabic" id="q-arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+                <div class="q-sep"></div>
+                <div class="q-trans" id="q-trans">In the name of Allah, the Entirely Merciful, the Especially Merciful.</div>
+              </div>
+              <div class="quran-controls">
+                <div class="q-ref" id="q-ref">Al-Fatiha · 1:1</div>
+                <div class="q-btns">
+                  <button class="q-btn" onclick="qPrev()"><i class="ph ph-caret-left"></i> Prev</button>
+                  <button class="q-btn" onclick="qNext()">Next <i class="ph ph-caret-right"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── HIJRI ── -->
+        <div class="tab-panel" id="tab-hijri">
+          <div class="hijri-layout">
+            <div class="hijri-hero">
+              <div class="hijri-tag">Hijri Date</div>
+              <div class="hijri-day-big"   id="h-day">—</div>
+              <div class="hijri-month-big" id="h-month">—</div>
+              <div class="hijri-year-big"  id="h-year">—</div>
+              <div class="hijri-greg-str"  id="h-greg">—</div>
+            </div>
+            <div class="hijri-cal-wrap">
+              <div class="hcal-header">
+                <h3 id="cal-label">April 2026</h3>
+                <div class="hcal-nav">
+                  <button><i class="ph ph-caret-left"></i></button>
+                  <button><i class="ph ph-caret-right"></i></button>
+                </div>
+              </div>
+              <div class="cal-grid" id="cal-grid"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── QIBLA ── -->
+        <div class="tab-panel" id="tab-qibla">
+          <div class="qibla-layout">
+            <div class="qibla-compass-outer">
+              <span class="qibla-e">E</span>
+              <span class="qibla-w">W</span>
+              <div class="qibla-inner-ring">
+                <div class="qibla-needle" id="qibla-needle"></div>
+                <div class="qibla-center-icon"><i class="ph-fill ph-mosque"></i></div>
+              </div>
+            </div>
+            <div class="qibla-info">
+              <div class="qi-deg-box">
+                <div class="qi-deg-tag">Qibla Direction</div>
+                <div class="qi-deg-num">28<sup>°</sup></div>
+              </div>
+              <div class="qi-stat"><label>Your Location</label><strong>Cairo, Egypt</strong></div>
+              <div class="qi-stat"><label>Coordinates</label><strong>30.0°N</strong><span>31.2°E</span></div>
+              <div class="qi-stat"><label>Distance to Makkah</label><strong>1,252 km</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── DHIKR ── -->
+        <div class="tab-panel" id="tab-dhikr">
+          <div class="dhikr-layout">
+            <div class="dhikr-left">
+              <div class="dhikr-circle" id="dhikr-circle" onclick="tapDhikr()">
+                <div class="dhikr-count" id="d-count">0</div>
+                <div class="dhikr-lbl"   id="d-lbl">Tap to Count</div>
+              </div>
+              <div class="dhikr-bar-wrap" style="width:220px">
+                <div class="dhikr-bar-fill" id="d-bar" style="width:0%"></div>
+              </div>
+              <div class="dhikr-prog-txt" id="d-prog">0 / 33</div>
+              <div class="dhikr-btns">
+                <button class="dhikr-tap"   onclick="tapDhikr()"><i class="ph ph-plus"></i> Tap</button>
+                <button class="dhikr-reset" onclick="resetDhikr()">Reset</button>
+              </div>
+            </div>
+            <div class="dhikr-presets" id="d-presets"></div>
+          </div>
+        </div>
+
+        <!-- ── HADITH ── -->
+        <div class="tab-panel" id="tab-hadith">
+          <div class="hadith-card">
+            <div class="hadith-qmark">"</div>
+            <div class="hadith-text"   id="h-text">The most beloved of deeds to Allah are those that are most consistent, even if they are small.</div>
+            <div class="hadith-arabic" id="h-arabic">أَحَبُّ الأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ</div>
+          </div>
+          <div class="hadith-footer">
+            <div class="hadith-source-row">
+              <div class="hadith-badge" id="h-source">Sahih al-Bukhari</div>
+              <div class="hadith-ref"   id="h-ref">Book 76, Hadith 472</div>
+            </div>
+            <div class="hadith-acts">
+              <button class="hadith-btn"><i class="ph ph-share-network"></i> Share</button>
+              <button class="hadith-btn"><i class="ph ph-bookmark-simple"></i> Save</button>
+              <button class="hadith-btn primary" onclick="nextHadith()"><i class="ph ph-arrows-clockwise"></i> Next</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── APPS ── -->
+        <div class="tab-panel" id="tab-apps">
+          <div class="apps-gallery" id="apps-gallery">
+
+            <div class="app-card" data-app="prayer">
+              <div class="app-card-icon"><i class="ph-fill ph-clock-countdown"></i></div>
+              <span>Prayer Times</span>
+            </div>
+            <div class="app-card" data-app="quran">
+              <div class="app-card-icon"><i class="ph-fill ph-book-open"></i></div>
+              <span>Quran</span>
+            </div>
+            <div class="app-card" data-app="hijri">
+              <div class="app-card-icon"><i class="ph-fill ph-calendar-dots"></i></div>
+              <span>Hijri Calendar</span>
+            </div>
+            <div class="app-card" data-app="qibla">
+              <div class="app-card-icon"><i class="ph-fill ph-compass"></i></div>
+              <span>Qibla</span>
+            </div>
+            <div class="app-card" data-app="dhikr">
+              <div class="app-card-icon"><i class="ph-fill ph-hand-praying"></i></div>
+              <span>Dhikr</span>
+            </div>
+            <div class="app-card" data-app="hadith">
+              <div class="app-card-icon"><i class="ph-fill ph-chat-teardrop-text"></i></div>
+              <span>Hadith</span>
+            </div>
+
+            <!-- placeholder extras to fill the gallery -->
+            <div class="app-card app-card--soon">
+              <div class="app-card-icon"><i class="ph ph-mosque"></i></div>
+              <span>Find Mosque</span>
+            </div>
+            <div class="app-card app-card--soon">
+              <div class="app-card-icon"><i class="ph ph-moon-stars"></i></div>
+              <span>Ramadan</span>
+            </div>
+            <div class="app-card app-card--soon">
+              <div class="app-card-icon"><i class="ph ph-list-numbers"></i></div>
+              <span>99 Names</span>
+            </div>
+            <div class="app-card app-card--soon">
+              <div class="app-card-icon"><i class="ph ph-map-trifold"></i></div>
+              <span>Hajj Guide</span>
+            </div>
+            <div class="app-card app-card--soon">
+              <div class="app-card-icon"><i class="ph ph-article"></i></div>
+              <span>Duas</span>
+            </div>
+            <div class="app-card app-card--soon">
+              <div class="app-card-icon"><i class="ph ph-star"></i></div>
+              <span>Favorites</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /bulk2 -->
+    </div><!-- /bulk -->
+  </div><!-- /right -->
+</div><!-- /dc-char -->
+</div></div>
+
+<script src="https://code.jquery.com/jquery-1.7.2.js"></script>
+<script defer>
+// ── NAME SPLIT (exact from index) ──
+$('.dc-char-left h2').each(function(){
+  var me=$(this),t=me.text().split(' ');
+  me.html('<div>'+t.shift()+'</div>'+t.join(' '));
+});
+
+// ── HIJRI ──
+function toHijri(d){
+  const JD=Math.floor(d.getTime()/86400000+2440587.5);
+  let l=JD-1948440+10632,n=Math.floor((l-1)/10631);
+  l-=10631*n-354;
+  const j=Math.floor((10985-l)/5316)*Math.floor(50*l/17719)+Math.floor(l/5670)*Math.floor(43*l/15238);
+  l-=Math.floor((30-j)/15)*Math.floor(17719*j/50)+Math.floor(j/16)*Math.floor(15238*j/43);
+  const mo=Math.floor(24*(l-1)/709);
+  return{day:l-Math.floor(709*mo/24),month:mo+1,year:30*n+j-30};
+}
+const hM=['Muharram','Safar','Rabi al-Awwal','Rabi al-Thani','Jumada al-Awwal','Jumada al-Thani','Rajab',"Sha'ban",'Ramadan','Shawwal',"Dhul Qa'dah","Dhul Hijjah"];
+const now=new Date(), hh=toHijri(now);
+const hStr=hh.day+' '+hM[hh.month-1];
+document.getElementById('l-hijri').textContent=hStr;
+document.getElementById('l-greg').textContent=now.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+document.getElementById('h-day').textContent=hh.day;
+document.getElementById('h-month').textContent=hM[hh.month-1];
+document.getElementById('h-year').textContent=hh.year+' AH';
+document.getElementById('h-greg').textContent=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+// mini calendar
+const cg=document.getElementById('cal-grid');
+const gM=['January','February','March','April','May','June','July','August','September','October','November','December'];
+document.getElementById('cal-label').textContent=gM[now.getMonth()]+' '+now.getFullYear();
+['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{const e=document.createElement('div');e.className='cal-head';e.textContent=d;cg.appendChild(e);});
+const fd=new Date(now.getFullYear(),now.getMonth(),1).getDay();
+for(let i=0;i<fd;i++){const e=document.createElement('div');cg.appendChild(e);}
+const dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+for(let i=1;i<=dim;i++){const e=document.createElement('div');e.className='cal-day'+(i===now.getDate()?' today':'');e.textContent=i;cg.appendChild(e);}
+
+// ── PRAYERS (Cairo approx) ──
+const prayers=[
+  {name:'Fajr',time:'04:32'},{name:'Sunrise',time:'05:58'},
+  {name:'Dhuhr',time:'12:08'},{name:'Asr',time:'15:30'},
+  {name:'Maghrib',time:'18:14'},{name:'Isha',time:'19:42'}
+];
+const nowMin=now.getHours()*60+now.getMinutes();
+let nextIdx=-1;
+prayers.forEach((p,i)=>{
+  const [ph,pm]=p.time.split(':').map(Number);
+  p.min=ph*60+pm; p.passed=p.min<nowMin;
+  if(!p.passed&&nextIdx===-1)nextIdx=i;
+});
+if(nextIdx===-1)nextIdx=0;
+const pg=document.getElementById('prayer-grid');
+prayers.forEach((p,i)=>{
+  const el=document.createElement('div');
+  el.className='prayer-card'+(p.passed?' passed':'')+(i===nextIdx?' current':'');
+  el.innerHTML='<div class="pc-name"><div class="pc-dot"></div>'+p.name+'</div><div class="pc-time">'+p.time+'</div>';
+  pg.appendChild(el);
+});
+const np=prayers[nextIdx];
+document.getElementById('pnb-name').textContent=np.name;
+document.getElementById('pnb-time').textContent=np.time;
+document.getElementById('l-next').textContent=np.name+' '+np.time;
+const diff=np.min-nowMin;
+document.getElementById('pnb-cd').textContent=diff>0?'in '+Math.floor(diff/60)+'h '+diff%60+'m':'Now';
+
+// ── QURAN ──
+const verses=[
+  {a:'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ',t:'In the name of Allah, the Entirely Merciful, the Especially Merciful.',r:'Al-Fatiha · 1:1'},
+  {a:'ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ',t:'All praise is due to Allah, Lord of the worlds.',r:'Al-Fatiha · 1:2'},
+  {a:'ٱلرَّحْمَٰنِ ٱلرَّحِيمِ',t:'The Entirely Merciful, the Especially Merciful.',r:'Al-Fatiha · 1:3'},
+  {a:'مَٰلِكِ يَوْمِ ٱلدِّينِ',t:'Sovereign of the Day of Recompense.',r:'Al-Fatiha · 1:4'},
+  {a:'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ',t:'It is You we worship and You we ask for help.',r:'Al-Fatiha · 1:5'},
+  {a:'ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ',t:'Guide us to the straight path.',r:'Al-Fatiha · 1:6'},
+  {a:'صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ',t:'The path of those upon whom You have bestowed favor.',r:'Al-Fatiha · 1:7'},
+];
+const surahs=[{n:'Al-Fatiha',v:7,r:'Makkah'},{n:'Al-Baqara',v:286,r:'Madinah'},{n:'Al-Imran',v:200,r:'Madinah'},{n:'An-Nisa',v:176,r:'Madinah'},{n:'Al-Maidah',v:120,r:'Madinah'}];
+let qIdx=0;
+const sl=document.getElementById('surah-list');
+surahs.forEach((s,i)=>{
+  const el=document.createElement('div');
+  el.className='qs-item'+(i===0?' active':'');
+  el.innerHTML='<div class="qs-num">'+(i+1)+'</div><div class="qs-info"><strong>'+s.n+'</strong><span>'+s.v+' verses · '+s.r+'</span></div>';
+  el.onclick=()=>document.querySelectorAll('.qs-item').forEach((x,j)=>x.classList.toggle('active',j===i));
+  sl.appendChild(el);
+});
+function renderVerse(){const v=verses[qIdx];document.getElementById('q-arabic').textContent=v.a;document.getElementById('q-trans').textContent=v.t;document.getElementById('q-ref').textContent=v.r;}
+function qNext(){qIdx=(qIdx+1)%verses.length;renderVerse();}
+function qPrev(){qIdx=(qIdx-1+verses.length)%verses.length;renderVerse();}
+
+// ── DHIKR ──
+const dItems=[
+  {l:'Subhan Allah',   a:'سُبْحَانَ اللَّهِ',t:33},
+  {l:'Alhamdulillah',  a:'الْحَمْدُ لِلَّهِ',t:33},
+  {l:'Allahu Akbar',   a:'اللَّهُ أَكْبَرُ',t:33},
+  {l:'La ilaha illallah',a:'لَا إِلَهَ إِلَّا اللَّهُ',t:100},
+];
+let dIdx=0,dCnt=0;
+function renderDhikr(){
+  document.getElementById('d-count').textContent=dCnt;
+  document.getElementById('d-lbl').textContent=dItems[dIdx].l;
+  const pct=Math.min(100,dCnt/dItems[dIdx].t*100);
+  document.getElementById('d-bar').style.width=pct+'%';
+  document.getElementById('d-prog').textContent=dCnt+' / '+dItems[dIdx].t;
+  const done=dCnt>=dItems[dIdx].t;
+  document.getElementById('dhikr-circle').classList.toggle('done',done);
+}
+function tapDhikr(){if(dCnt<dItems[dIdx].t)dCnt++;renderDhikr();}
+function resetDhikr(){dCnt=0;renderDhikr();}
+const dp=document.getElementById('d-presets');
+dItems.forEach((d,i)=>{
+  const el=document.createElement('div');
+  el.className='dhikr-preset'+(i===0?' active':'');
+  el.innerHTML='<strong>'+d.t+'×</strong><em>'+d.l+'</em><small>'+d.a+'</small>';
+  el.onclick=()=>{dIdx=i;dCnt=0;document.querySelectorAll('.dhikr-preset').forEach((x,j)=>x.classList.toggle('active',j===i));renderDhikr();};
+  dp.appendChild(el);
+});
+renderDhikr();
+
+// ── HADITH ──
+const hadiths=[
+  {t:'The most beloved of deeds to Allah are those that are most consistent, even if they are small.',a:'أَحَبُّ الأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ',s:'Sahih al-Bukhari',r:'Book 76, Hadith 472'},
+  {t:'None of you truly believes until he loves for his brother what he loves for himself.',a:'لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ',s:'Sahih al-Bukhari',r:'Book 2, Hadith 7'},
+  {t:'Make things easy and do not make things difficult; give glad tidings and do not make people run away.',a:'يَسِّرُوا وَلَا تُعَسِّرُوا وَبَشِّرُوا وَلَا تُنَفِّرُوا',s:'Sahih al-Bukhari',r:'Book 3, Hadith 69'},
+  {t:'The strong man is not the one who can overpower others. The strong man is the one who controls himself when he is angry.',a:'لَيْسَ الشَّدِيدُ بِالصُّرَعَةِ إِنَّمَا الشَّدِيدُ الَّذِي يَمْلِكُ نَفْسَهُ عِنْدَ الْغَضَبِ',s:'Sahih al-Bukhari',r:'Book 73, Hadith 135'},
+  {t:'Every act of kindness is charity.',a:'كُلُّ مَعْرُوفٍ صَدَقَةٌ',s:'Sahih Muslim',r:'Book 12, Hadith 84'},
+];
+let hIdx=0;
+function nextHadith(){hIdx=(hIdx+1)%hadiths.length;const hd=hadiths[hIdx];document.getElementById('h-text').textContent=hd.t;document.getElementById('h-arabic').textContent=hd.a;document.getElementById('h-source').textContent=hd.s;document.getElementById('h-ref').textContent=hd.r;}
+
+// ── APP CARDS → open corresponding tab, keep "Apps" menu active ──
+document.getElementById('apps-gallery').addEventListener('click', function(e) {
+  const card = e.target.closest('.app-card[data-app]');
+  if (!card || card.classList.contains('app-card--soon')) return;
+  const target = card.dataset.app;
+  // switch tab panel
+  document.querySelectorAll('.tab-panel').forEach(x => x.classList.remove('active'));
+  document.getElementById('tab-' + target).classList.add('active');
+  // keep Apps menu item visually active (add a sub-active marker)
+  document.querySelectorAll('#app-menu a').forEach(x => x.classList.remove('active'));
+  document.querySelector('#app-menu a[data-tab="apps"]').classList.add('active');
+});
+
+// ── TABS ──
+document.getElementById('app-menu').addEventListener('click',function(e){
+  const a=e.target.closest('a[data-tab]');
+  if(!a)return; e.preventDefault();
+  document.querySelectorAll('#app-menu a').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));
+  a.classList.add('active');
+  document.getElementById('tab-'+a.dataset.tab).classList.add('active');
+});
+</script>
+</body>
+</html>
