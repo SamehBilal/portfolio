@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+<!-- ============================================================
+     Zakat Calculator — live gold/silver spot + nisab + 2.5%
+     Theme: #F9812E · Poppins · light-dark()
+     ============================================================ -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#F9812E;
+  --primary-soft:rgba(249,129,46,.10);
+  --primary-ring:rgba(249,129,46,.45);
+  --grid:color-mix(in lch, canvasText, transparent 80%);
+  --size:25px;
+  color-scheme:light dark;
+}
+[data-theme="light"]{color-scheme:light only;}
+[data-theme="dark"]{color-scheme:dark only;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Poppins",sans-serif;color:light-dark(#444,#e2e2e2);background:light-dark(#fff,#0a0a0a);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body::before{
+  content:'';position:fixed;inset:0;height:75vh;width:100vw;z-index:-1;pointer-events:none;
+  background:linear-gradient(90deg,var(--grid) 1px,transparent 1px var(--size)) 50% 0/var(--size) var(--size),
+             linear-gradient(var(--grid) 1px,transparent 1px var(--size)) 50% 0/var(--size) var(--size);
+  -webkit-mask:linear-gradient(-20deg,transparent 45%,#000);mask:linear-gradient(-20deg,transparent 45%,#000);
+}
+.wrap{max-width:680px;margin:0 auto;padding:18px 16px 160px;}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.brand{display:flex;flex-direction:column;line-height:1.1;}
+.brand .ar{font-family:"Amiri",serif;font-size:28px;font-weight:700;color:light-dark(#111,#fff);}
+.brand .en{font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.55;font-weight:600;margin-top:2px;}
+.spacer{flex:1;}
+.icon-btn{width:42px;height:42px;border-radius:13px;cursor:pointer;display:grid;place-items:center;background:light-dark(#fff,#161616);border:1px solid light-dark(rgba(0,0,0,.08),rgba(255,255,255,.10));color:light-dark(#333,#ddd);transition:.25s;}
+.icon-btn:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-1px);}
+.icon-btn svg{width:20px;height:20px;}
+
+.card{background:light-dark(#fff,#141414);border:1px solid light-dark(rgba(0,0,0,.07),rgba(255,255,255,.08));border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:light-dark(0 2px 10px rgba(0,0,0,.03),0 2px 10px rgba(0,0,0,.25));}
+.card h3{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--primary);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.card h3 svg{width:16px;height:16px;}
+.card .hint{font-size:12px;opacity:.55;margin-bottom:14px;line-height:1.5;}
+
+.row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid light-dark(rgba(0,0,0,.05),rgba(255,255,255,.06));}
+.row:last-child{border-bottom:0;}
+.row label{flex:1;font-size:13.5px;font-weight:500;}
+.row label small{display:block;font-size:11px;opacity:.5;font-weight:400;margin-top:1px;}
+.in{position:relative;flex-shrink:0;}
+.in .sym{position:absolute;left:11px;top:50%;translate:0 -50%;font-size:13px;opacity:.5;pointer-events:none;}
+input[type=number],select{font:inherit;font-size:14px;padding:10px 12px;border-radius:11px;border:1px solid light-dark(rgba(0,0,0,.12),rgba(255,255,255,.14));background:light-dark(#fafafa,#0f0f0f);color:inherit;width:150px;text-align:right;-moz-appearance:textfield;}
+input.cur{padding-left:30px;text-align:right;}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+input:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);}
+select{width:auto;text-align:left;cursor:pointer;}
+
+.karat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:4px;}
+.karat{display:flex;align-items:center;justify-content:space-between;gap:8px;background:light-dark(#fafafa,#0f0f0f);border:1px solid light-dark(rgba(0,0,0,.08),rgba(255,255,255,.08));border-radius:12px;padding:8px 10px;}
+.karat b{font-size:13px;}
+.karat b small{font-weight:400;opacity:.5;font-size:10px;display:block;}
+.karat input{width:78px;padding:7px 9px;}
+
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.controls .grp{display:flex;flex-direction:column;gap:5px;}
+.controls .grp span{font-size:11px;font-weight:600;opacity:.6;text-transform:uppercase;letter-spacing:.04em;}
+.fetch{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;border:0;border-radius:12px;padding:11px 16px;font:inherit;font-weight:600;font-size:13.5px;cursor:pointer;transition:.2s;}
+.fetch:hover{filter:brightness(1.05);}
+.fetch:disabled{opacity:.6;cursor:default;}
+.fetch svg{width:16px;height:16px;}
+.spot{font-size:11.5px;opacity:.6;margin-top:8px;}
+.spot b{color:var(--primary);}
+
+/* summary */
+.summary{position:fixed;left:50%;bottom:16px;translate:-50% 0;width:min(648px,calc(100vw - 24px));z-index:30;background:light-dark(#fff,#161616);border:1px solid var(--primary-ring);border-radius:20px;padding:16px 18px;box-shadow:0 12px 34px -8px rgba(0,0,0,.35);}
+.summary .line{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;margin-bottom:7px;}
+.summary .line.muted{opacity:.65;font-size:12px;}
+.summary .line b{font-weight:600;}
+.summary .sep{height:1px;background:light-dark(rgba(0,0,0,.08),rgba(255,255,255,.1));margin:9px 0;}
+.summary .due{display:flex;justify-content:space-between;align-items:center;}
+.summary .due .lbl{font-size:13px;font-weight:600;}
+.summary .due .amt{font-family:"Amiri",serif;font-size:30px;font-weight:700;color:var(--primary);line-height:1;}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;}
+.pill.yes{background:var(--primary-soft);color:var(--primary);}
+.pill.no{background:light-dark(#eee,#222);color:light-dark(#777,#999);}
+.summary .row-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.summary .row-top .t{font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.55;font-weight:600;}
+.reset{background:transparent;border:0;color:light-dark(#999,#888);font:inherit;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;gap:5px;align-items:center;}
+.reset:hover{color:var(--primary);}
+.reset svg{width:14px;height:14px;}
+
+.foot{text-align:center;font-size:11.5px;opacity:.45;margin-top:20px;line-height:1.6;}
+.foot a{color:var(--primary);text-decoration:none;}
+.toast{position:fixed;left:50%;bottom:130px;translate:-50% 0;background:light-dark(#111,#fff);color:light-dark(#fff,#111);padding:10px 16px;border-radius:12px;font-size:13px;font-weight:500;z-index:50;opacity:0;pointer-events:none;transition:.3s;}
+.toast.show{opacity:1;translate:-50% -6px;}
+@media(max-width:520px){ .karat-grid{grid-template-columns:1fr;} input[type=number]{width:130px;} }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><span class="ar">الزكاة</span><span class="en">Zakat Calculator</span></div>
+    <div class="spacer"></div>
+    <button class="icon-btn" id="themeBtn" aria-label="Theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+
+  <!-- prices -->
+  <div class="card">
+    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5h4.5a1.5 1.5 0 0 1 0 3H9m0 0h5"/></svg> Metal prices</h3>
+    <p class="hint">Use today's market value. Fetch live USD spot, or type your local jeweller's price per gram.</p>
+    <div class="controls">
+      <div class="grp"><span>Currency</span>
+        <select id="currency"></select>
+      </div>
+      <div class="grp"><span>Nisab standard</span>
+        <select id="nisab">
+          <option value="silver">Silver · 595 g (recommended)</option>
+          <option value="gold">Gold · 85 g</option>
+        </select>
+      </div>
+      <div class="grp"><span>&nbsp;</span>
+        <button class="fetch" id="fetchBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg> Live spot (USD)</button>
+      </div>
+    </div>
+    <div class="spot" id="spot"></div>
+    <div class="row"><label>Gold price <small>per gram, 24k</small></label><div class="in"><span class="sym"></span><input class="cur" type="number" id="goldPrice" min="0" step="0.01" placeholder="0.00"></div></div>
+    <div class="row"><label>Silver price <small>per gram</small></label><div class="in"><span class="sym"></span><input class="cur" type="number" id="silverPrice" min="0" step="0.01" placeholder="0.00"></div></div>
+  </div>
+
+  <!-- assets -->
+  <div class="card">
+    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/></svg> Assets you own</h3>
+    <p class="hint">Wealth held for one lunar year (hawl). Enter current values.</p>
+    <div class="row"><label>Cash <small>on hand + bank</small></label><div class="in"><span class="sym"></span><input class="cur" type="number" id="cash" min="0" step="0.01" placeholder="0.00"></div></div>
+
+    <div class="row" style="display:block;border-bottom:0;padding-bottom:4px;"><label style="margin-bottom:8px;">Gold you own <small>grams, by karat</small></label>
+      <div class="karat-grid">
+        <div class="karat"><b>24k<small>pure</small></b><input type="number" id="g24" min="0" step="0.01" placeholder="g"></div>
+        <div class="karat"><b>22k<small>91.7%</small></b><input type="number" id="g22" min="0" step="0.01" placeholder="g"></div>
+        <div class="karat"><b>21k<small>87.5%</small></b><input type="number" id="g21" min="0" step="0.01" placeholder="g"></div>
+        <div class="karat"><b>18k<small>75%</small></b><input type="number" id="g18" min="0" step="0.01" placeholder="g"></div>
+      </div>
+    </div>
+    <div class="row"><label>Silver you own <small>grams</small></label><div class="in"><input type="number" id="silverG" min="0" step="0.01" placeholder="g" style="text-align:right;"></div></div>
+    <div class="row"><label>Business / trade goods <small>inventory value</small></label><div class="in"><span class="sym"></span><input class="cur" type="number" id="trade" min="0" step="0.01" placeholder="0.00"></div></div>
+    <div class="row"><label>Money owed to you <small>likely to be repaid</small></label><div class="in"><span class="sym"></span><input class="cur" type="number" id="recv" min="0" step="0.01" placeholder="0.00"></div></div>
+    <div class="row"><label>Investments <small>stocks, funds — market value</small></label><div class="in"><span class="sym"></span><input class="cur" type="number" id="invest" min="0" step="0.01" placeholder="0.00"></div></div>
+  </div>
+
+  <!-- liabilities -->
+  <div class="card">
+    <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 9l7-7 7 7"/></svg> Deduct</h3>
+    <p class="hint">Debts and bills due now.</p>
+    <div class="row"><label>Immediate debts <small>owed by you</small></label><div class="in"><span class="sym"></span><input class="cur" type="number" id="debts" min="0" step="0.01" placeholder="0.00"></div></div>
+  </div>
+
+  <div class="foot">
+    Zakat is 2.5% of net zakatable wealth held above the nisab for one lunar year. This tool is a guide — for complex cases consult a scholar.<br>
+    Built for the portfolio of <a href="https://samehbilal.github.io/portfolio" target="_blank" rel="noopener">Sameh Bilal</a>
+  </div>
+</div>
+
+<!-- live summary -->
+<div class="summary">
+  <div class="row-top">
+    <span class="t">Your Zakat</span>
+    <button class="reset" id="resetBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg> Reset</button>
+  </div>
+  <div class="line"><span>Total zakatable assets</span><b id="sAssets">—</b></div>
+  <div class="line muted"><span>Less debts</span><b id="sDebts">—</b></div>
+  <div class="line"><span>Net wealth</span><b id="sNet">—</b></div>
+  <div class="line muted"><span>Nisab threshold (<span id="sNisabStd">silver</span>)</span><b id="sNisab">—</b></div>
+  <div class="sep"></div>
+  <div class="due">
+    <div class="lbl">Zakat due <span class="pill no" id="sStatus">—</span></div>
+    <div class="amt" id="sDue">—</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* storage that won't crash if blocked */
+  var mem={};
+  var store={
+    get:function(k,d){ try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return (k in mem)?mem[k]:d;} },
+    set:function(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch(e){mem[k]=v;} }
+  };
+  function $(id){ return document.getElementById(id); }
+
+  var OZT = 31.1034768;           // grams per troy ounce
+  var NISAB_GOLD_G = 85;          // grams
+  var NISAB_SILVER_G = 595;       // grams
+  var KARAT = { g24:1, g22:22/24, g21:21/24, g18:18/24 };
+
+  var CURRENCIES = [
+    ["USD","$"],["EGP","E\u00A3"],["SAR","\uFDFC"],["AED","\u062F.\u0625"],
+    ["KWD","\u062F.\u0643"],["QAR","\u0631.\u0642"],["EUR","\u20AC"],
+    ["GBP","\u00A3"],["TRY","\u20BA"],["PKR","\u20A8"],["INR","\u20B9"],["MYR","RM"]
+  ];
+
+  /* theme */
+  var savedTheme = store.get("zakat.theme",null);
+  if(savedTheme) document.documentElement.dataset.theme = savedTheme;
+  $("themeBtn").onclick=function(){
+    var cur=document.documentElement.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+    var next=cur==="dark"?"light":"dark";
+    document.documentElement.dataset.theme=next;
+    store.set("zakat.theme",next);
+  };
+
+  /* currency dropdown */
+  var sel=$("currency");
+  CURRENCIES.forEach(function(c){ var o=document.createElement("option");o.value=c[0];o.textContent=c[0]+"  "+c[1];sel.appendChild(o); });
+
+  /* input ids to persist */
+  var FIELDS=["goldPrice","silverPrice","cash","g24","g22","g21","g18","silverG","trade","recv","invest","debts"];
+
+  function symFor(code){ for(var i=0;i<CURRENCIES.length;i++){ if(CURRENCIES[i][0]===code) return CURRENCIES[i][1]; } return ""; }
+  function num(id){ var v=parseFloat($(id).value); return isNaN(v)||v<0?0:v; }
+  function money(n){ return symFor(sel.value)+" "+new Intl.NumberFormat("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}).format(n||0); }
+
+  /* restore saved */
+  var saved=store.get("zakat.data",{});
+  FIELDS.forEach(function(f){ if(saved[f]!=null) $(f).value=saved[f]; });
+  if(saved.currency) sel.value=saved.currency;
+  if(saved.nisab) $("nisab").value=saved.nisab;
+
+  function applySymbols(){
+    var s=symFor(sel.value);
+    var spans=document.querySelectorAll(".in .sym");
+    spans.forEach(function(el){ el.textContent=s; });
+  }
+
+  function save(){
+    var d={currency:sel.value,nisab:$("nisab").value};
+    FIELDS.forEach(function(f){ d[f]=$(f).value; });
+    store.set("zakat.data",d);
+  }
+
+  function compute(){
+    var gp=num("goldPrice"), sp=num("silverPrice");
+
+    /* gold value by karat */
+    var pureGrams = num("g24")*KARAT.g24 + num("g22")*KARAT.g22 + num("g21")*KARAT.g21 + num("g18")*KARAT.g18;
+    var goldVal = pureGrams * gp;
+    var silverVal = num("silverG") * sp;
+
+    var assets = num("cash") + goldVal + silverVal + num("trade") + num("recv") + num("invest");
+    var debts = num("debts");
+    var net = assets - debts;
+
+    var std=$("nisab").value;
+    var nisabVal = std==="gold" ? NISAB_GOLD_G*gp : NISAB_SILVER_G*sp;
+    var meets = net >= nisabVal && nisabVal > 0;
+    var due = meets ? net*0.025 : 0;
+
+    $("sAssets").textContent=money(assets);
+    $("sDebts").textContent="- "+money(debts);
+    $("sNet").textContent=money(net);
+    $("sNisabStd").textContent=std;
+    $("sNisab").textContent = nisabVal>0 ? money(nisabVal) : "set price";
+    $("sDue").textContent = due>0 ? money(due) : money(0);
+
+    var pill=$("sStatus");
+    if(nisabVal<=0){ pill.textContent="set metal price"; pill.className="pill no"; }
+    else if(meets){ pill.textContent="above nisab — due"; pill.className="pill yes"; }
+    else { pill.textContent="below nisab — none"; pill.className="pill no"; }
+  }
+
+  function refresh(){ applySymbols(); compute(); save(); }
+
+  /* listeners */
+  FIELDS.forEach(function(f){ $(f).addEventListener("input",refresh); });
+  sel.addEventListener("change",refresh);
+  $("nisab").addEventListener("change",refresh);
+
+  /* toast */
+  var tt;
+  function toast(m){ var t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("show");},1800); }
+
+  /* live spot fetch — gold-api.com (free, no key, USD/oz) */
+  $("fetchBtn").onclick=function(){
+    var btn=this; btn.disabled=true;
+    var spot=$("spot"); spot.textContent="Fetching live spot prices…";
+    Promise.all([
+      fetch("https://api.gold-api.com/price/XAU").then(function(r){return r.json();}),
+      fetch("https://api.gold-api.com/price/XAG").then(function(r){return r.json();})
+    ]).then(function(res){
+      var gold=res[0], silver=res[1];
+      var gOz = gold && (gold.price||gold.Price);
+      var sOz = silver && (silver.price||silver.Price);
+      if(!gOz || !sOz) throw new Error("bad data");
+      sel.value="USD";
+      $("goldPrice").value=(gOz/OZT).toFixed(2);
+      $("silverPrice").value=(sOz/OZT).toFixed(2);
+      var when=new Date().toLocaleString();
+      spot.innerHTML="Spot loaded in <b>USD</b> — gold <b>$"+gOz.toFixed(0)+"</b>/oz, silver <b>$"+sOz.toFixed(2)+"</b>/oz · "+when;
+      refresh();
+      toast("Live USD spot prices loaded");
+    }).catch(function(){
+      spot.innerHTML="Couldn't reach the live feed — enter your local price per gram manually.";
+      toast("Live fetch failed — enter prices manually");
+    }).finally(function(){ btn.disabled=false; });
+  };
+
+  /* reset */
+  $("resetBtn").onclick=function(){
+    FIELDS.forEach(function(f){ $(f).value=""; });
+    $("spot").textContent="";
+    refresh();
+    toast("Cleared");
+  };
+
+  refresh();
+})();
+</script>
+
+</body>
+</html>

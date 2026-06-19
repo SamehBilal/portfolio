@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+<!-- ============================================================
+     Azkar — Morning & Evening Remembrance
+     Theme: #F9812E · Poppins · light-dark()
+     Counter · pin-to-continue (persists) · reminders · Arabic voice
+     ============================================================ -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap"
+  rel="stylesheet">
+
+<style>
+  :root {
+    --primary: #F9812E;
+    --primary-soft: rgba(249, 129, 46, .10);
+    --primary-ring: rgba(249, 129, 46, .45);
+    --grid: color-mix(in lch, canvasText, transparent 80%);
+    --size: 25px;
+    color-scheme: light dark;
+  }
+
+  [data-theme="light"] {
+    color-scheme: light only;
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark only;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Poppins", sans-serif;
+    color: light-dark(#444, #e2e2e2);
+    background: light-dark(#fff, #0a0a0a);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    height: 75vh;
+    width: 100vw;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px var(--size)) 50% 0/var(--size) var(--size),
+      linear-gradient(var(--grid) 1px, transparent 1px var(--size)) 50% 0/var(--size) var(--size);
+    -webkit-mask: linear-gradient(-20deg, transparent 45%, #000);
+    mask: linear-gradient(-20deg, transparent 45%, #000);
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 18px 16px 120px;
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .brand .ar {
+    font-family: "Amiri", serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: light-dark(#111, #fff);
+  }
+
+  .brand .en {
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    opacity: .55;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .icon-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    background: light-dark(#fff, #161616);
+    border: 1px solid light-dark(rgba(0, 0, 0, .08), rgba(255, 255, 255, .10));
+    color: light-dark(#333, #ddd);
+    transition: .25s;
+  }
+
+  .icon-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+  }
+
+  .icon-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .banner {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding: 13px 16px;
+    border-radius: 15px;
+    background: var(--primary-soft);
+    border: 1px solid var(--primary-ring);
+    color: light-dark(#7a3d10, #ffc89c);
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+
+  .banner.show {
+    display: flex;
+  }
+
+  .banner svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--primary);
+  }
+
+  .banner b {
+    color: var(--primary);
+  }
+
+  .banner button {
+    margin-inline-start: auto;
+    background: var(--primary);
+    color: #fff;
+    border: 0;
+    border-radius: 9px;
+    padding: 6px 12px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .seg {
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 16px;
+    margin-bottom: 14px;
+    background: light-dark(#f4f4f5, #141414);
+    border: 1px solid light-dark(rgba(0, 0, 0, .06), rgba(255, 255, 255, .08));
+  }
+
+  .seg button {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 11px;
+    border-radius: 11px;
+    color: light-dark(#777, #999);
+    transition: .25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+
+  .seg button .ar {
+    font-family: "Amiri", serif;
+    font-size: 17px;
+  }
+
+  .seg button.active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 4px 14px -4px var(--primary-ring);
+  }
+
+  .progress {
+    margin-bottom: 18px;
+  }
+
+  .progress .meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 7px;
+    opacity: .7;
+  }
+
+  .progress .meta b {
+    color: var(--primary);
+  }
+
+  .bar {
+    height: 8px;
+    border-radius: 99px;
+    background: light-dark(#eee, #1c1c1c);
+    overflow: hidden;
+  }
+
+  .bar i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary), #ffb070);
+    border-radius: 99px;
+    transition: width .4s cubic-bezier(.4, 0, .2, 1);
+  }
+
+  .card {
+    position: relative;
+    border-radius: 20px;
+    padding: 18px 18px 14px;
+    margin-bottom: 14px;
+    background: light-dark(#fff, #141414);
+    border: 1px solid light-dark(rgba(0, 0, 0, .07), rgba(255, 255, 255, .08));
+    box-shadow: light-dark(0 2px 10px rgba(0, 0, 0, .03), 0 2px 10px rgba(0, 0, 0, .25));
+    transition: border-color .3s, box-shadow .3s, opacity .3s;
+    scroll-margin-top: 80px;
+  }
+
+  .card.pinned {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-ring), 0 10px 28px -10px var(--primary-ring);
+  }
+
+  .card.done {
+    opacity: .5;
+  }
+
+  .card.done .arabic {
+    text-decoration: line-through;
+    text-decoration-color: var(--primary-ring);
+    text-decoration-thickness: 2px;
+  }
+
+  .card .hd {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .card .num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+
+  .card .tools {
+    margin-inline-start: auto;
+    display: flex;
+    gap: 6px;
+  }
+
+  .tool {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid light-dark(rgba(0, 0, 0, .08), rgba(255, 255, 255, .10));
+    background: transparent;
+    color: light-dark(#666, #aaa);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: .2s;
+  }
+
+  .tool:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .tool svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .tool.on {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+  }
+
+  .pin-flag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--primary);
+    display: none;
+    align-self: center;
+  }
+
+  .card.pinned .pin-flag {
+    display: inline;
+  }
+
+  .arabic {
+    font-family: "Amiri", serif;
+    direction: rtl;
+    text-align: right;
+    line-height: 2.05;
+    color: light-dark(#1a1a1a, #f4f4f4);
+    font-size: var(--ar-size, 24px);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .translit {
+    font-size: 13px;
+    font-style: italic;
+    opacity: .65;
+    margin-bottom: 6px;
+    direction: ltr;
+  }
+
+  .translation {
+    font-size: 13.5px;
+    line-height: 1.55;
+    opacity: .8;
+    margin-bottom: 14px;
+  }
+
+  .hideT .translit,
+  .hideT .translation {
+    display: none;
+  }
+
+  .counter {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .tap {
+    flex: 1;
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+    border-radius: 14px;
+    padding: 14px;
+    font-weight: 600;
+    font-size: 14px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    border: 1px solid var(--primary-ring);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    transition: transform .08s, background .2s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tap:active {
+    transform: scale(.97);
+  }
+
+  .tap.complete {
+    background: var(--primary);
+    color: #fff;
+    cursor: default;
+  }
+
+  .tap svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ring {
+    position: relative;
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+  }
+
+  .ring svg {
+    transform: rotate(-90deg);
+    width: 58px;
+    height: 58px;
+  }
+
+  .ring .track {
+    fill: none;
+    stroke: light-dark(#eee, #222);
+    stroke-width: 5;
+  }
+
+  .ring .fill {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset .35s;
+  }
+
+  .ring .val {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: light-dark(#222, #eee);
+  }
+
+  .ring .val small {
+    font-size: 9px;
+    opacity: .55;
+  }
+
+  .dock {
+    position: fixed;
+    left: 50%;
+    bottom: 18px;
+    translate: -50% 0;
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 99px;
+    z-index: 30;
+    background: light-dark(#fff, #161616);
+    border: 1px solid light-dark(rgba(0, 0, 0, .10), rgba(255, 255, 255, .12));
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+  }
+
+  .dock button {
+    border: 0;
+    background: transparent;
+    color: light-dark(#555, #bbb);
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: .2s;
+  }
+
+  .dock button:hover {
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+
+  .dock button svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .dock .sep {
+    width: 1px;
+    background: light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .12));
+    margin: 4px 0;
+  }
+
+  .scrim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(4px);
+    z-index: 40;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .scrim.show {
+    display: flex;
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: 480px;
+    background: light-dark(#fff, #141414);
+    border-radius: 24px 24px 0 0;
+    padding: 22px 20px calc(22px + env(safe-area-inset-bottom));
+    border: 1px solid light-dark(rgba(0, 0, 0, .08), rgba(255, 255, 255, .10));
+    animation: up .3s cubic-bezier(.2, .8, .2, 1);
+    max-height: 86vh;
+    overflow: auto;
+  }
+
+  @keyframes up {
+    from {
+      transform: translateY(100%);
+    }
+  }
+
+  .sheet h3 {
+    font-size: 18px;
+    color: light-dark(#111, #fff);
+    margin-bottom: 4px;
+  }
+
+  .sheet .sub {
+    font-size: 12.5px;
+    opacity: .6;
+    margin-bottom: 18px;
+  }
+
+  .field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid light-dark(rgba(0, 0, 0, .06), rgba(255, 255, 255, .07));
+  }
+
+  .field:last-of-type {
+    border-bottom: 0;
+  }
+
+  .field label {
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+
+  .field label small {
+    display: block;
+    font-size: 11px;
+    opacity: .55;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  .field input[type=time] {
+    font: inherit;
+    font-size: 14px;
+    padding: 7px 10px;
+    border-radius: 10px;
+    border: 1px solid light-dark(rgba(0, 0, 0, .12), rgba(255, 255, 255, .14));
+    background: transparent;
+    color: inherit;
+  }
+
+  .field input[type=range] {
+    accent-color: var(--primary);
+    width: 130px;
+  }
+
+  .sw {
+    position: relative;
+    width: 46px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+
+  .sw input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .sw span {
+    position: absolute;
+    inset: 0;
+    border-radius: 99px;
+    background: light-dark(#ddd, #333);
+    cursor: pointer;
+    transition: .25s;
+  }
+
+  .sw span::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 3px;
+    top: 3px;
+    border-radius: 50%;
+    background: #fff;
+    transition: .25s;
+  }
+
+  .sw input:checked+span {
+    background: var(--primary);
+  }
+
+  .sw input:checked+span::before {
+    transform: translateX(20px);
+  }
+
+  .sheet .close {
+    width: 100%;
+    margin-top: 18px;
+    border: 0;
+    background: var(--primary);
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    padding: 13px;
+    border-radius: 13px;
+    cursor: pointer;
+  }
+
+  .foot {
+    text-align: center;
+    font-size: 11.5px;
+    opacity: .45;
+    margin-top: 26px;
+  }
+
+  .foot a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 90px;
+    translate: -50% 0;
+    background: light-dark(#111, #fff);
+    color: light-dark(#fff, #111);
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+  }
+
+  .toast.show {
+    opacity: 1;
+    translate: -50% -6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="top">
+    <div class="brand">
+      <span class="ar">الأذكار</span>
+      <span class="en">Morning &amp; Evening</span>
+    </div>
+    <div class="spacer"></div>
+    <button class="icon-btn" id="settingsBtn" aria-label="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+        stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3" />
+        <path
+          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+      </svg>
+    </button>
+    <button class="icon-btn" id="themeBtn" aria-label="Theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="banner" id="banner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+      <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+    </svg>
+    <span id="bannerText"></span>
+    <button id="bannerGo">Go</button>
+  </div>
+
+  <div class="seg">
+    <button data-session="morning" class="active"><span class="ar">أذكار الصباح</span> Morning</button>
+    <button data-session="evening"><span class="ar">أذكار المساء</span> Evening</button>
+  </div>
+
+  <div class="progress">
+    <div class="meta"><span>Completed</span><span><b id="pDone">0</b> / <span id="pTotal">0</span></span></div>
+    <div class="bar"><i id="pBar"></i></div>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="foot">Built for the portfolio of <a href="https://samehbilal.github.io/portfolio" target="_blank"
+      rel="noopener">Sameh Bilal</a></div>
+</div>
+
+<div class="dock">
+  <button id="continueBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+    </svg>
+    Continue
+  </button>
+  <div class="sep"></div>
+  <button id="resetBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+      <path d="M3 3v5h5" />
+    </svg>
+    Reset
+  </button>
+</div>
+
+<div class="scrim" id="scrim">
+  <div class="sheet">
+    <h3>Settings</h3>
+    <p class="sub">Reminders, display &amp; voice</p>
+    <div class="field"><label>Morning reminder<small>Notify me for morning adhkar</small></label><input type="time"
+        id="morningTime" value="06:00"></div>
+    <div class="field"><label>Evening reminder<small>Notify me for evening adhkar</small></label><input type="time"
+        id="eveningTime" value="17:00"></div>
+    <div class="field"><label>Enable notifications<small>While the app is open in this tab</small></label>
+      <div class="sw"><input type="checkbox" id="notif"><span></span></div>
+    </div>
+    <div class="field"><label>Show translation<small>Transliteration &amp; meaning</small></label>
+      <div class="sw"><input type="checkbox" id="showT" checked><span></span></div>
+    </div>
+    <div class="field"><label>Auto-reset daily<small>Fresh counts each new day</small></label>
+      <div class="sw"><input type="checkbox" id="autoReset" checked><span></span></div>
+    </div>
+    <div class="field"><label>Arabic text size</label><input type="range" id="arSize" min="18" max="34" value="24">
+    </div>
+    <div class="field"><label>Voice speed</label><input type="range" id="rate" min="0.5" max="1.2" step="0.1"
+        value="0.8"></div>
+    <button class="close" id="closeSheet">Done</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  (function () {
+    "use strict";
+
+    var mem = {};
+    var store = {
+      get: function (k, d) { try { var v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return (k in mem) ? mem[k] : d; } },
+      set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { mem[k] = v; } }
+    };
+    function today() { return new Date().toISOString().slice(0, 10); }
+
+    /* ---- AZKAR DATA (authentic morning/evening remembrances) ---- */
+    var QULS = [
+      { id: "ikhlas", ar: "قُلْ هُوَ اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ", tr: "Surah Al-Ikhlas (x3)", en: "Say, He is Allah, the One. (Surah 112)", count: 3 },
+      { id: "falaq", ar: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ، مِنْ شَرِّ مَا خَلَقَ، وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ، وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ", tr: "Surah Al-Falaq (x3)", en: "Say, I seek refuge in the Lord of daybreak. (Surah 113)", count: 3 },
+      { id: "nas", ar: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ، مَلِكِ النَّاسِ، إِلَهِ النَّاسِ، مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ، الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ، مِنَ الْجِنَّةِ وَالنَّاسِ", tr: "Surah An-Nas (x3)", en: "Say, I seek refuge in the Lord of mankind. (Surah 114)", count: 3 }
+    ];
+
+    var KURSI = { id: "kursi", ar: "اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ، لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ، لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ، مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ، يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ، وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ، وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ، وَلَا يَئُودُهُ حِفْظُهُمَا، وَهُوَ الْعَلِيُّ الْعَظِيمُ", tr: "Ayat al-Kursi", en: "The Throne Verse (2:255). Protection upon reciting it morning and evening.", count: 1 };
+
+    var TAIL = [
+      { id: "sayyid", count: 1, tr: "Sayyid al-Istighfar", en: "The chief supplication for seeking forgiveness.", ar: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ" },
+      { id: "radhitu", count: 3, tr: "Radhitu billahi (x3)", en: "I am pleased with Allah as Lord, Islam as religion, and Muhammad as Prophet.", ar: "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا" },
+      { id: "hasbi", count: 7, tr: "Hasbiyallah (x7)", en: "Allah is sufficient for me; there is no god but Him. In Him I trust, Lord of the Mighty Throne.", ar: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ" },
+      { id: "bismillah", count: 3, tr: "Bismillahilladhi (x3)", en: "In the name of Allah, with whose name nothing on earth or in heaven can cause harm.", ar: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ" },
+      { id: "afini", count: 3, tr: "Allahumma afini (x3)", en: "O Allah, grant health to my body, my hearing and my sight. There is no god but You.", ar: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ" },
+      { id: "subhan100", count: 100, tr: "SubhanAllahi wa bihamdihi (x100)", en: "Glory and praise to Allah. Whoever says it 100 times has sins forgiven.", ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ" },
+      { id: "tahlil", count: 10, tr: "La ilaha illa Allah (x10)", en: "None has the right to be worshipped but Allah alone, with no partner.", ar: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ" },
+      { id: "istighfar", count: 100, tr: "Astaghfirullah (x100)", en: "I seek Allah's forgiveness and turn to Him in repentance.", ar: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ" },
+      { id: "salah", count: 10, tr: "Salah upon the Prophet (x10)", en: "O Allah, send prayers and peace upon our Prophet Muhammad.", ar: "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ" }
+    ];
+
+    var MORNING = [KURSI].concat(QULS).concat([
+      { id: "asbahna", count: 1, tr: "Asbahna", en: "We have reached the morning and the dominion belongs to Allah.", ar: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ" },
+      { id: "fitrah-m", count: 1, tr: "Asbahna ala fitrah", en: "We rise upon the natural religion of Islam and the word of sincerity.", ar: "أَصْبَحْنَا عَلَى فِطْرَةِ الْإِسْلَامِ، وَعَلَى كَلِمَةِ الْإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ حَنِيفًا مُسْلِمًا وَمَا كَانَ مِنَ الْمُشْرِكِينَ" },
+      { id: "bika-m", count: 1, tr: "Allahumma bika asbahna", en: "O Allah, by You we enter the morning and the evening, by You we live and die, and to You is the resurrection.", ar: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ" }
+    ]).concat(TAIL);
+
+    var EVENING = [KURSI].concat(QULS).concat([
+      { id: "amsayna", count: 1, tr: "Amsayna", en: "We have reached the evening and the dominion belongs to Allah.", ar: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ" },
+      { id: "fitrah-e", count: 1, tr: "Amsayna ala fitrah", en: "We reach evening upon the natural religion of Islam and the word of sincerity.", ar: "أَمْسَيْنَا عَلَى فِطْرَةِ الْإِسْلَامِ، وَعَلَى كَلِمَةِ الْإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ حَنِيفًا مُسْلِمًا وَمَا كَانَ مِنَ الْمُشْرِكِينَ" },
+      { id: "bika-e", count: 1, tr: "Allahumma bika amsayna", en: "O Allah, by You we enter the evening and the morning, by You we live and die, and to You is the return.", ar: "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ" }
+    ]).concat(TAIL);
+
+    var DATA = { morning: MORNING, evening: EVENING };
+
+    /* ---- state ---- */
+    var defaults = { morningTime: "06:00", eveningTime: "17:00", notif: false, showT: true, autoReset: true, arSize: 24, rate: 0.8, theme: null };
+    var saved = store.get("azkar.settings", {});
+    var settings = {};
+    for (var k in defaults) { settings[k] = (k in saved) ? saved[k] : defaults[k]; }
+
+    var counts = store.get("azkar.counts", { morning: {}, evening: {} });
+    if (!counts.morning) counts.morning = {};
+    if (!counts.evening) counts.evening = {};
+    var bookmark = store.get("azkar.bookmark", {});
+    var session = store.get("azkar.session", "morning");
+
+    if (settings.autoReset && store.get("azkar.lastReset", "") !== today()) {
+      counts = { morning: {}, evening: {} };
+      store.set("azkar.counts", counts);
+      store.set("azkar.lastReset", today());
+    }
+
+    if (settings.theme) { document.documentElement.dataset.theme = settings.theme; }
+    document.documentElement.style.setProperty("--ar-size", settings.arSize + "px");
+
+    /* ---- helpers ---- */
+    function $(id) { return document.getElementById(id); }
+    function saveSettings() { store.set("azkar.settings", settings); }
+    var toastTimer;
+    function toast(msg) {
+      var t = $("toast");
+      t.textContent = msg; t.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { t.classList.remove("show"); }, 1600);
+    }
+
+    /* ---- theme toggle ---- */
+    $("themeBtn").onclick = function () {
+      var cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      var next = cur === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      settings.theme = next; saveSettings();
+    };
+
+    /* ---- render ---- */
+    var list = $("list");
+
+    function render() {
+      var items = DATA[session];
+      list.innerHTML = "";
+      list.classList.toggle("hideT", !settings.showT);
+
+      items.forEach(function (z, i) {
+        var cur = counts[session][z.id] || 0;
+        var done = cur >= z.count;
+        var pinned = bookmark.session === session && bookmark.id === z.id;
+        var C = 2 * Math.PI * 24;
+        var off = C * (1 - Math.min(cur / z.count, 1));
+
+        var card = document.createElement("div");
+        card.className = "card" + (done ? " done" : "") + (pinned ? " pinned" : "");
+        card.id = "z-" + z.id;
+
+        var tapInner = done
+          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Completed'
+          : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> Tap to count';
+
+        card.innerHTML =
+          '<div class="hd">' +
+          '<span class="num">' + (i + 1) + '</span>' +
+          '<span class="pin-flag">continue here</span>' +
+          '<div class="tools">' +
+          '<button class="tool spk" aria-label="Read aloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg></button>' +
+          '<button class="tool pin ' + (pinned ? "on" : "") + '" aria-label="Pin"><svg viewBox="0 0 24 24" fill="' + (pinned ? "currentColor" : "none") + '" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>' +
+          '</div>' +
+          '</div>' +
+          '<div class="arabic">' + z.ar + '</div>' +
+          '<div class="translit">' + z.tr + '</div>' +
+          '<div class="translation">' + z.en + '</div>' +
+          '<div class="counter">' +
+          '<button class="tap ' + (done ? "complete" : "") + '">' + tapInner + '</button>' +
+          '<div class="ring">' +
+          '<svg viewBox="0 0 58 58"><circle class="track" cx="29" cy="29" r="24"/><circle class="fill" cx="29" cy="29" r="24" stroke-dasharray="' + C + '" stroke-dashoffset="' + off + '"/></svg>' +
+          '<div class="val">' + cur + '<small>/' + z.count + '</small></div>' +
+          '</div>' +
+          '</div>';
+
+        card.querySelector(".tap").addEventListener("click", function () {
+          var c = counts[session][z.id] || 0;
+          if (c >= z.count) return;
+          counts[session][z.id] = c + 1;
+          store.set("azkar.counts", counts);
+          bookmark = { session: session, id: z.id };
+          store.set("azkar.bookmark", bookmark);
+          if (navigator.vibrate) navigator.vibrate(12);
+          render();
+        });
+
+        card.querySelector(".pin").addEventListener("click", function (e) {
+          e.stopPropagation();
+          if (bookmark.session === session && bookmark.id === z.id) { bookmark = {}; toast("Unpinned"); }
+          else { bookmark = { session: session, id: z.id }; toast("Pinned - continue here later"); }
+          store.set("azkar.bookmark", bookmark);
+          render();
+        });
+
+        card.querySelector(".spk").addEventListener("click", function (e) {
+          e.stopPropagation();
+          speak(z.ar, e.currentTarget);
+        });
+
+        list.appendChild(card);
+      });
+
+      updateProgress();
+    }
+
+    function updateProgress() {
+      var items = DATA[session];
+      var done = 0;
+      items.forEach(function (z) { if ((counts[session][z.id] || 0) >= z.count) done++; });
+      $("pDone").textContent = done;
+      $("pTotal").textContent = items.length;
+      $("pBar").style.width = (done / items.length * 100) + "%";
+    }
+
+    /* ---- session switch ---- */
+    var segBtns = document.querySelectorAll(".seg button");
+    segBtns.forEach(function (b) {
+      b.onclick = function () {
+        segBtns.forEach(function (x) { x.classList.remove("active"); });
+        b.classList.add("active");
+        session = b.dataset.session;
+        store.set("azkar.session", session);
+        render();
+      };
+    });
+    document.querySelector('.seg button[data-session="' + session + '"]').classList.add("active");
+    segBtns.forEach(function (x) { if (x.dataset.session !== session) x.classList.remove("active"); });
+
+    /* ---- continue / reset ---- */
+    $("continueBtn").onclick = function () {
+      if (!bookmark.id) { toast("Nothing pinned yet - tap the bookmark on a zikr"); return; }
+      if (bookmark.session !== session) {
+        document.querySelector('.seg button[data-session="' + bookmark.session + '"]').click();
+      }
+      var el = $("z-" + bookmark.id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    };
+
+    $("resetBtn").onclick = function () {
+      counts[session] = {};
+      store.set("azkar.counts", counts);
+      store.set("azkar.lastReset", today());
+      render();
+      toast("Counts reset for this session");
+    };
+
+    /* ---- voice (Web Speech API, Arabic) ---- */
+    var voices = [];
+    var speaking = null;
+    function loadVoices() { try { voices = window.speechSynthesis.getVoices(); } catch (e) { } }
+    if ("speechSynthesis" in window) {
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function arabicVoice() {
+      for (var i = 0; i < voices.length; i++) { if (/^ar\b|ar[-_]/i.test(voices[i].lang)) return voices[i]; }
+      return null;
+    }
+    function speak(text, btn) {
+      if (!("speechSynthesis" in window)) { toast("Voice not supported here"); return; }
+      if (speaking) { window.speechSynthesis.cancel(); speaking = null; if (btn) btn.classList.remove("on"); return; }
+      var v = arabicVoice();
+      if (!v) { toast("No Arabic voice installed on this device"); }
+      var u = new SpeechSynthesisUtterance(text);
+      if (v) u.voice = v;
+      u.lang = v ? v.lang : "ar-SA";
+      u.rate = settings.rate;
+      u.onend = function () { speaking = null; if (btn) btn.classList.remove("on"); };
+      speaking = u;
+      if (btn) btn.classList.add("on");
+      window.speechSynthesis.speak(u);
+    }
+
+    /* ---- settings sheet ---- */
+    var scrim = $("scrim");
+    $("settingsBtn").onclick = function () {
+      $("morningTime").value = settings.morningTime;
+      $("eveningTime").value = settings.eveningTime;
+      $("notif").checked = settings.notif;
+      $("showT").checked = settings.showT;
+      $("autoReset").checked = settings.autoReset;
+      $("arSize").value = settings.arSize;
+      $("rate").value = settings.rate;
+      scrim.classList.add("show");
+    };
+    $("closeSheet").onclick = function () { scrim.classList.remove("show"); };
+    scrim.onclick = function (e) { if (e.target === scrim) scrim.classList.remove("show"); };
+
+    $("morningTime").onchange = function (e) { settings.morningTime = e.target.value; saveSettings(); };
+    $("eveningTime").onchange = function (e) { settings.eveningTime = e.target.value; saveSettings(); };
+    $("showT").onchange = function (e) { settings.showT = e.target.checked; saveSettings(); render(); };
+    $("autoReset").onchange = function (e) { settings.autoReset = e.target.checked; saveSettings(); };
+    $("arSize").oninput = function (e) { settings.arSize = +e.target.value; document.documentElement.style.setProperty("--ar-size", settings.arSize + "px"); saveSettings(); };
+    $("rate").oninput = function (e) { settings.rate = +e.target.value; saveSettings(); };
+    $("notif").onchange = function (e) {
+      if (e.target.checked) {
+        if (!("Notification" in window)) { toast("Notifications not supported"); e.target.checked = false; return; }
+        Notification.requestPermission().then(function (perm) {
+          if (perm !== "granted") { toast("Permission denied"); e.target.checked = false; settings.notif = false; saveSettings(); }
+          else { toast("Reminders on while the app is open"); settings.notif = true; saveSettings(); }
+        });
+      } else {
+        settings.notif = false; saveSettings();
+      }
+    };
+
+    /* ---- reminders ---- */
+    function timeAwareBanner() {
+      var h = new Date().getHours();
+      var banner = $("banner"), txt = $("bannerText"), go = $("bannerGo");
+      var target = null;
+      if (h >= 4 && h < 11) target = "morning";
+      else if (h >= 15 && h < 20) target = "evening";
+      if (!target) { banner.classList.remove("show"); return; }
+      var allDone = DATA[target].every(function (z) { return (counts[target][z.id] || 0) >= z.count; });
+      if (allDone) { banner.classList.remove("show"); return; }
+      txt.innerHTML = target === "morning"
+        ? "It is morning - time for <b>Morning Adhkar</b>."
+        : "It is evening - time for <b>Evening Adhkar</b>.";
+      go.onclick = function () {
+        document.querySelector('.seg button[data-session="' + target + '"]').click();
+        banner.classList.remove("show");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+      banner.classList.add("show");
+    }
+
+    function checkReminder() {
+      if (!settings.notif || !("Notification" in window) || Notification.permission !== "granted") return;
+      var now = new Date();
+      var hhmm = now.toTimeString().slice(0, 5);
+      var stamp = today();
+      var fired = store.get("azkar.fired", {});
+      var plan = [["morning", settings.morningTime, "Morning Adhkar"], ["evening", settings.eveningTime, "Evening Adhkar"]];
+      plan.forEach(function (p) {
+        var ses = p[0], t = p[1], label = p[2];
+        var key = ses + "-" + stamp;
+        if (hhmm === t && !fired[key]) {
+          fired[key] = true; store.set("azkar.fired", fired);
+          try {
+            var n = new Notification("Time for " + label, {
+              body: ses === "morning" ? "Begin your morning remembrance" : "Begin your evening remembrance",
+              tag: "azkar-" + ses
+            });
+            n.onclick = function () { window.focus(); document.querySelector('.seg button[data-session="' + ses + '"]').click(); };
+          } catch (e) { }
+        }
+      });
+    }
+
+    /* ---- init ---- */
+    render();
+    timeAwareBanner();
+    checkReminder();
+    setInterval(checkReminder, 30000);
+    setInterval(timeAwareBanner, 300000);
+
+    if (bookmark.id) {
+      setTimeout(function () {
+        if (bookmark.session !== session) {
+          document.querySelector('.seg button[data-session="' + bookmark.session + '"]').click();
+        }
+        var el = $("z-" + bookmark.id);
+        if (el) el.scrollIntoView({ block: "center" });
+      }, 250);
+    }
+
+    /* For background reminders when the app is fully closed, register a
+       service worker (sw.js) on your domain and use the Push API. */
+
+  })();
+</script>
+</body>
+</html>
