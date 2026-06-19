@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Pray — Every Salah — Sameh Bilal</title>
+<link rel="apple-touch-icon" href="../assets/images/favicon.png">
+<link rel="shortcut icon" type="image/png" href="../assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#F9812E;--sz:25px;
+  --ln:color-mix(in lch,canvasText,transparent 70%);
+  --bc:rgba(119,119,125,.2);
+  --cord:color-mix(in lch,canvas,canvasText 75%);
+  --stroke-v:color-mix(in lch,canvas,canvasText 75%);
+  --shine:hsl(210 20% 80%/.75);
+  --cap:color-mix(in lch,canvas,canvasText);
+  --filament:light-dark(orange,color-mix(in lch,canvas,canvasText 25%));
+  --bulb:transparent;--wf:24px;--dur:520ms;
+}
+[data-theme="light"]{color-scheme:light only}
+[data-theme="dark"]{color-scheme:dark only}
+html{color-scheme:light dark;height:100%}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{font-family:"Poppins",sans-serif;background:light-dark(#fff,#000);color:light-dark(#444,#e2e2e2);height:100vh;overflow:hidden;display:flex;flex-direction:column}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(90deg,var(--ln) 1px,transparent 1px var(--sz)) 50%/var(--sz) var(--sz),linear-gradient(var(--ln) 1px,transparent 1px var(--sz)) 50%/var(--sz) var(--sz);-webkit-mask:linear-gradient(-20deg,transparent 50%,white);mask:linear-gradient(-20deg,transparent 50%,white);pointer-events:none;z-index:0}
+
+/* ═══ HEADER ═══ */
+header{flex-shrink:0;position:relative;z-index:100;display:flex;align-items:center;padding:16px 28px;gap:16px;background:light-dark(rgba(255,255,255,.9),rgba(0,0,0,.9));backdrop-filter:blur(12px);border-bottom:1px solid var(--bc)}
+.logo{display:inline-block;font-size:2vmin;text-decoration:none;flex-shrink:0}
+.ll{position:relative;display:block;float:left;width:3vmin;height:3vmin;border-top:.25vmin solid light-dark(#000,#fff);line-height:3vmin;text-align:center;color:light-dark(#000,#fff);transition:all .3s}
+.ll::before{position:absolute;top:-.25vmin;right:-.25vmin;display:block;width:.25vmin;height:3vmin;background:var(--p);content:""}
+.nav-mid{margin:0 auto;display:flex;gap:4px;list-style:none}
+.nav-mid a{color:light-dark(#000,#fff);font-size:14px;font-weight:500;padding:6px 14px;text-decoration:none;border-radius:20px;transition:color .2s}
+.nav-mid a:hover,.nav-mid a.cur{color:var(--p)}
+@media(max-width:767px){.nav-mid{display:none}}
+.hbtns{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.hire{background:var(--p);color:#fff;font-size:13px;font-weight:600;font-family:"Poppins",sans-serif;border-radius:14px;padding:9px 20px;text-decoration:none;transition:.3s;white-space:nowrap}
+.hire:hover{background:#000}
+.lform{position:relative;width:var(--wf);aspect-ratio:1;top:-1.2rem;z-index:9999}
+.lform button{width:100%;aspect-ratio:1;position:absolute;top:0;left:0;z-index:3;background:transparent;border:0;padding:0;display:grid;place-items:center;cursor:pointer}
+.gh{width:24px;aspect-ratio:1;border-radius:50%;position:absolute;top:calc((24px*.175)+((24px*.65)*(125/48)));left:50%;translate:-50% -50%;z-index:9;outline:2px dashed canvasText!important;background:hsla(29,77%,59%,.25)}
+.arr{position:absolute;left:-300%;top:200%;width:140%;container-type:inline-size;color:color-mix(in hsl,canvasText,#0000 40%)}
+.arr svg{width:100%;scale:-1 -1}
+.arr label{font-family:"Gloria Hallelujah",cursive;position:absolute;bottom:25%;rotate:8deg;font-size:18cqi;white-space:nowrap;top:50%;right:110%}
+.ts{overflow:visible!important;position:absolute;width:65%;top:50%;left:50%;translate:-50% -50%}
+.ts__cord{stroke:var(--cord);stroke-width:10;cursor:move}
+.ts__cord:nth-of-type(1),.ts__cord:nth-of-type(2),.ts__cord:nth-of-type(3),.ts__cord:nth-of-type(4),.ts__cord:nth-of-type(5){display:none}
+.ts__ce{stroke:var(--cord);fill:var(--cord)}.ts__dc{stroke-width:10;stroke:var(--cord)}
+.bf{stroke:var(--filament);stroke-width:8}[data-theme='light'] .bf{stroke-width:12}
+.bs{stroke:var(--shine)}.bb{stroke:var(--stroke-v);fill:var(--bulb);stroke-width:10}
+.bc2{fill:var(--cap)}.bcs{fill:var(--shine)}.bco{stroke-width:10;stroke:var(--stroke-v)}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ═══ CHOOSER (landing) ═══ */
+.chooser{flex:1;display:none;flex-direction:column;overflow-y:auto;position:relative;z-index:1;padding:30px 32px 36px}
+.chooser.show{display:flex}
+.chooser-head{text-align:center;margin-bottom:24px;flex-shrink:0}
+.ch-sub{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--p);margin-bottom:6px}
+.ch-title{font-size:clamp(24px,4vw,40px);font-weight:800;text-transform:uppercase;letter-spacing:-.01em;color:light-dark(#000,#fff)}
+.ch-title span{color:transparent;-webkit-text-stroke:1px var(--p)}
+.ch-note{font-size:12px;color:light-dark(#888,#777);margin-top:8px}
+.chooser-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;max-width:940px;margin:0 auto;width:100%}
+.ch-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:22px 14px;border-radius:18px;border:1px solid var(--bc);background:light-dark(#fff,#1D1D1D);cursor:pointer;transition:.25s;position:relative;font-family:"Poppins",sans-serif}
+.ch-tile:hover{border-color:var(--p);transform:translateY(-3px);box-shadow:0 8px 24px rgba(249,129,46,.15)}
+.ch-ic{width:54px;height:54px;border-radius:30%;display:flex;align-items:center;justify-content:center;background:rgba(249,129,46,.1);border:1px solid rgba(249,129,46,.2);flex-shrink:0}
+.ch-ic svg{width:60%;height:60%}
+.ch-txt{display:flex;flex-direction:column;align-items:center;gap:3px}
+.ch-en{font-size:14px;font-weight:700;color:light-dark(#222,#e2e2e2)}
+.ch-ar{font-size:13px;direction:rtl;color:var(--p);font-weight:600;line-height:1.4}
+.ch-type{font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:light-dark(#999,#777);line-height:1.35;max-width:150px}
+/* Fard — big tile on the chooser */
+.ch-tile.big{grid-column:span 2;flex-direction:row;justify-content:flex-start;gap:20px;padding:26px 26px;background:rgba(249,129,46,.06);border:1.5px solid rgba(249,129,46,.4);box-shadow:0 0 0 3px rgba(249,129,46,.08)}
+.ch-tile.big .ch-ic{width:78px;height:78px;background:rgba(249,129,46,.16);border-color:rgba(249,129,46,.45)}
+.ch-tile.big .ch-txt{align-items:flex-start;gap:4px}
+.ch-tile.big .ch-en{font-size:23px}
+.ch-tile.big .ch-ar{font-size:18px}
+.ch-tile.big .ch-type{font-size:10px;max-width:none}
+.ch-fard-tag{position:absolute;top:11px;right:13px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--p);padding:3px 9px;border-radius:20px;box-shadow:0 2px 6px rgba(249,129,46,.35)}
+
+/* ═══ STEP VIEW ═══ */
+.main{flex:1;display:none;overflow:hidden;position:relative;z-index:1}
+.main.show{display:flex}
+.left-col{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.pbar{height:3px;background:var(--bc);flex-shrink:0}
+.pfill{height:100%;background:var(--p);transition:width var(--dur) cubic-bezier(.4,0,.2,1);width:0%}
+
+.strip{padding:14px 40px 12px;flex-shrink:0;border-bottom:1px solid var(--bc);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.backbtn{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;font-family:"Poppins",sans-serif;cursor:pointer;border:1px solid var(--bc);background:light-dark(rgba(0,0,0,.03),rgba(255,255,255,.04));color:light-dark(#555,#aaa);transition:.2s}
+.backbtn:hover{border-color:var(--p);color:var(--p)}
+.backbtn svg{width:13px;height:13px}
+.scounter{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:light-dark(#aaa,#555)}
+.sbadge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:30px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(249,129,46,.1);color:var(--p);border:1px solid rgba(249,129,46,.3)}
+.sbadge .dot{width:5px;height:5px;border-radius:50%;background:var(--p)}
+.snametag{font-size:12px;font-weight:700;color:light-dark(#222,#e2e2e2);letter-spacing:.02em;margin-left:auto;display:flex;align-items:center;gap:7px}
+.snametag .ar{direction:rtl;color:var(--p);font-weight:600}
+
+.viewport{flex:1;overflow:hidden;position:relative}
+.panel{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:26px 40px;opacity:0;pointer-events:none;transform:translateY(40px);transition:opacity var(--dur) cubic-bezier(.4,0,.2,1),transform var(--dur) cubic-bezier(.4,0,.2,1)}
+.panel.active{opacity:1;pointer-events:auto;transform:translateY(0)}
+.panel.leaving{opacity:0;transform:translateY(-40px);transition:opacity calc(var(--dur)*.55) ease,transform calc(var(--dur)*.55) ease}
+.snum{font-size:clamp(50px,8vw,92px);font-weight:800;line-height:.85;color:transparent;-webkit-text-stroke:1.5px var(--p);letter-spacing:-.04em;margin-bottom:10px;user-select:none}
+.snum .fill{color:var(--p);-webkit-text-stroke:0}
+.sav{direction:rtl;font-size:17px;line-height:2;color:var(--p);font-weight:500;margin-bottom:3px}
+.sref{font-size:11px;color:light-dark(#aaa,#666);margin-bottom:14px}
+.stitle{font-size:clamp(18px,2.6vw,27px);font-weight:700;text-transform:uppercase;letter-spacing:-.01em;color:light-dark(#000,#fff);margin-bottom:8px;line-height:1.2}
+.stitle span{color:transparent;-webkit-text-stroke:1px light-dark(#000,#fff)}
+.sdesc{font-size:13.5px;line-height:1.85;color:light-dark(#555,#a0aec0);max-width:480px;margin-bottom:14px}
+.squote{padding:11px 15px;border-radius:12px;font-size:11.5px;font-style:italic;line-height:1.85;color:light-dark(#666,#b0b8c8);border:1px dashed rgba(249,129,46,.3);background:rgba(249,129,46,.04);max-width:480px}
+.stip{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:6px 13px;border-radius:20px;font-size:11px;font-weight:600;background:light-dark(rgba(0,0,0,.04),rgba(255,255,255,.05));border:1px solid var(--bc);color:light-dark(#555,#aaa)}
+.stip svg{width:13px;height:13px;flex-shrink:0;color:var(--p)}
+
+.snav{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:12px 40px 14px;border-top:1px solid var(--bc);gap:12px}
+.nbtn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:14px;font-size:13px;font-weight:600;font-family:"Poppins",sans-serif;cursor:pointer;transition:.25s;border:1px solid var(--bc);background:light-dark(rgba(0,0,0,.03),rgba(255,255,255,.04));color:light-dark(#444,#ccc)}
+.nbtn:hover{border-color:var(--p);color:var(--p)}
+.nbtn:disabled{opacity:.3;cursor:default;pointer-events:none}
+.nbtn.primary{background:var(--p);color:#fff;border-color:transparent}
+.nbtn.primary:hover{background:#000}
+.nbtn svg{width:14px;height:14px}
+.dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center}
+.sdot{width:7px;height:7px;border-radius:50%;background:light-dark(rgba(0,0,0,.15),rgba(255,255,255,.15));cursor:pointer;transition:all .3s}
+.sdot.active{background:var(--p);width:22px;border-radius:4px}
+.sdot:hover:not(.active){background:rgba(249,129,46,.4)}
+
+.complete{display:none;flex-direction:column;align-items:center;justify-content:center;padding:30px 40px;text-align:center;gap:12px}
+.complete.show{display:flex;animation:ci .5s ease}
+@keyframes ci{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.cicon{width:70px;height:70px;border-radius:50%;background:rgba(249,129,46,.12);border:2px solid rgba(249,129,46,.3);display:flex;align-items:center;justify-content:center}
+.cicon svg{width:34px;height:34px;color:var(--p)}
+.ctitle{font-size:clamp(20px,3vw,30px);font-weight:800;text-transform:uppercase;letter-spacing:-.01em;color:light-dark(#000,#fff)}
+.ctitle span{color:transparent;-webkit-text-stroke:1px var(--p)}
+.cdesc{font-size:13.5px;line-height:1.9;color:light-dark(#666,#a0aec0);max-width:440px}
+.cav{font-size:20px;direction:rtl;color:var(--p);font-weight:600;line-height:1.8}
+.cref{font-size:11px;color:light-dark(#aaa,#666)}
+
+.right-col{width:42%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--bc);background:light-dark(rgba(249,129,46,.03),rgba(249,129,46,.04));overflow:hidden;position:relative}
+.right-col::before{content:'';position:absolute;width:70%;aspect-ratio:1;border-radius:50%;background:rgba(249,129,46,.06);pointer-events:none}
+.illo{position:relative;z-index:1;width:min(340px,78%);display:flex;flex-direction:column;align-items:center;gap:14px;transition:opacity var(--dur) ease,transform var(--dur) cubic-bezier(.4,0,.2,1)}
+.illo.out{opacity:0;transform:scale(.86) translateY(16px)}
+.illo.in{opacity:0;transform:scale(.86) translateY(-16px)}
+.illo svg.mi{width:100%;height:auto}
+.ilabel{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:light-dark(#888,#777);text-align:center}
+.iav{font-size:20px;direction:rtl;color:var(--p);font-weight:600;text-align:center;line-height:1.6}
+
+/* ═══ DOCK (equal icons) ═══ */
+.dock-wrap{flex-shrink:0;display:none;justify-content:center;align-items:flex-end;padding:0 0 12px;position:relative;z-index:50}
+.dock-wrap.show{display:flex}
+.dock-bar{padding:8px 14px 10px;border-radius:22px;background:light-dark(rgba(255,255,255,.9),rgba(18,18,18,.9));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid light-dark(rgba(0,0,0,.12),rgba(255,255,255,.1));box-shadow:0 4px 24px rgba(0,0,0,.15);max-width:calc(100vw - 24px)}
+.dlist{display:flex;align-items:flex-end;list-style:none;padding:0;margin:0;gap:2px;font-size:clamp(8px,1vw,12px);overflow-x:auto;scrollbar-width:none}
+.dlist::-webkit-scrollbar{display:none}
+.di{display:flex;flex-direction:column;align-items:center;width:4.8em;transition:width .4s cubic-bezier(.16,1,.3,1);position:relative;flex-shrink:0}
+.di.hover{width:7em}.di.sc{width:6em}.di.sf{width:5.3em}
+.dl{display:flex;justify-content:center;align-items:flex-end;width:100%;padding:0 .35em;cursor:pointer;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.dl:hover{transform:translateY(-3px)}
+.di.active .dl{transform:translateY(-5px)}
+.dicon{width:100%;aspect-ratio:1;border-radius:24%;display:flex;align-items:center;justify-content:center;background:light-dark(#eeebe5,#2a2a2a);border:1px solid light-dark(rgba(0,0,0,.08),rgba(255,255,255,.08));overflow:hidden;transition:all .25s}
+.dicon svg{width:60%;height:60%}
+.di.active .dicon{background:rgba(249,129,46,.15);border-color:rgba(249,129,46,.4)}
+.ddot{width:4px;height:4px;border-radius:50%;background:light-dark(#444,#ccc);margin:4px auto 0;opacity:0;transition:opacity .2s}
+.di.active .ddot{opacity:1}
+.dtt{background:light-dark(#1a1a1a,#f0f0f0);color:light-dark(#f0f0f0,#1a1a1a);opacity:0;white-space:nowrap;border-radius:7px;padding:.3em .6em;font-size:.85em;font-weight:500;transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .35s;position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(4px);pointer-events:none;z-index:5}
+.di:hover .dtt{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ═══ MOBILE ═══ */
+@media(max-width:767px){
+  body{overflow:hidden}
+  header{padding:10px 16px}
+  .ll{width:5vmin;height:5vmin;line-height:5vmin;border-top-width:.4vmin}
+  .ll::before{width:.4vmin;height:5vmin;top:-.4vmin;right:-.4vmin}
+  .logo{font-size:3vmin}.lform{display:none}
+  /* chooser */
+  .chooser{padding:16px}
+  .chooser-head{margin-bottom:16px}
+  .chooser-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .ch-tile{padding:16px 10px;gap:7px}
+  .ch-ic{width:44px;height:44px}
+  .ch-en{font-size:12px}.ch-ar{font-size:11px}.ch-type{font-size:8px}
+  .ch-tile.big{grid-column:span 2;padding:18px 16px;gap:14px}
+  .ch-tile.big .ch-ic{width:62px;height:62px}
+  .ch-tile.big .ch-en{font-size:19px}.ch-tile.big .ch-ar{font-size:15px}
+  /* steps */
+  .main{flex-direction:column}
+  .right-col{width:100%;height:180px;flex-shrink:0;border-left:none;border-bottom:1px solid var(--bc)}
+  .right-col::before{width:130px}
+  .illo{width:min(150px,64%);gap:8px}
+  .iav{font-size:15px}.ilabel{font-size:9px}
+  .left-col{flex:1;overflow:hidden}
+  .strip{padding:9px 14px 7px}
+  .snametag{font-size:11px}
+  .panel{padding:12px 16px}
+  .snum{font-size:clamp(38px,13vw,60px)}
+  .sav{font-size:13px}.stitle{font-size:clamp(15px,4.5vw,20px)}
+  .sdesc{font-size:11.5px;margin-bottom:9px}
+  .squote{font-size:10.5px;padding:8px 11px}
+  .stip{font-size:10px;padding:5px 10px}
+  .snav{padding:9px 14px 11px}
+  .nbtn{padding:8px 13px;font-size:12px}
+  .dots{gap:4px}.sdot{width:6px;height:6px}.sdot.active{width:16px}
+  .complete{padding:18px 14px;gap:8px}
+  .ctitle{font-size:clamp(16px,5.5vw,24px)}.cdesc{font-size:11.5px}.cav{font-size:16px}
+  .dock-wrap{padding:6px 0 8px}
+  .dock-bar{padding:6px 10px 8px;border-radius:16px}
+  .dlist{gap:1px;font-size:8px}
+  .di{width:4.4em}.di.hover{width:6em}.di.sc{width:5em}.di.sf{width:4.6em}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="../index.html" class="logo">
+    <span class="ll">S</span><span class="ll">A</span><span class="ll">M</span><span class="ll">E</span><span class="ll">H</span>
+  </a>
+  <ul class="nav-mid">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#service">Services</a></li>
+    <li><a href="../index.html#works">Works</a></li>
+    <li><a href="../stories.html" class="cur">Stories</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <div class="hbtns">
+    <a href="../index.html#contact" class="hire">Hire Me</a>
+    <form class="lform" id="lf">
+      <div class="arr"><label>drag me.</label>
+        <svg aria-hidden="true" viewBox="0 0 144 141" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M129.189 0.049C128.744 0.119 126.422 0.378 124.03 0.636C114.719 1.645 109.23 2.489 108.058 3.099C107.119 3.569 106.674 4.343 106.674 5.446C106.674 6.713 107.424 7.511 109.043 7.98C110.403 8.379 110.825 8.426 118.87 9.528C121.778 9.927 124.288 10.303 124.475 10.373C124.663 10.444 122.951 11.101 120.676 11.875C110.028 15.441 100.412 20.768 91.734 27.924C88.38 30.716 81.696 37.427 79.21 40.501C73.839 47.212 69.687 54.814 66.568 63.73C65.935 65.467 65.348 66.898 65.255 66.898C65.137 66.898 63.777 66.734 62.229 66.569C52.965 65.513 43.185 68.165 34.132 74.219C24.774 80.46 18.535 87.734 10.537 101.742C2.539 115.726-1.096 127.482 0.288 135.014C0.898 138.463 2.047 140.035 3.97 140.082C5.284 140.105 5.377 139.659 4.205 139.049C3.055 138.463 2.657 137.9 2.328 136.281C0.616 128.021 6.245 113.028 17.433 96.11C23.273 87.241 28.362 81.915 35.562 77.105C43.865 71.544 52.707 69.033 61.174 69.831C64.997 70.183 64.692 69.925 64.199 72.482C62.253 82.501 63.801 92.638 67.975 97.354C73.112 103.079 81.977 102 85.003 95.266C86.34 92.286 86.386 87.71 85.143 83.98C83.15 78.09 80.007 73.82 75.434 70.816C73.815 69.76 70.485 68.188 69.875 68.188C69.359 68.188 69.429 67.649 70.227 65.326C72.338 59.249 75.457 52.702 78.412 48.244C83.244 40.923 91.452 32.57 99.169 27.103C105.806 22.41 113.241 18.539 120.512 16.005C123.772 14.855 129.87 13.189 130.081 13.377C130.128 13.447 129.541 14.362 128.791 15.441C124.78 21.026 122.716 26.071 122.388 30.998C122.224 33.72 122.341 34.588 122.88 34.26C122.998 34.189 123.678 32.969 124.405 31.561C126.281 27.807 131.722 20.674 139.579 11.64C141.127 9.857 142.652 7.863 143.027 7.088C144.552 4.038 143.52 1.48 140.377 0.471C139.439 0.166 138.102 0.049 134.584 0.026C132.074-0.021 129.635 0.002 129.189 0.049Z" fill="currentColor"/></svg>
+      </div>
+      <button aria-pressed="false"><span class="sr">Toggle theme</span>
+        <svg aria-hidden="true" class="ts" xmlns="http://www.w3.org/2000/svg" viewBox="32 32 134 134">
+          <defs>
+            <marker id="ma" orient="auto" overflow="visible" refx="0" refy="0"><path class="ts__ce" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+            <clippath id="mg" clippathunits="userSpaceOnUse"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path></clippath>
+          </defs>
+          <g class="ts__cords">
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782" transform="translate(-24.503 256.106)"></path>
+            <path class="ts__cord" marker-end="url(#ma)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623" transform="translate(-24.503 256.106)"></path>
+            <g class="ts__dc line"><line marker-end="url(#ma)" x1="98" x2="98" y1="240" y2="380"></line></g>
+            <circle cx="98.7255" cy="380.5405" r="60" fill="transparent"></circle>
+          </g>
+          <g transform="translate(844.069 -645.213)">
+            <path class="bc2" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+            <path class="bcs" d="M-778.379 802.873h25.512v118.409h-25.512z" clip-path="url(#mg)" transform="matrix(.52452 0 0 .90177 -368.282 82.976)"></path>
+            <path class="bc2" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z"></path>
+            <path class="bco" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+            <g class="bf" fill="none" stroke-linecap="round" stroke-width="5"><path d="M-752.914 823.875l-8.858-33.06"></path><path d="M-737.772 823.875l8.858-33.06"></path></g>
+            <path class="bb" stroke-linecap="round" stroke-width="5" d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z"></path>
+            <circle cx="-745.343" cy="743.939" r="83.725" fill="none" stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></circle>
+            <path class="bs" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957"></path>
+          </g>
+        </svg>
+        <div class="gh"></div>
+      </button>
+    </form>
+  </div>
+</header>
+
+<!-- CHOOSER (landing screen — all prayers, Fard big) -->
+<section class="chooser show" id="chooser">
+  <div class="chooser-head">
+    <p class="ch-sub">How to Pray</p>
+    <h1 class="ch-title">Choose a <span>Prayer</span></h1>
+    <p class="ch-note">Pick a prayer to walk through it step by step.</p>
+  </div>
+  <div class="chooser-grid" id="chooserGrid"></div>
+</section>
+
+<!-- STEP VIEW -->
+<div class="main" id="stepView">
+  <div class="left-col">
+    <div class="pbar"><div class="pfill" id="pf"></div></div>
+    <div class="strip">
+      <button class="backbtn" id="backBtn">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        All prayers
+      </button>
+      <span class="scounter" id="sc">Step 1 of 9</span>
+      <span class="sbadge"><span class="dot"></span><span id="scat">Preparation</span></span>
+      <span class="snametag" id="sname"><span id="snameEn">Fard</span><span class="ar" id="snameAr">الفرض</span></span>
+    </div>
+    <div class="viewport" id="vp"></div>
+    <div class="complete" id="comp">
+      <div class="cicon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      <p class="cav">تَقَبَّلَ اللَّهُ</p>
+      <p class="cref">May Allah accept it from you</p>
+      <h1 class="ctitle"><span id="cnameEn">Salah</span> <span>Complete</span></h1>
+      <p class="cdesc">You have completed this prayer. Choose another from the bar below, start again, or go back to all prayers.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:4px">
+        <button class="nbtn primary" id="againBtn">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.35"/></svg>
+          Start Again
+        </button>
+        <button class="nbtn" id="allBtn">All prayers</button>
+      </div>
+    </div>
+    <div class="snav" id="nav">
+      <button class="nbtn" id="pb" disabled>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="15 18 9 12 15 6"/></svg>
+        Previous
+      </button>
+      <div class="dots" id="dots"></div>
+      <button class="nbtn primary" id="nb">
+        Next
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="right-col">
+    <div class="illo" id="illo">
+      <svg class="mi" id="mi" viewBox="0 0 320 320" fill="none"></svg>
+      <p class="iav" id="iav"></p>
+      <p class="ilabel" id="ilbl"></p>
+    </div>
+  </div>
+</div>
+
+<!-- DOCK (equal icons — quick switch in step view) -->
+<div class="dock-wrap" id="dockWrap">
+  <nav class="dock-bar"><ul class="dlist" id="dock"></ul></nav>
+</div>
+
+<script>
+/* ── Theme ── */
+(function(){
+  const h=document.documentElement,s=localStorage.getItem('theme');
+  if(s)h.dataset.theme=s;
+  const T=['system','light','dark'];let i=s?Math.max(T.indexOf(s),0):0;
+  document.getElementById('lf').addEventListener('submit',e=>{
+    e.preventDefault();i=(i+1)%T.length;const t=T[i];
+    if(!document.startViewTransition){h.dataset.theme=t;}
+    else{document.startViewTransition(()=>{h.dataset.theme=t;});}
+    localStorage.setItem('theme',t);
+  });
+})();
+
+const P='#F9812E';
+
+/* ════════ SVG illustration helpers ════════ */
+function ground(y,w=240){return `<line x1="${160-w/2}" y1="${y}" x2="${160+w/2}" y2="${y}" stroke="${P}" stroke-width="1.5" opacity=".3" stroke-dasharray="5 4"/>`;}
+function cap(t,sub){let h=`<text x="160" y="262" text-anchor="middle" font-family="Poppins,sans-serif" font-size="11" font-weight="600" fill="${P}" opacity=".7">${t}</text>`;if(sub)h+=`<text x="160" y="279" text-anchor="middle" font-family="Poppins,sans-serif" font-size="10" fill="${P}" opacity=".5">${sub}</text>`;return h;}
+
+function figStand(){return `
+  <circle cx="160" cy="70" r="16" fill="${P}22" stroke="${P}" stroke-width="2"/>
+  <line x1="160" y1="86" x2="160" y2="155" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M138 110 Q160 104 182 110" stroke="${P}" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <rect x="140" y="102" width="40" height="16" rx="6" fill="${P}20" stroke="${P}" stroke-width="1.5"/>
+  <line x1="160" y1="155" x2="144" y2="205" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  <line x1="160" y1="155" x2="176" y2="205" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  ${ground(205)}`;}
+function figTakbir(){return `
+  <circle cx="160" cy="70" r="16" fill="${P}22" stroke="${P}" stroke-width="2"/>
+  <line x1="160" y1="86" x2="160" y2="150" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="160" y1="100" x2="120" y2="80" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  <line x1="160" y1="100" x2="200" y2="80" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  <rect x="112" y="68" width="14" height="18" rx="4" fill="${P}20" stroke="${P}" stroke-width="1.5"/>
+  <rect x="194" y="68" width="14" height="18" rx="4" fill="${P}20" stroke="${P}" stroke-width="1.5"/>
+  <line x1="160" y1="150" x2="144" y2="200" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  <line x1="160" y1="150" x2="176" y2="200" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  ${ground(200)}`;}
+function figRuku(){return `
+  <circle cx="105" cy="118" r="16" fill="${P}22" stroke="${P}" stroke-width="2"/>
+  <line x1="105" y1="134" x2="105" y2="158" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="105" y1="140" x2="218" y2="140" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="105" y1="158" x2="88" y2="210" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  <line x1="105" y1="158" x2="122" y2="210" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="205" cy="148" rx="13" ry="9" fill="${P}20" stroke="${P}" stroke-width="1.5"/>
+  ${ground(210)}`;}
+function figSujood(){return `
+  <ellipse cx="160" cy="195" rx="86" ry="11" fill="${P}0a"/>
+  <circle cx="158" cy="183" r="14" fill="${P}22" stroke="${P}" stroke-width="2"/>
+  <path d="M144 183 Q120 178 100 175" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M172 183 Q194 178 215 175" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="95" cy="174" rx="10" ry="7" fill="${P}20" stroke="${P}" stroke-width="1.5"/>
+  <ellipse cx="218" cy="174" rx="10" ry="7" fill="${P}20" stroke="${P}" stroke-width="1.5"/>
+  <path d="M148 196 Q135 196 125 196" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M168 196 Q180 196 195 196" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="158" cy="186" r="4" fill="${P}"/>
+  ${ground(218)}`;}
+function figSit(raise){return `
+  <circle cx="160" cy="105" r="16" fill="${P}22" stroke="${P}" stroke-width="2"/>
+  <line x1="160" y1="121" x2="160" y2="160" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M160 160 Q142 168 124 173 Q112 176 106 180" stroke="${P}" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M160 160 Q178 168 196 175 Q206 179 214 184" stroke="${P}" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="104" cy="183" rx="22" ry="8" fill="${P}15" stroke="${P}" stroke-width="1.5" transform="rotate(-10 104 183)"/>
+  <ellipse cx="214" cy="186" rx="22" ry="8" fill="${P}15" stroke="${P}" stroke-width="1.5" transform="rotate(10 214 186)"/>
+  <line x1="138" y1="138" x2="116" y2="150" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  <line x1="182" y1="138" x2="204" y2="146" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="112" cy="152" rx="13" ry="8" fill="${P}20" stroke="${P}" stroke-width="1.5" transform="rotate(-10 112 152)"/>
+  <ellipse cx="207" cy="148" rx="13" ry="8" fill="${P}20" stroke="${P}" stroke-width="1.5" transform="rotate(5 207 148)"/>
+  ${raise?`<line x1="207" y1="140" x2="207" y2="123" stroke="${P}" stroke-width="2.5" stroke-linecap="round"/><circle cx="207" cy="121" r="3" fill="${P}"/>`:''}
+  ${ground(200)}`;}
+function dua(){return `
+  <circle cx="160" cy="70" r="16" fill="${P}22" stroke="${P}" stroke-width="2"/>
+  <path d="M150 86 Q160 150 160 175" stroke="${P}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M170 86 Q160 150 160 175" stroke="${P}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M140 110 Q120 96 116 78" stroke="${P}" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M180 110 Q200 96 204 78" stroke="${P}" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M104 74 Q110 60 124 62 Q120 72 126 78 Q116 82 116 90 Q110 82 104 74Z" fill="${P}18" stroke="${P}" stroke-width="1.5"/>
+  <path d="M216 74 Q210 60 196 62 Q200 72 194 78 Q204 82 204 90 Q210 82 216 74Z" fill="${P}18" stroke="${P}" stroke-width="1.5"/>
+  <line x1="160" y1="175" x2="144" y2="215" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  <line x1="160" y1="175" x2="176" y2="215" stroke="${P}" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="160" cy="38" r="5" fill="${P}" opacity=".4"/><circle cx="138" cy="46" r="3" fill="${P}" opacity=".3"/><circle cx="182" cy="46" r="3" fill="${P}" opacity=".3"/>
+  ${ground(215)}`;}
+function nightSky(){return `
+  <circle cx="200" cy="110" r="52" fill="${P}0d" stroke="${P}" stroke-width="1.5"/>
+  <path d="M200 62 a52 52 0 1 0 0 96 a40 40 0 1 1 0 -96Z" fill="${P}22" stroke="${P}" stroke-width="2"/>
+  <circle cx="110" cy="70" r="2.5" fill="${P}"/><circle cx="90" cy="120" r="2" fill="${P}" opacity=".7"/>
+  <circle cx="130" cy="150" r="2.5" fill="${P}" opacity=".8"/><circle cx="80" cy="180" r="2" fill="${P}" opacity=".6"/>
+  <circle cx="150" cy="95" r="1.8" fill="${P}" opacity=".5"/><circle cx="240" cy="180" r="2" fill="${P}" opacity=".6"/>
+  <path d="M108 64 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z" fill="${P}"/>
+  ${ground(215)}${cap('Rise in the depth of the night','Last third is most beloved')}`;}
+function sunLow(){return `
+  <circle cx="160" cy="150" r="34" fill="${P}22" stroke="${P}" stroke-width="2"/>
+  <g stroke="${P}" stroke-width="2.5" stroke-linecap="round">
+   <line x1="160" y1="95" x2="160" y2="108"/><line x1="160" y1="192" x2="160" y2="205"/>
+   <line x1="105" y1="150" x2="118" y2="150"/><line x1="202" y1="150" x2="215" y2="150"/>
+   <line x1="121" y1="111" x2="130" y2="120"/><line x1="199" y1="111" x2="190" y2="120"/>
+  </g>
+  <line x1="60" y1="205" x2="260" y2="205" stroke="${P}" stroke-width="2" opacity=".5"/>
+  <path d="M60 205 Q160 195 260 205" stroke="${P}" stroke-width="1.5" fill="none" opacity=".3" stroke-dasharray="4 4"/>
+  ${cap('After sunrise has fully risen','From mid-morning until just before Dhuhr')}`;}
+function mosque(){return `
+  <rect x="95" y="120" width="130" height="90" rx="4" fill="${P}10" stroke="${P}" stroke-width="2"/>
+  <path d="M160 70 Q172 95 172 120 L148 120 Q148 95 160 70Z" fill="${P}20" stroke="${P}" stroke-width="2"/>
+  <circle cx="160" cy="66" r="4" fill="${P}"/>
+  <rect x="78" y="100" width="14" height="110" rx="3" fill="${P}10" stroke="${P}" stroke-width="1.8"/>
+  <rect x="228" y="100" width="14" height="110" rx="3" fill="${P}10" stroke="${P}" stroke-width="1.8"/>
+  <path d="M140 210 L140 175 Q160 158 180 175 L180 210Z" fill="${P}18" stroke="${P}" stroke-width="1.5"/>
+  ${ground(210)}${cap('Two rak\'ahs before you sit','Honour the house of Allah')}`;}
+function rows(){return `
+  <line x1="60" y1="120" x2="260" y2="120" stroke="${P}" stroke-width="1.5" opacity=".4"/>
+  ${[80,120,160,200,240].map(x=>`<g transform="translate(${x},0)"><circle cx="0" cy="100" r="9" fill="${P}18" stroke="${P}" stroke-width="1.5"/><line x1="0" y1="109" x2="0" y2="150" stroke="${P}" stroke-width="2"/><line x1="-12" y1="120" x2="12" y2="120" stroke="${P}" stroke-width="1.5"/></g>`).join('')}
+  <rect x="92" y="172" width="136" height="26" rx="6" fill="${P}15" stroke="${P}" stroke-width="2"/>
+  <line x1="92" y1="185" x2="228" y2="185" stroke="${P}" stroke-width="1" opacity=".5"/>
+  ${ground(212)}${cap('Standing only — no ruku, no sujood','The congregation prays in rows')}`;}
+
+/* ════════ SALAH DATA ════════ */
+const SALAH=[
+  {
+    key:'fard',en:'Fard',ar:'الفرض',type:'Obligatory — Fard',fard:true,
+    dock:'Fard · الفرض',
+    icon:'<svg viewBox="0 0 32 32"><path d="M16 5 Q19 11 19 16 a3 3 0 0 1-6 0 Q13 11 16 5Z" fill="#F9812E22" stroke="#F9812E" stroke-width="1.5"/><circle cx="16" cy="16" r="11" fill="none" stroke="#F9812E" stroke-width="1.4"/></svg>',
+    steps:[
+      {cat:'Preparation',av:'النِّيَّةُ وَاسْتِقْبَالُ الْقِبْلَة',ref:'Hadith — Bukhari 1',
+        title:'Intention',titleSpan:'& Facing Qibla',
+        desc:'Ensure you have valid wudu, clean clothes and place, and face the Qibla. Make the intention in your heart for the specific Fard prayer (Fajr, Dhuhr, Asr, Maghrib or Isha).',
+        quote:'"Actions are by intentions." — Bukhari 1',
+        tip:'Fajr 2 · Dhuhr 4 · Asr 4 · Maghrib 3 · Isha 4 rak\'ahs.',
+        iav:'النِّيَّة',ilbl:'Face the Qibla, intend in the heart',draw:s=>s.innerHTML=figStand()+cap('Stand facing the Kaaba','Intention is silent, in the heart')},
+      {cat:'Opening',av:'تَكْبِيرَةُ الإِحْرَام',ref:'Hadith — Abu Dawud 618',
+        title:'Takbiratul',titleSpan:'Ihram',
+        desc:'Raise both hands to shoulder or ear level and say "Allahu Akbar". This begins the prayer; everything worldly is now left behind.',
+        quote:'"Its opening is the Takbir." — Abu Dawud 618',
+        tip:'Say "Allahu Akbar" aloud — this opens the Salah.',
+        iav:'اللَّهُ أَكْبَر',ilbl:'Raise hands — Allahu Akbar',draw:s=>s.innerHTML=figTakbir()+cap('Hands raised to shoulder level')},
+      {cat:'Qiyam',av:'القِيَامُ وَقِرَاءَةُ الفَاتِحَة',ref:'Hadith — Bukhari 756',
+        title:'Standing:',titleSpan:'Recite Al-Fatiha',
+        desc:'Fold hands on the chest (right over left). Recite the opening du\'a, then Surah Al-Fatiha, then a short surah or verses. Done in every rak\'ah.',
+        quote:'"No prayer for one who does not recite Al-Fatiha." — Bukhari 756',
+        tip:'Al-Fatiha is obligatory in every rak\'ah.',
+        iav:'الْحَمْدُ لِلَّهِ',ilbl:'Hands folded — recite Al-Fatiha',draw:s=>s.innerHTML=figStand()+cap('Right hand over left, on the chest')},
+      {cat:'Ruku',av:'الرُّكُوع',ref:'Hadith — Bukhari 793',
+        title:'Bow:',titleSpan:'Ruku',
+        desc:'Say "Allahu Akbar" and bow with a flat back, hands gripping the knees. Say "Subhana Rabbiyal Adheem" three times.',
+        quote:'"Bow until your back is straight." — Bukhari 793',
+        tip:'Back level — parallel to the ground.',
+        iav:'سُبْحَانَ رَبِّيَ الْعَظِيم',ilbl:'× 3 — back straight, hands on knees',draw:s=>s.innerHTML=figRuku()+cap('Bow with a level back','× 3')},
+      {cat:'Rising',av:'الاعْتِدَال',ref:'Hadith — Bukhari 789',
+        title:'Rise from',titleSpan:'Ruku',
+        desc:'Rise saying "Sami\'a Allahu liman hamidah", stand fully upright, then say "Rabbana wa lakal hamd". Pause briefly.',
+        quote:'"Then rise until you are standing straight." — Bukhari 793',
+        tip:'Stand fully upright before going down.',
+        iav:'سَمِعَ اللَّهُ لِمَنْ حَمِدَه',ilbl:'Rise and stand straight',draw:s=>s.innerHTML=figStand()+cap('Stand fully upright again')},
+      {cat:'Sujood',av:'السُّجُود',ref:'Hadith — Muslim 482',
+        title:'Prostration:',titleSpan:'Sujood',
+        desc:'Say "Allahu Akbar" and prostrate on seven parts: forehead with nose, both palms, both knees, and toes of both feet. Say "Subhana Rabbiyal A\'la" three times. Two sujoods per rak\'ah.',
+        quote:'"The closest a servant is to his Lord is in prostration." — Muslim 482',
+        tip:'7 points touch the ground in each sujood.',
+        iav:'سُبْحَانَ رَبِّيَ الأَعْلَى',ilbl:'7 points down — × 3',draw:s=>s.innerHTML=figSujood()+cap('Forehead, hands, knees, toes','× 3 each sujood')},
+      {cat:'Sitting',av:'الجُلُوسُ بَيْنَ السَّجْدَتَيْن',ref:'Hadith — Bukhari 818',
+        title:'Sit between',titleSpan:'the Sujoods',
+        desc:'Rise to a brief sitting, say "Rabbighfir li", then perform the second sujood. Then rise for the next rak\'ah.',
+        quote:'"He sat until he was upright." — Bukhari 818',
+        tip:'A calm, brief sit is obligatory between sujoods.',
+        iav:'رَبِّ اغْفِرْ لِي',ilbl:'Sit — then second sujood',draw:s=>s.innerHTML=figSit(0)+cap('Brief sit, then prostrate again')},
+      {cat:'Tashahhud',av:'التَّشَهُّد',ref:'Hadith — Muslim 402',
+        title:'Sit for',titleSpan:'Tashahhud',
+        desc:'After the second sujood of the second rak\'ah, sit and recite the Tashahhud with the index finger raised. In the final sitting, add the Salawat upon the Prophet ﷺ.',
+        quote:'"At-Tahiyyatu lillahi..." — Bukhari 831',
+        tip:'Raise only the index finger during Tashahhud.',
+        iav:'التَّحِيَّاتُ لِلَّهِ',ilbl:'Index finger raised',draw:s=>s.innerHTML=figSit(1)+cap('Tashahhud — finger raised')},
+      {cat:'Tasleem',av:'التَّسْلِيم',ref:'Hadith — Abu Dawud 618',
+        title:'Ending:',titleSpan:'Tasleem',
+        desc:'Turn the head right saying "Assalamu Alaikum wa Rahmatullah", then left and repeat. This ends the prayer; follow with the post-prayer adhkar.',
+        quote:'"Its closing is the Tasleem." — Abu Dawud 618',
+        tip:'Both turns — right then left — are required.',
+        iav:'السَّلَامُ عَلَيْكُم وَرَحْمَةُ اللَّه',ilbl:'Turn right, then left',draw:s=>s.innerHTML=figSit(0)+cap('Salam to the right, then the left')},
+    ]},
+
+  {
+    key:'sunnah',en:'Sunnah',ar:'السنن الرواتب',type:'Confirmed Sunnah (Rawatib)',
+    dock:'Sunnah · السنن',
+    icon:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="#F9812E" stroke-width="1.4" stroke-dasharray="3 2"/><path d="M16 7 Q19 12 19 16 a3 3 0 0 1-6 0 Q13 12 16 7Z" fill="#F9812E18" stroke="#F9812E" stroke-width="1.3"/></svg>',
+    steps:[
+      {cat:'Intention',av:'سُنَّةٌ رَاتِبَة',ref:'Hadith — Muslim 728',
+        title:'Intend a',titleSpan:'Sunnah Prayer',
+        desc:'These are the regular voluntary prayers attached to the Fard. Make the intention for the specific Sunnah you are praying — they are performed exactly like a normal 2-rak\'ah prayer.',
+        quote:'"Whoever prays twelve rak\'ahs in a day and night, a house is built for him in Paradise." — Muslim 728',
+        tip:'Same physical steps as Fard — only the intention differs.',
+        iav:'النِّيَّة',ilbl:'Intend the specific Sunnah',draw:s=>s.innerHTML=figStand()+cap('Pray as a normal 2-rak\'ah prayer')},
+      {cat:'The 12',av:'اثْنَتَا عَشْرَةَ رَكْعَة',ref:'Hadith — Tirmidhi 415',
+        title:'The Twelve',titleSpan:'Rak\'ahs',
+        desc:'The confirmed Rawatib are: 2 before Fajr · 4 before Dhuhr and 2 after · 2 after Maghrib · 2 after Isha. The 2 before Fajr are the most emphasised of all.',
+        quote:'"The two rak\'ahs of Fajr are better than the world and all it contains." — Muslim 725',
+        tip:'2 before Fajr · 4+2 Dhuhr · 2 Maghrib · 2 Isha = 12.',
+        iav:'سُنَّةُ الْفَجْر',ilbl:'12 rak\'ahs across the day',draw:s=>s.innerHTML=mosque()},
+      {cat:'Method',av:'كَصَلَاةِ النَّافِلَة',ref:'Sunnah of the Prophet ﷺ',
+        title:'Pray Two',titleSpan:'Rak\'ahs',
+        desc:'Each Sunnah is prayed like any prayer: Takbir, Al-Fatiha and a surah, Ruku, two Sujood, then Tashahhud and Tasleem after two rak\'ahs. Praying them at home is encouraged.',
+        quote:'"Pray in your homes, and do not turn them into graves." — Bukhari 1187',
+        tip:'Praying Sunnah at home carries extra reward.',
+        iav:'الرَّكْعَتَان',ilbl:'Two rak\'ahs, then Tasleem',draw:s=>s.innerHTML=figSujood()+cap('Same steps — Fatiha, Ruku, Sujood')},
+    ]},
+
+  {
+    key:'witr',en:'Witr',ar:'الوتر',type:'Sunnah Mu\'akkadah / Wajib (Hanafi)',
+    dock:'Witr · الوتر',
+    icon:'<svg viewBox="0 0 32 32"><text x="16" y="22" text-anchor="middle" font-size="16" font-weight="800" font-family="Poppins,sans-serif" fill="#F9812E">1</text><circle cx="16" cy="16" r="12" fill="none" stroke="#F9812E" stroke-width="1.3"/></svg>',
+    steps:[
+      {cat:'Timing',av:'وَقْتُ الْوِتْر',ref:'Hadith — Bukhari 998',
+        title:'Pray After',titleSpan:'Isha',
+        desc:'Witr is prayed after the Isha prayer and lasts until the break of dawn (Fajr). It is the seal of the night prayers and was never abandoned by the Prophet ﷺ.',
+        quote:'"Make the last of your night prayer Witr." — Bukhari 998',
+        tip:'Its time runs from after Isha until Fajr enters.',
+        iav:'بَعْدَ الْعِشَاء',ilbl:'After Isha, until dawn',draw:s=>s.innerHTML=nightSky()},
+      {cat:'Rak\'ahs',av:'عَدَدٌ وِتْر',ref:'Hadith — Muslim 752',
+        title:'An Odd',titleSpan:'Number',
+        desc:'Witr is an odd number of rak\'ahs — one, three, five, and so on. The simplest is a single rak\'ah; three is the most common, prayed like a normal prayer.',
+        quote:'"Allah is Witr (One) and loves the Witr (odd)." — Bukhari 6410',
+        tip:'1, 3, 5… — one rak\'ah alone is valid Witr.',
+        iav:'رَكْعَةٌ فَرْدِيَّة',ilbl:'Odd number of rak\'ahs',draw:s=>s.innerHTML=figStand()+cap('One, three, five… an odd count')},
+      {cat:'Qunut',av:'دُعَاءُ الْقُنُوت',ref:'Hadith — Tirmidhi 464',
+        title:'The Du\'a',titleSpan:'al-Qunut',
+        desc:'In the final rak\'ah, raise the hands and recite Du\'a al-Qunut — "Allahumma ihdini fiman hadayt..." Schools differ on whether it comes before or after Ruku; both are reported.',
+        quote:'"O Allah, guide me among those You have guided..." — Qunut, Tirmidhi 464',
+        tip:'Before or after Ruku — both ways are authentically reported.',
+        iav:'اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْت',ilbl:'Raise hands — du\'a of Qunut',draw:s=>s.innerHTML=dua()+cap('Raise the hands for Qunut')},
+    ]},
+
+  {
+    key:'istikhara',en:'Istikhara',ar:'الاستخارة',type:'Voluntary — Seeking Guidance',
+    dock:'Istikhara · الاستخارة',
+    icon:'<svg viewBox="0 0 32 32"><path d="M16 6 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2Z" fill="#F9812E"/><path d="M9 22 Q16 17 23 22" stroke="#F9812E" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="9" cy="24" r="2" fill="#F9812E"/><circle cx="23" cy="24" r="2" fill="#F9812E"/></svg>',
+    steps:[
+      {cat:'When',av:'عِنْدَ الْهَمِّ بِالأَمْر',ref:'Hadith — Bukhari 1166',
+        title:'When You',titleSpan:'Must Decide',
+        desc:'Pray Istikhara whenever you face a lawful decision and are unsure which path is better — work, marriage, travel, and so on. It is not for choosing between right and wrong, which is already clear.',
+        quote:'"When one of you intends a matter, let him pray two rak\'ahs..." — Bukhari 1166',
+        tip:'Only for permissible choices — not for obvious duties.',
+        iav:'إِذَا هَمَّ أَحَدُكُم',ilbl:'When a lawful matter is unclear',draw:s=>s.innerHTML=`<path d="M120 80 h80 v60 l-20 20 h-40 l-20 -20Z" fill="${P}10" stroke="${P}" stroke-width="2"/><path d="M160 100 v40 M140 120 h40" stroke="${P}" stroke-width="2" stroke-linecap="round"/><path d="M95 110 l-18 14 18 14" fill="none" stroke="${P}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M225 110 l18 14 -18 14" fill="none" stroke="${P}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`+cap('Two paths — seek the better one')},
+      {cat:'Pray',av:'رَكْعَتَانِ نَافِلَة',ref:'Hadith — Bukhari 1166',
+        title:'Pray Two',titleSpan:'Rak\'ahs',
+        desc:'With wudu and intention for Istikhara, pray two voluntary rak\'ahs as normal (not at the forbidden times). Complete them with the Tasleem before making the du\'a.',
+        quote:'"...two rak\'ahs other than the obligatory prayer." — Bukhari 1166',
+        tip:'Two ordinary rak\'ahs first — then the du\'a.',
+        iav:'الرَّكْعَتَان',ilbl:'Two voluntary rak\'ahs',draw:s=>s.innerHTML=figRuku()+cap('Two normal rak\'ahs')},
+      {cat:'The Du\'a',av:'دُعَاءُ الاسْتِخَارَة',ref:'Hadith — Bukhari 1166',
+        title:'The Istikhara',titleSpan:'Du\'a',
+        desc:'After the Tasleem, raise the hands and recite: "Allahumma inni astakhiruka bi\'ilmika wa astaqdiruka bi qudratika..." — naming your specific need where the du\'a indicates.',
+        quote:'"O Allah, I seek Your guidance through Your knowledge, and Your power..." — Bukhari 1166',
+        tip:'Mention your actual need by name within the du\'a.',
+        iav:'اللَّهُمَّ إِنِّي أَسْتَخِيرُكَ بِعِلْمِك',ilbl:'Raise hands — the Istikhara du\'a',draw:s=>s.innerHTML=dua()+cap('Recite the du\'a, name your need')},
+      {cat:'After',av:'التَّوَكُّلُ وَالْمُضِيّ',ref:'Sunnah of the Prophet ﷺ',
+        title:'Trust',titleSpan:'& Proceed',
+        desc:'After Istikhara, proceed with what your heart inclines toward and trust Allah\'s decree. There is no need to wait for a dream; ease or difficulty in the matter is often the answer.',
+        quote:'"Whoever consults the Creator will not regret it." — narrated by the scholars',
+        tip:'No dream is required — act, then trust the outcome.',
+        iav:'وَتَوَكَّلْ عَلَى اللَّه',ilbl:'Act on it and rely on Allah',draw:s=>s.innerHTML=`<path d="M80 150 Q160 90 240 150" stroke="${P}" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="240" cy="150" r="6" fill="${P}"/><path d="M232 145 l8 5 8 -5" stroke="${P}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="80" cy="150" r="5" fill="${P}" opacity=".6"/>`+cap('Move forward with trust','Ease in the path is a sign')},
+    ]},
+
+  {
+    key:'hajah',en:'Hajah',ar:'الحاجة',type:'Voluntary — Prayer of Need',
+    dock:'Hajah · الحاجة',
+    icon:'<svg viewBox="0 0 32 32"><path d="M9 22 Q16 16 23 22" stroke="#F9812E" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="9" cy="24" r="2.4" fill="#F9812E"/><circle cx="23" cy="24" r="2.4" fill="#F9812E"/><circle cx="16" cy="8" r="2.4" fill="#F9812E"/><line x1="16" y1="11" x2="16" y2="14" stroke="#F9812E" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    steps:[
+      {cat:'Purify',av:'فَأَحْسِنِ الْوُضُوء',ref:'Hadith — Tirmidhi 479',
+        title:'Perfect Your',titleSpan:'Wudu',
+        desc:'When you have a pressing need from Allah or from people, begin by making wudu well and completely. A calm heart and good purification set the tone for the prayer.',
+        quote:'"Whoever has a need... let him perform wudu well." — Tirmidhi 479',
+        tip:'Take your time and complete the wudu properly.',
+        iav:'فَلْيَتَوَضَّأ',ilbl:'Make wudu completely',draw:s=>s.innerHTML=`<path d="M120 90 q-10 50 30 70 q40 -20 30 -70" fill="${P}0d" stroke="${P}" stroke-width="2"/><path d="M140 120 q20 -10 40 0" stroke="${P}" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="125" cy="95" r="4" fill="${P}" opacity=".5"/><circle cx="195" cy="95" r="4" fill="${P}" opacity=".5"/><path d="M150 75 q10 -10 20 0" stroke="${P}" stroke-width="2" fill="none" stroke-linecap="round"/>`+cap('Begin with a complete wudu')},
+      {cat:'Pray',av:'رَكْعَتَانِ',ref:'Hadith — Tirmidhi 479',
+        title:'Pray Two',titleSpan:'Rak\'ahs',
+        desc:'Pray two voluntary rak\'ahs with full attention and humility, intending Salat al-Hajah. Do not hurry; let the heart be present before Allah.',
+        quote:'"...then let him pray two rak\'ahs." — Tirmidhi 479',
+        tip:'Pray with presence of heart, unhurried.',
+        iav:'الرَّكْعَتَان',ilbl:'Two rak\'ahs of need',draw:s=>s.innerHTML=figSujood()+cap('Two humble rak\'ahs')},
+      {cat:'Praise',av:'الثَّنَاءُ وَالصَّلَاةُ عَلَى النَّبِيّ',ref:'Hadith — Tirmidhi 479',
+        title:'Praise &',titleSpan:'Send Salawat',
+        desc:'After the prayer, begin by praising Allah as He deserves, then send blessings (Salawat) upon the Prophet ﷺ. This is the etiquette that opens the gates of acceptance.',
+        quote:'"...let him praise Allah and send blessings on the Prophet ﷺ." — Tirmidhi 479',
+        tip:'Praise first, then Salawat — before asking.',
+        iav:'اللَّهُمَّ صَلِّ عَلَى مُحَمَّد',ilbl:'Praise Allah, bless the Prophet ﷺ',draw:s=>s.innerHTML=`<text x="160" y="120" text-anchor="middle" font-family="serif" font-size="20" fill="${P}">الحمد لله</text><path d="M90 150 h140" stroke="${P}" stroke-width="1.5" opacity=".3"/><text x="160" y="185" text-anchor="middle" font-family="serif" font-size="16" fill="${P}" opacity=".8">اللهم صلِّ على محمد</text>`+cap('Praise, then blessings on the Prophet ﷺ')},
+      {cat:'Ask',av:'سُؤَالُ الْحَاجَة',ref:'Hadith — Tirmidhi 479',
+        title:'Make Du\'a',titleSpan:'for Your Need',
+        desc:'Raise your hands and ask Allah directly and clearly for your specific need — in this world and the next. Ask with certainty that He hears and answers.',
+        quote:'"Call upon Me; I will respond to you." — Quran 40:60',
+        tip:'Be specific and ask with full certainty of response.',
+        iav:'يَا رَبِّ',ilbl:'Ask clearly for your need',draw:s=>s.innerHTML=dua()+cap('Raise the hands and ask plainly')},
+    ]},
+
+  {
+    key:'duha',en:'Duha',ar:'الضحى',type:'Voluntary — Forenoon',
+    dock:'Duha · الضحى',
+    icon:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="6" fill="#F9812E22" stroke="#F9812E" stroke-width="1.4"/><g stroke="#F9812E" stroke-width="1.5" stroke-linecap="round"><line x1="16" y1="4" x2="16" y2="7"/><line x1="16" y1="25" x2="16" y2="28"/><line x1="4" y1="16" x2="7" y2="16"/><line x1="25" y1="16" x2="28" y2="16"/></g></svg>',
+    steps:[
+      {cat:'Timing',av:'وَقْتُ الضُّحَى',ref:'Hadith — Muslim 748',
+        title:'After the',titleSpan:'Sun Rises',
+        desc:'Salat al-Duha begins about 15–20 minutes after sunrise (once the sun has fully risen) and continues until just before Dhuhr. The best time is when the day grows hot.',
+        quote:'"The prayer of the oft-repentant is when the young camels feel the heat." — Muslim 748',
+        tip:'From mid-morning until just before Dhuhr.',
+        iav:'بَعْدَ الشُّرُوق',ilbl:'Mid-morning, before Dhuhr',draw:s=>s.innerHTML=sunLow()},
+      {cat:'Rak\'ahs',av:'مِنْ رَكْعَتَيْنِ إِلَى ثَمَان',ref:'Hadith — Muslim 719',
+        title:'Two to',titleSpan:'Eight Rak\'ahs',
+        desc:'Pray a minimum of two rak\'ahs, and as many as eight or more in sets of two. Each pair is prayed like a normal voluntary prayer, ended with Tasleem.',
+        quote:'"Charity is due upon every joint... two rak\'ahs of Duha suffice for that." — Muslim 720',
+        tip:'Pray in pairs — 2, 4, 6 or 8 rak\'ahs.',
+        iav:'رَكْعَتَانِ فَأَكْثَر',ilbl:'2 to 8 rak\'ahs, in pairs',draw:s=>s.innerHTML=figStand()+cap('Pray in sets of two')},
+      {cat:'Reward',av:'صَدَقَةٌ عَنْ كُلِّ مَفْصِل',ref:'Hadith — Muslim 720',
+        title:'Charity for',titleSpan:'Every Joint',
+        desc:'The two rak\'ahs of Duha stand in for the charity owed by every joint of the body each morning — a light act with immense reward and a means of barakah in the day.',
+        quote:'"Two rak\'ahs in the forenoon suffice him." — Muslim 720',
+        tip:'A small prayer that pays the body\'s daily charity.',
+        iav:'تُجْزِئُ عَنْ ذَلِك',ilbl:'Reward of giving charity',draw:s=>s.innerHTML=`<circle cx="160" cy="140" r="50" fill="${P}10" stroke="${P}" stroke-width="2"/><path d="M160 115 v50 M135 140 h50" stroke="${P}" stroke-width="3" stroke-linecap="round"/><circle cx="160" cy="140" r="64" fill="none" stroke="${P}" stroke-width="1" stroke-dasharray="3 5" opacity=".4"/>`+cap('A small prayer, great reward')},
+    ]},
+
+  {
+    key:'tahajjud',en:'Tahajjud',ar:'التهجد',type:'Voluntary — Night Prayer',
+    dock:'Tahajjud · التهجد',
+    icon:'<svg viewBox="0 0 32 32"><path d="M22 16 a8 8 0 1 1-8-8 a6 6 0 1 0 8 8Z" fill="#F9812E22" stroke="#F9812E" stroke-width="1.4"/><circle cx="9" cy="9" r="1.4" fill="#F9812E"/><circle cx="25" cy="24" r="1.4" fill="#F9812E"/></svg>',
+    steps:[
+      {cat:'Wake',av:'الْقِيَامُ بَعْدَ النَّوْم',ref:'Quran 17:79',
+        title:'Sleep,',titleSpan:'Then Rise',
+        desc:'Tahajjud is the night prayer offered after sleeping. To rise from a warm bed for Allah is among the most beloved acts and a mark of the sincere.',
+        quote:'"And in part of the night, pray Tahajjud as an extra offering." — Quran 17:79',
+        tip:'Its essence is rising after sleep to pray.',
+        iav:'وَمِنَ اللَّيْلِ فَتَهَجَّد',ilbl:'Sleep first, then rise to pray',draw:s=>s.innerHTML=nightSky()},
+      {cat:'Best Time',av:'الثُّلُثُ الأَخِير',ref:'Hadith — Bukhari 1145',
+        title:'The Last',titleSpan:'Third of Night',
+        desc:'The most beloved time is the final third of the night, when Allah descends and answers the supplicant. If that is hard, any portion after Isha and sleep counts.',
+        quote:'"Our Lord descends each night to the lowest heaven in the last third..." — Bukhari 1145',
+        tip:'The last third of the night is the most blessed.',
+        iav:'يَنْزِلُ رَبُّنَا',ilbl:'The final third of the night',draw:s=>s.innerHTML=`<path d="M40 170 a120 120 0 0 1 240 0" fill="none" stroke="${P}" stroke-width="1.5" opacity=".3"/><line x1="120" y1="100" x2="120" y2="170" stroke="${P}" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/><line x1="200" y1="100" x2="200" y2="170" stroke="${P}" stroke-width="1" stroke-dasharray="3 3" opacity=".4"/><path d="M200 60 a40 40 0 1 0 30 70 a30 30 0 1 1-30 -70Z" fill="${P}22" stroke="${P}" stroke-width="1.5"/><text x="240" y="158" text-anchor="middle" font-family="Poppins,sans-serif" font-size="10" font-weight="700" fill="${P}">3rd</text>`+cap('When the Lord answers the caller')},
+      {cat:'Pray',av:'مَثْنَى مَثْنَى',ref:'Hadith — Bukhari 990',
+        title:'Pray Two',titleSpan:'by Two',
+        desc:'Pray in pairs of two rak\'ahs, as many as you wish. The Prophet ﷺ prayed long, beautiful rak\'ahs at night with humility and weeping.',
+        quote:'"The night prayer is two by two." — Bukhari 990',
+        tip:'Two rak\'ahs at a time, as many as you can.',
+        iav:'صَلَاةُ اللَّيْلِ مَثْنَى',ilbl:'Pray in pairs of two',draw:s=>s.innerHTML=figSujood()+cap('Long, humble rak\'ahs','Two by two')},
+      {cat:'Seal',av:'وَاخْتِمْ بِالْوِتْر',ref:'Hadith — Bukhari 998',
+        title:'End With',titleSpan:'Witr & Du\'a',
+        desc:'Make Witr the last prayer of your night, and pour out du\'a in those quiet hours — for the night is a time when supplication is answered.',
+        quote:'"Make the last of your night prayer Witr." — Bukhari 998',
+        tip:'Close the night with Witr and sincere du\'a.',
+        iav:'وَالْوِتْرُ آخِرُهَا',ilbl:'Seal the night with Witr',draw:s=>s.innerHTML=dua()+cap('End with Witr and du\'a')},
+    ]},
+
+  {
+    key:'tawbah',en:'Tawbah',ar:'التوبة',type:'Voluntary — Repentance',
+    dock:'Tawbah · التوبة',
+    icon:'<svg viewBox="0 0 32 32"><path d="M22 9 a9 9 0 1 0 3 7" fill="none" stroke="#F9812E" stroke-width="1.6" stroke-linecap="round"/><path d="M22 5 v5 h-5" fill="none" stroke="#F9812E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="16" r="2.4" fill="#F9812E"/></svg>',
+    steps:[
+      {cat:'Purify',av:'الْوُضُوءُ ثُمَّ الصَّلَاة',ref:'Hadith — Abu Dawud 1521',
+        title:'Make Wudu',titleSpan:'Well',
+        desc:'When you fall into a sin, the Prophet ﷺ taught a beautiful remedy: rise, make wudu properly, and turn back to Allah. The door of repentance is always open.',
+        quote:'"There is no servant who sins, then purifies and prays, then seeks forgiveness, except Allah forgives him." — Abu Dawud 1521',
+        tip:'Begin the return to Allah with a clean wudu.',
+        iav:'فَيَتَطَهَّر',ilbl:'Purify yourself first',draw:s=>s.innerHTML=`<path d="M120 90 q-10 50 30 70 q40 -20 30 -70" fill="${P}0d" stroke="${P}" stroke-width="2"/><path d="M140 120 q20 -10 40 0" stroke="${P}" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="155" cy="80" r="3" fill="${P}" opacity=".5"/><circle cx="170" cy="72" r="2.5" fill="${P}" opacity=".4"/>`+cap('Wudu opens the return')},
+      {cat:'Pray',av:'رَكْعَتَانِ',ref:'Hadith — Abu Dawud 1521',
+        title:'Pray Two',titleSpan:'Rak\'ahs',
+        desc:'Pray two rak\'ahs seeking nearness to Allah, with a heart that feels its fault and hopes in His mercy. Sujood is the closest you can be to Him — pour it out there.',
+        quote:'"...then prays two rak\'ahs." — Abu Dawud 1521',
+        tip:'Let humility and hope fill the two rak\'ahs.',
+        iav:'الرَّكْعَتَان',ilbl:'Two rak\'ahs of return',draw:s=>s.innerHTML=figSujood()+cap('Two rak\'ahs of humble return')},
+      {cat:'Repent',av:'الِاسْتِغْفَارُ الصَّادِق',ref:'Quran 66:8',
+        title:'Sincere',titleSpan:'Istighfar',
+        desc:'Seek Allah\'s forgiveness sincerely — regret the sin, leave it at once, and resolve not to return. Allah loves those who turn back to Him.',
+        quote:'"O you who believe, turn to Allah in sincere repentance." — Quran 66:8',
+        tip:'True tawbah: regret, leave the sin, resolve to not return.',
+        iav:'أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْه',ilbl:'Sincere seeking of forgiveness',draw:s=>s.innerHTML=dua()+cap('Regret, leave it, return no more')},
+    ]},
+
+  {
+    key:'janazah',en:'Janazah',ar:'الجنازة',type:'Fard Kifayah — Funeral Prayer',
+    dock:'Janazah · الجنازة',
+    icon:'<svg viewBox="0 0 32 32"><rect x="6" y="14" width="20" height="6" rx="2" fill="#F9812E18" stroke="#F9812E" stroke-width="1.4"/><line x1="11" y1="14" x2="11" y2="24" stroke="#F9812E" stroke-width="1.4"/><line x1="21" y1="14" x2="21" y2="24" stroke="#F9812E" stroke-width="1.4"/><path d="M10 11 h12" stroke="#F9812E" stroke-width="1.4" stroke-linecap="round"/></svg>',
+    steps:[
+      {cat:'Standing',av:'القِيَامُ بِلَا رُكُوعٍ وَلَا سُجُود',ref:'Hadith — Bukhari 1245',
+        title:'Standing',titleSpan:'Prayer Only',
+        desc:'The funeral prayer is performed entirely standing — there is no Ruku and no Sujood. It is a Fard Kifayah: if some of the community perform it, the obligation is lifted from the rest.',
+        quote:'"Pray over your companion." — Bukhari 1245',
+        tip:'No bowing or prostration — four Takbirs while standing.',
+        iav:'صَلَاةُ الْجِنَازَة',ilbl:'Standing, in rows, behind the imam',draw:s=>s.innerHTML=rows()},
+      {cat:'1st Takbir',av:'التَّكْبِيرَةُ الأُولَى',ref:'Hadith — Bukhari 1335',
+        title:'First Takbir:',titleSpan:'Al-Fatiha',
+        desc:'Say "Allahu Akbar" raising the hands, then recite Surah Al-Fatiha quietly. This is the opening of the funeral prayer.',
+        quote:'"It is from the Sunnah to recite Al-Fatiha in the funeral prayer." — Bukhari 1335',
+        tip:'After the first Takbir, recite Al-Fatiha.',
+        iav:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِين',ilbl:'1st Takbir — recite Al-Fatiha',draw:s=>s.innerHTML=figStand()+cap('First Takbir, then Al-Fatiha')},
+      {cat:'2nd Takbir',av:'الصَّلَاةُ عَلَى النَّبِيّ',ref:'Sunnah of the Prophet ﷺ',
+        title:'Second Takbir:',titleSpan:'Salawat',
+        desc:'Say "Allahu Akbar" again, then recite the Salawat upon the Prophet ﷺ — the same Ibrahimiyyah blessings recited in the Tashahhud.',
+        quote:'"Allahumma salli ala Muhammad..." — the Ibrahimi blessings',
+        tip:'Send blessings on the Prophet ﷺ after the second Takbir.',
+        iav:'اللَّهُمَّ صَلِّ عَلَى مُحَمَّد',ilbl:'2nd Takbir — Salawat',draw:s=>s.innerHTML=figStand()+cap('Second Takbir, then Salawat')},
+      {cat:'3rd Takbir',av:'الدُّعَاءُ لِلْمَيِّت',ref:'Hadith — Muslim 963',
+        title:'Third Takbir:',titleSpan:'Du\'a for the Deceased',
+        desc:'Say "Allahu Akbar", then make sincere du\'a for the deceased: "Allahumma ighfir lahu warhamhu wa \'afihi wa\'fu \'anhu" — O Allah, forgive him, have mercy on him, and pardon him.',
+        quote:'"O Allah, forgive our living and our dead..." — Muslim 963',
+        tip:'Pray earnestly for the forgiveness of the deceased.',
+        iav:'اللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْه',ilbl:'3rd Takbir — du\'a for the deceased',draw:s=>s.innerHTML=dua()+cap('Du\'a of mercy for the deceased')},
+      {cat:'4th Takbir',av:'التَّكْبِيرَةُ الرَّابِعَةُ وَالتَّسْلِيم',ref:'Sunnah of the Prophet ﷺ',
+        title:'Fourth Takbir:',titleSpan:'Tasleem',
+        desc:'Say "Allahu Akbar" a fourth time, pause briefly (a short du\'a may be added), then give the Tasleem to the right — and to the left — ending the prayer.',
+        quote:'"Its closing is the Tasleem."',
+        tip:'A brief pause, then Salam ends the funeral prayer.',
+        iav:'السَّلَامُ عَلَيْكُم',ilbl:'4th Takbir — then Tasleem',draw:s=>s.innerHTML=rows()},
+    ]},
+
+  {
+    key:'masjid',en:'Greeting',ar:'تحية المسجد',type:'Sunnah — Greeting the Mosque',
+    dock:'Masjid · تحية المسجد',
+    icon:'<svg viewBox="0 0 32 32"><path d="M16 5 q4 5 4 8 h-8 q0 -3 4 -8Z" fill="#F9812E20" stroke="#F9812E" stroke-width="1.3"/><rect x="8" y="14" width="16" height="12" rx="1.5" fill="#F9812E10" stroke="#F9812E" stroke-width="1.3"/><path d="M13 26 v-5 q3 -3 6 0 v5" fill="#F9812E18" stroke="#F9812E" stroke-width="1.1"/></svg>',
+    steps:[
+      {cat:'On Entering',av:'دُخُولُ الْمَسْجِد',ref:'Hadith — Bukhari 444',
+        title:'When You',titleSpan:'Enter the Mosque',
+        desc:'Whenever you enter a mosque, it is a confirmed Sunnah to greet it with two rak\'ahs before you sit down — a greeting to the house of Allah.',
+        quote:'"When one of you enters the mosque, let him not sit until he prays two rak\'ahs." — Bukhari 444',
+        tip:'Pray before you sit down.',
+        iav:'إِذَا دَخَلَ أَحَدُكُمُ الْمَسْجِد',ilbl:'Greet the mosque on entering',draw:s=>s.innerHTML=mosque()},
+      {cat:'Pray',av:'رَكْعَتَانِ خَفِيفَتَان',ref:'Hadith — Muslim 714',
+        title:'Pray Two',titleSpan:'Light Rak\'ahs',
+        desc:'Pray two brief rak\'ahs as a normal voluntary prayer. If the congregational Fard is about to begin, that suffices and you join the line instead.',
+        quote:'"...let him pray two rak\'ahs before he sits." — Muslim 714',
+        tip:'If the Fard is starting, join it — that counts.',
+        iav:'الرَّكْعَتَان',ilbl:'Two light rak\'ahs',draw:s=>s.innerHTML=figRuku()+cap('Two short rak\'ahs')},
+      {cat:'Note',av:'أَوْقَاتُ النَّهْي',ref:'Hadith — Muslim 825',
+        title:'Mind the',titleSpan:'Times of Prohibition',
+        desc:'Avoid voluntary prayer at the three forbidden times: after Fajr until the sun rises, at the sun\'s zenith, and after Asr until sunset. Many scholars allow this greeting even then, as it has a cause.',
+        quote:'"Do not seek to pray at sunrise or sunset." — Bukhari 1192',
+        tip:'Scholars differ — many permit it as it has a reason.',
+        iav:'أَوْقَاتُ الْكَرَاهَة',ilbl:'Be aware of forbidden times',draw:s=>s.innerHTML=`<circle cx="160" cy="150" r="34" fill="${P}10" stroke="${P}" stroke-width="2" stroke-dasharray="5 4"/><line x1="126" y1="184" x2="194" y2="116" stroke="${P}" stroke-width="3" stroke-linecap="round" opacity=".6"/><line x1="60" y1="200" x2="260" y2="200" stroke="${P}" stroke-width="2" opacity=".4"/>`+cap('Three brief windows to avoid','Sunrise, zenith, and sunset')},
+    ]},
+];
+
+/* ════════ Chooser (landing) ════════ */
+function buildChooser(){
+  const g=document.getElementById('chooserGrid');g.innerHTML='';
+  SALAH.forEach((m,i)=>{
+    const t=document.createElement('button');
+    t.className='ch-tile'+(m.fard?' big':'');t.dataset.idx=i;
+    t.innerHTML=`${m.fard?'<span class="ch-fard-tag">Fard</span>':''}
+      <span class="ch-ic">${m.icon}</span>
+      <span class="ch-txt">
+        <span class="ch-en">${m.en}</span>
+        <span class="ch-ar">${m.ar}</span>
+        <span class="ch-type">${m.type}</span>
+      </span>`;
+    t.addEventListener('click',()=>selectSalah(i));
+    g.appendChild(t);
+  });
+}
+
+/* ════════ Dock (equal icons) ════════ */
+function buildDock(){
+  const el=document.getElementById('dock');el.innerHTML='';
+  SALAH.forEach((m,i)=>{
+    const li=document.createElement('li');
+    li.className='di'+(i===curSalah?' active':'');li.dataset.idx=i;
+    li.innerHTML=`<div class="dl"><div class="dicon">${m.icon}</div></div><div class="ddot"></div><div class="dtt">${m.dock}</div>`;
+    li.querySelector('.dl').addEventListener('click',()=>selectSalah(i));
+    li.addEventListener('mouseenter',()=>{
+      li.classList.add('hover');
+      const ls=el.querySelectorAll('.di');const idx=[...ls].indexOf(li);
+      [[1,'sc'],[2,'sf'],[-1,'sc'],[-2,'sf']].forEach(([o,c])=>{const s=ls[idx+o];if(s)s.classList.add(c);});
+    });
+    li.addEventListener('mouseleave',()=>{li.classList.remove('hover');el.querySelectorAll('.di').forEach(d=>d.classList.remove('sc','sf'));});
+    el.appendChild(li);
+  });
+}
+
+/* ════════ State & step rendering ════════ */
+let curSalah=0, cur=0, busy=false;
+function STEPS(){return SALAH[curSalah].steps;}
+
+function buildPanels(){
+  const vp=document.getElementById('vp');vp.innerHTML='';
+  STEPS().forEach((s,i)=>{
+    const p=document.createElement('div');
+    p.className='panel'+(i===0?' active':'');p.id='p'+i;
+    const n=String(i+1);
+    p.innerHTML=`
+      <div class="snum"><span class="fill">${n[0]}</span>${n.length>1?n[1]:''}</div>
+      <p class="sav">${s.av}</p><p class="sref">${s.ref}</p>
+      <h1 class="stitle">${s.title} <span>${s.titleSpan}</span></h1>
+      <p class="sdesc">${s.desc}</p>
+      <div class="squote">${s.quote}</div>
+      <div class="stip">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        ${s.tip}
+      </div>`;
+    vp.appendChild(p);
+  });
+}
+
+function buildDots(){
+  const el=document.getElementById('dots');el.innerHTML='';
+  STEPS().forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='sdot'+(i===cur?' active':'');
+    d.addEventListener('click',()=>{if(!busy)goTo(i);});
+    el.appendChild(d);
+  });
+}
+
+function updateIllo(animate){
+  const s=STEPS()[cur];const wrap=document.getElementById('illo');const svg=document.getElementById('mi');
+  const set=()=>{s.draw(svg);document.getElementById('iav').textContent=s.iav;document.getElementById('ilbl').textContent=s.ilbl;};
+  if(animate){
+    wrap.classList.add('out');
+    setTimeout(()=>{set();wrap.classList.remove('out');wrap.classList.add('in');
+      requestAnimationFrame(()=>requestAnimationFrame(()=>wrap.classList.remove('in')));},220);
+  } else set();
+}
+
+function updateUI(){
+  const m=SALAH[curSalah], s=STEPS()[cur], total=STEPS().length;
+  document.getElementById('sc').textContent=`Step ${cur+1} of ${total}`;
+  document.getElementById('scat').textContent=s.cat;
+  document.getElementById('snameEn').textContent=m.en;
+  document.getElementById('snameAr').textContent=m.ar;
+  document.getElementById('pf').style.width=`${((cur+1)/total)*100}%`;
+  document.getElementById('pb').disabled=cur===0;
+  const nb=document.getElementById('nb');
+  nb.innerHTML=(cur===total-1)
+    ?'Finish <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>'
+    :'Next <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+  buildDots();updateIllo(true);
+}
+
+function goTo(next){
+  if(busy)return;
+  const total=STEPS().length;
+  if(next===total){showComplete();return;}
+  if(next<0||next>=total)return;
+  busy=true;
+  const op=document.getElementById('p'+cur), np=document.getElementById('p'+next);
+  op.classList.add('leaving');op.classList.remove('active');
+  updateIllo(true);
+  setTimeout(()=>{
+    op.classList.remove('leaving');cur=next;
+    np.style.transform='translateY(40px)';np.style.opacity='0';np.classList.add('active');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{np.style.transform='';np.style.opacity='';}));
+    updateUI();busy=false;
+  },300);
+}
+function next(){const t=STEPS().length;cur===t-1?showComplete():goTo(cur+1);}
+function prev(){goTo(cur-1);}
+
+function showComplete(){
+  const m=SALAH[curSalah];
+  document.getElementById('vp').style.display='none';
+  document.getElementById('nav').style.display='none';
+  document.querySelector('.strip').style.display='none';
+  document.getElementById('pf').style.width='100%';
+  document.getElementById('cnameEn').textContent=m.en;
+  document.getElementById('comp').classList.add('show');
+  const svg=document.getElementById('mi');
+  document.getElementById('iav').textContent='تَقَبَّلَ اللَّهُ';
+  document.getElementById('ilbl').textContent='May Allah accept it from you';
+  svg.innerHTML=`
+    <circle cx="160" cy="160" r="88" fill="${P}0a" stroke="${P}" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <circle cx="160" cy="160" r="58" fill="${P}12" stroke="${P}" stroke-width="2"/>
+    <path d="M132 160 L150 178 L190 134" stroke="${P}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="160" y="288" text-anchor="middle" font-family="serif" font-size="15" fill="${P}" opacity=".8">تَقَبَّلَ اللَّهُ</text>`;
+}
+
+/* ════════ View switching ════════ */
+function showChooser(){
+  document.getElementById('chooser').classList.add('show');
+  document.getElementById('stepView').classList.remove('show');
+  document.getElementById('dockWrap').classList.remove('show');
+}
+
+function selectSalah(i){
+  curSalah=i;cur=0;busy=false;
+  // enter step view
+  document.getElementById('chooser').classList.remove('show');
+  document.getElementById('stepView').classList.add('show');
+  document.getElementById('dockWrap').classList.add('show');
+  // reset step UI
+  document.getElementById('vp').style.display='';
+  document.getElementById('nav').style.display='';
+  document.querySelector('.strip').style.display='';
+  document.getElementById('comp').classList.remove('show');
+  buildPanels();buildDots();updateUI();buildDock();
+}
+
+/* ════════ Events ════════ */
+document.getElementById('nb').addEventListener('click',next);
+document.getElementById('pb').addEventListener('click',prev);
+document.getElementById('backBtn').addEventListener('click',showChooser);
+document.getElementById('allBtn').addEventListener('click',showChooser);
+document.getElementById('againBtn').addEventListener('click',()=>selectSalah(curSalah));
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('stepView').classList.contains('show'))return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')next();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')prev();
+});
+
+/* swipe on left col */
+let tx=0,ty=0;
+const lc=document.querySelector('.left-col');
+lc.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+lc.addEventListener('touchend',e=>{
+  const dy=ty-e.changedTouches[0].clientY, dx=tx-e.changedTouches[0].clientX;
+  if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>40){dy>0?next():prev();}
+},{passive:true});
+
+/* init — start on the chooser */
+buildChooser();
+buildDock();
+showChooser();
+</script>
+</body>
+</html>
