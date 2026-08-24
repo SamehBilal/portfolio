@@ -40,7 +40,7 @@
     "description": "Portfolio site for DigitXa featuring a snake-menu component and firefly particle effects.",
     "label": "Islamic Checklist",
     "url": "stories/islamic-checklist.html"
-  },
+  }/* ,
   {
     "image": "https://assets.codepen.io/2585/Roboto.svg",
     "description": "Portfolio site for DigitXa featuring a snake-menu component and firefly particle effects.",
@@ -88,5 +88,5 @@
     "description": "Data migration seeder transferring ~55,000 posts across PostgreSQL schemas with role and phone normalization.",
     "label": "Data Migration",
     "url": "#"
-  }
+  } */
 ]
