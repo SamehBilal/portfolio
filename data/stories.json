@@ -40,53 +40,5 @@
     "description": "Portfolio site for DigitXa featuring a snake-menu component and firefly particle effects.",
     "label": "Islamic Checklist",
     "url": "stories/islamic-checklist.html"
-  }/* ,
-  {
-    "image": "https://assets.codepen.io/2585/Roboto.svg",
-    "description": "Portfolio site for DigitXa featuring a snake-menu component and firefly particle effects.",
-    "label": "DigitXa Portfolio",
-    "url": "#"
-  },
-  {
-    "image": "https://assets.codepen.io/2585/Entertainment.svg",
-    "description": "Event ticketing system with QR scanning, offline queuing via IndexedDB, and Paymob payment flows.",
-    "label": "Event Ticketing",
-    "url": "#"
-  },
-  {
-    "image": "https://assets.codepen.io/2585/Mechanical+Love.svg",
-    "description": "A tournament bracket voting system with public interfaces, QR codes, and real-time results.",
-    "label": "Bracket Voting",
-    "url": "#"
-  },
-  {
-    "image": "https://assets.codepen.io/2585/Waiting.svg",
-    "description": "Zoho ↔ Shopify synchronization engine with duplicate prevention, rate limiting, and email alerts.",
-    "label": "Zoho–Shopify Sync",
-    "url": "#"
-  },
-  {
-    "image": "https://assets.codepen.io/2585/Roboto.svg",
-    "description": "Analytics dashboard with PostgreSQL-specific queries, Chart.js visualizations, and auto-refresh.",
-    "label": "Analytics Dashboard",
-    "url": "#"
-  },
-  {
-    "image": "https://assets.codepen.io/2585/Entertainment.svg",
-    "description": "HR careers portal with job postings, applicant tracking, interview calendar, and email templates.",
-    "label": "Careers Portal",
-    "url": "#"
-  },
-  {
-    "image": "https://assets.codepen.io/2585/Mechanical+Love.svg",
-    "description": "WhatsApp template manager integrated with Twilio's Content API for multi-channel messaging.",
-    "label": "WhatsApp Templates",
-    "url": "#"
-  },
-  {
-    "image": "https://assets.codepen.io/2585/Waiting.svg",
-    "description": "Data migration seeder transferring ~55,000 posts across PostgreSQL schemas with role and phone normalization.",
-    "label": "Data Migration",
-    "url": "#"
-  } */
+  }
 ]
