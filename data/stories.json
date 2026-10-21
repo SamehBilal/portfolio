@@ -6,6 +6,12 @@
     "url": "https://samehbilal.github.io/palestine-crises/live.html"
   },
   {
+    "image": "https://samehbilal.github.io/portfolio/assets/images/projects/92.jpg",
+    "description": "A tribute page for the late Egyptian author Ahmed Khaled Tawfik, showcasing his works and legacy.",
+    "label": "Ahmed Khaled Tawfik",
+    "url": "https://samehbilal.github.io/ahmed-khaled-tawfik/index.html"
+  },
+  {
     "image": "https://samehbilal.github.io/portfolio/assets/images/stories/hijra_story.png",
     "description": "An interactive map tracing the Prophet's Hijra journey from Makkah to Madinah with rich historical storytelling.",
     "label": "Hijra Map",
