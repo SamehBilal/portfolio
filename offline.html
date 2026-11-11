@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="assets/js/theme.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline | Sameh Bilal</title>
+    <meta name="robots" content="noindex">
+    <style>
+        :root {
+            color-scheme: light dark;
+            --bg: #FAFAFA;
+            --card: #fff;
+            --text: #18181B;
+            --muted: #6b6b73;
+            --line: rgba(0, 0, 0, .08);
+            --accent: #F9812E;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #18181B;
+                --card: #1D1D1D;
+                --text: #FAFAFA;
+                --muted: #a1a1aa;
+                --line: rgba(255, 255, 255, .08);
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #18181B;
+            --card: #1D1D1D;
+            --text: #FAFAFA;
+            --muted: #a1a1aa;
+            --line: rgba(255, 255, 255, .08);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px 16px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Poppins, system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 40px 28px;
+        }
+
+        .card img { width: 72px; height: 72px; border-radius: 18px; }
+        h1 { font-size: 26px; margin: 20px 0 8px; }
+        p { color: var(--muted); line-height: 1.6; margin: 0 0 24px; }
+
+        .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+        .btn {
+            border: 0;
+            border-radius: 999px;
+            padding: 12px 22px;
+            font: 600 14px/1 inherit;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            background: var(--accent);
+            color: #18181B;
+        }
+
+        .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    </style>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#18181B">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/icons/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icons/apple-touch-icon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Sameh Bilal">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+</head>
+
+<body>
+    <main class="card">
+        <img src="assets/images/icons/icon-192.png" alt="">
+        <h1>You're offline</h1>
+        <p>This page hasn't been saved on this device yet. Pages you've opened before still work &mdash; try the home page, or reload once you're back online.</p>
+        <div class="actions">
+            <button class="btn" type="button" onclick="location.reload()">Try again</button>
+            <a class="btn ghost" href="index.html">Home</a>
+        </div>
+    </main>
+    <script>window.addEventListener('online', function () { location.reload(); });</script>
+    <!-- PWA: offline, updates and connection notices -->
+    <script src="assets/js/pwa.js" data-root="./"></script>
+</body>
+
+</html>

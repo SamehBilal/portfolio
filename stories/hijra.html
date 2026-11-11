@@ -277,6 +277,17 @@
             }
         }
     </style>
+
+    <!-- PWA -->
+    <link rel="manifest" href="../manifest.webmanifest">
+    <meta name="theme-color" content="#18181B">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/icons/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/icons/apple-touch-icon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Sameh Bilal">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 </head>
 
 <body>
@@ -659,6 +670,8 @@
 
         draw();
     </script>
+    <!-- PWA: offline, updates and connection notices -->
+    <script src="../assets/js/pwa.js" data-root="../"></script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ميزان الأعمال · Deed Balance — Sameh Bilal</title>
 
-    <link rel="apple-touch-icon" href="../assets/images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/icons/apple-touch-icon.png">
     <link rel="shortcut icon" type="image/png" href="../assets/images/favicon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -409,6 +409,16 @@
             .scale-scene { font-size: clamp(3px, 2.8vw, 4px); }
         }
     </style>
+
+    <!-- PWA -->
+    <link rel="manifest" href="../manifest.webmanifest">
+    <meta name="theme-color" content="#18181B">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/icons/favicon-32.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Sameh Bilal">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 </head>
 
 <body>
@@ -856,5 +866,7 @@ document.getElementById('modalBg').addEventListener('click', e => {
 });
 </script>
 
+    <!-- PWA: offline, updates and connection notices -->
+    <script src="../assets/js/pwa.js" data-root="../"></script>
 </body>
 </html>
