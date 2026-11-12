@@ -1,6 +1,6 @@
-/* The site as an app: registers sw.js and shows small notices when a new version is ready,
-   when the connection drops or comes back, and once the app has been installed.
-   It never asks or nudges anyone to install — the browser's own install option is enough.
+/* The site as an app: registers sw.js, adds an install button above the coffee button, and
+   shows small notices when a new version is ready, when the connection drops or comes back,
+   and once the app has been installed. It never pops up an install prompt on its own.
    Loaded on every page, from the page's own folder (data-root says where the site root is). */
 (function () {
 	'use strict';
@@ -90,9 +90,65 @@
 	}
 	window.PWANotify = notify;
 
-	/* ---------- installed (only reported once it happens; never asked for) ---------- */
+	/* ---------- install button: a round button above the coffee button ----------
+	   Shown only where the site can be installed (Chrome/Edge/Android, or Safari on iPhone/iPad,
+	   which gets the Add to Home Screen steps). It never pops up a prompt by itself. */
+	var deferred = null;
+	var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+	var installBtn = null;
+	function installCss() {
+		if (document.getElementById('pwa-install-css')) return;
+		var s = document.createElement('style');
+		s.id = 'pwa-install-css';
+		s.textContent =
+			'.pwa-install{position:fixed;right:18px;bottom:18px;z-index:9998;width:64px;height:64px;border-radius:50%;border:2px solid #F9812E;background:#18181B;color:#F9812E;display:grid;place-items:center;cursor:pointer;padding:0;box-shadow:0 4px 8px rgba(0,0,0,.15);transition:transform .2s,background-color .2s,color .2s;opacity:0;animation:pwa-in .3s .2s forwards}' +
+			'.pwa-install.above-bmc{bottom:94px}' +
+			'.pwa-install:hover,.pwa-install:focus-visible{transform:scale(1.08);background:#F9812E;color:#18181B}' +
+			'.pwa-install:focus-visible{outline:2px solid #F9812E;outline-offset:3px}' +
+			'.pwa-install svg{width:28px;height:28px}' +
+			'.pwa-install::after{content:attr(data-tip);position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%);white-space:nowrap;background:#1D1D1D;color:#FAFAFA;font:500 13px/1 Poppins,system-ui,sans-serif;padding:8px 12px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s}' +
+			'.pwa-install:hover::after,.pwa-install:focus-visible::after{opacity:1}' +
+			'html[data-theme="light"] .pwa-install{background:#fff}' +
+			'@media (prefers-color-scheme:light){html:not([data-theme="dark"]) .pwa-install{background:#fff}}' +
+			'html[data-theme="light"] .pwa-install:hover,html[data-theme="light"] .pwa-install:focus-visible{background:#F9812E}' +
+			'@media (prefers-color-scheme:light){html:not([data-theme="dark"]) .pwa-install:hover,html:not([data-theme="dark"]) .pwa-install:focus-visible{background:#F9812E}}' +
+			'@media (max-width:575px){.pwa-install{width:45px;height:45px}.pwa-install.above-bmc{bottom:73px}.pwa-install svg{width:22px;height:22px}}' +
+			'@keyframes pwa-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}' +
+			'@media (prefers-reduced-motion:reduce){.pwa-install{animation:none;opacity:1;transition:none}}' +
+			'@media print{.pwa-install{display:none}}';
+		document.head.appendChild(s);
+	}
+	function canInstall() { return !standalone && (deferred || ios); }
+	function placeInstall() {
+		if (!document.body) { document.addEventListener('DOMContentLoaded', placeInstall); return; }
+		if (!canInstall()) { if (installBtn) { installBtn.remove(); installBtn = null; } return; }
+		if (installBtn) return;
+		installCss();
+		installBtn = document.createElement('button');
+		installBtn.type = 'button';
+		installBtn.className = 'pwa-install';
+		/* sit above the Buy Me a Coffee button on the pages that have it */
+		if (document.querySelector('script[data-name="BMC-Widget"]')) installBtn.classList.add('above-bmc');
+		installBtn.setAttribute('aria-label', 'Install the app');
+		installBtn.setAttribute('data-tip', 'Install the app');
+		installBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 19h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+		installBtn.addEventListener('click', install);
+		document.body.appendChild(installBtn);
+	}
+	function install() {
+		if (deferred) {
+			deferred.prompt();
+			deferred.userChoice.then(function () { deferred = null; placeInstall(); });
+			return;
+		}
+		if (ios) notify('In Safari, tap Share, then "Add to Home Screen".', { title: 'Install the app', ttl: 9000 });
+	}
+	window.addEventListener('beforeinstallprompt', function (ev) { ev.preventDefault(); deferred = ev; placeInstall(); });
+	placeInstall();
+
+	/* ---------- installed ---------- */
 	window.addEventListener('appinstalled', function () {
-		standalone = true;
+		standalone = true; deferred = null; placeInstall();
 		notify('Sameh Bilal is on your device now. Open it like any other app.', { title: 'App installed', type: 'success', ttl: 6000 });
 	});
 
