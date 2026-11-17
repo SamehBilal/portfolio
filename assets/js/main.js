@@ -1,6 +1,40 @@
 (function ($) {
   'use strict';
 
+  // this file's URL, so orca.js can be loaded from the same folder
+  const MAIN_SRC = document.currentScript ? document.currentScript.src : '';
+
+  /* Footer pet: on each page load show the orca (3 in 4) or the owl (1 in 4).
+     Shared by main.js and owl.js — whichever runs first decides; the orca script is
+     loaded only when it's picked, and the owl stays as the fallback if it fails. */
+  window.footerPet = window.footerPet || function (owlEl, startOwl, base) {
+    if (!owlEl) return;
+    const pick = window.__footerPick || (window.__footerPick = Math.random() < 0.75 ? 'orca' : 'owl');
+    if (pick === 'owl') return startOwl();
+    if (window.__orcaRequested) return;          // main.js + owl.js on one page: swap once
+    window.__orcaRequested = true;
+    owlEl.style.visibility = 'hidden';           // no flash of the owl while orca.js loads
+
+    const swap = () => {
+      const orca = document.createElement('span');
+      orca.id = 'orca';
+      orca.className = 'ascii orca';
+      orca.dataset.len = '34';
+      orca.setAttribute('aria-hidden', 'true');
+      owlEl.replaceWith(orca);
+      const sr = orca.nextElementSibling;
+      if (sr && sr.classList.contains('sr-only')) sr.textContent = 'Decorative orca animation indicating site activity';
+      window.AsciiOrca.mount([orca]);
+    };
+
+    if (window.AsciiOrca) return swap();
+    const s = document.createElement('script');
+    s.src = new URL('orca.js', base || location.href).href;
+    s.onload = swap;
+    s.onerror = () => { window.__footerPick = 'owl'; owlEl.style.visibility = ''; startOwl(); };
+    document.head.appendChild(s);
+  };
+
   /* ============================================================
      1. CONFIG & STATE
      ============================================================ */
@@ -552,6 +586,10 @@
   function initOwl() {
     const owl = document.getElementById('owl');
     if (!owl) return;
+    window.footerPet(owl, () => runOwl(owl), MAIN_SRC);
+  }
+
+  function runOwl(owl) {
 
     const OWL = {
       light: {

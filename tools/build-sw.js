@@ -18,6 +18,7 @@ const EXTRA = [
 	'data/projects.json',
 	'data/stories.json',
 	'assets/images/favicon.png',
+	'assets/js/orca.js',   // loaded on demand by main.js / owl.js
 	...fs.readdirSync(path.join(ROOT, 'assets/images/icons')).map(f => 'assets/images/icons/' + f)
 ];
 
