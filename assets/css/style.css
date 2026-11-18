@@ -1688,8 +1688,6 @@ html[data-theme="light"] .themed-logo-nvidia-studio img { content: url("../image
 .themed-logo-moonton img           { content: url("../images/client-logos/moonton-light.png"); }
 html[data-theme="light"] .themed-logo-moonton img { content: url("../images/client-logos/moonton-dark.png"); }
 
-.themed-logo-solid img             { content: url("../images/skills/solid-light.png"); }
-html[data-theme="light"] .themed-logo-solid img   { content: url("../images/skills/solid-dark.png"); }
 
 [data-theme="dark"]  .logo-dark  { display: block; }
 [data-theme="dark"]  .logo-light { display: none; }
