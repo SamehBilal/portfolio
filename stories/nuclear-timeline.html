@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuclear Detonation Timeline (1945–1996) | Sameh Bilal</title>
+    <meta name="description" content="Every nuclear detonation from 1945 to 1996 replayed on a world map, month by month, with a running count for each country.">
+    <link rel="shortcut icon" type="image/png" href="../assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+
+        html, body { height: 100%; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            padding: 24px 16px;
+            background: #000;
+            color: #fff;
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(9px, 1.8vw, 16px);
+        }
+
+        .back {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 10px;
+            letter-spacing: .05em;
+        }
+
+        .back:hover, .back:focus-visible { color: #fff; }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(11px, 2.2vw, 18px);
+            font-weight: 400;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        #bombs {
+            width: min(800px, 100%);
+        }
+
+        .bar {
+            display: flex;
+            align-items: center;
+            gap: .5em 1.5em;
+            flex-wrap: wrap;
+            min-height: 2.5em;
+            padding: .6em 0;
+        }
+
+        .bar .push { margin-left: auto; }
+
+        #stage {
+            display: block;
+            width: 100%;
+            aspect-ratio: 2 / 1;
+            height: auto;
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/49914/bkg_1.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .score {
+            font-size: .7em;
+            opacity: 0;
+            transition: opacity 1s;
+            white-space: nowrap;
+        }
+
+        .score.active { opacity: 1; }
+
+        /* Flags from https://tayles.tumblr.com/post/321497631/flags-css-sprite */
+        .score:before {
+            display: inline-block;
+            content: "";
+            width: 16px;
+            height: 11px;
+            background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/49914/flags_sprite.png) no-repeat;
+            margin-right: .5ex;
+            vertical-align: -1px;
+        }
+
+        #US { color: #ccf; }
+        #CP { color: #fcc; }
+        #GB { color: #fcf; }
+        #FR { color: #cfc; }
+        #PC, #IN, #IS { color: #fff; }
+
+        #US:before { background-position: -64px -187px; }
+        #CP:before { background-position: -48px -319px; }
+        #GB:before { background-position: -16px -275px; }
+        #FR:before { background-position: -16px -253px; }
+        #PC:before { background-position: 0 -506px; }
+        #IN:before { background-position: -16px -561px; }
+        #IS:before { background-position: -16px -550px; }
+
+        #total:after, .score:after { content: attr(data-score); }
+
+        #time { white-space: nowrap; }
+
+        #time:before {
+            content: attr(data-month);
+            font-size: .7em;
+            margin-right: 1em;
+            vertical-align: middle;
+        }
+
+        #time:after {
+            content: attr(data-year);
+            vertical-align: middle;
+        }
+
+        #total:before {
+            content: "TOTAL ";
+            font-size: .7em;
+            color: #aaa;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            font: inherit;
+            font-size: 10px;
+            color: #000;
+            background: #fff;
+            border: 0;
+            padding: 10px 16px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 #555;
+        }
+
+        button:hover, button:focus-visible { background: #F9812E; }
+        button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #555; }
+
+        .credit {
+            margin: 0;
+            max-width: 800px;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #888;
+            text-align: center;
+        }
+
+        .credit a { color: #bbb; }
+    </style>
+
+    <!-- PWA -->
+    <link rel="manifest" href="../manifest.webmanifest">
+    <meta name="theme-color" content="#18181B">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/icons/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/icons/apple-touch-icon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Sameh Bilal">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+</head>
+
+<body>
+    <a class="back" href="../stories.html">&larr; STORIES</a>
+
+    <h1>NUCLEAR DETONATIONS<br>1945&ndash;1996</h1>
+
+    <div id="bombs">
+        <div class="bar">
+            <div class="score" id="US" title="United States"></div>
+            <div class="score" id="CP" title="Soviet Union / Russia"></div>
+            <div class="score" id="GB" title="United Kingdom"></div>
+            <div class="score" id="FR" title="France"></div>
+            <div class="push" id="time" aria-live="off"></div>
+        </div>
+
+        <canvas id="stage" width="500" height="250" role="img"
+            aria-label="World map where each nuclear detonation from 1945 to 1996 flashes in the colour of the country that set it off"></canvas>
+
+        <div class="bar">
+            <div class="score" id="PC" title="China"></div>
+            <div class="score" id="IN" title="India"></div>
+            <div class="score" id="IS" title="Israel (suspected)"></div>
+            <div class="push" id="total" data-score="0"></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button type="button" id="pause">PAUSE</button>
+        <button type="button" id="replay">REPLAY</button>
+    </div>
+
+    <p class="credit">
+        Based on <a href="https://codepen.io/32bitkid/pen/ALgyWX" target="_blank" rel="noopener">Nuclear Detonation Timeline</a>
+        by 32bitkid on CodePen. Data: <a href="http://nuclearweaponarchive.org/Library/Catalog" target="_blank" rel="noopener">nuclearweaponarchive.org</a>.
+    </p>
+
+    <script>
+        /* Every detonation in the source catalogue, in its original order, packed as
+           "<days since 1945-07-16, base 36, 3 chars><country index><location index, base 36 (absent = unknown)>".
+           Countries: 0 US, 1 Soviet Union, 2 UK, 3 France, 4 India, 5 China, 6 Israel, 7 other / unknown.
+           Generated with the pen's own parser (positions rounded to 0.1°). */
+        const LOCS = "33.7,-106.5;34.4,132.5;32.8,129.9;11,165;11.6,165.4;11,162;48,76;37,-116;11.5,162.3;37.1,-116;-20.8,115.4;-28,135;-28.7,132.4;55,64;50,82.6;-30.1,131.6;-10.5,105.6;73,55;74,56;16.8,-169.5;-35,-20;26.3,-0.1;26.1,-0.1;26.3,0;50,78;48.5,44.3;74.6,51.1;74,52;73.7,53.8;48.6,45.7;49.8,78;46.4,72.9;73.9,53.8;70.7,53.5;24.1,5.1;32.4,-104.2;24.1,5;74.3,51.5;74.4,51.5;73.2,54.7;73.8,53.8;74.3,52.4;74.2,52.3;73.6,57.5;73.4,56.5;24,5.1;24,5;39.5,-118.8;37.1,-116.1;37.2,-111;36.9,-116.2;49.8,78.1;37.2,-116;37.1,-116.4;36.4,-115.8;37.2,-115.9;73.2,54.4;42.4,88.3;31.3,-89.4;73.4,53.9;49.8,78.2;37,-115.8;37,-116.2;49.9,79;36.7,-115.9;37,-116.1;37.3,-116.5;37.2,-116.5;36.8,-116.1;37,-115.9;51.6,179.2;49.9,78;49.9,78.1;37,-116.3;37.2,-116.4;37.2,-116.1;36.9,-116.1;49.7,78.1;37.1,-116.2;37.1,-115.9;37,-115.6;47.9,47.7;36.8,-116;37.2,-116.2;-20,-140;37.3,-116.3;-21.8,-138.8;-22.2,-138.7;37.3,-116;50.5,77.9;49.9,77.9;36.8,-115.9;39,64.5;73.4,54.6;31.3,-89.3;49.7,77.9;49.9,77.8;37.3,-116.4;37.1,-117;50,77;20,-140;49.9,78.2;50,77.8;50,77.7;57.7,65.2;73.4,54.4;36.7,-107.2;37.4,-116;49.7,78;38.6,-116.2;36.9,-115.9;38.9,65.1;50,79;-22.2,-139.1;37.3,-116.6;37.1,-166.1;36.1,-116;57.5,54.7;57.3,56;39.2,-108.7;41.4,88.3;46,42.4;51.5,179;73.4,54.5;48.1,47.8;43.8,54.8;48.3,78.2;-22.2,-138.8;52.2,55.7;-21.8,-139.2;73.3,54.9;43.9,54.8;49.7,78.2;61.4,56.2;37.1,-116.3;-23.8,-137.2;36.6,-115.8;67.7,62;64.2,54.8;-21.9,-139;57.8,41.4;73.4,54.9;61.6,47.2;50,77.6;51.6,54.5;36.7,-116.9;47.9,48.1;50,78.9;37.4,62.1;49.8,35.5;50,46.4;49.4,48.1;73.4,54.7;67.7,33.1;52.2,51.9;46.7,44.9;49.9,78.8;52.1,51.8;51.9,64.2;51.7,77.2;39.8,-108.4;50,78.8;42.7,67.4;50.6,68.4;73.3,55;45.7,67.8;70.8,53.4;51.7,54.5;53.6,55.4;70.8,53.9;36.9,-116;27,71.8;53.7,55.1;68.9,75.8;67.2,62.1;66.1,112.6;49.9,77.6;48.1,47.2;49.9,78.9;-22,-139;37.4,-116.3;70.8,127.1;73.3,54.5;37.3,-116.2;69.6,90.5;55.8,75.1;70.8,53.5;41.4,88.7;-21.9,-138.8;47.8,48.1;49.9,77.7;41.7,88.7;61.5,112.7;-21.9,-138.9;50,78.1;-21.8,-139;69.5,90.5;51,110.8;64.1,99.6;57.3,106.2;73.5,54;50.1,79;-21.7,-138.9;63.7,125.3;73.3,54.7;65.9,112.6;49.8,78.4;66.5,86.3;61.5,112.9;41.5,88.6;63.2,63.3;-21.8,-138.9;47,48;50.1,78.9;-21.8,-138.7;-22.1,-138.5;61.9,122.2;48.2,38.3;-47,40;60.7,71.4;61.9,113.1;50,77.9;46.8,48.3;73.4,54.8;60.8,97.6;61.7,66.8;68.2,53.5;60.6,55.7;73.3,54.6;63.8,97.5;-22,-138.9;53.8,104.1;69.2,81.6;64.3,81.8;73.4,54.3;46.8,48.2;55,50;48,49;49,79;51.3,53.3;46.9,48.3;41.6,88.8;49.8,79;-22.3,-138.5;50,79.1;51.4,53.2;51.4,53.3;48,59;65.1,55.3;61.9,72.1;66.8,33.7;60.8,57.5;61,58;55.8,87.4;41.6,88.7;73.4,55;46.9,48.1;46.8,48.1;-21.5,-139.1;41.7,88.5;44.4,57.9;-22.1,-138.9;-21.8,-139.1;49.9,78.7;66,40.8;-21.7,-138.8;-22.1,-139.1;-21.9,-139.1;60.8,56.2;60.7,56.3;-21.6,-138.7;-21.5,-138.8;-22,-138.8;61.5,112.8;49.8,78.9;49,78;47.6,56.2;-22.3,-139;50.1,77.5;49.9,78.6;66.3,78.5;61.3,48;49.8,78.8;41.8,88.5;-22.1,-139;-22.9,-139;-22.9,-138.9;-21.7,-139.1;-22.3,-138.7;-21.8,-130;-22.4,-139;41.6,81.6;-22.3,-138.8;41.6,88.9;41.7,88.6;41.6,89.1;41.6,-88.9;41.7,88.8;41.7,88.4";
+        const ROWS = "00000 00k01 00o02 09p03 0ad04 0rv05 0sb05 0sp05 15t16 1k507 1k607 1ka07 1kb07 1kf07 1m308 1mg08 1my08 1ne08 1qt1 1rh16 1rl09 1rr09 1rt09 1rv09 1rz09 1sd09 1sn09 1w309 1wh09 1wo09 1wx09 1x309 1xl09 1xs09 1xw09 2182a 22008 22f08 25t09 26009 26709 26d09 26i09 26p09 26w09 27909 27k09 27q09 28009 29x1 2a81 2bo2b 2c02c 2fh04 2g704 2gi04 2h104 2ha04 2hj08 2kz1d 2pc09 2pg09 2pn09 2pt09 2py09 2q809 2q909 2qf09 2qf09 2qn09 2qq09 2qw09 2rg09 2rq09 2rp04 2tt1 2tx1 2vb1 2wl1e 2x11e 2ym09 30c1 30m1 31l08 31j04 31x2a 32804 32808 32b08 32i08 32n04 32n08 32p08 32s08 32v2a 32x08 33104 33808 33e08 33g04 33q04 33r08 34p1 34v1 34y1 3561 35n2f 35u2f 3612f 36c2f 3721 38t1 3a51 3av1 3ay1 3b21 3b41 3b81 3c12g 3ce09 3ch2g 3cj09 3cm09 3cz09 3d02g 3d509 3dg09 3dq09 3du09 3dz09 3e009 3ed09 3ed09 3eg09 3eo09 3es1 3et09 3ex09 3f009 3f109 3f309 3f709 3f709 3f909 3ff09 3ff2f 3fh09 3fk09 3fo09 3fp1h 3fq2f 3fr1e 3ft09 3g11h 3g209 3g42f 3g51i 3gy2g 3hq09 3ht09 3ic1 3jw09 3jx1h 3k11h 3k11h 3kg09 3kg1h 3kg1 3kh1 3km1h 3kn1 3ko1h 3lp04 3lp2g 3lw08 3m204 3m208 3m308 3m708 3mb08 3mc04 3mh08 3mh08 3ml08 3mm04 3mo08 3mu08 3mw04 3n004 3n008 3n408 3nd04 3nd08 3ne08 3nf04 3nh08 3ni04 3nl08 3ns04 3nu08 3nx08 3o204 3o208 3o608 3oc0j 3oh08 3on0j 3ot08 3ox2g 3p20k 3p50k 3p82g 3pc0k 3ph2g 3pi09 3pn09 3pp09 3pq1h 3pr09 3pt09 3pt2g 3pw09 3py09 3pz09 3q01h 3q01h 3q21h 3q21h 3q509 3q509 3q51h 3q809 3qa09 3qa1h 3qc1h 3qd09 3qe09 3qf09 3qf1h 3qg09 3qg09 3qh09 3qi09 3qi1h 3qj1h 3qk1h 3qm09 3qm09 3qm09 3qm1h 3qo09 3qo09 3qo1h 3qp1h 3qq09 3qq09 3qq09 3qr09 3qt09 3qt09 3qu09 3qu09 3qu09 3qw1 3qy1 43x3l 4593m 4cr3n 4g23n 4jn1o 4jq1o 4jr1o 4js1p 4jw1h 4jw1h 4jy1h 4jz1h 4jz1o 4k01q 4k109 4k209 4k21h 4k31o 4k41r 4k61h 4k81h 4ki1h 4kk1s 4km1h 4km1t 4ko1h 4kh09 4kq09 4kr1u 4ks1o 4l01h 4l11v 4l31w 4l31x 4l51h 4l71x 4l71v 4l909 4la1h 4lb1h 4lb1h 4ld1h 4lf1h 4li3y 4m809 4mf0z 4mi09 4mm09 4mr09 4n909 4ni09 4nu09 4nx1u 4o309 4o409 4oa09 4oe09 4oe09 4oi09 4oj09 4oo29 4os09 4ot09 4ov09 4p209 4pf09 4pi09 4pn09 4po09 4pu09 4pw09 4q309 4q70g 4q90g 4q909 4qd310 4qe0g 4qg0g 4qi04 4qj09 4qk0g 4ql0g 4qm09 4qn0g 4qn04 4qo0g 4qo09 4qq0g 4qv09 4qv0g 4r109 4r10g 4r30g 4r809 4rd09 4rf0g 4rg0g 4rh0g 4rj0g 4rk09 4rm0g 4ro0g 4rq0g 4rs09 4rt0g 4ry0g 4ry09 4rz09 4s10g 4s109 4s709 4s809 4sa0j 4sb0g 4sc0g 4sc09 4se09 4sf09 4si09 4ss09 4t11h 4t31o 4t61h 4tg111 4ti1h 4tk09 4tk09 4tl1o 4tl1h 4tn1h 4ts1h 4tt1h 4tx09 4tz1h 4u509 4u6112 4u71h 4u9113 4ua114 4ub09 4uc1h 4ug1h 4ui115 4uk09 4un0j 4uq09 4ur0j 4us1h 4ux09 4ux09 4uz1o 4v30j 4v309 4v409 4v50j 4v71o 4v71h 4vb0j 4vc09 4vc0j 4vc1h 4vd1o 4ve1h 4vf0j 4vf1h 4vh0j 4vh1h 4vh1o 4vj1h 4vk0j 4vk1o 4vp09 4vv09 4vx1o 4w709 4we09 4wh29 4wm09 4wm09 4wo09 4ws1h 4ws1h 4wu1h 4ww1h 4wx1h 4wy116 4wy117 4wz118 4y809 4y809 4y809 4y809 4yf09 4yl09 4yl09 4yt09 4z709 4za319 4zl09 4zm319 4zs09 4zx09 4zy09 50b09 50b09 50q09 50y09 50y09 51309 51a09 51h09 51i09 51i09 51q09 52109 53d09 53g09 53o09 53o09 54909 54909 54n09 54n09 55109 55109 55609 55709 55a31a 55g01b 55z09 56009 56709 56j09 56j09 56r09 56z09 57q01c 57x09 58409 58h09 58i09 58n09 58n09 58p01d 59a09 59b01e 59d11f 5a701g 5a801h 5aa09 5ah01c 5am07 5au09 5b101i 5b209 5b311f 5bt01j 5bu09 5bx310 5c009 5c701c 5cc01c 5cs01c 5ct29 5cv11f 5cz09 5d009 5dq09 5dt07 5dy09 5dz07 5e607 5ed09 5ek11k 5er09 5ey09 5f501c 5fc07 5fc7 5fc07 5fc51l 5fc09 5fi01m 5fj09 5fl11n 5fr01c 5fw01c 5g711o 5gj31a 5gq01c 5gq7 5gq09 5gq7 5gq09 5h109 5h107 5h101p 5h301q 5h809 5hu09 5hw11r 5i909 5if01c 5in09 5ir07 5it01s 5iu09 5j2310 5j601t 5j611f 5jn09 5jt01c 5k301t 5kc01u 5kj01q 5kk09 5kl09 5kz01c 5l31u 5l401v 5l609 5l601w 5l651l 5ld09 5lm3y 5ly07 5ly09 5m301w 5m409 5m411f 5mx09 5n309 5n409 5na1u 5ni01t 5nx09 5o309 5o801x 5o801x 5oh27 5oo11f 5oo09 5p2310 5p911f 5pu01y 5q807 5qh11z 5qj09 5qr31a 5qt09 5r609 5r607 5re120 5rf021 5ry01g 5s309 5s309 5s607 5s709 5sj01c 5st11o 5sw31a 5t4022 5td023 5tf024 5tf024 5tk01c 5tq024 5ts125 5tw026 5u4027 5u901c 5ua028 5uh022 5uo11f 5up129 5uq09 5us02a 5uw09 5v101g 5v207 5v302b 5v411f 5wo32c 5x532c 5v651l 5v909 5va09 5vg09 5vo09 5vu01g 5vv07 5w207 5w709 5w709 5wh01c 5wl11f 5wm02d 5wo32e 5x532f 5x7125 5xe01x 5xm11f 5xr02g 5xt09 5y012h 5yj12i 5yn32c 5yo02j 5yz09 5z032f 5z509 5z612k 5za32c 5zl09 5zp1u 5zx51l 5zx12l 60601g 60c09 60j01t 60n09 60y02m 60y12n 61802a 61809 61d12o 61f02p 61n51l 62809 629026 62a09 62g09 62k11z 62t01g 63b11f 63f09 63g09 63n09 64211f 64c09 64e09 64f09 64s125 64t07 64z01c 65c02q 65m01c 65p02p 65s09 65s01v 65u11f 66012r 66232c 66e51l 66j09 66n02b 66o32c 66q07 66q120 66t32s 66y32s 67509 67612t 67i09 67q11f 67q09 67w01g 68407 68a09 68h02b 68o023 68w09 68x12u 69201g 69312v 69801c 69h12w 69s1u 69t01c 69w12x 6a009 6a009 6a007 6a51u 6ae09 6as12u 6b609 6b812t 6ba02y 6bf02z 6bo51l 6cd130 6cd01c 6ce023 6ce031 6cj09 6cl01u 6cq09 6db09 6db01c 6dj07 6do09 6dv07 6dv07 6dv07 6dv07 6dv07 6dx09 6e502d 6e8032 6ei09 6eo023 6eo023 6ew01g 6f102p 6f211f 6f401u 6fb09 6fg09 6fp01c 6ft133 6g009 6g809 6g901g 6g901g 6g901g 6g901g 6g901g 6ge11f 6gi02d 6gm134 6gs09 6gs09 6gv01v 6gy129 6h432c 6h911f 6hc32c 6he09 6hr023 6hv32e 6i109 6i709 6ic11f 6ig335 6ij032 6il02d 6is11o 6it07 6it09 6iv32e 6j402b 6jb02b 6jg11o 6jk09 6jk07 6jr09 6ka09 6kc09 6kc09 6kc09 6kc09 6kg01c 6kg7 6kg09 6kg09 6kj12l 6kl11f 6kr09 6kr07 6kw01q 6ky09 6le036 6li01c 6li01c 6li01c 6li01c 6li01c 6li01c 6li09 6li09 6lo125 6lp01v 6lx51l 6mg037 6mg02b 6mn09 6mv09 6mv09 6n009 6n009 6n802b 6nv11o 6o609 6o609 6o807 6o901c 6p709 6p707 6p707 6pd038 6pd038 6pk01v 6ps09 6pt11o 6q409 6q409 6q409 6q409 6q812v 6qk09 6qy09 6qy09 6qy09 6r611o 6ri01c 6ri01c 6rp11o 6i67 6sb09 6sb09 6so07 6so09 6su139 6t013a 6t203b 6t31u 6t4032 6t801u 6tc09 6tc09 6tc09 6te53c 6ti13d 6tl51l 6tn11o 6tn09 6tn09 6tn09 6tn09 6tn09 6to03e 6tu02p 6u013f 6u613g 6ue07 6uf01c 6uf01c 6uf01c 6uf01c 6uf01c 6uf01c 6uu023 6v209 6v207 6vb11r 6vg02b 6vh13h 6vl09 6vl09 6vl09 6vl09 6vl09 6vl09 6vl09 6vl09 6vs09 6vs09 6vt09 6vt09 6w312v 6w41u 7637 6wt09 6wt09 6wt09 6wz11o 6x009 6x509 6x509 6x601g 6xc02b 6xq07 6xr01c 6xr01c 6xr01c 6xz01t 6xz09 6xz09 6xz09 6yc07 6yg09 6yj01u 6yk11f 6z909 6z901c 6z901c 6zj7 6zj09 6zj09 6zj09 6zn02b 6zu01q 6zx01g 6zx01g 6zx32c 70307 70309 70432c 70513g 70613g 70809 70809 70809 70802b 70801c 70913i 70a09 70a09 70a09 70a09 70a01g 70b13g 70c33j 71132c 71213k 71309 71309 71301c 71511o 71a33l 71s12v 71v11o 71y32c 72432c 72832c 7331u 74409 74409 74409 74409 74401j 74513m 74551l 74509 74j09 74j09 74j09 74j09 74q12u 74r07 75509 75j09 75j09 75s13n 75w09 75w09 75w09 75w09 75w09 75w09 75x01c 75x13o 75y023 76313h 78k11f 78l13p 79i11f 79m03q 7ac11o 7an32c 7ao12v 7au33r 7ay07 7b112v 7b509 7b507 7b6023 7bb03s 7bc11r 7bd01q 7be13t 7bg32c 7bk09 7bl09 7bm13u 7bx09 7cb09 7cc09 7cc09 7cc09 7cd09 7cf32c 7cl33v 7cp09 7dl13w 7do09 7do09 7do09 7do09 7do09 7dt13x 7dv07 7dv09 7e013y 7e409 7e512v 7ea09 7eh13z 7ei140 7ex03e 7f951l 7ff041 7fk11f 7fl09 7fz09 7fz09 7fz01t 7g01o 7g7142 7gf11f 7gh51l 7gl09 7he09 7hl143 7hs09 7ie11f 7im51l 7ir09 7iw125 7iy07 7iy07 7ja144 7ji09 7ji01c 7jv02b 7k301q 7k409 7ka01c 7kc09 7kf03q 7kg03q 7kh03q 7ki03q 7kj03q 7kv11f 7kv09 7ld32c 7lg09 7lg09 7lg09 7li32c 7lo11f 7lr145 7lw146 7m202b 7m709 7mb32c 7mm09 7mm09 7mm09 7mt11f 7mx147 7n312u 7n5148 7na12v 7nc149 7nt14a 7nt09 7ny01c 7o514b 7oz14c 7p609 7p609 7pe09 7pe09 7pe09 7pl14d 7pl14e 7q111f 7q1134 7q309 7q509 7qc09 7qc09 7qj14f 7rv09 7rx11o 7sh09 7sw09 7t909 7tn13z 7tt07 7tt07 7tu09 7tu01c 7u709 7uf04g 7uf04g 7uf04g 7um09 7um09 7uy02b 7uz02d 7ve09 7vk51l 7vl01c 7vl09 7vx11f 7w832c 7wa14h 7wf32c 7wx14i 7x132c 7x732c 7x832c 7xa32e 7xa14j 7xp14k 7xw14l 7y414m 7y714n 7y909 7y909 7yj02b 7yx11o 7yx14o 7yy14p 7zu04q 80809 80909 80a134 80f09 80f09 81109 81109 81179 81109 81l1u 81l120 82d09 82s09 83l09 83p143 83w09 84409 84b09 84j11f 84l44r 84p09 84q21c 84y143 85409 85e32c 85f51l 85h02b 85n11o 85z32c 86014s 86211f 86209 86932c 86a09 86a09 86a09 86i32c 86l32e 87107 87114t 87232c 87c32c 87g13x 87g14u 87h01c 87v11f 87x32c 88709 88809 88801c 88e14v 88s143 88t09 89409 89914p 89909 89x09 8a814w 8ah11f 8ah120 8ah09 8as11r 8bx09 8bx09 8bx09 8ca09 8cb11f 8cj01c 8cq01c 8cu125 8dj02b 8e201c 8e314x 8e514y 8e809 8em01v 8f601u 8f609 8f834z 8fb11f 8fe09 8fl09 8fm050 8ft02p 8fx134 8gz11o 8h4151 8hf152 8hm053 8ht07 8ig154 8im155 8iz156 8j213m 8j502b 8j751l 8j8557 8j902p 8ja14y 8ju09 8jw022 8k232c 8k209 8kj11o 8kq01c 8kv14h 8l402d 8lg11o 8lo51l 8m009 8m009 8m801u 8ma022 8mm09 8my02p 8n301u 8n602d 8n609 8nn32e 8o511f 8o514c 8oq02b 8ox11f 8oy09 8pd14y 8pi134 8qe358 8qq32c 8qq11f 8qu09 8qw159 8r215a 8ro21c 8rq143 8sj51l 8sm13f 8st09 8t455b 8t713f 8th1u 8th3 8tn15c 8ts09 8tz51l 8u5134 8u5023 8uh3 8uj14c 8uk09 8uk32c 8ux09 8ux01c 8v409 8v611f 8wi09 8wi09 8wl32e 8x209 8x209 8xd35d 8xn15e 8xr3 8xu01c 8ye11o 8yg09 8z809 8zc14c 8zg09 907143 90e35f 90y15g 91009 91211f 91709 91d15h 91j09 91j09 91j09 91j023 91k11o 91m09 91m09 91n15i 91z12x 923143 92815j 92d07 92f51l 92p01c 92s142 93115k 93i09 93l11f 93l15l 93o02b 93w09 93z34z 94407 94b35d 94h143 94v09 94v01c 94y34z 95715e 95w120 96k09 96u01c 96y34z 97e51l 97f09 97i12v 97l35m 97m09 97m09 97o3 97p1u 98522d 985022 98g11o 98j09 99h11f 99k09 99u14c 9ae7 9ai14y 9ak09 9ap09 9aw34z 9b334z 9b511f 9bh15n 9bi15o 9bw15p 9c111f 9c1134 9c302p 9cg02b 9ci14y 9cn15q 9co15r 9cu12x 9cu09 9cu09 9cu09 9cu09 9cu09 9d415s 9db55t 9dc11o 9de159 9de15u 9ds11f 9du02d 9du34z 9dw143 9ea21c 9el1u 9el14c 9em35d 9en09 9f051l 9f011f 9f202p 9f334z 9f4159 9f535v 9fr15w 9fy142 9g509 9gd15x 9gk01c 9gr023 9gs12v 9h534z 9hd34z 9hi07 9hs35v 9i335y 9iz1u 9j409 9jh1o 9jo11f 9jz09 9k635z 9k809 9kb14y 9kg09 9kh35v 9kp134 9kw159 9l012i 9l735d 9la32e 9lg09 9lh14y 9ll09 9lp160 9lv14y 9m629 9me09 9c915i 9mg09 9ml51l 9mm1o 9mn1o 9mo161 9mu662 9mw12l 9my09 9mz11f 9n6163 9n9164 9nk11f 9nk15o 9nq159 9nu134 9og7 9oj34z 9oq09 9or11f 9ot14c 9p509 9pc11o 9pe14c 9r432e 9r909 9rd32e 9ri09 9rx35d 9s6358 9s809 9s9165 9s9358 9sf11f 9sl09 9su14h 9sv29 9t109 9tl09 9tl11f 9u609 9u6134 9ua35d 9uf32e 9ui09 9un14c 9uu35v 9v11o 9v733v 9vd09 9vj09 9vj11f 9ws14c 9wy1o 9x309 9x309 9x311f 9x81o 9x81o 9xg166 9xj167 9xk134 9xo51l 9xw29 9y309 9y4168 9yh09 9ys32e 9z035d 9z7169 9zb14y 9ze29 9zn12t 9zo15l a0709 a0s09 a1c09 a1e32e a1l32e a2735y a28134 a2a134 a2k35f a2w14c a3409 a3t16a a3v134 a3x09 a441o a4509 a4t11f a4y1o a5135f a5309 a5432e a5909 a5a11o a5b32e a5r35v a5t09 a6211f a6f09 a6l16b a6n09 a6w14y a7709 a79166 a79166 a7d1o a7e09 a7e16c a7v14y a7z16d a8e7 a8j09 a8j35f a8k29 a8s13o a91143 a9509 a973 a9a35v a9i09 a9o11f a9t14c aap09 ab409 ab409 abb11f abc32e abg3 ac436e ac73 acw09 ad429 ad414y adf09 adg09 aef1o aek09 aes09 aet11f aev32e aez35f af214h afa1o afj32e afn35d afr09 afs16f aft15w afy09 ag409 agg11f agl15w ago14c ago15w agq09 ags1o ags16g ah31o ah911o ahb09 ahb09 ahb09 ahd16h ahh09 ahj15w ahn51l ahs15s aht16i ahy16j ahy16j ahy16j ai915w aip09 aiy16k aj616k aj715w ajc14c ajh09 ajw11f ajx15l aky15w al809 ale09 all15w alm15w alr16l amf09 amj16m amw11o amx09 an335v an629 an932e ani51l anj09 ao335d ao409 ao409 ao813o aoi09 aol11r aor32e aox11f ap135m apd16n apn34z apv16m aq109 aq235v aq909 aqg13x aqp09 aqu09 ar412t are09 are09 are09 are09 arf09 arh166 arh166 arh16o arh166 arh16j ari12x arm09 art14c art56p asd14y at215l atb16q atf34z atj36r atl09 ats09 au211o av209 avh09 avl14c avw09 aw215l awo11r awq09 ax513o axf143 axl29 axm09 axs32e axw33v ay009 aya16s ayf09 ayr32e ayv33v ayz09 az2134 azl09 azn11r azu16t azu16u azu16u azu16v azy09 b0609 b0f16w b0t16x b0v16y b0w16z b0w170 b0y09 b0y09 b1812t b1c09 b1e134 b1g171 b1v09 b1w572 b2b11f b2i173 b2k14h b2k174 b2k175 b2k376 b2q33v b2y09 b3b120 b3j34z b3k16s b3o33v b3r29 b3x09 b3y143 b41577 b4209 b4a14c b5i14c b6f09 b6n09 b6x09 b7109 b7e178 b7k11r b7p379 b7r09 b7x37a b8n32e b8r32e b8w09 b8w09 b8z14y b9a09 b9e17b b9p1o b9w17c b9y134 ba309 ba3134 ban09 baq09 bbv09 bc709 bc709 bca09 bce09 bcm32e bco35f bcs09 bdh37d bdj35d bds29 bef09 bgr09 bha09 bhk09 bhm09 bhq37e bi032e bif09 bil32e bio37f biu09 bje29 bk009 bld09 bk709 blk09 bm309 bmj09 bn832e bna37f bnc09 bny32e bo233v bo509 bpl09 bpl09 bpl09 bpt09 bq811f bqm14c bqs09 br814c brm17b brn09 bro17g bro17h brr09 brz09 bs437i bs511f bsj33v bsz51l bt0120 bt037j btc09 bte09 bte17b btf37k bto09 btu17l bu429 bu511f buc17l bul17m bul15o buv17l buw09 bvu17n bvw17n bw209 bwb17o bwo17n bwv09 bwv35f bx837p bxi14c bxm33v bxw34z bxy09 bxz09 bya143 byh17q byo17r bzt1u c0014y c0209 c1e14y c1i09 c1x11f c2914c c2c12x c2g37f c2i09 c2q09 c2u33v c3209 c3e134 c3g32e c3m09 c3m09 c3n33v c4109 c5609 c5b17s c5c09 c5c09 c5c09 c5j09 c5q17t c5y17u c6d57v c6r09 c6w120 c7332e c7e37w c7i09 c7i09 c7i09 c7l134 c7w37x c7w11f c8337y c87173 c8c09 c8c09 c8c09 c8d09 c8k14y c8v134 c9k14c ca309 ca514c caa11f cah09 cah09 cau09 ccl37z ccp09 ccp09 ccp09 ccu3 cd009 cd837a cdf380 cdr09 cdw09 ce714c cfr134 cg309 cgn11f ch211r ch735f che09 che35f cht09 chy381 ci5382 cig29 cis09 cis09 cl009 clr09 cn5572 cnc35v cnh32e cnn09 cnv09 co033j co837a cot7 cot09 cot09 cpf583 cqe09 cqe09 cql09 cr009 crc148 crx29 crx33j cs433v cv309 cv309 cv309 cvu09 cw609 cwr32e cx235f cxd384 cxt33v cye32e cyo33v czj09 d0d09 d0i09 d1b09 d2e29 d5r09 d6q09 d7b585 d8409 d8809 d8809 d8809 dan02b das09 dau51l dl9586 ds5585 dvg587 e1k585 e46588 e4p35v e5f33j e6535f e6u33v e7u37a e8p384 ece589 edt58a";
+
+        const PARTIES = ['US', 'CP', 'GB', 'FR', 'IN', 'PC', 'IS', null];
+        const DAY = 1000 * 60 * 60 * 24;
+        const BASE = Date.UTC(1945, 6, 16);
+
+        const locs = LOCS.split(';').map(s => s.split(',').map(Number));
+        const data = ROWS.split(' ').map(s => {
+            const loc = s.length > 4 ? locs[parseInt(s.slice(4), 36)] : null;
+            return {
+                when: BASE + parseInt(s.slice(0, 3), 36) * DAY,
+                party: PARTIES[+s[3]],
+                lat: loc ? loc[0] : null,
+                lon: loc ? loc[1] : null
+            };
+        });
+
+        /* ---------- animation (after the original pen) ---------- */
+        const cnvs = document.getElementById('stage'),
+            ctx = cnvs.getContext('2d'),
+            width = cnvs.width,
+            height = cnvs.height,
+            partyColors = {
+                US: '#66f',
+                GB: 'purple',
+                CP: 'red',
+                FR: 'green',
+                IN: 'orange',
+                PC: 'yellow',
+                IS: 'cyan'
+            };
+
+        // longitude/latitude straight onto the map
+        ctx.setTransform(width / 2 / 180, 0, 0, -height / 2 / 90, width / 2, height / 2);
+        ctx.shadowBlur = 15;
+
+        const timeEl = document.getElementById('time');
+        function updateTime(val) {
+            const d = new Date(val);
+            timeEl.dataset.month = d.getUTCMonth() + 1;
+            timeEl.dataset.year = d.getUTCFullYear();
+        }
+
+        function scoreKeeper(elem) {
+            let count = 0;
+            return {
+                inc() {
+                    if (count === 0) elem.classList.add('active');
+                    elem.dataset.score = String(++count);
+                },
+                reset() {
+                    count = 0;
+                    elem.classList.remove('active');
+                    elem.dataset.score = '0';
+                }
+            };
+        }
+        const total = scoreKeeper(document.getElementById('total'));
+        const partyScore = {};
+        ['US', 'CP', 'GB', 'FR', 'IN', 'PC', 'IS'].forEach(p => { partyScore[p] = scoreKeeper(document.getElementById(p)); });
+
+        const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // the original pace: 120 days of history per second (slower when reduced motion is asked for)
+        const SPEED = DAY * (reduceMotion ? 40 : 120);
+
+        let head, tail, currentTime, lastTick, frame = 0, paused = false;
+
+        function reset() {
+            head = 0;
+            tail = 0;
+            currentTime = data[0].when - DAY * 360;
+            lastTick = null;
+            total.reset();
+            document.getElementById('total').classList.add('active');
+            Object.values(partyScore).forEach(s => s.reset());
+            ctx.clearRect(-185, -95, 370, 190);
+        }
+
+        function render(tick) {
+            ctx.clearRect(-185, -95, 370, 190);
+            ctx.globalCompositeOperation = 'screen';
+
+            if (!lastTick) lastTick = tick;
+            currentTime += ((tick - lastTick) / 1000) * SPEED;
+            updateTime(currentTime);
+
+            while (data[head] && data[head].when < currentTime) {
+                const d = data[head];
+                total.inc();
+                if (partyScore[d.party]) partyScore[d.party].inc();
+                head++;
+            }
+
+            for (let i = tail; i < head; i++) {
+                const d = data[i];
+                const age = 2 - (currentTime - d.when) / (DAY * 180);
+                const glowAge = 8 - (currentTime - d.when) / (DAY * 10);
+
+                if (age < 0) {
+                    tail++;
+                    continue;
+                }
+                if (d.lat === null) continue;
+
+                if (glowAge > 0) {
+                    ctx.beginPath();
+                    ctx.arc(d.lon, d.lat, glowAge, 0, Math.PI * 2);
+                    ctx.shadowColor = ctx.fillStyle = partyColors[d.party] || '#fff';
+                    ctx.fill();
+                }
+
+                ctx.beginPath();
+                ctx.arc(d.lon, d.lat, age, 0, Math.PI * 2);
+                ctx.shadowColor = 'transparent';
+                ctx.fillStyle = 'white';
+                ctx.fill();
+            }
+
+            lastTick = tick;
+            frame = data[tail] && !paused ? requestAnimationFrame(render) : 0;
+            if (!data[tail]) pauseBtn.disabled = true;
+        }
+
+        const pauseBtn = document.getElementById('pause');
+        pauseBtn.addEventListener('click', () => {
+            paused = !paused;
+            pauseBtn.textContent = paused ? 'PLAY' : 'PAUSE';
+            if (!paused && !frame) { lastTick = null; frame = requestAnimationFrame(render); }
+        });
+
+        document.getElementById('replay').addEventListener('click', () => {
+            cancelAnimationFrame(frame);
+            paused = false;
+            pauseBtn.textContent = 'PAUSE';
+            pauseBtn.disabled = false;
+            reset();
+            frame = requestAnimationFrame(render);
+        });
+
+        // the tab coming back after a while shouldn't jump decades ahead
+        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') lastTick = null; });
+
+        reset();
+        frame = requestAnimationFrame(render);
+    </script>
+    <!-- PWA: offline, updates and connection notices -->
+    <script src="../assets/js/pwa.js" data-root="../"></script>
+</body>
+
+</html>

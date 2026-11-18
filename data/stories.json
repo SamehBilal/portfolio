@@ -46,5 +46,11 @@
     "description": "Portfolio site for DigitXa featuring a snake-menu component and firefly particle effects.",
     "label": "Islamic Checklist",
     "url": "stories/islamic-checklist.html"
+  },
+  {
+    "image": "https://samehbilal.github.io/portfolio/assets/images/stories/nuclear-timeline.png",
+    "description": "Every nuclear detonation from 1945 to 1996 replayed on a world map, month by month, with a running count for each country.",
+    "label": "Nuclear Detonations Timeline",
+    "url": "stories/nuclear-timeline.html"
   }
 ]
