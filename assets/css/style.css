@@ -669,11 +669,11 @@ fieldset { border: 0 none; margin: 0 auto; padding: 0; }
 /* Snake menu */
 .snake-menu-container {
     overflow: hidden; position: relative;
-    padding-bottom: 30px; width: 100%; max-width: 560px;
+    padding-bottom: 30px; width: 100%; max-width: 700px;
 }
 .snake {
     position: absolute; transition: transform 500ms;
-    width: 100%; transform: translateY(-50%); top: 86%;
+    width: 80%; transform: translateY(-50%); top: 86%;
 }
 .snake path {
     fill: none; stroke: var(--card-label-color);
@@ -682,6 +682,7 @@ fieldset { border: 0 none; margin: 0 auto; padding: 0; }
 .pos1 .snake { transform: translateX(25%) translateY(-50%); }
 .pos2 .snake { transform: translateX(50%) translateY(-50%); }
 .pos3 .snake { transform: translateX(75%) translateY(-50%); }
+.pos4 .snake { transform: translateX(100%) translateY(-50%); }
 .left .snake path  { stroke-dashoffset: 0; transform: translateX(0); transition: stroke-dasharray 500ms, stroke-dashoffset 500ms, transform 500ms; }
 .right .snake path { stroke-dashoffset: -70px; transform: translateX(-60%); transition: stroke-dasharray 500ms, stroke-dashoffset 500ms, transform 500ms; }
 .instant .snake path { transition: none; }
@@ -927,6 +928,9 @@ fieldset { border: 0 none; margin: 0 auto; padding: 0; }
 }
 .skill-item h5 { margin-top: 15px; margin-bottom: 16px; color: var(--subtitle-color); font-size: 16px; line-height: 19px; }
 .skill-item img { height: 55px; width: auto; }
+/* every card in a row gets the same height, even when a label wraps to two lines */
+.skill-items-wrap .row > [class*="col-"] { display: flex; }
+.skill-items-wrap .skill-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .skill-item .percent {
     padding: 10px; display: block; font-size: 20px; font-weight: 600;
     transition: 0.5s; line-height: 1.2; border-radius: 14px;

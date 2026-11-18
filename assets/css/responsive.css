@@ -349,13 +349,20 @@ Version      : 1.0
     }
 
     .snake-menu-container {
-        max-width: 100%;
+        max-width: none;
+        width: calc(100% + 24px);
+        margin-inline: -12px;
         padding-bottom: 15px;
     }
 
+    /* five tabs share a phone-width row */
+    .snake-menu { left: 0; }
+
     .menu-item {
-        font-size: 10px;
+        font-size: 8px;
         gap: 3px;
+        letter-spacing: 0;
+        line-height: 1.3;
     }
 
     .menu-item .micon {

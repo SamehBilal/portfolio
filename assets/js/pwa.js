@@ -1,4 +1,4 @@
-/* The site as an app: registers sw.js, adds an install button above the coffee button, and
+/* The site as an app: registers sw.js, adds an install button (floating, and in the pop-up menu), and
    shows small notices when a new version is ready, when the connection drops or comes back,
    and once the app has been installed. It never pops up an install prompt on its own.
    Loaded on every page, from the page's own folder (data-root says where the site root is). */
@@ -119,8 +119,26 @@
 		document.head.appendChild(s);
 	}
 	function canInstall() { return !standalone && (deferred || ios); }
+	/* menu entries: any element with data-pwa-install is shown only while the site can be installed,
+	   and a click on [data-pwa-install-action] inside it closes its popover and starts the install */
+	function syncMenuItems() {
+		var items = document.querySelectorAll('[data-pwa-install]');
+		for (var i = 0; i < items.length; i++) items[i].hidden = !canInstall();
+	}
+	function menuInstall(ev) {
+		var t = ev.target.closest && ev.target.closest('[data-pwa-install-action]');
+		if (!t) return;
+		if (ev.type === 'keydown' && ev.key !== 'Enter' && ev.key !== ' ') return;
+		ev.preventDefault();
+		var pop = t.closest('[popover]');
+		if (pop && pop.hidePopover) { try { pop.hidePopover(); } catch (e) {} }
+		install();
+	}
+	document.addEventListener('click', menuInstall);
+	document.addEventListener('keydown', menuInstall);
 	function placeInstall() {
 		if (!document.body) { document.addEventListener('DOMContentLoaded', placeInstall); return; }
+		syncMenuItems();
 		if (!canInstall()) { if (installBtn) { installBtn.remove(); installBtn = null; } return; }
 		if (installBtn) return;
 		installCss();

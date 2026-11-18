@@ -334,6 +334,68 @@
       await Promise.allSettled(pop.getAnimations().map(a => a.finished));
       pop.querySelector('[type=search]')?.focus();
     });
+
+    // the search box filters the menu's links as you type; Enter opens the first match
+    const search = pop.querySelector('[type=search]');
+    const nav = pop.querySelector('.links nav');
+    if (!search || !nav) return;
+    const filter = () => {
+      const q = search.value.trim().toLowerCase();
+      nav.querySelectorAll('ul').forEach(ul => {
+        let shown = 0;
+        ul.querySelectorAll('li').forEach(li => {
+          const hit = !q || li.textContent.toLowerCase().includes(q);
+          li.style.display = hit ? '' : 'none';
+          if (hit) shown++;
+        });
+        // hide a group's heading when none of its links match
+        const head = ul.previousElementSibling;
+        if (head && head.tagName === 'H3') head.style.display = shown ? '' : 'none';
+      });
+    };
+    search.addEventListener('input', filter);
+    search.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      const first = [...nav.querySelectorAll('li')].find(li => li.style.display !== 'none' && !li.closest('[hidden]'));
+      const link = first && first.querySelector('a');
+      if (!link) return;
+      e.preventDefault();
+      link.click();
+    });
+    pop.addEventListener('toggle', e => {
+      if (e.newState === 'closed' && search.value) { search.value = ''; filter(); }
+    });
+    // close the menu after picking an in-page link
+    nav.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => {
+      try { pop.hidePopover(); } catch (err) { /* already closed */ }
+    }));
+  }
+
+  /* ============================================================
+     14b. CONTACT FORM
+     The site is static (GitHub Pages), so the form opens the visitor's
+     email app with the message filled in instead of posting to a server.
+     ============================================================ */
+  function initContactForm() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    const to = (form.getAttribute('action') || '').replace(/^mailto:/, '') || 'sameh.bilal@outlook.com';
+    const note = document.getElementById('msgSubmit');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const name = form.elements.name.value.trim();
+      const email = form.elements.email.value.trim();
+      const message = form.elements.message.value.trim();
+      const subject = `Project enquiry from ${name}`;
+      const body = `${message}\n\n— ${name} (${email})`;
+      window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      if (note) {
+        note.className = '';
+        note.style.marginTop = '12px';
+        note.textContent = `Your email app should open with the message ready to send. If it doesn't, write to ${to}.`;
+      }
+    });
   }
 
   /* ============================================================
@@ -354,6 +416,7 @@
       ['API Design', 'Auth Layer', 'Endpoints', 'Rate Limit', 'API Docs'],
       ['Profiling', 'Bottlenecks', 'Caching', 'Queues', 'Monitoring'],
       ['DB Schema', 'Backend Core', 'API Layer', 'Frontend', 'Deploy'],
+      ['Use Case', 'Data & Context', 'Prompts & Tools', 'Evals', 'Ship & Monitor'],
     ];
 
     let current = 0;
@@ -880,6 +943,7 @@
     initLogo();
     initYear();
     initPopover();
+    initContactForm();
     initSnakeMenu();
     initMagicArea();
     initScrollSpy();
