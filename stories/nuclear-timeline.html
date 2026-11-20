@@ -1,175 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <script src="../assets/js/theme.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuclear Detonation Timeline (1945–1996) | Sameh Bilal</title>
+    <title>Nuclear Detonation Timeline (1945–1996) — Sameh Bilal</title>
     <meta name="description" content="Every nuclear detonation from 1945 to 1996 replayed on a world map, month by month, with a running count for each country.">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/icons/apple-touch-icon.png">
     <link rel="shortcut icon" type="image/png" href="../assets/images/favicon.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/fonts/remixicon.css">
+    <link rel="stylesheet" href="../assets/css/spacing.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+
     <style>
-        * { box-sizing: border-box; }
+        /* ═══════════════════════════════
+           NUCLEAR TIMELINE — page-specific
+        ═══════════════════════════════ */
+        :root {
+            /* one colour per country; the map and counters share them */
+            --nt-us: light-dark(#3b5bdb, #748ffc);
+            --nt-cp: light-dark(#e03131, #ff6b6b);
+            --nt-gb: light-dark(#9c36b5, #da77f2);
+            --nt-fr: light-dark(#2f9e44, #69db7c);
+            --nt-in: light-dark(#e8590c, #ffa94d);
+            --nt-pc: light-dark(#e6a700, #ffd43b);
+            --nt-is: light-dark(#0c8599, #3bc9db);
+            /* map */
+            --nt-core:  light-dark(#18181b, #ffffff);
+        }
 
-        html, body { height: 100%; }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
+        .nt-page {
+            position: relative;
+            z-index: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 24px;
-            padding: 24px 16px;
-            background: #000;
-            color: #fff;
-            font-family: 'Press Start 2P', monospace;
-            font-size: clamp(9px, 1.8vw, 16px);
+            padding: 140px 1rem 6rem;
+            min-height: 100vh;
         }
 
-        .back {
-            position: fixed;
-            top: 16px;
-            left: 16px;
-            color: #aaa;
-            text-decoration: none;
-            font-size: 10px;
-            letter-spacing: .05em;
-        }
-
-        .back:hover, .back:focus-visible { color: #fff; }
-
-        h1 {
-            margin: 0;
-            font-size: clamp(11px, 2.2vw, 18px);
-            font-weight: 400;
+        .nt-title {
             text-align: center;
-            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-size: clamp(1.4rem, 4vw, 2.4rem);
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--heading-color);
+        }
+        .nt-title span  { color: var(--primary-color); }
+        .nt-title small {
+            display: block;
+            margin-top: .5em;
+            font-size: .42em;
+            font-weight: 400;
+            color: var(--text-color);
         }
 
-        #bombs {
-            width: min(800px, 100%);
+        .nt-card {
+            width: min(900px, 100%);
+            padding: clamp(14px, 3vw, 28px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            background: color-mix(in srgb, var(--bg, canvas) 70%, transparent);
+            backdrop-filter: blur(6px);
         }
 
-        .bar {
+        /* year + totals */
+        .nt-head {
             display: flex;
-            align-items: center;
-            gap: .5em 1.5em;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1rem;
             flex-wrap: wrap;
-            min-height: 2.5em;
-            padding: .6em 0;
+            margin-bottom: 1rem;
+        }
+        .nt-time { line-height: 1; color: var(--heading-color); }
+        .nt-time small {
+            display: block;
+            margin-bottom: .35rem;
+            font-size: .7rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-color);
+        }
+        .nt-time b {
+            font-size: clamp(2rem, 6vw, 3.4rem);
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+        .nt-time em {
+            margin-left: .4rem;
+            font-style: normal;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        .nt-total { text-align: right; line-height: 1; }
+        .nt-total small {
+            display: block;
+            margin-bottom: .35rem;
+            font-size: .7rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-color);
+        }
+        .nt-total b {
+            font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+            font-weight: 800;
+            color: var(--primary-color);
+            font-variant-numeric: tabular-nums;
         }
 
-        .bar .push { margin-left: auto; }
-
+        /* map: the source image is a light sea with dark land; filters retint it per theme
+           (light: faded onto white, dark: inverted and dimmed) */
+        .nt-map {
+            position: relative;
+            aspect-ratio: 2 / 1;
+            border-radius: 14px;
+            overflow: hidden;
+            background: light-dark(#fff, #000);
+            border: 1px solid var(--border-color);
+        }
+        .nt-map::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/49914/bkg_1.png') center / 100% 100% no-repeat;
+            filter: opacity(.28);
+        }
+        html[data-theme="dark"] .nt-map::before { filter: invert(.93) brightness(.32); }
+        @media (prefers-color-scheme: dark) {
+            html:not([data-theme="light"]) .nt-map::before { filter: invert(.93) brightness(.32); }
+        }
         #stage {
+            position: relative;
             display: block;
             width: 100%;
-            aspect-ratio: 2 / 1;
-            height: auto;
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/49914/bkg_1.png');
-            background-size: contain;
-            background-repeat: no-repeat;
+            height: 100%;
         }
 
+        /* per-country counters */
+        .nt-scores {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: .6rem;
+            margin-top: 1rem;
+        }
         .score {
-            font-size: .7em;
-            opacity: 0;
-            transition: opacity 1s;
-            white-space: nowrap;
-        }
-
-        .score.active { opacity: 1; }
-
-        /* Flags from https://tayles.tumblr.com/post/321497631/flags-css-sprite */
-        .score:before {
-            display: inline-block;
-            content: "";
-            width: 16px;
-            height: 11px;
-            background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/49914/flags_sprite.png) no-repeat;
-            margin-right: .5ex;
-            vertical-align: -1px;
-        }
-
-        #US { color: #ccf; }
-        #CP { color: #fcc; }
-        #GB { color: #fcf; }
-        #FR { color: #cfc; }
-        #PC, #IN, #IS { color: #fff; }
-
-        #US:before { background-position: -64px -187px; }
-        #CP:before { background-position: -48px -319px; }
-        #GB:before { background-position: -16px -275px; }
-        #FR:before { background-position: -16px -253px; }
-        #PC:before { background-position: 0 -506px; }
-        #IN:before { background-position: -16px -561px; }
-        #IS:before { background-position: -16px -550px; }
-
-        #total:after, .score:after { content: attr(data-score); }
-
-        #time { white-space: nowrap; }
-
-        #time:before {
-            content: attr(data-month);
-            font-size: .7em;
-            margin-right: 1em;
-            vertical-align: middle;
-        }
-
-        #time:after {
-            content: attr(data-year);
-            vertical-align: middle;
-        }
-
-        #total:before {
-            content: "TOTAL ";
-            font-size: .7em;
-            color: #aaa;
-        }
-
-        .controls {
             display: flex;
-            gap: 12px;
+            align-items: center;
+            gap: .55rem;
+            padding: .55rem .75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: .8rem;
+            color: var(--text-color);
+            opacity: .35;
+            transition: opacity .8s, border-color .8s;
+        }
+        .score.active { opacity: 1; border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+        .score i {
+            flex: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--c);
+            box-shadow: 0 0 10px var(--c);
+        }
+        .score span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .score b {
+            font-weight: 700;
+            color: var(--heading-color);
+            font-variant-numeric: tabular-nums;
+        }
+        .score b::after { content: attr(data-score); }
+        #US { --c: var(--nt-us); } #CP { --c: var(--nt-cp); } #GB { --c: var(--nt-gb); }
+        #FR { --c: var(--nt-fr); } #PC { --c: var(--nt-pc); } #IN { --c: var(--nt-in); }
+        #IS { --c: var(--nt-is); }
+
+        .nt-controls {
+            display: flex;
+            gap: .75rem;
             flex-wrap: wrap;
             justify-content: center;
+            margin-top: 1.5rem;
         }
+        .nt-controls .theme-btn { border: 0; cursor: pointer; }
+        .nt-controls .theme-btn:disabled { opacity: .5; cursor: default; }
 
-        button {
-            font: inherit;
-            font-size: 10px;
-            color: #000;
-            background: #fff;
-            border: 0;
-            padding: 10px 16px;
-            cursor: pointer;
-            box-shadow: 4px 4px 0 #555;
-        }
-
-        button:hover, button:focus-visible { background: #F9812E; }
-        button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #555; }
-
-        .credit {
-            margin: 0;
-            max-width: 800px;
-            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-            font-size: 12px;
-            line-height: 1.6;
-            color: #888;
+        .nt-credit {
+            max-width: 900px;
+            margin: 1.5rem 0 0;
+            font-size: .8rem;
+            line-height: 1.7;
             text-align: center;
+            color: var(--text-color);
         }
+        .nt-credit a { color: var(--heading-color); text-decoration: underline; text-underline-offset: 3px; }
+        .nt-credit a:hover { color: var(--primary-color); }
 
-        .credit a { color: #bbb; }
+        @media (max-width: 600px) {
+            .nt-scores { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .score { padding: .5rem .6rem; font-size: .75rem; }
+            .nt-scores .score:last-child { grid-column: span 2; }
+        }
     </style>
 
     <!-- PWA -->
     <link rel="manifest" href="../manifest.webmanifest">
     <meta name="theme-color" content="#18181B">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/icons/favicon-32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/icons/apple-touch-icon.png">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Sameh Bilal">
@@ -178,41 +227,239 @@
 </head>
 
 <body>
-    <a class="back" href="../stories.html">&larr; STORIES</a>
 
-    <h1>NUCLEAR DETONATIONS<br>1945&ndash;1996</h1>
+<!-- ═══ HEADER (identical to stories.html) ═══ -->
+<header class="main-header">
+    <div class="header-upper">
+        <div class="container">
+            <div class="header-inner d-flex align-items-center">
 
-    <div id="bombs">
-        <div class="bar">
-            <div class="score" id="US" title="United States"></div>
-            <div class="score" id="CP" title="Soviet Union / Russia"></div>
-            <div class="score" id="GB" title="United Kingdom"></div>
-            <div class="score" id="FR" title="France"></div>
-            <div class="push" id="time" aria-live="off"></div>
-        </div>
+                <!-- LOGO -->
+                <div class="logo-outer" onclick="location.href='../index.html'">
+                    <div class="logo">
+                        <span class="logo-letter is-active">S</span>
+                        <span class="logo-letter is-active">A</span>
+                        <span class="logo-letter is-active">M</span>
+                        <span class="logo-letter is-active">E</span>
+                        <span class="logo-letter is-active">H</span>
+                    </div>
+                </div>
 
-        <canvas id="stage" width="500" height="250" role="img"
-            aria-label="World map where each nuclear detonation from 1945 to 1996 flashes in the colour of the country that set it off"></canvas>
+                <!-- NAV -->
+                <div class="nav-outer clearfix mx-auto">
+                    <nav class="main-menu navbar-expand-lg">
+                        <div class="navbar-header">
+                            <div class="mobile-logo">
+                                <div class="logo">
+                                    <span class="logo-letter is-active">S</span>
+                                    <span class="logo-letter is-active">A</span>
+                                    <span class="logo-letter is-active">M</span>
+                                    <span class="logo-letter is-active">E</span>
+                                    <span class="logo-letter is-active">H</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="o-page"></div>
+                    </nav>
+                </div>
 
-        <div class="bar">
-            <div class="score" id="PC" title="China"></div>
-            <div class="score" id="IN" title="India"></div>
-            <div class="score" id="IS" title="Israel (suspected)"></div>
-            <div class="push" id="total" data-score="0"></div>
+                <!-- ACTIONS -->
+                <div class="menu-btns align-items-center">
+                    <a href="../index.html#contact" class="theme-btn">Hire Me <i class="ri-shake-hands-line"></i></a>
+                    <form class="form">
+                        <div class="arrow">
+                            <label>drag me.</label>
+                            <svg aria-hidden="true" viewBox="0 0 144 141" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M129.189 0.0490494C128.744 0.119441 126.422 0.377545 124.03 0.635648C114.719 1.6446 109.23 2.4893 108.058 3.09936C107.119 3.56864 106.674 4.34295 106.674 5.44576C106.674 6.71281 107.424 7.51058 109.043 7.97986C110.403 8.37875 110.825 8.42567 118.87 9.52847C121.778 9.92736 124.288 10.3028 124.475 10.3732C124.663 10.4436 122.951 11.1006 120.676 11.8749C110.028 15.4414 100.412 20.7677 91.7339 27.9242C88.38 30.7164 81.6957 37.4271 79.2096 40.5009C73.8387 47.2116 69.6874 54.8139 66.5681 63.7302C65.9348 65.4665 65.3484 66.8978 65.2546 66.8978C65.1374 66.8978 63.7771 66.7336 62.2291 66.5693C52.9649 65.5134 43.1847 68.1649 34.1316 74.2186C24.7735 80.46 18.5349 87.7338 10.5371 101.742C2.53943 115.726 -1.0959 127.482 0.287874 135.014C0.89767 138.463 2.0469 140.035 3.97011 140.082C5.28352 140.105 5.37733 139.659 4.20465 139.049C3.05541 138.463 2.6567 137.9 2.32835 136.281C0.616228 128.021 6.24512 113.028 17.4325 96.1104C23.2725 87.241 28.362 81.9147 35.5622 77.1046C43.8649 71.5437 52.7069 69.033 61.1737 69.8308C64.9967 70.1828 64.6917 69.9247 64.1992 72.4822C62.2525 82.5013 63.8005 92.6378 67.9753 97.354C73.1116 103.079 81.9771 102 85.0027 95.2657C86.3395 92.2858 86.3864 87.7103 85.1434 83.9796C83.1498 78.0901 80.007 73.8197 75.4335 70.8163C73.8152 69.7604 70.4848 68.1883 69.875 68.1883C69.359 68.1883 69.4294 67.6487 70.2268 65.3257C72.3377 59.2486 75.457 52.7021 78.4122 48.244C83.2436 40.9232 91.4524 32.5701 99.1687 27.103C105.806 22.4102 113.241 18.5386 120.512 16.0045C123.772 14.8548 129.87 13.1889 130.081 13.3766C130.128 13.447 129.541 14.362 128.791 15.4414C124.78 21.0258 122.716 26.0706 122.388 30.998C122.224 33.7198 122.341 34.588 122.88 34.2595C122.998 34.1891 123.678 32.969 124.405 31.5611C126.281 27.8069 131.722 20.6738 139.579 11.6402C141.127 9.85697 142.652 7.86254 143.027 7.08823C144.552 4.03792 143.52 1.48035 140.377 0.471397C139.439 0.166366 138.102 0.0490408 134.584 0.0255769C132.074 -0.021351 129.635 0.00212153 129.189 0.0490494ZM137.117 4.92955C137.187 5.0234 136.718 5.63346 136.061 6.29045L134.865 7.48712L131.042 6.73627C128.931 6.33739 126.727 5.9385 126.14 5.8681C124.827 5.68039 124.123 5.32843 124.968 5.28151C125.296 5.28151 126.868 5.11725 128.486 4.953C131.3 4.64797 136.812 4.62451 137.117 4.92955ZM71.5168 72.5292C76.2075 74.899 79.4441 78.8175 81.3204 84.355C83.6189 91.1361 81.2266 96.8378 76.0433 96.8847C73.3227 96.9082 70.9773 95.2188 69.5936 92.2389C68.2802 89.4232 67.6938 86.5606 67.5765 82.1259C67.4593 78.3248 67.6 76.4242 68.2333 72.7403L68.4912 71.2856L69.359 71.5906C69.8515 71.7548 70.8132 72.1772 71.5168 72.5292Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <button aria-pressed="false">
+                            <span class="sr-only">Toggle theme</span>
+                            <svg aria-hidden="true" class="toggle-scene" xmlns="http://www.w3.org/2000/svg" viewBox="32 32 134 134">
+                                <defs>
+                                    <marker id="e" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                    <marker id="a" orient="auto" overflow="visible" refx="0" refy="0"><path class="toggle-scene__cord-end" fill-rule="evenodd" stroke-width=".2666" d="M.98 0a1 1 0 11-2 0 1 1 0 012 0z"></path></marker>
+                                    <clippath id="g" clippathunits="userSpaceOnUse"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path></clippath>
+                                </defs>
+                                <g class="toggle-scene__cords">
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.56v150.493" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.59s28 8.131 28 19.506-18.667 13.005-28 19.507c-9.333 6.502-28 8.131-28 19.506s28 19.507 28 19.507" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.575s-20 16.871-20 28.468c0 11.597 13.333 18.978 20 28.468 6.667 9.489 20 16.87 20 28.467 0 11.597-20 28.468-20 28.468" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.569s16 20.623 16 32.782c0 12.16-10.667 21.855-16 32.782-5.333 10.928-16 20.623-16 32.782 0 12.16 16 32.782 16 32.782" transform="translate(-24.503 256.106)"></path>
+                                    <path class="toggle-scene__cord" marker-end="url(#a)" fill="none" stroke-linecap="square" stroke-width="6" d="M123.228-28.563s-10 24.647-10 37.623c0 12.977 6.667 25.082 10 37.623 3.333 12.541 10 24.647 10 37.623 0 12.977-10 37.623-10 37.623" transform="translate(-24.503 256.106)"></path>
+                                    <g class="line toggle-scene__dummy-cord"><line marker-end="url(#a)" x1="98" x2="98" y1="240" y2="380"></line></g>
+                                    <circle class="toggle-scene__hit-spot" cx="98.7255" cy="380.5405" r="60" fill="transparent"></circle>
+                                </g>
+                                <g class="toggle-scene__bulb bulb" transform="translate(844.069 -645.213)">
+                                    <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+                                    <path class="bulb__cap-shine" d="M-778.379 802.873h25.512v118.409h-25.512z" clip-path="url(#g)" transform="matrix(.52452 0 0 .90177 -368.282 82.976)"></path>
+                                    <path class="bulb__cap" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v0s-8.439 10.115-28.817 10.115c-21.673 0-29.59-10.115-29.59-10.115z"></path>
+                                    <path class="bulb__cap-outline" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.677" d="M-774.546 827.629s12.917-13.473 29.203-13.412c16.53.062 29.203 13.412 29.203 13.412v53.6s-8.825 16-29.203 16c-21.674 0-29.203-16-29.203-16z"></path>
+                                    <g class="bulb__filament" fill="none" stroke-linecap="round" stroke-width="5">
+                                        <path d="M-752.914 823.875l-8.858-33.06"></path>
+                                        <path d="M-737.772 823.875l8.858-33.06"></path>
+                                    </g>
+                                    <path class="bulb__bulb" stroke-linecap="round" stroke-width="5" d="M-783.192 803.855c5.251 8.815 5.295 21.32 13.272 27.774 12.299 8.045 36.46 8.115 49.127 0 7.976-6.454 8.022-18.96 13.273-27.774 3.992-6.7 14.408-19.811 14.408-19.811 8.276-11.539 12.769-24.594 12.769-38.699 0-35.898-29.102-65-65-65-35.899 0-65 29.102-65 65 0 13.667 4.217 26.348 12.405 38.2 0 0 10.754 13.61 14.746 20.31z"></path>
+                                    <circle class="bulb__flash" cx="-745.343" cy="743.939" r="83.725" fill="none" stroke-dasharray="10,30" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"></circle>
+                                    <path class="bulb__shine" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957"></path>
+                                </g>
+                            </svg>
+                            <div class="grab-handle"></div>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
+</header>
+<!-- /HEADER -->
 
-    <div class="controls">
-        <button type="button" id="pause">PAUSE</button>
-        <button type="button" id="replay">REPLAY</button>
-    </div>
 
-    <p class="credit">
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main class="nt-page">
+
+    <h1 class="nt-title">
+        Nuclear <span>Detonations</span>
+        <small>Every test and attack from 1945 to 1996, replayed month by month</small>
+    </h1>
+
+    <section class="nt-card" aria-label="Detonation timeline">
+        <div class="nt-head">
+            <div class="nt-time">
+                <small>Date</small>
+                <b id="year">1944</b><em id="month">Jul</em>
+            </div>
+            <div class="nt-total">
+                <small>Total detonations</small>
+                <b id="total">0</b>
+            </div>
+        </div>
+
+        <div class="nt-map">
+            <canvas id="stage" width="1000" height="500" role="img"
+                aria-label="World map where each nuclear detonation from 1945 to 1996 flashes in the colour of the country that set it off"></canvas>
+        </div>
+
+        <div class="nt-scores">
+            <div class="score" id="US"><i></i><span>United States</span><b data-score="0"></b></div>
+            <div class="score" id="CP"><i></i><span>USSR / Russia</span><b data-score="0"></b></div>
+            <div class="score" id="GB"><i></i><span>United Kingdom</span><b data-score="0"></b></div>
+            <div class="score" id="FR"><i></i><span>France</span><b data-score="0"></b></div>
+            <div class="score" id="PC"><i></i><span>China</span><b data-score="0"></b></div>
+            <div class="score" id="IN"><i></i><span>India</span><b data-score="0"></b></div>
+            <div class="score" id="IS" title="Suspected"><i></i><span>Israel (suspected)</span><b data-score="0"></b></div>
+        </div>
+
+        <div class="nt-controls">
+            <button type="button" class="theme-btn" id="pause">Pause <i class="ri-pause-line"></i></button>
+            <button type="button" class="theme-btn" id="replay">Replay <i class="ri-restart-line"></i></button>
+        </div>
+    </section>
+
+    <p class="nt-credit">
         Based on <a href="https://codepen.io/32bitkid/pen/ALgyWX" target="_blank" rel="noopener">Nuclear Detonation Timeline</a>
         by 32bitkid on CodePen. Data: <a href="http://nuclearweaponarchive.org/Library/Catalog" target="_blank" rel="noopener">nuclearweaponarchive.org</a>.
     </p>
 
-    <script>
+</main>
+
+
+<!-- ═══ TAGLINE ═══ -->
+<div class="c-author">
+    <h6>
+        <span class="fluid">Less noise.</span><br>
+        <span class="fluid" aria-hidden="true" data-splitting="">More <span style="color:#F9812E">impact.</span></span>
+        <span class="sr-only">More impact.</span>
+    </h6>
+</div>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="main-footer">
+    <div class="footer-bottom pt-50 pb-40">
+        <div class="container footer-poistion">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="copyright-text">
+                        <p>
+                            Copyright &copy;<span id="currentYear"></span>,
+                            <span id="owl" class="ascii owl" aria-hidden="true">,___,
+[o,o]
+/)__)
+-"--"-</span>
+                            <span class="sr-only">Decorative owl animation</span>
+                            All Rights Reserved.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="copyright-text extra-copyright">
+                        <p>
+                            Crafted with <span style="color:#F9812E">🧡</span>
+                            <a class="c-author__link" href="https://samehbilal.github.io/portfolio">Sameh Bilal</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav class="nav">
+    <ul>
+        <li><a href="../index.html#about">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z"/>
+            </svg>
+        </a></li>
+        <li><a href="mailto:sameh.bilal@outlook.com">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z"/>
+            </svg>
+        </a></li>
+        <li><a href="../stories.html">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/>
+            </svg>
+        </a></li>
+        <li>
+            <button class="theme-toggler">
+                <span class="sr-only">Toggle Theme</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="theme-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/>
+                </svg>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+
+<!-- ═══ SCROLL-TO-TOP ═══ -->
+<div class="progress-wrap cursor-pointer">
+    <i class="ri-arrow-up-double-line"></i>
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+    </svg>
+</div>
+
+
+<!-- ═══ SCRIPTS ═══ -->
+<script src="../assets/js/jquery-3.7.1.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/gsap.min.js"></script>
+<script src="../assets/js/lodash.min.js"></script>
+<script src="../assets/js/MorphSVGPlugin3.min.js"></script>
+<script type="module" src="../assets/js/lights.js" defer></script>
+<script type="module" src="../assets/js/splitting.js" defer></script>
+<script src="../assets/js/main.js" defer></script>
+
+<script>
         /* Every detonation in the source catalogue, in its original order, packed as
            "<days since 1945-07-16, base 36, 3 chars><country index><location index, base 36 (absent = unknown)>".
            Countries: 0 US, 1 Soviet Union, 2 UK, 3 France, 4 India, 5 China, 6 Israel, 7 other / unknown.
@@ -236,46 +483,58 @@
         });
 
         /* ---------- animation (after the original pen) ---------- */
+        const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const cnvs = document.getElementById('stage'),
             ctx = cnvs.getContext('2d'),
             width = cnvs.width,
-            height = cnvs.height,
-            partyColors = {
-                US: '#66f',
-                GB: 'purple',
-                CP: 'red',
-                FR: 'green',
-                IN: 'orange',
-                PC: 'yellow',
-                IS: 'cyan'
-            };
+            height = cnvs.height;
 
-        // longitude/latitude straight onto the map
+        // longitude/latitude straight onto the map (the canvas is 2x the original pen, so radii scale with it)
         ctx.setTransform(width / 2 / 180, 0, 0, -height / 2 / 90, width / 2, height / 2);
-        ctx.shadowBlur = 15;
 
-        const timeEl = document.getElementById('time');
+        // colours come from the page's CSS, so the map follows the light/dark theme
+        let colors = {};
+        // custom properties hold unresolved light-dark(), so resolve each one through a probe's computed colour
+        const probe = document.createElement('i');
+        probe.hidden = true;
+        cnvs.after(probe);
+        const resolve = v => { probe.style.color = 'var(' + v + ')'; return getComputedStyle(probe).color; };
+        function readColors() {
+            colors = { core: resolve('--nt-core') };
+            // light cores (dark theme) glow by adding light; dark cores (light theme) by darkening
+            const [r, g, b] = colors.core.match(/\d+/g).map(Number);
+            colors.blend = r + g + b > 382 ? 'screen' : 'multiply';
+            for (const p of ['us', 'cp', 'gb', 'fr', 'in', 'pc', 'is']) colors[p.toUpperCase()] = resolve('--nt-' + p);
+        }
+        readColors();
+        new MutationObserver(readColors).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readColors);
+
+        const yearEl = document.getElementById('year'), monthEl = document.getElementById('month');
         function updateTime(val) {
             const d = new Date(val);
-            timeEl.dataset.month = d.getUTCMonth() + 1;
-            timeEl.dataset.year = d.getUTCFullYear();
+            yearEl.textContent = d.getUTCFullYear();
+            monthEl.textContent = MONTHS[d.getUTCMonth()];
         }
 
-        function scoreKeeper(elem) {
+        function scoreKeeper(elem, label) {
             let count = 0;
+            const out = label || elem.querySelector('b');
+            const set = v => { if (label) out.textContent = v; else out.dataset.score = v; };
             return {
                 inc() {
                     if (count === 0) elem.classList.add('active');
-                    elem.dataset.score = String(++count);
+                    set(String(++count));
                 },
                 reset() {
                     count = 0;
                     elem.classList.remove('active');
-                    elem.dataset.score = '0';
+                    set('0');
                 }
             };
         }
-        const total = scoreKeeper(document.getElementById('total'));
+        const totalEl = document.getElementById('total');
+        const total = scoreKeeper(totalEl, totalEl);
         const partyScore = {};
         ['US', 'CP', 'GB', 'FR', 'IN', 'PC', 'IS'].forEach(p => { partyScore[p] = scoreKeeper(document.getElementById(p)); });
 
@@ -285,20 +544,27 @@
 
         let head, tail, currentTime, lastTick, frame = 0, paused = false;
 
+        function clear() {
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, width, height);
+            ctx.restore();
+        }
+
         function reset() {
             head = 0;
             tail = 0;
             currentTime = data[0].when - DAY * 360;
             lastTick = null;
             total.reset();
-            document.getElementById('total').classList.add('active');
             Object.values(partyScore).forEach(s => s.reset());
-            ctx.clearRect(-185, -95, 370, 190);
+            updateTime(currentTime);
+            clear();
         }
 
         function render(tick) {
-            ctx.clearRect(-185, -95, 370, 190);
-            ctx.globalCompositeOperation = 'screen';
+            clear();
+            ctx.globalCompositeOperation = colors.blend;
 
             if (!lastTick) lastTick = tick;
             currentTime += ((tick - lastTick) / 1000) * SPEED;
@@ -325,14 +591,17 @@
                 if (glowAge > 0) {
                     ctx.beginPath();
                     ctx.arc(d.lon, d.lat, glowAge, 0, Math.PI * 2);
-                    ctx.shadowColor = ctx.fillStyle = partyColors[d.party] || '#fff';
+                    ctx.shadowBlur = 30;
+                    ctx.shadowColor = ctx.fillStyle = colors[d.party] || colors.core;
+                    ctx.globalAlpha = .85;
                     ctx.fill();
+                    ctx.globalAlpha = 1;
                 }
 
                 ctx.beginPath();
                 ctx.arc(d.lon, d.lat, age, 0, Math.PI * 2);
-                ctx.shadowColor = 'transparent';
-                ctx.fillStyle = 'white';
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = colors.core;
                 ctx.fill();
             }
 
@@ -342,16 +611,19 @@
         }
 
         const pauseBtn = document.getElementById('pause');
+        const setPauseLabel = () => {
+            pauseBtn.innerHTML = paused ? 'Play <i class="ri-play-line"></i>' : 'Pause <i class="ri-pause-line"></i>';
+        };
         pauseBtn.addEventListener('click', () => {
             paused = !paused;
-            pauseBtn.textContent = paused ? 'PLAY' : 'PAUSE';
+            setPauseLabel();
             if (!paused && !frame) { lastTick = null; frame = requestAnimationFrame(render); }
         });
 
         document.getElementById('replay').addEventListener('click', () => {
             cancelAnimationFrame(frame);
             paused = false;
-            pauseBtn.textContent = 'PAUSE';
+            setPauseLabel();
             pauseBtn.disabled = false;
             reset();
             frame = requestAnimationFrame(render);
@@ -362,7 +634,8 @@
 
         reset();
         frame = requestAnimationFrame(render);
-    </script>
+</script>
+
     <!-- PWA: offline, updates and connection notices -->
     <script src="../assets/js/pwa.js" data-root="../"></script>
 </body>
